@@ -192,6 +192,8 @@ class LinePlot(Plot):
         self.zlabel = None
 
         self.linestyle = None 
+        # possible linestyles: borrowing the names from gnuplot
+        #                      borrowing the symbol shortcuts from matlab
 
         return
 
@@ -244,6 +246,14 @@ class LinePlot(Plot):
         # and add it to the evalstack
         self.renderer.addToEvalStack(evalString)
 
+        return True
+
+    def render(self):
+        """
+        Does LinePlot object specific (pre) rendering styff
+        """
+        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
+
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
@@ -263,14 +273,6 @@ class LinePlot(Plot):
         if self.zlabel is not None:
             evalString = "_gnuplot.zlabel(\'%s\')" % self.zlabel
             self.renderer.addToEvalStack(evalString)
-
-        return True
-
-    def render(self):
-        """
-        Does LinePlot object specific (pre) rendering styff
-        """
-        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
 
         return True
 
