@@ -4,6 +4,70 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Contour plotting works in gnuplot</div>
+      <div class="itemDate">23-Feb-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  Since objects can now render themselves, it was possible to
+	  implement the different rendering code necessary for contour plots
+	  to work in gnuplot.  Have a look at the file
+	  <code>contourPlotExample.py</code> in the <code>examples</code>
+	  directory of the pyvisi cvs to see it in action.  It is likely to
+	  take a while to get the vtk version going, but it will come in the
+	  fullness of time.
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
+      <div class="itemTitle">Objects render themselves</div>
+      <div class="itemDate">23-Feb-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  Objects now render themselves.  Therefore, there is no longer a
+	  reason to call the <code>render()</code> method of a scene's
+	  sub-object directly; this is taken care of when the
+	  <code>render()</code> method of the scene is called.  The example
+	  code has been changed in the cvs, and so look for the updated
+	  versions of the examples in the second release of the pre-alpha
+	  version of pyvisi.
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
+      <div class="itemTitle">First release of pre-alpha version of pyvisi</div>
+      <div class="itemDate">??-Feb-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  After much cleaning of the code with the help of <a
+	      href="http://pylint.sourceforge.net">pylint</a>, and updating
+	  READMEs and stuff, I've released the first pre-alpha version of
+	  pyvisi.  This is a very limited functionality version, but is
+	  something for people to see how things will look, and for me to
+	  get some kind of feedback from people to how they would like it to
+	  look and behave.  There are three examples that work at present,
+	  these are <code>simplePlotExample.py</code>,
+	  <code>singleArrayPlotExample.py</code>, and
+	  <code>multiPlotExample.py</code>.  These examples show the current
+	  functionality possible with pyvisi, and what the gnuplot and vtk
+	  equivalent code is.
+	  </p>
+	  <p>
+	  <strong>Download</strong>: you can download pyvisi from the
+	  sourceforge.net web site by visiting <a
+	      href="http://pyvisi.sourceforge.net">pyvisi.sourceforge.net</a>
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">Scenes can now be saved to file</div>
       <div class="itemDate">24-Jan-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
