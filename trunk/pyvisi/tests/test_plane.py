@@ -25,7 +25,7 @@ sys.path.append(here)
 from pyvisi import *   # this should import all of the pyvisi stuff needed
 
 """
-@brief Class and functions for testing the Plane class
+Class and functions for testing the Plane class
 """
 
 class TestPlane(unittest.TestCase):

@@ -19,7 +19,7 @@
 ## @file axes.py
 
 """
-@brief Class and functions associated with a pyvisi Axes object
+Class and functions associated with a pyvisi Axes object
 """
 
 from plot import Plot

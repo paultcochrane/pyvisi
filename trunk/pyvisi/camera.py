@@ -19,7 +19,7 @@
 ## @file camera.py
 
 """
-@brief Class and functions associated with a pyvisi Camera object
+Class and functions associated with a pyvisi Camera object
 """
 
 from common import _debug
@@ -27,7 +27,7 @@ from item import Item
 
 class Camera(Item):
     """
-    @brief Camera class
+    Camera class
     """
     def __init__(self,scene):
         """

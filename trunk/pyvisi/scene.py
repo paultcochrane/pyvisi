@@ -19,7 +19,7 @@
 ## @file scene.py
 
 """
-@brief Class and functions associated with a pyvisi Scene
+Class and functions associated with a pyvisi Scene
 """
 
 from common import _debug
@@ -27,7 +27,7 @@ from renderer import Renderer
 
 class Scene(object):
     """
-    @brief The main object controlling the scene.
+    The main object controlling the scene.
 
     The scene object should be an abstract class that subsequent pyvisi modules
     override.
@@ -35,7 +35,7 @@ class Scene(object):
 
     def __init__(self,renderer):
         """
-        @brief The init function
+        The init function
 
         @param renderer The renderer object to use for the scene.
         """
@@ -67,7 +67,7 @@ class Scene(object):
 
     def render(self,pause=False,interactive=False):
         """
-        @brief Render (or re-render) the scene
+        Render (or re-render) the scene
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
@@ -120,7 +120,7 @@ class Scene(object):
 
     def save(self,file,format):
         """
-        @brief Save the scene to a file
+        Save the scene to a file
         """
         if _debug: print "\tCalled Scene.save()"
         return

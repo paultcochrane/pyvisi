@@ -28,7 +28,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the Plot classes
+Class and functions for testing the Plot classes
 """
 
 class TestPlot(unittest.TestCase):

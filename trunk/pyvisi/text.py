@@ -19,14 +19,14 @@
 ## @file text.py
 
 """
-@brief Class and functions associated with a pyvisi Text object
+Class and functions associated with a pyvisi Text object
 """
 
 from pyvisi.scene import *
 
 class Text(Scene):
     """
-    @brief Text
+    Text
     """
     def __init__(self):
         print "\tCalled Text.__init__()"

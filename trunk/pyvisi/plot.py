@@ -19,7 +19,7 @@
 ## @file plot.py
 
 """
-@brief Class and functions associated with a pyvisi Plot objects
+Class and functions associated with a pyvisi Plot objects
 """
 
 from scene import Scene
@@ -28,7 +28,7 @@ from common import _debug
 
 class Plot(Scene):
     """
-    @brief Abstract plot class
+    Abstract plot class
     """
     def __init__(self):
         if _debug: print "\tCalled Plot.__init__()"
@@ -40,7 +40,7 @@ class Plot(Scene):
 
 class ArrowPlot(Plot):
     """
-    @brief Arrow field plot
+    Arrow field plot
     """
     def __init__(self):
         if _debug: print "\tCalled ArrowPlot.__init__()"
@@ -52,7 +52,7 @@ class ArrowPlot(Plot):
 
 class ContourPlot(Plot):
     """
-    @brief Contour plot
+    Contour plot
     """
     def __init__(self):
         if _debug: print "\tCalled ContourPlot.__init__()"
@@ -64,7 +64,7 @@ class ContourPlot(Plot):
 
 class LinePlot(Plot):
     """
-    @brief Line plot
+    Line plot
     """
     def __init__(self):
         if _debug: print "\tCalled LinePlot.__init__()"

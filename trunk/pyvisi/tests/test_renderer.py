@@ -26,7 +26,7 @@ sys.path.append(here)
 import pyvisi  # this should import all of the pyvisi stuff needed
 
 """
-@brief Class and functions for testing the Renderer class
+Class and functions for testing the Renderer class
 """
 
 class TestRenderer(unittest.TestCase):

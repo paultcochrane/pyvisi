@@ -30,7 +30,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the vtk interface
+Class and functions for testing the vtk interface
 """
 
 class TestVTK(unittest.TestCase):

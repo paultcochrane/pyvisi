@@ -30,7 +30,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the Gnuplot interface
+Class and functions for testing the Gnuplot interface
 """
 
 class TestGnuplot(unittest.TestCase):

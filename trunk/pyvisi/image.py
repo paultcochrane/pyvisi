@@ -19,7 +19,7 @@
 ## @file image.py
 
 """
-@brief Class and functions associated with a pyvisi Image objects
+Class and functions associated with a pyvisi Image objects
 """
 
 from item import Item

@@ -28,7 +28,7 @@ import pyvisi   # this should import all of the pyvisi stuff needed
 #import Finley
 
 """
-@brief Class and functions for testing the Image classes
+Class and functions for testing the Image classes
 """
 
 class TestImage(unittest.TestCase):

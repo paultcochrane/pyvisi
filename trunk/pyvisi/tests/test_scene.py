@@ -28,7 +28,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the Scene class
+Class and functions for testing the Scene class
 """
 
 class TestScene(unittest.TestCase):

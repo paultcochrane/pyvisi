@@ -28,7 +28,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the Camera class
+Class and functions for testing the Camera class
 """
 
 class TestCamera(unittest.TestCase):

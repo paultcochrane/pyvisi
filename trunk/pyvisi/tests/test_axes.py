@@ -28,7 +28,7 @@ from ESyS import *
 import Finley
 
 """
-@brief Class and functions for testing the Axes class
+Class and functions for testing the Axes class
 """
 
 class TestAxes(unittest.TestCase):
