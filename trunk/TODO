@@ -27,9 +27,6 @@
 - View vtk structured and unstructured meshes
   (added 2005-02-24, 13:52, incomplete, priority high)
 
-- Release pyvisi-0.1-pre-alpha2
-  (added 2005-03-02, 14:42, incomplete, priority high)
-
 - Write up student project description
   (added 2004-11-19, 14:03, incomplete, priority medium)
 
@@ -39,9 +36,6 @@
 - scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up
   the actor
   (added 2004-11-19, 14:30, incomplete, priority medium)
-
-- use a numarray to generate a mesh plot
-  (added 2004-11-19, 14:31, incomplete, priority medium)
 
 - Need a log output file for user- and developer- debugging information.
   (added 2005-01-21, 14:09, incomplete, priority medium)
