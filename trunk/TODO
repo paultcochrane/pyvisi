@@ -34,22 +34,9 @@
   users can install it easily
   (added Mon Jan 10 13:18:37 2005, incomplete, priority high)
 
-- Migrate all vtk specific code into renders.vtk
-  (added Mon Jan 10 13:20:06 2005, incomplete, priority high)
-
-- As part of removing the vtk specific code out of the main part of pyvisi,
-  replace the code that is there with objects to be overridden by the specific
-  renderer
-  (added Mon Jan 10 13:21:52 2005, incomplete, priority high)
-
 - Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha
   release)
   (added Tue Jan 11 11:48:42 2005, incomplete, priority high)
-
-- Add a Development link to the web site and start putting stuff like renderers
-  used, how to add a new renderer, what to inherit, structure renderer module
-  should have and other coding guidelines
-  (added Tue Jan 11 14:16:41 2005, incomplete, priority high)
 
 - Write up student project description
   (added Fri Nov 19 14:03:51 2004, incomplete, priority medium)
@@ -78,14 +65,12 @@
   easily
   (added Mon Jan 10 13:19:08 2005, incomplete, priority medium)
 
-- Start to define the objects and methods that all renderers should override or
-  at least give an error message or warning that that renderer doesn't support
-  that method/object
-  (added Mon Jan 10 13:22:38 2005, incomplete, priority medium)
-
 - Might need some kind of renderer module templating system for developers to
   work from.
   (added Tue Jan 11 14:50:36 2005, incomplete, priority medium)
+
+- Start writing a manual, and add objects that are already supported.
+  (added Wed Jan 12 08:53:35 2005, incomplete, priority medium)
 
 - View a 2D vector field as an Arrow Plot
   (added Fri Nov 19 14:04:33 2004, incomplete, priority low)
@@ -106,4 +91,8 @@
 
 - Try and get a simple gnuplot plot working using renderers.gnuplot
   (added Mon Jan 10 13:20:57 2005, incomplete, priority verylow)
+
+- Will need sections in the manual for the docs about each renderer module, or
+  possibly each module supplies their own.
+  (added Wed Jan 12 08:54:18 2005, incomplete, priority verylow)
 
