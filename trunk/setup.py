@@ -13,7 +13,8 @@ a=setup(name="pyvisi",
       packages=['pyvisi',
       'pyvisi.renderers',
       'pyvisi.renderers.gnuplot',
-      'pyvisi.renderers.vtk'],
+      'pyvisi.renderers.vtk',
+      ],
 )
 
 
