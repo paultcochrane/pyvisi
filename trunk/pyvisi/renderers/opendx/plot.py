@@ -22,7 +22,7 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.opendx.common import debugMsg, overrideWarning
+from pyvisi.renderers.opendx.common import debugMsg
 
 from pyvisi.renderers.opendx.item import Item
 
@@ -57,7 +57,7 @@ class Plot(Item):
         """
         return
 
-    class ArrowPlot(Plot):
+class ArrowPlot(Plot):
     """
     Brief introduction to what the class does
     """
@@ -85,7 +85,7 @@ class Plot(Item):
         """
         return
 
-    class ContourPlot(Plot):
+class ContourPlot(Plot):
     """
     Brief introduction to what the class does
     """
@@ -113,7 +113,7 @@ class Plot(Item):
         """
         return
 
-    class LinePlot(Plot):
+class LinePlot(Plot):
     """
     Brief introduction to what the class does
     """

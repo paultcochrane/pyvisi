@@ -22,7 +22,7 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.opendx.common import debugMsg, overrideWarning
+from pyvisi.renderers.opendx.common import debugMsg
 
 from pyvisi.renderers.opendx.item import Item
 
@@ -57,7 +57,7 @@ class Image(Item):
         """
         return
 
-    class JpegImage(Image):
+class JpegImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -85,7 +85,7 @@ class Image(Item):
         """
         return
 
-    class PbmImage(Image):
+class PbmImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -113,7 +113,7 @@ class Image(Item):
         """
         return
 
-    class PdfImage(Image):
+class PdfImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -141,7 +141,7 @@ class Image(Item):
         """
         return
 
-    class PngImage(Image):
+class PngImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -169,7 +169,7 @@ class Image(Item):
         """
         return
 
-    class PnmImage(Image):
+class PnmImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -197,7 +197,7 @@ class Image(Item):
         """
         return
 
-    class PsImage(Image):
+class PsImage(Image):
     """
     Brief introduction to what the class does
     """
@@ -225,7 +225,7 @@ class Image(Item):
         """
         return
 
-    class TiffImage(Image):
+class TiffImage(Image):
     """
     Brief introduction to what the class does
     """
