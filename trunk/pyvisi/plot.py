@@ -313,5 +313,50 @@ class LinePlot(Plot):
 
         return self.linestyle
 
+class SurfacePlot(Plot):
+    """
+    Surface plot
+    """
+
+    def __init__(self, scene):
+        """
+        Intialisation of SurfacePlot class
+
+        @param scene: the scene with which to associate the SurfacePlot
+        @type scene: Scene object
+        """
+        debugMsg("Called SurfacePlot.__init__()")
+        Plot.__init__(self, scene)
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to a SurfacePlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in SurfacePlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("SurfacePlot.setData")
+
+        return
+
+    def render(self):
+        """
+        Perform SurfacePlot specific rendering stuff
+        """
+
+        # print a warning message if get to here
+        overrideWarning("SurfacePlot.render")
+
+        return
+
 # vim: expandtab shiftwidth=4:
 
