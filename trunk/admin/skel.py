@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2004 Paul Cochrane 
+# Copyright (C) 2004-2005 Paul Cochrane 
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ if (len(sys.argv) != 2):
 classname = sys.argv[1]  
 
 # the copyright string to put at the top of the file
-copyrightStr = """# Copyright (C) 2004 Paul Cochrane
+copyrightStr = """# Copyright (C) 2004-2005 Paul Cochrane
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -43,8 +43,11 @@ copyrightStr = """# Copyright (C) 2004 Paul Cochrane
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-# \$Id\$
+# $
 """ % classname
+# this is here to get around cvs keyword expansion issues
+copyrightStr += "Id"
+copyrightStr += "$"
 
 # doxygen documentation strings for info about the file itself
 fileDoxStr = "## @file %s.py\n" % classname
@@ -53,7 +56,7 @@ fileDoxStr += """
 Brief introduction to what the file contains/does
 \"\"\"
 
-from common import _debug
+from pyvisi.common import debugMsg, overrideWarning
 
 """
 
@@ -64,14 +67,15 @@ classStr += """
     Brief introduction to what the class does
     \"\"\"
 
-    def __init__(self,**dict):
+    def __init__(self, arg):
         \"\"\"
         Brief description of the init function
-    
-        @param dict A dictionary of attributes to set
+
+        @param arg: a description of the argument
+        @type arg: the type of the argument
         \"\"\"
-        if _debug: print \"\\tCalled %s.__init__()\"
-        return
+        BaseClass.__init__(self)
+        debugMsg(\"Called %s.__init__()\")
     
     def myfunc(myarg):
         \"\"\"
@@ -81,7 +85,8 @@ classStr += """
         the function does.  Also change the name of the function and
         the name of the argument.
     
-        @param myarg Description of what the parameter means/does
+        @param myarg: Description of what the parameter means/does
+        @type myarg: the type of the argument
         \"\"\"
         return
         """ % classname.capitalize()
@@ -99,7 +104,7 @@ f.close()
 
 # now biff out the stuff for the test file
 
-copyrightStr = """# Copyright (C) 2004 Paul Cochrane
+copyrightStr = """# Copyright (C) 2004-2005 Paul Cochrane
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
