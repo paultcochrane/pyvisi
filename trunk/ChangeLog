@@ -1,318 +1,324 @@
-<?xml version="1.0"?>
+2005-01-12 14:22  paultcochrane
 
-<changelog xmlns="http://www.red-bean.com/xmlns/cvs2cl/">
+	* pyvisi/__init__.py: Displaying revision number in startup
+	  informative information.
 
-<entry>
-<date>2004-11-29</date>
-<weekday>Monday</weekday>
-<time>11:18</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/renderer.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.3</revision>
-</file>
-<msg>Fixed bug caused by still explicitly appending to renderer evaluation stack.
-</msg>
-</entry>
+2005-01-12 14:22  paultcochrane
 
-<entry>
-<date>2004-11-26</date>
-<weekday>Friday</weekday>
-<time>15:29</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/renderer.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<msg>Tidied up some of the evalStack generating code, am now using the interface function rather than setting the variable directly.
-</msg>
-</entry>
+	* pyvisi/common.py: Added a revision number.
 
-<entry>
-<date>2004-11-25</date>
-<weekday>Thursday</weekday>
-<time>14:58</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.5</revision>
-</file>
-<msg>Trivial change.
-</msg>
-</entry>
+2005-01-11 19:13  paultcochrane
 
-<entry>
-<date>2004-11-25</date>
-<weekday>Thursday</weekday>
-<time>14:54</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/camera.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.3</revision>
-</file>
-<msg>Trivial change.
-</msg>
-</entry>
+	* pyvisi/: camera.py, image.py, plane.py, plot.py, renderer.py,
+	  scene.py: Implemented warning users if a method is called without
+	  having been overriden.
 
-<entry>
-<date>2004-11-25</date>
-<weekday>Thursday</weekday>
-<time>14:51</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.4</revision>
-</file>
-<msg>Trivial formatting change.
-</msg>
-</entry>
+2005-01-11 19:13  paultcochrane
 
-<entry>
-<date>2004-11-25</date>
-<weekday>Thursday</weekday>
-<time>14:34</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/tests/test_item.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<msg>Initial import to repository.  This is a skeleton test file for the Item class.
-</msg>
-</entry>
+	* pyvisi/common.py: Added a function to display a warning message
+	  when a method is used but hasn't been overridden by the renderer
+	  module.
 
-<entry>
-<date>2004-11-24</date>
-<weekday>Wednesday</weekday>
-<time>16:24</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/tests/test_axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_camera.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_gnuplot_lib.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_image.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_plane.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_plot.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_renderer.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_scene.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_text.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_vtk_lib.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<commondir>pyvisi/tests/</commondir>
-<msg>Removed @brief tags from docstrings as makes the source more compatible between both doxygen and epydoc.
-</msg>
-</entry>
+2005-01-11 18:28  paultcochrane
 
-<entry>
-<date>2004-11-24</date>
-<weekday>Wednesday</weekday>
-<time>16:20</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.3</revision>
-</file>
-<file>
-<name>pyvisi/camera.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/image.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/plot.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/scene.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<file>
-<name>pyvisi/text.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<commondir>pyvisi/</commondir>
-<msg>Removed @brief tags from docstrings as makes the source more compatible between both doxygen and epydoc.
-</msg>
-</entry>
+	* pyvisi/image.py: Added better wording in warning message.
 
-<entry>
-<date>2004-11-24</date>
-<weekday>Wednesday</weekday>
-<time>15:29</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.2</revision>
-</file>
-<msg>Removed @brief from documentation string.  This means that the doc strings will be interpreted better by both doxygen and epydoc.
-</msg>
-</entry>
+2005-01-11 18:26  paultcochrane
 
-<entry>
-<date>2004-11-23</date>
-<weekday>Tuesday</weekday>
-<time>22:37</time>
-<author>paultcochrane</author>
-<file>
-<name>pyvisi/__init__.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/camera.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/common.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/image.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/item.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/plane.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/plot.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/renderer.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/scene.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/text.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_axes.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_camera.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_gnuplot_lib.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_image.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_plane.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_plot.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_renderer.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_scene.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_text.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<file>
-<name>pyvisi/tests/test_vtk_lib.py</name>
-<cvsstate>Exp</cvsstate>
-<revision>1.1</revision>
-</file>
-<commondir>pyvisi/</commondir>
-<msg>Moved from my own sandbox version of the esys2/pyvisi project.
-</msg>
-</entry>
+	* pyvisi/image.py: Added warnings if the base level methods are
+	  ever used, and giving the user advice as to what to do if they
+	  see the warning.
 
-</changelog>
+2005-01-11 17:51  paultcochrane
+
+	* pyvisi/renderers/vtk/renderer.py: Removed the
+	  setRenderWindowWidth, setRenderWindowHeight,
+	  getRenderWindowWidth, getRenderWindowHeight, getEvalStack,
+	  addToEvalSTack and resetEvalStack methods as they are provided by
+	  the base class, so pointless overriding them in this case.
+
+2005-01-11 17:44  paultcochrane
+
+	* pyvisi/axes.py: Expanded the doc strings to say that this is just
+	  an abstract class and needs to be overridden.  Put the print
+	  statement into an if _debug:
+
+2005-01-11 17:29  paultcochrane
+
+	* pyvisi/: camera.py, image.py, item.py, plane.py, renderer.py,
+	  scene.py, renderers/vtk/camera.py, renderers/vtk/image.py,
+	  renderers/vtk/item.py, renderers/vtk/renderer.py,
+	  renderers/vtk/scene.py: Fixed formatting errors in docstrings.
+
+2005-01-11 15:45  paultcochrane
+
+	* pyvisi/scene.py: Fixed problem with an if loop not actually doing
+	  anything inside.
+
+2005-01-11 15:20  paultcochrane
+
+	* pyvisi/: camera.py, image.py, plane.py, renderer.py, scene.py:
+	  Removed vtk code from base code.  Fixed obsolete references to
+	  renderer names and renderer objects from when used to pass the
+	  renderer name etc into the Scene object at instatiation time.
+	  Fixed some other minor bugs.
+
+2005-01-11 15:10  paultcochrane
+
+	* pyvisi/renderers/povray/tests/: test_axes.py, test_camera.py,
+	  test_image.py, test_item.py, test_plane.py, test_plot.py,
+	  test_renderer.py, test_scene.py, test_text.py: Initial import to
+	  repository.  These are the skeleton test files for the povray
+	  renderer module.
+
+2005-01-11 15:09  paultcochrane
+
+	* pyvisi/renderers/povray/: __init__.py, axes.py, camera.py,
+	  common.py, image.py, item.py, plane.py, plot.py, renderer.py,
+	  scene.py, text.py: Initial import to repository.  These are the
+	  skeleton files for the povray renderer module.
+
+2005-01-11 15:07  paultcochrane
+
+	* pyvisi/renderers/gnuplot/tests/: test_axes.py, test_camera.py,
+	  test_image.py, test_item.py, test_plane.py, test_plot.py,
+	  test_renderer.py, test_scene.py, test_text.py: Initial import to
+	  repository.  These are the skeleton test files for the gnuplot
+	  renderer module.
+
+2005-01-11 15:07  paultcochrane
+
+	* pyvisi/renderers/gnuplot/: __init__.py, axes.py, camera.py,
+	  common.py, image.py, item.py, plane.py, plot.py, renderer.py,
+	  scene.py, text.py: Initial import to repository.  These are the
+	  skeleton files for the gnuplot renderer module.
+
+2005-01-11 14:47  paultcochrane
+
+	* pyvisi/renderers/vtk/: item.py, renderer.py: Am now importing
+	  Renderer and Item as BaseRenderer and BaseItem to resolve naming
+	  conflicts and to allow the base classes to do some sanity/error
+	  checking of the imported renderer modules (have they overridden
+	  stuff they should have etc.).
+
+2005-01-11 14:46  paultcochrane
+
+	* pyvisi/renderers/vtk/scene.py: Added some version information
+	  output and am now importing the Scene from the base classes as
+	  BaseScene.
+
+2005-01-11 14:46  paultcochrane
+
+	* pyvisi/renderers/vtk/common.py: Added a rendererVersion number
+	  global variable.
+
+2005-01-11 14:45  paultcochrane
+
+	* pyvisi/: axes.py, camera.py, image.py, item.py, plane.py,
+	  plot.py, renderer.py, scene.py, text.py: Reversed naming rule
+	  whereby used Base as a prefix.  Using the Base prefix didn't
+	  allow for error checking at the base pyvisi level to see if the
+	  module has overridden all of the classes and methods it should
+	  have.  One merely now has to import (within a renderer module)
+	  the relevant base class as BaseClass so that there aren't naming
+	  difficulties.
+
+2005-01-11 14:42  paultcochrane
+
+	* pyvisi/common.py: Added pyvisiVersion variable
+
+2005-01-11 14:42  paultcochrane
+
+	* pyvisi/__init__.py: Added (hopefully helpful) version output.
+
+2005-01-11 14:23  paultcochrane
+
+	* pyvisi/renderers/__init__.py: Initial import to repository.  This
+	  is the __init__ file so that python knows to treat this directory
+	  like a module path.
+
+2005-01-11 14:21  paultcochrane
+
+	* pyvisi/renderers/vtk/tests/: test_axes.py, test_camera.py,
+	  test_image.py, test_item.py, test_plane.py, test_plot.py,
+	  test_renderer.py, test_scene.py, test_text.py: Initial import to
+	  repository.  These files are the tests from the pyvisi testsuite
+	  (minus the gnuplot_lib and vtk_lib ones).  These are now the
+	  vtk-specific tests and should be developed as such.
+
+2005-01-11 14:18  paultcochrane
+
+	* pyvisi/renderers/vtk/: axes.py, camera.py, common.py, item.py,
+	  plane.py, plot.py, text.py: Changed the global variable renName
+	  to rendererName because it's more descriptive.
+
+2005-01-11 14:17  paultcochrane
+
+	* pyvisi/renderers/vtk/image.py: Removed old references to now
+	  obsolete rendererName attribute which was passed in as an
+	  argument.  This is now set by the import statement at the start
+	  of the script.  Also changed the global variable renName to
+	  rendererName because it's more descriptive.
+
+2005-01-11 14:15  paultcochrane
+
+	* pyvisi/renderers/vtk/renderer.py: Removed old references to now
+	  obsolete rendererName attribute which was passed in as an
+	  argument.  This is now set by the import statement at the start
+	  of the script.  Removed the _initRendererModule method as it is
+	  now obsolete as there is no need for switching on what the
+	  renderer is now; this is all handled by the module code.  Also
+	  changed the global variable renName to rendererName because it's
+	  more descriptive.
+
+2005-01-11 14:14  paultcochrane
+
+	* pyvisi/renderers/vtk/scene.py: Removed old references to now
+	  obsolete rendererName attribute which was passed in as an
+	  argument.  This is now set by the import statement at the start
+	  of the script.  Also changed the global variable renName to
+	  rendererName because it's more descriptive.
+
+2005-01-11 14:03  paultcochrane
+
+	* pyvisi/renderers/vtk/: axes.py, camera.py, common.py, image.py,
+	  item.py, plane.py, plot.py, renderer.py, scene.py, text.py: Am
+	  now using the renName variable in common.py to specific that this
+	  is the vtk renderer, and this helps with the debugging output.
+	  Will make this a coding guideline/standard.  Also added some
+	  helpful comments and split up generic and module specific
+	  imports.
+
+2005-01-11 13:44  paultcochrane
+
+	* pyvisi/renderers/vtk/common.py: Dammit!  I should have kept
+	  common.py around.  It turns out I found a good reason to use
+	  renderer-specific options.  Duh.
+
+2005-01-11 11:55  paultcochrane
+
+	* pyvisi/renderers/vtk/: axes.py, item.py, renderer.py, scene.py:
+	  Changed all objects that need to inherit from the Base objects to
+	  actually inherit from them.  Namely, Item, Scene and Renderer.
+
+2005-01-11 11:51  paultcochrane
+
+	* pyvisi/renderers/vtk/common.py: common.py should only be part of
+	  the base set of objects, and be inherited by all renderers.  Only
+	  keeps debugging flags and stuff anyway.  If I change my mind in
+	  the future, can always add it back in.
+
+2005-01-11 11:44  paultcochrane
+
+	* pyvisi/: axes.py, camera.py, common.py, image.py, item.py,
+	  plane.py, plot.py, renderer.py, scene.py, text.py: Trying out an
+	  idea...  Am going to make all central classes named with the
+	  prefix Base, ie Scene is now BaseScene, and so each module which
+	  provides a Scene class must inherit from BaseScene.  Hopefully
+	  this will allow me to do something like from pyvisi import *, and
+	  then from pyvisi.renderers.vtk import * to get all of the vtk
+	  overrides.  Will see what happens.  This is an attempt to
+	  separate the individual renderer code from the base code.
+
+2005-01-10 14:09  paultcochrane
+
+	* pyvisi/: axes.py, camera.py, image.py, item.py, plane.py,
+	  plot.py, renderer.py, scene.py, text.py: Added common module in
+	  axes.py and text.py, also fixed a print statement which needed an
+	  if _debug in front of it for both of these files.  For all files
+	  added the BASE: prefix to all of the debug output so that I know
+	  what is being called when.
+
+2005-01-10 14:01  paultcochrane
+
+	* pyvisi/renderers/vtk/: camera.py, image.py, item.py, plane.py,
+	  plot.py, renderer.py, scene.py: Prepending the name of the
+	  renderer to the debug output so that I know which renderer is
+	  doing what.
+
+2005-01-10 13:59  paultcochrane
+
+	* pyvisi/renderers/vtk/text.py: Fixed print statement only to print
+	  if the _debug flag is set.  Also prepending the name of the
+	  renderer to the debug output so that I know which renderer is
+	  doing what.  Importing the common module.
+
+2005-01-10 13:53  paultcochrane
+
+	* pyvisi/renderers/vtk/axes.py: Importing common stuff now.  Fixed
+	  _debug statement.
+
+2005-01-10 13:52  paultcochrane
+
+	* pyvisi/renderers/vtk/axes.py: Fixed print statement only to print
+	  if the _debug flag is set.  Also prepending the name of the
+	  renderer to the debug output so that I know which renderer is
+	  doing what.
+
+2005-01-10 13:36  paultcochrane
+
+	* pyvisi/renderers/vtk/: __init__.py, axes.py, camera.py,
+	  common.py, image.py, item.py, plane.py, plot.py, renderer.py,
+	  scene.py, text.py: Initial import to repository.  These files
+	  were in the main pyvisi dir, but are being moved to a
+	  vtk-specific location as part of separation of the code of the
+	  different possible renderers.
+
+2004-11-29 11:18  paultcochrane
+
+	* pyvisi/renderer.py: Fixed bug caused by still explicitly
+	  appending to renderer evaluation stack.
+
+2004-11-26 15:29  paultcochrane
+
+	* pyvisi/renderer.py: Tidied up some of the evalStack generating
+	  code, am now using the interface function rather than setting the
+	  variable directly.
+
+2004-11-25 14:58  paultcochrane
+
+	* pyvisi/axes.py: Trivial change.
+
+2004-11-25 14:54  paultcochrane
+
+	* pyvisi/camera.py: Trivial change.
+
+2004-11-25 14:51  paultcochrane
+
+	* pyvisi/axes.py: Trivial formatting change.
+
+2004-11-25 14:34  paultcochrane
+
+	* pyvisi/tests/test_item.py: Initial import to repository.  This is
+	  a skeleton test file for the Item class.
+
+2004-11-24 16:24  paultcochrane
+
+	* pyvisi/tests/: test_axes.py, test_camera.py, test_gnuplot_lib.py,
+	  test_image.py, test_plane.py, test_plot.py, test_renderer.py,
+	  test_scene.py, test_text.py, test_vtk_lib.py: Removed @brief tags
+	  from docstrings as makes the source more compatible between both
+	  doxygen and epydoc.
+
+2004-11-24 16:20  paultcochrane
+
+	* pyvisi/: axes.py, camera.py, image.py, plot.py, scene.py,
+	  text.py: Removed @brief tags from docstrings as makes the source
+	  more compatible between both doxygen and epydoc.
+
+2004-11-24 15:29  paultcochrane
+
+	* pyvisi/axes.py: Removed @brief from documentation string.  This
+	  means that the doc strings will be interpreted better by both
+	  doxygen and epydoc.
+
+2004-11-23 22:37  paultcochrane
+
+	* pyvisi/: __init__.py, axes.py, camera.py, common.py, image.py,
+	  item.py, plane.py, plot.py, renderer.py, scene.py, text.py,
+	  tests/test_axes.py, tests/test_camera.py,
+	  tests/test_gnuplot_lib.py, tests/test_image.py,
+	  tests/test_plane.py, tests/test_plot.py, tests/test_renderer.py,
+	  tests/test_scene.py, tests/test_text.py, tests/test_vtk_lib.py:
+	  Moved from my own sandbox version of the esys2/pyvisi project.
+
