@@ -18,6 +18,11 @@
 
 ## @file __init__.py
 
+"""
+__init__ file to make the renderers/ directory into a package
+"""
+
 __author__ = 'Paul Cochrane'
+__revision__ = 'pre-alpha-1'
 
 # vim: expandtab shiftwidth=4:
