@@ -34,8 +34,10 @@ TexFiles = abstract.tex
         developerManual.tex
 	gpl.tex
         intro.tex
+        install.tex
 	languageReference.tex
 	misc_defs.tex
+        plottingExamples.tex
 	titlepage.tex
 	tutFromScratch.tex
 	pyvisi_defs.tex
@@ -61,14 +63,13 @@ PdfFigs = figures/*.pdf
 
 webdir = ../../website/docs/manual
 	
-all: pyvisi_doc.dvi pyvisi_doc.ps pyvisi_doc.ps.gz pyvisi_doc.pdf pyvisi_doc.html pyvisi_doc.tar.gz
+all: pyvisi_doc.dvi pyvisi_doc.ps pyvisi_doc.ps.gz pdf_figs pyvisi_doc.pdf pyvisi_doc.html pyvisi_doc.tar.gz
 
-:rule %.pdf : %.eps
-	:sys epstopdf $source
-
-pdf_figs: $EpsFigs
+pdf_figs: $PdfFigs
 	:print Generating the pdf figures from the eps figures
-	
+
+:rule figures/%.pdf : figures/%.eps
+        :sys epstopdf $source
 
 pyvisi_doc.dvi: $TexFiles $EpsFigs $StyFiles
 	:print Generating the dvi...
