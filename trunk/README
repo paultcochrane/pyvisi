@@ -28,7 +28,7 @@ Pyvisi is just a python module ... treat it as any other module
 
    This will install the files, in the appropriate place for 
    your python distribution. This will be something like
-   e.g. /usr/lib/python2.2/site-packages/
+   e.g. /usr/lib/python2.3/site-packages/
 
  * Local instalation:
 
@@ -46,11 +46,28 @@ Pyvisi is just a python module ... treat it as any other module
    also see http://www.python.org/doc/current/inst/ for more details on 
    using the distutils package
 
- * By hand
 
-   copy all the files in the pyvisi directory to somewhere in your
-   python path
+--------------------------------------------------------------------
+ Dependencies
+--------------------------------------------------------------------
 
-   eg
+Pyvisi depends upon the relevant renderer module's application and/or python
+wrappers to be installed so that the renderer module can be used.  At
+present, the vtk and gnuplot renderer modules are being developed.
 
-   cp -r pyvisi ~/lib/python/ 
+  * Gnuplot renderer module
+
+    You must have gnuplot installed (version 3.7).  You can get gnuplot
+    from http://www.gnuplot.info.  
+    Note that gnuplot version 4 is not yet supported by pyvisi.
+
+    You must have the Gnuplot.py python wrapper for gnuplot.  You can get 
+    this from http://gnuplot-py.sourceforge.net/
+
+  * VTK renderer module
+
+    You must have vtk version 4.2 or above installed.  You can get vtk from 
+    http://www.vtk.org.
+    Note that when you install vtk, that you must install the python wrappers 
+    as well (this is explained in the vtk installation information.)
+
