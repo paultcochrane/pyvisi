@@ -102,7 +102,13 @@ class LinePlot(Plot):
 
         return
 
-    def setData(self,data):
+    def setData(self,*dataList):
+        """
+        Sets the data to the given plot object.
+
+        @param dataList: list of data objects to plot
+        @type dataList: tuple
+        """
         if _debug: print "\tBASE: Called setData() in LinePlot()"
 
         # print a warning message if get to here
