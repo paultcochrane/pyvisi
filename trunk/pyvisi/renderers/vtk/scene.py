@@ -110,7 +110,7 @@ class Scene(BaseScene):
         for object in self.objectList:
             object.render()
 
-        #renderer.addToEvalStack("_renderWindow.Render()")
+        renderer.addToEvalStack("_renderWindow.Render()")
 
         if interactive:
             renderer.addToEvalStack("_iRenderer.Start()")

@@ -115,7 +115,6 @@ class JpegImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_jpegReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
-        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PngImage(Image):
@@ -170,7 +169,6 @@ class PngImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_pngReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
-        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class BmpImage(Image):
@@ -225,7 +223,6 @@ class BmpImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_bmpReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
-        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class TiffImage(Image):
@@ -280,7 +277,6 @@ class TiffImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_tiffReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
-        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PnmImage(Image):
@@ -335,7 +331,6 @@ class PnmImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_pnmReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
-        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PsImage(Image):

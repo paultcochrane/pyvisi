@@ -237,8 +237,6 @@ class ContourPlot(Plot):
             evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
 
-        self.renderer.addToEvalStack("_renderWindow.Render()")
-
         return
 
 class LinePlot(Plot):
@@ -408,8 +406,6 @@ class LinePlot(Plot):
         if self.ylabel is not None:
             evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
-
-        self.renderer.addToEvalStack("_renderWindow.Render()")
 
         return
 
