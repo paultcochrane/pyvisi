@@ -23,11 +23,14 @@ Class and functions associated with a pyvisi Scene
 """
 
 # generic imports
-from common import _debug, rendererName, rendererVersion
+from pyvisi.renderers.povray.common \
+        import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
-from renderer import Renderer
+from pyvisi.renderers.povray.renderer import Renderer
+
+__revision__ = 'pre-alpha-1'
 
 class Scene(BaseScene):
     """
@@ -39,57 +42,67 @@ class Scene(BaseScene):
     def __init__(self):
         """
         The init function
-
-        @param renderer The renderer object to use for the scene.
         """
-        print "You are using PyVisi renderer module \"%s\" version %s" % \
-                (rendererName, rendererVersion)
-
-        if _debug: print "\t%s: Called Scene.__init__()" % rendererName
+        BaseScene.__init__()
+        debugMsg("Called Scene.__init__()")
 
         self.renderer = Renderer()
-
-        # kept around in the hope that it will be useful...
-        numCameras = 0
-
-        return
 
     def add(self, obj):
         """
         Add a new item to the scene
 
-        @param obj The object to add to the scene
+        @param obj: The object to add to the scene
+        @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.add()" % rendererName
+        debugMsg("Called Scene.add()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to add"
+
         return
 
     def place(self, obj):
         """
         Place an object within a scene
 
-        @param obj The object to place within the scene
+        @param obj: The object to place within the scene
+        @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.place()" % rendererName
+        debugMsg("Called Scene.place()")
+        
+        if obj is None:
+            raise ValueError, "You must specify an object to place" 
+
         return
 
-    def render(self,pause=False,interactive=False):
+    def render(self, pause=False, interactive=False):
         """
         Render (or re-render) the scene
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
-        @param pause Flag to wait at end of script evaluation for user input
-        @param interactive Whether or not to have interactive use of the output
+        @param pause: Flag to wait at end of script evaluation for user input
+        @type pause: boolean
+
+        @param interactive: Whether or not to have interactive use of the output
+        @type interactive: boolean
         """
-        if _debug: print "\t%s: Called Scene.render()" % rendererName
+        debugMsg("Called Scene.render()")
         renderer = self.renderer
+
+        if pause is None:
+            pause = False
+
+        if interactive is None:
+            interactive = False
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "%s: Here is the evaluation stack" % rendererName
-        if _debug: print 70*"#"
-        if _debug: print renderer.getEvalStack()
-        if _debug: print 70*"#"
+        debugMsg("Here is the evaluation stack")
+        debugMsg(70*"#")
+        debugMsg(renderer.getEvalStack())
+        debugMsg(70*"#")
 
         # now compile the string object into code, and execute it
         try:
@@ -102,25 +115,39 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        if _debug: print "%s: Flusing evaluation stack" % rendererName
+        debugMsg("Flusing evaluation stack")
         renderer.resetEvalStack()
 
         return
 
-    def save(self,file,format):
+    def save(self, fname, format):
         """
         Save the scene to a file
+
+        @param fname: the name of the file to save to
+        @type fname: string
+
+        @param format: the image format of the output file
+        @type format: string
         """
-        if _debug: print "\t%s: Called Scene.save()" % rendererName
+        debugMsg("Called Scene.save()")
+
+        if fname is None:
+            raise ValueError, "You must specify a filename"
+
+        if format is None:
+            raise ValueError, "You must specify an output format"
+
         return
 
-    def setBackgroundColor(self,*color):
+    def setBackgroundColor(self, *color):
         """
         Sets the background color of the Scene
 
-        @param clr The color to set the background to.  Can be RGB or CMYK
+        @param color: The color to set the background to.  Can be RGB or CMYK
+        @type color: tuple
         """
-        if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
+        debugMsg("Called Scene.setBackgroundColor()")
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -144,16 +171,17 @@ class Scene(BaseScene):
             # ok, using rgb
             # probably should use a Color object or something
             # this will do in the meantime
+            pass
         else:
-            raise UserError, "Sorry, only RGB color is supported at present"
+            raise ValueError, "Sorry, only RGB color is supported at present"
 
         return
 
-    def getBackgroundClr(self):
+    def getBackgroundColor(self):
         """
         Gets the current background colour/color setting of the Scene
         """
-        if _debug: print "\t%s: Called Scene.getBackgroundClr()" % rendererName
+        debugMsg("Called Scene.getBackgroundColor()")
         return
 
 # vim: expandtab shiftwidth=4:
