@@ -3,6 +3,40 @@
   
   <hr class="top">
 
+  <h2>Reference Manual</h2>
+
+  <p>
+  The PyVisi reference manual is available in these forms:
+  </p>
+  <blockquote>
+  <table>
+      <tr>
+	  <td>
+	      PDF: 
+	      <a href="docs/manual/pyvisi_doc.pdf">pyvisi_doc.pdf</a>
+	  </td>
+      </tr>
+      <tr>
+	  <td>
+	      Gzipped Postscript: 
+	      <a href="docs/manual/pyvisi_doc.ps.gz">pyvisi_doc.ps.gz</a>
+	  </td>
+      </tr>
+      <tr>
+	  <td>
+	      HTML:
+	      <a href="docs/manual/pyvisi_doc/index.html">pyvisi docs online</a>
+	  </td>
+      </tr>
+      <tr>
+	  <td>
+	      Gzipped tarball:
+	      <a href="docs/manual/pyvisi_doc.tar.gz">pyvisi_doc.tar.gz</a>
+	  </td>
+      </tr>
+  </table>
+  </blockquote>
+
   <h2>API</h2>
 
   <p>
