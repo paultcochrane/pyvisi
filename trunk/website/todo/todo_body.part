@@ -53,11 +53,6 @@
   <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td class="description">use a numarray to generate an x-y line plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
   <td class="description">Get shaded contour plots working</td>
   <td class="dateAdded">2004-11-24</td>
   <td class="priority">high</td>
@@ -65,11 +60,6 @@
 <tr class="high">
   <td class="description">Get installation process working so that when pyvisi actually has features users can install it easily</td>
   <td class="dateAdded">2005-01-10</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
-  <td class="dateAdded">2005-01-11</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
@@ -85,6 +75,11 @@
 <tr class="high">
   <td class="description">Add proper write() methods so that can actually output scenes to file</td>
   <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">Add a single curve, single data example, and implement.  Single data meaning that the x data is just the indices of the y data given.</td>
+  <td class="dateAdded">2005-01-24</td>
   <td class="priority">high</td>
 </tr>
 <tr class="medium">
@@ -128,11 +123,6 @@
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
-  <td class="dateAdded">2005-01-19</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
   <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">medium</td>
@@ -140,6 +130,11 @@
 <tr class="medium">
   <td class="description">Need a log output file for user- and developer- debugging information.</td>
   <td class="dateAdded">2005-01-21</td>
+  <td class="priority">medium</td>
+</tr>
+<tr class="medium">
+  <td class="description">At present, can only have one kind of linestyle per graph.  We need a way to specify different linestyles for each individual line on a multi-line graph if desired.</td>
+  <td class="dateAdded">2005-01-24</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="low">
@@ -198,6 +193,12 @@
     <th class="comment">Comment</th>
   </tr>
 <tr class="done">
+  <td class="description">use a numarray to generate an x-y line plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">completed, but with a Numeric python object.  Should work at present with either.</td>
+</tr>
+<tr class="done">
   <td class="description">Migrate all vtk specific code into renders.vtk</td>
   <td class="dateAdded">2005-01-10</td>
   <td class="dateCompleted">2005-01-11</td>
@@ -240,9 +241,21 @@
   <td class="comment">started</td>
 </tr>
 <tr class="done">
+  <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
+  <td class="dateAdded">2005-01-19</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
   <td class="description">Try and get a simple gnuplot plot working using renderers.gnuplot</td>
   <td class="dateAdded">2005-01-10</td>
   <td class="dateCompleted">2005-01-19</td>
   <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">mostly done</td>
 </tr>
 </table>
