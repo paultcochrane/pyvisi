@@ -32,6 +32,9 @@ __revision__ = '$Revision$'
 class Plot(Item):
     """
     Abstract plot class
+
+    This is the abstract base class of all Plot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -147,6 +150,9 @@ class Plot(Item):
 class ArrowPlot(Plot):
     """
     Arrow field plot
+
+    This is the abstract base class of all ArrowPlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -181,6 +187,9 @@ class ArrowPlot(Plot):
 class BallPlot(Plot):
     """
     Ball plot
+
+    This is the abstract base class of all BallPlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -215,6 +224,9 @@ class BallPlot(Plot):
 class ContourPlot(Plot):
     """
     Contour plot
+
+    This is the abstract base class of all ContourPlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -249,6 +261,9 @@ class ContourPlot(Plot):
 class IsosurfacePlot(Plot):
     """
     Isosurface plot
+
+    This is the abstract base class of all IsosurfacePlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -384,6 +399,9 @@ class LinePlot(Plot):
 class ScatterPlot(Plot):
     """
     Scatter plot
+
+    This is the abstract base class of all ScatterPlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
     def __init__(self, scene):
         """
@@ -418,6 +436,9 @@ class ScatterPlot(Plot):
 class ScatterPlot3D(Plot):
     """
     Three dimensional scatter plot
+
+    This is the abstract base class of all ScatterPlot3D objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
 
     def __init__(self, scene):
@@ -463,6 +484,9 @@ class ScatterPlot3D(Plot):
 class SurfacePlot(Plot):
     """
     Surface plot
+
+    This is the abstract base class of all SurfacePlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
 
     def __init__(self, scene):
