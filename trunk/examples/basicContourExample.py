@@ -38,8 +38,8 @@ import vtk
 import numarray
 
 # generate the x and y grid data
-x = numarray.arrayrange(-2, 2, stride=0.1, type='Float')
-y = numarray.arrayrange(-3, 3, stride=0.1, type='Float')
+x = numarray.arrayrange(-1, 1, stride=0.5, type='Float')
+y = numarray.arrayrange(-1, 1, stride=0.5, type='Float')
 
 # generate a matrix of repeated x values (c.f. repmat() in matlab)
 xm = numarray.zeros([len(x), len(y)], type='Float')
@@ -74,11 +74,12 @@ for i in range(len(x)):
 
 # make the points to put into the grid
 points = vtk.vtkPoints()
+values = vtk.vtkFloatArray()
 count = 0
 for i in xrange(len(x)):
     for j in xrange(len(y)):
-        #points.InsertPoint(i+j, x[i], y[j], distn[i,j])
-        points.InsertPoint(count, x[i], y[j], x[i]*y[j])
+        points.InsertPoint(count, x[i], y[j], 0)
+        values.InsertValue(count, distn[i,j])
         count += 1
 
 # now make the strips (whatever they are...)
@@ -87,14 +88,40 @@ strips.InsertNextCell(len(x)*len(y))  # number of points
 for i in xrange(len(x)*len(y)):
     strips.InsertCellPoint(i)
 
+#strips.InsertCellPoint(0)
+#strips.InsertCellPoint(1)
+#strips.InsertCellPoint(7)
+#strips.InsertCellPoint(6)
+#strips.InsertCellPoint(2)
+#strips.InsertCellPoint(3)
+#strips.InsertCellPoint(5)
+#strips.InsertCellPoint(4)
+
+# create a plane to warp
+plane = vtk.vtkPlaneSource()
+plane.SetXResolution(100)
+plane.SetYResolution(100)
+
+# transform the plane
+transform = vtk.vtkTransform()
+transform.Scale(10,10,1)
+transf = vtk.vtkTransformPolyDataFilter()
+transf.SetInput(plane.GetOutput())
+transf.SetTransform(transform)
+
+# pass through filter
+fun = vtk.vtkPassThroughFilter()
+fun.SetInput(transf.GetOutput())
+
 # set up the polygonal data object
 polyData = vtk.vtkPolyData()
 polyData.SetPoints(points)
 polyData.SetStrips(strips)
-polyData.GetPointData().SetScalars(distnvtk)
+polyData.GetPointData().SetScalars(values)
 
 warp = vtk.vtkWarpScalar()
 warp.SetInput(polyData)
+warp.SetScaleFactor(0.5)
 
 contMapper = vtk.vtkPolyDataMapper()
 contMapper.SetInput(warp.GetPolyDataOutput())
