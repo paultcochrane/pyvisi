@@ -56,73 +56,34 @@ sigma = 0.2  # the spread of the distribution
 # generate the distribution
 distn = numarray.exp(-(xm*xm + ym*ym)/sigma)
 
+# convert the x data into vtkFloatArray objects
 xvtk = vtk.vtkFloatArray()
 for i in range(len(x)):
     xvtk.InsertNextValue(x[i])
 
+# convert the y data into vtkFloatArray objects
 yvtk = vtk.vtkFloatArray()
 for i in range(len(y)):
     yvtk.InsertNextValue(y[i])
 
+# convert the distribution data into vtkFloatArray objects
 distnvtk = vtk.vtkFloatArray()
 for i in range(len(x)):
     for j in range(len(y)):
-	distnvtk.InsertNextValue(distn[i,j])
+        distnvtk.InsertNextValue(distn[i,j])
 
-grid = vtk.vtkStructuredGrid()
-grid.SetDimensions((len(x), len(y), 1))
-grid.SetPoints(points)
-#rgrid.SetXCoordinates(xvtk)
-#rgrid.SetYCoordinates(yvtk)
+polyData = vtk.vtkPolyData()
+polyData.GetPointData().SetScalars(distnvtk)
 
-#dataArray = vtk.vtkDoubleArray()
-#dataArray.SetNumberOfComponents(2)
-#dataArray.SetNumberOfTuples(len(x)*len(y))
-#for i in range(len(y)):
-#    dataArray.SetTuple2(0,distn[:,i])
+dataSet = vtk.vtkDataObjectToDataSetFilter()
+dataSet.SetInput(polyData)
 
-plane = vtk.vtkStructuredGridGeometryFilter()
-plane.SetInput(grid)
-#plane.SetExtent((0,40, 0,60, 0,0))
-
-cont = vtk.vtkContourFilter()
-cont.SetInput(plane.GetOutput())
-cont.GenerateValues(10,0.0,1.0)
-
-contMap = vtk.vtkPolyDataMapper()
-contMap.SetInput(cont.GetOutput())
-contMap.SetScalarRange(0.0,1.0)
-
-contAct = vtk.vtkActor()
-contAct.SetMapper(contMap)
-
-planeMapper = vtk.vtkPolyDataMapper()
-planeMapper.SetInput(plane.GetOutput())
-
-planeActor = vtk.vtkActor()
-planeActor.SetMapper(planeMapper)
-#planeActor.GetProperty().SetRepresentationToWireframe()
-#planeActor.GetProperty().SetColor(0,0,0)
-
-quadric = vtk.vtkQuadric()
-quadric.SetCoefficients(0.5, 1, 0.2 ,0 ,0.1 ,0 ,0, 0.2, 0, 0)
-
-sample = vtk.vtkSampleFunction()
-sample.SetSampleDimensions(30,30,30)
-sample.SetImplicitFunction(quadric)
-sample.ComputeNormalsOff()
-
-extract = vtk.vtkExtractVOI()
-extract.SetInput(sample.GetOutput())
-extract.SetVOI(0, 29, 0, 29, 15, 15)
-extract.SetSampleRate(1, 2, 3)
-
-contours = vtk.vtkContourFilter()
-contours.SetInput(extract.GetOutput())
-contours.GenerateValues(13, 0.0, 1.2)
+warp = vtk.vtkWarpScalar()
+warp.SetInput(dataSet.GetOutput())
+warp.XYPlaneOn()
 
 contMapper = vtk.vtkPolyDataMapper()
-contMapper.SetInput(contours.GetOutput())
+contMapper.SetInput(warp.GetOutput())
 contMapper.SetScalarRange(0.0, 1.2)
 
 contActor = vtk.vtkActor()
@@ -134,9 +95,7 @@ renWin.AddRenderer(ren)
 iren = vtk.vtkRenderWindowInteractor()
 iren.SetRenderWindow(renWin)
 
-#ren.AddActor(contActor)
-#ren.AddActor(planeActor)
-ren.AddActor(contAct)
+ren.AddActor(contActor)
 renWin.SetSize(400,400)
 ren.SetBackground(0.1,0.2,0.4)
 renWin.Render()
@@ -144,3 +103,4 @@ iren.Start()
 #raw_input("Press enter to continue")
 
 
+# vim: expandtab shiftwidth=4:
