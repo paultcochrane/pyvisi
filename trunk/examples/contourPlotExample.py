@@ -2,8 +2,6 @@
 
 """
 Example of contour plotting with pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
 # what plotting method are we using?
@@ -34,6 +32,7 @@ if method == 'pyvisi':
     from pyvisi import *
     # import the gnuplot overrides of the interface
     from pyvisi.renderers.gnuplot import *
+    #from pyvisi.renderers.vtk import *
 
     # define a scene object
     # a Scene is a container for all of the kinds of things you want to put
@@ -62,7 +61,13 @@ if method == 'pyvisi':
     scene.render(pause=True, interactive=True)
 
     # save the scene to file
+    plot.setData(x,y,z)  # have to do this now because we've already
+                         # render()ed the scene.  This requirement will be
+                         # removed in the future
     scene.save(fname="contourPlotExample.png", format=PngImage())
+    plot.setData(x,y,z)  # have to do this now because we've already save()d
+                         # the scene.  This requirement will be removed in
+                         # the future
     scene.save(fname="contourPlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
@@ -90,7 +95,70 @@ elif method == 'gnuplot':
     raw_input('Press enter to continue...')
 
 elif method == 'vtk':
-    print "vtk contour plotting not yet implemented"
+    #### original vtk code
+
+    import vtk
+
+    # set up the data
+    _points = vtk.vtkPoints()
+    _scalars = vtk.vtkFloatArray()
+
+    _index = 0
+    for _i in range(len(x)):
+        for _j in range(len(y)):
+            _points.InsertPoint(_index, x[_i], y[_j], 0)
+            _scalars.InsertValue(_index, z[_i,_j])
+
+    zMin = min(min(z))
+    zMax = max(max(z))
+
+    _data = vtk.vtkUnstructuredGrid()
+    _data.SetPoints(_points)
+    _data.GetPointData().SetScalars(_scalars);
+
+    # set up the contour
+    _plotContour = vtk.vtkContourGrid()
+    _plotContour.SetInput(_data)
+    _plotContour.GenerateValues(5, zMin, zMax)
+
+    # set up the mapper
+    _plotMapper = vtk.vtkPolyDataMapper()
+    _plotMapper.SetInput(_plotContour.GetOutput())
+    _plotMapper.SetScalarRange(zMin, zMax)
+
+    # set up the actor
+    _plotActor = vtk.vtkActor()
+    _plotActor.SetMapper(_plotMapper)
+
+    # use a scalar bar
+    #_scalarBar = vtk.vtkScalarBarActor()
+
+    #_lut = vtk.vtkLookupTable()
+    #_planeMapper = vtk.vtkPolyDataMapper()
+    #_planeMapper.SetInput(_data)
+    #_planeMapper.SetLookupTable(_lut)
+    #_planeMapper.SetScalarRange(0.0, 1.0)
+    #_scalarBarActor = vtk.vtkActor()
+    #_scalarBarActor.SetMapper(_planeMapper)
+
+    # set up the renderer and the render window
+    _ren = vtk.vtkRenderer()
+    _ren.SetBackground(1, 1, 1)
+    _renWin = vtk.vtkRenderWindow()
+    _renWin.AddRenderer(_ren)
+
+    # add the actor to the renderer
+    _ren.AddActor(_plotActor)
+    #_ren.AddActor(_scalarBarActor)
+
+    # render the scene
+    _iren = vtk.vtkRenderWindowInteractor()
+    _iren.SetRenderWindow(_renWin)
+    _iren.Initialize()
+    _renWin.Render()
+    _iren.Start()
+
+    #raw_input('Press enter to continue...')
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"

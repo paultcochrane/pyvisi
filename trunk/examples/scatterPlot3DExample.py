@@ -2,8 +2,6 @@
 
 """
 Example of plotting 3D scatter plots with pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
 # what plotting method are we using?
@@ -72,7 +70,13 @@ if method == 'pyvisi':
     scene.render(pause=True, interactive=True)
 
     # save the scene to file
+    plot.setData(x,y,z)  # have to do this now because we've already
+                         # render()ed the scene.  This requirement will be
+                         # removed in the future
     scene.save(fname="scatterPlot3DExample.png", format=PngImage())
+    plot.setData(x,y,z)  # have to do this now because we've already save()d
+                         # the scene.  This requirement will be removed in
+                         # the future
     scene.save(fname="scatterPlot3DExample.ps", format=PsImage())
 
 elif method == 'gnuplot':

@@ -48,8 +48,14 @@ if method == 'pyvisi':
     scene.render(pause=True, interactive=True)
 
     # save the scene out to file
-    #scene.save(fname="simplePlotExample.png", format=PngImage())
-    #scene.save(fname="simplePlotExample.ps", format=PsImage())
+    plot.setData(x, y)  # have to do this now because we've already
+                        # render()ed the scene, will be removed in the
+                        # future
+    scene.save(fname="simplePlotExample.png", format=PngImage())
+    plot.setData(x, y)  # have to do this now because we've already save()d
+                        # the scene.  This requirement will be removed in
+                        # the future
+    scene.save(fname="simplePlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
@@ -81,11 +87,6 @@ elif method == 'vtk':
     #### original vtk code
 
     import vtk
-
-    # set up the renderer and the render window
-    _ren = vtk.vtkRenderer()
-    _renWin = vtk.vtkRenderWindow()
-    _renWin.AddRenderer(_ren)
 
     # do a quick check to make sure x and y are same length
     if len(x) != len(y):
@@ -134,6 +135,11 @@ elif method == 'vtk':
     # add the actor
     _ren.AddActor2D(_plot)
     
+    # set up the renderer and the render window
+    _ren = vtk.vtkRenderer()
+    _renWin = vtk.vtkRenderWindow()
+    _renWin.AddRenderer(_ren)
+
     # render the scene
     _iren = vtk.vtkRenderWindowInteractor()
     _iren.SetRenderWindow(_renWin)

@@ -59,8 +59,14 @@ if method == 'pyvisi':
     scene.render(pause=True, interactive=True)
 
     # save the scene out to file
-    #scene.save(fname="arrowPlotExample.png", format=PngImage())
-    #scene.save(fname="arrowPlotExample.ps", format=PsImage())
+    plot.setData(x, y, dx, dy) # have to do this now because we've already
+                               # render()ed the scene.  This requirement
+                               # will be removed in the future
+    scene.save(fname="arrowPlotExample.png", format=PngImage())
+    plot.setData(x, y, dx, dy) # have to do this now because we've already
+                               # save()d the scene.  This requirement will
+                               # be removed in the future
+    scene.save(fname="arrowPlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
