@@ -49,11 +49,10 @@ publishFiles =
 # generating the source
 :print Executing the main aap file
 
-#all: $Files extras
-all: $Files
+all: $Files extras
 
-#extras:
-    #:execute news/main.aap
+extras:
+    :execute todo/main.aap
 
 # publish, or just generate the html files
 @if TARGETARG == 'publish':
