@@ -276,8 +276,8 @@ class %s(%s):
         @param arg: a description of the argument
         @type arg: the type of the argument
         \"\"\"
-        %s.__init__(self)  # initialisation of base class
         debugMsg(\"Called %s.__init__()\")
+        %s.__init__(self)  # initialisation of base class
     
     def myfunc(self, myarg):
         \"\"\"
