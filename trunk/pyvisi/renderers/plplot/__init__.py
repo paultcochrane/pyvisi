@@ -24,7 +24,7 @@ Initialisation of the plplot renderer module
     
 from pyvisi.renderers.plplot.common \
         import _rendererName, _rendererVersion, _rendererRevision
-print "This is the\"%s\" renderer module version %s-%s" % \
+print "This is the \"%s\" renderer module version %s-%s" % \
         (_rendererName, _rendererVersion, _rendererRevision)
 
 __author__ = 'Paul Cochrane'
