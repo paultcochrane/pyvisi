@@ -23,8 +23,11 @@ This is the file for the Renderer class
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.povray.common \
+        import debugMsg
 from pyvisi.renderer import Renderer as BaseRenderer
+
+__revision__ = 'pre-alpha-1'
 
 class Renderer(BaseRenderer):
     """
@@ -35,7 +38,8 @@ class Renderer(BaseRenderer):
         """
         Initialisation of Renderer() class
         """
-        if _debug: print "\t%s: Called Renderer.__init__()" % rendererName
+        BaseRenderer.__init__()
+        debugMsg("Called Renderer.__init__()")
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -49,22 +53,22 @@ class Renderer(BaseRenderer):
         self.addToEvalStack("# Renderer.__init__\n")
         self.addToEvalStack("import gnuplot\n")
 
-        return
-
-    def setRenderWindowWidth(self,width):
+    def setRenderWindowWidth(self, width):
         """
         Sets the render window width
         
-        @param width The width of the render window
+        @param width: The width of the render window
+        @type width: float
         """
         self.renderWindowWidth = width
         return
 
-    def setRenderWindowHeight(self,height):
+    def setRenderWindowHeight(self, height):
         """
         Sets the render window height
 
-        @param height The height of the render window
+        @param height: The height of the render window
+        @type height: float
         """
         self.renderWindowHeight = height
         return
@@ -87,14 +91,14 @@ class Renderer(BaseRenderer):
         """
         return self._evalStack
 
-    def addToEvalStack(self,evalString):
+    def addToEvalStack(self, evalString):
         """
         Method to add commands to the evaluation stack
         
-        @param renderer The renderer whose evalStack to add to
-        @param evalString The string of commands to be added to the evalStack
+        @param evalString: The string of commands to be added to the evalStack
+        @type evalString: string
         """
-        if _debug: print "\t%s: Called Renderer.addToEvalStack()" % rendererName
+        debugMsg("Called Renderer.addToEvalStack()")
         self._evalStack += evalString
         return
 
@@ -102,7 +106,7 @@ class Renderer(BaseRenderer):
         """
         Reset/flush the evaluation stack
         """
-        if _debug: print "\t%s: Called Renderer.resetEvalStack()" % rendererName
+        debugMsg("Called Renderer.resetEvalStack()")
         self._evalStack = ""
         return
 
