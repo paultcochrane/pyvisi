@@ -5,7 +5,7 @@
 
   <p>
   PyVisi is a very new project (launched in November of 2004) and is under
-  constant development.
+  constant development.  However, any help would be greatly appreciated.
   </p>
 
   <h2>Renderers</h2>
@@ -13,10 +13,25 @@
   <p>
   Currently only the <a href="http://www.vtk.org">vtk</a> renderer is being
   used in development, however, the structure already exists for  
-  <a href="http://www.gnuplot.org">gnuplot</a> and 
+  <a href="http://www.gnuplot.info">gnuplot</a> and 
   <a href="http://www.povray.org">povray</a> renderers, one merely needs to
   write the relevant code (although there is some change going on, so expect
-  there to be more objects and methods to come).  If you are interested in
+  there to be more objects and methods to come).  
+  </p>
+  <p>
+  Other renderers are envisaged being added to the interface, such as 
+  <a href="http://www.rsinc.com/idl/">IDL</a>, 
+  <a href="http://plplot.sourceforge.net">PLplot</a>, 
+  <a href="http://www.mps.mpg.de/dislin/">DISLIN</a>, 
+  <a href="http://ngwww.ucar.edu/ncl/pyngl/">PyNGL</a>, 
+  <a href="http://www.opengl.org/">OpenGL</a>,
+  <a href="http://www.renderman.org/">RenderMan</a>,
+  and many more.  Once the structure is in place
+  to add a renderer module, it is just a matter of writing the code to
+  the interface.
+  </p>
+  <p>
+  If you are interested in
   contributing code, grab a copy of the cvs:<br>
   cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi login<br>
   cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi co pyvisi<br>
