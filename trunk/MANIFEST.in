@@ -17,6 +17,7 @@ include pyvisi/renderers/gnuplot *.py
 
 # these are the examples to include so far
 include examples/arrowPlotExample.py
+include examples/arrowPlotExample2.py
 include examples/contourPlotExample.py
 include examples/contourPlotMovieExample.py
 include examples/multiCurvePlotExample.py
