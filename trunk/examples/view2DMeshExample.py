@@ -36,6 +36,7 @@ from pyvisi.renderers.vtk import *
 
 # start a scene, using vtk as the renderer
 scene = Scene()
+scene.setSize()
 scene.setBackgroundColor(0,0,0)
 
 # render the scene
