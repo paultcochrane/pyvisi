@@ -1,0 +1,25 @@
+# main html files
+# $Id$
+
+Files = 
+    multiCurvePlotExample.html
+    simplePlotExample.html
+    singleArrayPlotExample.html
+
+examplesDir = ../../examples/
+
+PyFiles =
+    $(examplesDir)multiCurvePlotExample.py
+    $(examplesDir)simplePlotExample.py
+    $(examplesDir)singleArrayPlotExample.py
+
+# generating the source
+:print Executing the examples aap file
+
+all: $PyFiles $Files
+    :sys cp ../../examples/multiCurvePlotExample.py .
+    :sys cp ../../examples/simplePlotExample.py .
+    :sys cp ../../examples/singleArrayPlotExample.py .
+
+:rule %.html : %.py
+    :sys enscript -Epython --lang=html --color -o $target --title=$source $source
