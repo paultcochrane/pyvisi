@@ -58,14 +58,15 @@ class Renderer(object):
         if _debug: print "\tCalled Renderer._initRendererModule()"
         # do a check to see if the renderer used is one of the known renderers
         if rendererName == "vtk":
-            self._evalStack += "# Renderer._initRendererModule\n"
-            self._evalStack += "import vtk\n"
-            self._evalStack += "_renderer = vtk.vtkRenderer()\n"
+            self.addToEvalStack("# Renderer._initRendererModule\n")
+            self.addToEvalStack("import vtk\n")
+            self.addToEvalStack("_renderer = vtk.vtkRenderer()\n")
             # this next line should only be done if we have an active display
-            self._evalStack += "_renderWindow = vtk.vtkRenderWindow()\n"
-            self._evalStack += "_renderWindow.AddRenderer(_renderer)\n"
-            self._evalStack += "_renderWindow.SetSize(%d,%d)\n" % \
+            self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()\n")
+            self._evalStack += "_renderWindow.AddRenderer(_renderer)\n")
+            evalString = "_renderWindow.SetSize(%d,%d)\n" % \
                     (self.renderWindowWidth,self.renderWindowHeight)
+            self.addToEvalStack(evalString)
         else:
             print "Unknown renderer"
             return None
