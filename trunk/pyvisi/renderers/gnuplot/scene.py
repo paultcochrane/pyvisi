@@ -216,4 +216,3 @@ class Scene(BaseScene):
         return
 
 # vim: expandtab shiftwidth=4:
-\n

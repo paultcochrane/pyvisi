@@ -42,4 +42,3 @@ class Item(BaseItem):
         debugMsg("Called Item.__init__()")
 
 # vim: expandtab shiftwidth=4:
-\n

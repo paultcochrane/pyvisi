@@ -42,4 +42,3 @@ from pyvisi.renderers.gnuplot.axes import *
 from pyvisi.renderers.gnuplot.plane import *
 
 # vim: expandtab shiftwidth=4:
-\n

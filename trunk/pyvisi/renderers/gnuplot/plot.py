@@ -488,4 +488,3 @@ class LinePlot(Plot):
 
 # vim: expandtab shiftwidth=4:
 
-\n

@@ -63,4 +63,3 @@ class Renderer(BaseRenderer):
         self.addToEvalStack("_gnuplot = Gnuplot.Gnuplot()")
 
 # vim: expandtab shiftwidth=4:
-\n

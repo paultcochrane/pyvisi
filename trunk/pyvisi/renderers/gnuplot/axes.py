@@ -39,4 +39,3 @@ class Axes(Plot):
         debugMsg("Called Axes.__init__()")
 
 # vim: expandtab shiftwidth=4:
-\n
