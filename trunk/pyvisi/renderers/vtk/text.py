@@ -24,12 +24,12 @@ Class and functions associated with a pyvisi Text object
 
 # generic imports
 from pyvisi.renderers.vtk.common \
-        import debugMsg
+        import debugMsg, getRevision
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = getRevision()
 
 class Text(Item):
     """
