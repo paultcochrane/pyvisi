@@ -44,8 +44,8 @@ class Image(Item):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Item.__init__(self)
         debugMsg("Called Image.__init__()")
+        Item.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -72,8 +72,8 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called JpegImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -117,8 +117,8 @@ class PngImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PngImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -162,8 +162,8 @@ class BmpImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called BmpImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -207,8 +207,8 @@ class TiffImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called TiffImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -252,8 +252,8 @@ class PnmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PnmImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -297,8 +297,8 @@ class PbmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PbmImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -344,8 +344,8 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PsImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -391,8 +391,8 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PdfImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer

@@ -38,8 +38,8 @@ class Text(Item):
         """
         Initialisation of the Text object
         """
-        Item.__init__(self)
         debugMsg("Called Text.__init__()")
+        Item.__init__(self)
         self.font = "Times"
 
     def setFont(self, font):
