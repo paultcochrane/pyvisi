@@ -34,9 +34,11 @@ __revision__ = _rendererRevision
 from pyvisi.renderers.vtk.item import Item
 from pyvisi.renderers.vtk.renderer import Renderer
 from pyvisi.renderers.vtk.scene import Scene
-from pyvisi.renderers.vtk.plot import *
+from pyvisi.renderers.vtk.plot import Plot, \
+        ArrowPlot, ContourPlot, LinePlot
 from pyvisi.renderers.vtk.camera import Camera
-from pyvisi.renderers.vtk.image import *
+from pyvisi.renderers.vtk.image import Image, \
+        JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
 from pyvisi.renderers.vtk.text import Text
 from pyvisi.renderers.vtk.axes import Axes
 from pyvisi.renderers.vtk.plane import Plane

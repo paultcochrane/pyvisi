@@ -34,9 +34,11 @@ __revision__ = _rendererRevision
 from pyvisi.renderers.povray.item import Item
 from pyvisi.renderers.povray.renderer import Renderer
 from pyvisi.renderers.povray.scene import Scene
-from pyvisi.renderers.povray.plot import *
+from pyvisi.renderers.povray.plot import Plot, \
+        ArrowPlot, ContourPlot, LinePlot
 from pyvisi.renderers.povray.camera import Camera
-from pyvisi.renderers.povray.image import *
+from pyvisi.renderers.povray.image import Image, \
+        JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
 from pyvisi.renderers.povray.text import Text
 from pyvisi.renderers.povray.axes import Axes
 from pyvisi.renderers.povray.plane import Plane
