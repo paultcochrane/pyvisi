@@ -168,11 +168,12 @@ class Scene(BaseScene):
 
         return
 
-    def getBackgroundClr(self):
+    def getBackgroundColor(self):
         """
-        Gets the current background colour/color setting of the Scene
+        Gets the current background color setting of the Scene
         """
-        if _debug: print "\t%s: Called Scene.getBackgroundClr()" % rendererName
+        if _debug: print "\t%s: Called Scene.getBackgroundColor()"%rendererName
         return
+
 
 # vim: expandtab shiftwidth=4:
