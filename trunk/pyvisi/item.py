@@ -43,6 +43,9 @@ class Item(object):
         """
         if _debug: print "\tBASE: Called Item.render()"
 
+        # print a warning if get to here
+        overrideWarning("Item.render")
+
         return
 
 # vim: expandtab shiftwidth=4:
