@@ -2,9 +2,13 @@
 # $Id$
 
 Files = 
+    arrowPlotExample.html
+    arrowPlotExample2.html
     contourPlotExample.html
+    contourPlotMovieExample.html
     multiCurvePlotExample.html
     simplePlotExample.html
+    simplePlotMovieExample.html
     singleArrayPlotExample.html
     surfaceAndContourPlotExample.html
     surfacePlotExample.html
@@ -14,9 +18,13 @@ Files =
 examplesDir = ../../examples/
 
 PyFiles =
+    $(examplesDir)arrowPlotExample.py
+    $(examplesDir)arrowPlotExample2.py
     $(examplesDir)contourPlotExample.py
+    $(examplesDir)contourPlotMovieExample.py
     $(examplesDir)multiCurvePlotExample.py
     $(examplesDir)simplePlotExample.py
+    $(examplesDir)simplePlotMovieExample.py
     $(examplesDir)singleArrayPlotExample.py
     $(examplesDir)surfaceAndContourPlotExample.py
     $(examplesDir)surfacePlotExample.py
