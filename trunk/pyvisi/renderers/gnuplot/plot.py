@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg
+from pyvisi.renderers.gnuplot.common import debugMsg, _gnuplot4
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
@@ -260,11 +260,11 @@ class ContourPlot(Plot):
         self.renderer.addToEvalStack(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
 
-        return True
+        return
 
     def render(self):
         """
-        Does ContourPlot object specific (pre) rendering styff
+        Does ContourPlot object specific rendering stuff
         """
         debugMsg("Called ContourPlot.render()")
 
@@ -290,7 +290,8 @@ class ContourPlot(Plot):
 
         # gnuplot 4 specific (I reckon I should bite the bullet with this
         # one)
-        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        if _gnuplot4:
+            self.renderer.addToEvalStack("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
@@ -409,7 +410,7 @@ class LinePlot(Plot):
 
     def render(self):
         """
-        Does LinePlot object specific (pre) rendering styff
+        Does LinePlot object specific rendering stuff
         """
         debugMsg("Called LinePlot.render()")
 
@@ -506,5 +507,143 @@ class LinePlot(Plot):
 
         return self.linestyle
 
+class SurfacePlot(Plot):
+    """
+    Surface plot
+    """
+
+    def __init__(self, scene):
+        """
+        Initialisation of ScenePlot class
+
+        @param scene: the scene with which to associate the SurfacePlot
+        @type scene: Scene object
+        """
+        debugMsg("Called SurfacePlot.__init__()")
+        Plot.__init__(self, scene)
+
+        # grab the renderer
+        self.renderer = scene.renderer
+
+        # set up some of the attributes
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
+        # to show contours of the surface on the bottom of the axes, set
+        # this variable to True
+        self.contours = False
+
+        # now add the object to the scen
+        scene.add(self)
+
+    def setData(self, *dataList):
+        """
+        Sets the data to the given plot object.
+
+        @param dataList: list of data objects to plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in SurfacePlot()")
+
+        self.renderer.addToEvalStack("# SurfacePlot.setData()")
+
+        # for the moment, make sure that there are three arrays
+        if len(dataList) != 3:
+            raise ValueError, "Must have three arrays as input (at present)"
+
+        # do some sanity checks on the data
+        xData = dataList[0]
+        yData = dataList[1]
+        zData = dataList[2]
+
+        if len(xData.shape) != 1:
+            raise ValueError, "x data array is not of the correct shape: %s"\
+                    % xData.shape
+
+        if len(yData.shape) != 1:
+            raise ValueError, "y data array is not of the correct shape: %s"\
+                    % yData.shape
+
+        if len(zData.shape) != 2:
+            raise ValueError, "z data array is not of the correct shape: %s"\
+                    % zData.shape
+
+        # range over the data, printing what the expansion of the array is
+        # and regenerate the data within the eval
+        ## the x data
+        evalString = "_x = ["
+        for j in range(len(xData)-1):
+            evalString += "%s, " % xData[j]
+        evalString += "%s]" % xData[-1]
+        self.renderer.addToEvalStack(evalString)
+
+        ## the y data
+        evalString = "_y = ["
+        for j in range(len(yData)-1):
+            evalString += "%s, " % yData[j]
+        evalString += "%s]" % yData[-1]
+        self.renderer.addToEvalStack(evalString)
+
+        ## the z data
+        evalString = "_z = ["
+        for i in range(len(xData)):
+            evalString += "["
+            for j in range(len(yData)-1):
+                evalString += "%s, " % zData[i, j]
+            evalString += "%s],\n" % zData[i, -1]
+        evalString += "]"
+        self.renderer.addToEvalStack(evalString)
+
+        self.renderer.addToEvalStack(\
+                "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
+
+        return
+
+    def render(self):
+        """
+        Does SurfacePlot object specific rendering stuff
+        """
+        debugMsg("Called SurfacePlot.render()")
+
+        self.renderer.addToEvalStack("#SurfacePlot.render()")
+        self.renderer.addToEvalStack("_gnuplot('set surface')")
+
+        # if a title is set, put it here
+        if self.title is not None:
+            evalString = "_gnuplot.title(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a ylabel is set add it
+        if self.ylabel is not None:
+            evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a zlabel is set add it
+        if self.zlabel is not None:
+            evalString = "_gnuplot.zlabel(\'%s\')" % self.zlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if contours is true, set the relevant option
+        if self.contours:
+            evalString = "_gnuplot('set contour base')"
+            self.renderer.addToEvalStack(evalString)
+
+        # this is gnuplot 4 specific, maybe should deprecate gnuplot 3.7...
+        if _gnuplot4:
+            self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+
+        # set up the evalString to use for plotting
+        evalString = "_gnuplot.splot(_data)"
+        self.renderer.addToEvalStack(evalString)
+
+        return
+            
 # vim: expandtab shiftwidth=4:
 
