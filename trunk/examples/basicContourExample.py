@@ -97,22 +97,6 @@ for i in xrange(len(x)*len(y)):
 #strips.InsertCellPoint(5)
 #strips.InsertCellPoint(4)
 
-# create a plane to warp
-plane = vtk.vtkPlaneSource()
-plane.SetXResolution(100)
-plane.SetYResolution(100)
-
-# transform the plane
-transform = vtk.vtkTransform()
-transform.Scale(10,10,1)
-transf = vtk.vtkTransformPolyDataFilter()
-transf.SetInput(plane.GetOutput())
-transf.SetTransform(transform)
-
-# pass through filter
-fun = vtk.vtkPassThroughFilter()
-fun.SetInput(transf.GetOutput())
-
 # set up the polygonal data object
 polyData = vtk.vtkPolyData()
 polyData.SetPoints(points)
