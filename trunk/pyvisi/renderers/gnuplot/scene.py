@@ -89,6 +89,7 @@ class Scene(BaseScene):
         if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
 
+        renderer.addToEvalStack("# Scene.render()")
         renderer.addToEvalStack("_gnuplot.plot(_data)")
 
         # add some code to pause after rendering if asked to
