@@ -18,12 +18,25 @@
 
 ## @file __init__.py
 
-from plot import *
-from camera import *
-from image import *
-from text import *
-from axes import *
-from renderer import *
-from plane import *
+"""
+Initialisation of the povray renderer module
+"""
+
+from pyvisi.renderers.povray.common \
+        import _rendererName, _rendererVersion, _rendererRevision
+print "This is the \"%s\" renderer module version %s-%s" % \
+        (_rendererName, _rendererVersion, _rendererRevision)
+
+__author__ = 'Paul Cochrane'
+__version__ = _rendererVersion
+__revision__ = _rendererRevision
+
+from pyvisi.renderers.povray.plot import *
+from pyvisi.renderers.povray.camera import *
+from pyvisi.renderers.povray.image import *
+from pyvisi.renderers.povray.text import *
+from pyvisi.renderers.povray.axes import *
+from pyvisi.renderers.povray.renderer import *
+from pyvisi.renderers.povray.plane import *
 
 # vim: expandtab shiftwidth=4:
