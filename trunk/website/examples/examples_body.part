@@ -295,3 +295,79 @@ generated randomly, and the z value is calculated via
 </tr>
 </table>
 
+<hr />
+
+<h2>arrowPlotExample</h2>
+
+<p>
+This example shows a vector plot of randomly generated vectors.  Here we are
+only using 1D arrays as input.
+</p>
+
+<a href="examples/arrowPlotExample.html">arrowPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/arrowPlotExampleGnuplot.png"><img 
+	    src="examples/arrowPlotExampleGnuplotSmall.png" 
+	    alt="arrowPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/arrowPlotExampleGnuplot4.png"><img 
+	    src="examples/arrowPlotExampleGnuplot4Small.png" 
+	    alt="arrowPlotExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>arrowPlotExample2</h2>
+
+<p>
+This example shows a vector plot of randomly generated vectors.  Here we are
+only using 2D arrays as input.
+</p>
+
+<a href="examples/arrowPlotExample2.html">arrowPlotExample2.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/arrowPlotExample2Gnuplot.png"><img 
+	    src="examples/arrowPlotExample2GnuplotSmall.png" 
+	    alt="arrowPlotExample2Gnuplot.png"/></a></td>
+    <td><a href="examples/arrowPlotExample2Gnuplot4.png"><img 
+	    src="examples/arrowPlotExample2Gnuplot4Small.png" 
+	    alt="arrowPlotExample2Gnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
