@@ -179,7 +179,7 @@ class Scene(object):
         @type xSize: float
 
         @param ySize: the size to set the y dimension
-        @type xSize: float
+        @type ySize: float
         """
         if _debug: print "\tBASE: Called Scene.setSize()"
 
