@@ -22,17 +22,30 @@
 Class and functions associated with a pyvisi Text object
 """
 
-from common import _debug
+# generic imports
+from pyvisi.common import debugMsg
 
-from pyvisi.scene import *
+from pyvisi.item import Item
 
-class Text(Scene):
+__revision__ = 'pre-alpha-1'
+
+class Text(Item):
     """
     Text
     """
-    def __init__(self):
-        if _debug: print "\tBASE: Called Text.__init__()"
+    def __init__(self, scene):
+        """
+        Initialisation of the Text object
+
+        @param scene: The scene with which to associate the text
+        @type scene: Scene object
+        """
+        Item.__init__(self)
+        debugMsg("Called Text.__init__()")
+
         self.font = "Times"
-        pass
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
 
 # vim: expandtab shiftwidth=4:
