@@ -7,7 +7,6 @@ Will hopefully help me write a decent interface.
 """
 
 import sys
-sys.path.append('../')
 
 # what plotting method are we using?
 method = 'pyvisi'
@@ -48,14 +47,13 @@ if method == 'pyvisi':
     
     # assign some data to the plot
     plot.setData(x, y1, y2, y3)
-    plot.render()  # need to tell some renderers to finish up stuff here
 
     # render the scene to screen
     scene.render(pause=True,interactive=True)
 
     # save the scene to file
-    scene.save(fname="multiCurvePlotExample.png", format=PngImage())
-    scene.save(fname="multiCurvePlotExample.ps", format=PsImage())
+    #scene.save(fname="multiCurvePlotExample.png", format=PngImage())
+    #scene.save(fname="multiCurvePlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
