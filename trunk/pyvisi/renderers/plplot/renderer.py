@@ -26,7 +26,7 @@ from pyvisi.renderers.plplot.common import debugMsg, overrideWarning
 
 from pyvisi.renderer import BaseRenderer
 
-__revision__ = 'some-revision-number-thing'
+__revision__ = 'pre-alpha-1'
 
     
 class Renderer(BaseRenderer):

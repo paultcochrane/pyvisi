@@ -26,7 +26,7 @@ from pyvisi.renderers.opendx.common import debugMsg, overrideWarning
 
 from pyvisi.renderers.opendx.plot import Plot
 
-__revision__ = 'some-revision-number-thing'
+__revision__ = 'pre-alpha-1'
 
     
 class Axes(Plot):

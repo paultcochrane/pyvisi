@@ -26,7 +26,9 @@ from pyvisi.renderers.plplot.common import debugMsg, overrideWarning
 
 from pyvisi.scene import BaseScene
 
-__revision__ = 'some-revision-number-thing'
+from pyvisi.renderers.plplot.renderer import Renderer
+
+__revision__ = 'pre-alpha-1'
 
     
 class Scene(BaseScene):

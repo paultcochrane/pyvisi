@@ -26,7 +26,7 @@ from pyvisi.renderers.plplot.common import debugMsg, overrideWarning
 
 from pyvisi.renderers.plplot.item import Item
 
-__revision__ = 'some-revision-number-thing'
+__revision__ = 'pre-alpha-1'
 
     
 class Camera(Item):
