@@ -116,7 +116,7 @@ class LinePlot(Plot):
 
         self.renderer = scene.renderer
         self.renderer.addToEvalStack("# LinePlot.__init__()")
-        self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor")
+        self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor()")
 
         return True
 
@@ -152,22 +152,22 @@ class LinePlot(Plot):
         # set up the vtkDataArray objects
         for i in range(len(dataList)):
             evalString = \
-              "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)" % i
-            evalString += "x%dData.SetNumberOfTuples(len(_x%d))" % (i,i)
+            "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
+            evalString += "_x%dData.SetNumberOfTuples(len(_x%d))" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
         # put the data into the data arrays
         self.renderer.addToEvalStack("for i in range(len(_x0)):")
         # need to be careful here to remember to indent the code properly
         for i in range(len(dataList)):
-            evalString = "    _x%dData.SetTuple1(i,_x%d[i])"
+            evalString = "    _x%dData.SetTuple1(i,_x%d[i])" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
         # create the field data object
         self.renderer.addToEvalStack("_fieldData = vtk.vtkFieldData()")
         self.renderer.addToEvalStack("_fieldData.AllocateArrays(2)")
         for i in range(len(dataList)):
-            evalString = "_fieldData.AddArray(_x%dArray)" % i
+            evalString = "_fieldData.AddArray(_x%dData)" % i
             self.renderer.addToEvalStack(evalString)
 
         # now put the field data into a data object
