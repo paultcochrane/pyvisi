@@ -50,4 +50,20 @@ class Text(Item):
         
         self.font = "Times"
 
+    def setFont(self, font):
+        """
+        Set the current font
+
+        @param font: the font to set
+        @type font: string
+        """
+        self.font = font
+        return
+
+    def getFont(self):
+        """
+        Get the current font
+        """
+        return self.font
+
 # vim: expandtab shiftwidth=4:
