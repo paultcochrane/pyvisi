@@ -76,6 +76,30 @@ class Renderer(object):
         """
         return self.renderWindowHeight
 
+    def setRenderWindowDimensions(self, width, height):
+        """
+        Sets the render window dimensions
+
+        @param width: the width of the render window
+        @type width: float
+
+        @param height: the height of the render window
+        @type height: float
+        """
+
+        self.renderWindowWidth = width
+        self.renderWindowHeight = height
+
+        return
+
+    def getRenderWindowDimensions(self):
+        """
+        Gets the render window dimensions
+
+        @return: tuple of window width and window height, respectively
+        """
+        return (self.renderWindowWidth, self.renderWindowHeight)
+
     def getEvalStack(self):
         """
         Gets the evaluation stack as it currently stands
