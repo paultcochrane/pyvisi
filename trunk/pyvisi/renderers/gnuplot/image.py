@@ -79,9 +79,6 @@ class JpegImage(Image):
         self.renderer = scene.renderer
         self.format = "jpeg"
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
-
     def load(self, fname):
         """
         Loads jpeg image data from file.
@@ -123,9 +120,6 @@ class PngImage(Image):
         debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
         self.format = "png"
-
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
 
     def load(self, fname):
         """
@@ -169,9 +163,6 @@ class BmpImage(Image):
         self.renderer = scene.renderer
         self.format = "bmp"
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
-
     def load(self, fname):
         """
         Loads bmp image data from file.
@@ -214,9 +205,6 @@ class TiffImage(Image):
         self.renderer = scene.renderer
         self.format = "tiff"
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
-
     def load(self, fname):
         """
         Loads tiff image data from file.
@@ -258,9 +246,6 @@ class PnmImage(Image):
         debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
         self.format = "pnm"
-
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
 
     def load(self, fname):
         """
@@ -306,9 +291,6 @@ class PsImage(Image):
         self.renderer = scene.renderer
         self.format = "ps"
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
-
     def load(self, fname):
         """
         Loads ps image data from file.
@@ -352,9 +334,6 @@ class PdfImage(Image):
         debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
         self.format = "pdf"
-
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
 
     def load(self, fname):
         """
