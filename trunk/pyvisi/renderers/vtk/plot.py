@@ -37,7 +37,7 @@ class Plot(Scene):
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         pass
 
-    def setData(self,data):
+    def setData(self,*dataList):
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
 
@@ -49,7 +49,7 @@ class ArrowPlot(Plot):
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
         pass
 
-    def setData(self,data):
+    def setData(self,*dataList):
         if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
         return True
 
@@ -61,7 +61,7 @@ class ContourPlot(Plot):
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
         pass
 
-    def setData(self,data):
+    def setData(self,*dataList):
         if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
         return True
 
@@ -73,7 +73,7 @@ class LinePlot(Plot):
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
         pass
 
-    def setData(self,data):
+    def setData(self,*dataList):
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         return True
 
