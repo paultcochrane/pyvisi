@@ -58,11 +58,9 @@ StyFiles = apsrev.bst
 EpsFigs = figures/*.eps
 PdfFigs = figures/*.pdf
 
-webdir = /dev/null
+webdir = ../../website/docs/manual
 	
-all: pyvisi_doc.dvi 
-
-#pyvisi_doc.ps pyvisi_doc.ps.gz pyvisi_doc.pdf pyvisi_doc.html pyvisi_doc.tar.gz
+all: pyvisi_doc.dvi pyvisi_doc.ps pyvisi_doc.ps.gz pyvisi_doc.pdf pyvisi_doc.html pyvisi_doc.tar.gz
 
 :rule %.pdf : %.eps
 	:sys epstopdf $source
