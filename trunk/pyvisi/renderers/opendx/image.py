@@ -41,22 +41,9 @@ class Image(Item):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Item.__init__(self)  # initialisation of base class
         debugMsg("Called Image.__init__()")
+        Item.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class JpegImage(Image):
     """
     Brief introduction to what the class does
@@ -69,22 +56,9 @@ class JpegImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called JpegImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class PbmImage(Image):
     """
     Brief introduction to what the class does
@@ -97,22 +71,9 @@ class PbmImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called PbmImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class PdfImage(Image):
     """
     Brief introduction to what the class does
@@ -125,22 +86,9 @@ class PdfImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called PdfImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class PngImage(Image):
     """
     Brief introduction to what the class does
@@ -153,22 +101,9 @@ class PngImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called PngImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class PnmImage(Image):
     """
     Brief introduction to what the class does
@@ -181,22 +116,9 @@ class PnmImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called PnmImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class PsImage(Image):
     """
     Brief introduction to what the class does
@@ -209,22 +131,9 @@ class PsImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called PsImage.__init__()")
+        Image.__init__(self)  # initialisation of base class
     
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
 class TiffImage(Image):
     """
     Brief introduction to what the class does
@@ -237,21 +146,7 @@ class TiffImage(Image):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        Image.__init__(self)  # initialisation of base class
         debugMsg("Called TiffImage.__init__()")
-    
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
+        Image.__init__(self)  # initialisation of base class
     
 # vim: expandtab shiftwidth=4:

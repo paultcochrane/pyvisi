@@ -43,21 +43,7 @@ class Scene(BaseScene):
         @param arg: a description of the argument
         @type arg: the type of the argument
         """
-        BaseScene.__init__(self)  # initialisation of base class
         debugMsg("Called Scene.__init__()")
-    
-    def myfunc(myarg):
-        """
-        Brief description of what the function does
-    
-        Replace the text given here with an actual description of what
-        the function does.  Also change the name of the function and
-        the name of the argument.
-    
-        @param myarg: Description of what the parameter means/does
-        @type myarg: the type of the argument
-        """
-        return
-
+        BaseScene.__init__(self)  # initialisation of base class
     
 # vim: expandtab shiftwidth=4:
