@@ -20,7 +20,10 @@ include examples/simplePlotExample.py
 include examples/singleArrayPlotExample.py
 include examples/multiCurvePlotExample.py
 include examples/contourPlotExample.py
+include examples/surfaceAndContourPlotExample.py
 include examples/surfacePlotExample.py
+include examples/scatterPlotExample.py
+include examples/scatterPlot3DExample.py
 #include examples/imageLoadExample.py
 #include examples/Flinders_eval*
 
