@@ -22,7 +22,9 @@
 This is the file for the Renderer class
 """
 
-from common import _debug
+# generic imports
+from common import _debug, renName
+from pyvisi.renderer import BaseRenderer
 
 class Renderer(BaseRenderer):
     """
@@ -35,9 +37,9 @@ class Renderer(BaseRenderer):
     
         @param rendererName The name of the renderer backend to use
         """
-        if _debug: print "\tVTK: Called Renderer.__init__()"
+        if _debug: print "\t%s: Called Renderer.__init__()" % renName
         self.rendererName = rendererName
-        if _debug: print "\tVTK: Renderer name is %s" % rendererName
+        if _debug: print "\t%s: Renderer name is %s" % (renName, rendererName)
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -55,7 +57,7 @@ class Renderer(BaseRenderer):
 
         @param rendererName The name of the renderer to initialise
         """
-        if _debug: print "\tVTK: Called Renderer._initRendererModule()"
+        if _debug: print "\t%s: Called Renderer._initRendererModule()"% renName
         # do a check to see if the renderer used is one of the known renderers
         if rendererName == "vtk":
             self.addToEvalStack("# Renderer._initRendererModule\n")
@@ -116,7 +118,7 @@ class Renderer(BaseRenderer):
         @param renderer The renderer whose evalStack to add to
         @param evalString The string of commands to be added to the evalStack
         """
-        if _debug: print "\tVTK: Called Renderer.addToEvalStack()"
+        if _debug: print "\t%s: Called Renderer.addToEvalStack()" % renName
         self._evalStack += evalString
         return
 
@@ -124,7 +126,7 @@ class Renderer(BaseRenderer):
         """
         Reset/flush the evaluation stack
         """
-        if _debug: print "\tVTK: Called Renderer.resetEvalStack()"
+        if _debug: print "\t%s: Called Renderer.resetEvalStack()" % renName
         self._evalStack = ""
         return
 

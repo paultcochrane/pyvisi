@@ -22,7 +22,9 @@
 This is the file of the base class for items within a scene
 """
 
-from common import _debug
+# generic imports
+from common import _debug, renName
+from pyvisi.item import BaseItem
 
 class Item(BaseItem):
     """
@@ -35,7 +37,7 @@ class Item(BaseItem):
     
         @param dict A dictionary of attributes to set
         """
-        if _debug: print "\tVTK: Called Item.__init__()"
+        if _debug: print "\t%s: Called Item.__init__()" % renName
         return
 
 # vim: expandtab shiftwidth=4:

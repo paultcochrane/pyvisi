@@ -22,20 +22,23 @@
 Class and functions associated with a pyvisi Plot objects
 """
 
+# generic imports
+from common import _debug, renName
+
+# module specific imports
 from scene import Scene
 from item import Item
-from common import _debug
 
 class Plot(Scene):
     """
     Abstract plot class
     """
     def __init__(self):
-        if _debug: print "\tVTK: Called Plot.__init__()"
+        if _debug: print "\t%s: Called Plot.__init__()" % renName
         pass
 
     def setData(self,data):
-        if _debug: print "\tVTK: Called setData() in Plot()"
+        if _debug: print "\t%s: Called setData() in Plot()" % renName
         return True
 
 class ArrowPlot(Plot):
@@ -43,11 +46,11 @@ class ArrowPlot(Plot):
     Arrow field plot
     """
     def __init__(self):
-        if _debug: print "\tVTK: Called ArrowPlot.__init__()"
+        if _debug: print "\t%s: Called ArrowPlot.__init__()" % renName
         pass
 
     def setData(self,data):
-        if _debug: print "\tVTK: Called setData() in ArrowPlot()"
+        if _debug: print "\t%s: Called setData() in ArrowPlot()" % renName
         return True
 
 class ContourPlot(Plot):
@@ -55,11 +58,11 @@ class ContourPlot(Plot):
     Contour plot
     """
     def __init__(self):
-        if _debug: print "\tVTK: Called ContourPlot.__init__()"
+        if _debug: print "\t%s: Called ContourPlot.__init__()" % renName
         pass
 
     def setData(self,data):
-        if _debug: print "\tVTK: Called setData() in ContourPlot()"
+        if _debug: print "\t%s: Called setData() in ContourPlot()" % renName
         return True
 
 class LinePlot(Plot):
@@ -67,11 +70,11 @@ class LinePlot(Plot):
     Line plot
     """
     def __init__(self):
-        if _debug: print "\tVTK: Called LinePlot.__init__()"
+        if _debug: print "\t%s: Called LinePlot.__init__()" % renName
         pass
 
     def setData(self,data):
-        if _debug: print "\tVTK: Called setData() in LinePlot()"
+        if _debug: print "\t%s: Called setData() in LinePlot()" % renName
         return True
 
 # vim: expandtab shiftwidth=4:

@@ -22,8 +22,11 @@
 Class and functions associated with a pyvisi Image objects
 """
 
+# generic imports
+from common import _debug, renName
+
+# module specific imports
 from item import Item
-from common import _debug
 
 class Image(Item):
     """
@@ -36,10 +39,10 @@ class Image(Item):
         @param format The image format
         @param scene The Scene object to add to
         """
-        if _debug: print "\tVTK: Called Image.__init__()"
+        if _debug: print "\t%s: Called Image.__init__()" % renName
 
         if format == "jpeg":
-            if _debug: print "\tVTK: Using jpeg image format"
+            if _debug: print "\t%s: Using jpeg image format" % renName
             return JpegImage(scene)
         else:
             print "Unknown image format %s" % format
@@ -53,7 +56,7 @@ class Image(Item):
 
         @param fname The filename from which to load image data
         """
-        if _debug: print "\tVTK: Called Image.load()"
+        if _debug: print "\t%s: Called Image.load()" % renName
         return
 
 class JpegImage(Image):
@@ -66,7 +69,7 @@ class JpegImage(Image):
 
         @param scene The Scene object to add to
         """
-        if _debug: print "\tVTK: Called JpegImage.__init__()"
+        if _debug: print "\t%s: Called JpegImage.__init__()" % renName
         self.renderer = scene.renderer
         rendererName = self.renderer.rendererName
         if rendererName == "vtk":
@@ -85,7 +88,7 @@ class JpegImage(Image):
 
         @param file The filename from which to load jpeg image data
         """
-        if _debug: print "\tVTK: Called JpegImage.load()"
+        if _debug: print "\t%s: Called JpegImage.load()" % renName
 
         # need to check that the file exists and is readable etc here
         # *before* we add to the evalString, better to get the feedback
@@ -100,7 +103,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tVTK: Called JpegImage.render()"
+        if _debug: print "\t%s: Called JpegImage.render()" % renName
 
         self.renderer.addToEvalStack("# JpegImage.render()\n")
         self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()\n")

@@ -23,6 +23,6 @@ Variables common to all classes and functions
 """
 
 _debug = 1
-rendererName = "VTK"
+renName = "VTK"
 
 # vim: expandtab shiftwidth=4:
