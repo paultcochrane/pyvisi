@@ -139,6 +139,7 @@ class Scene(object):
             # ok, using rgb
             # probably should use a Color object or something
             # this will do in the meantime
+            pass
         else:
             raise UserError, "Sorry, only RGB color is supported at present"
 
