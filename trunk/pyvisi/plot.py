@@ -24,10 +24,9 @@ Class and functions associated with a pyvisi Plot objects
 
 from common import _debug
 
-from scene import Scene
 from item import Item
 
-class Plot(Scene):
+class Plot(Item):
     """
     Abstract plot class
     """
@@ -78,10 +77,30 @@ class ContourPlot(Plot):
 class LinePlot(Plot):
     """
     Line plot
+
+    This is the abstract base class of all LinePlot objects.  Renderer
+    modules must inherit and override the methods defined here.
     """
-    def __init__(self):
+    def __init__(self,scene):
+        """
+        Initialisation of LinePlot class
+
+        @param scene: the scene with which to associate the LinePlot
+        @type scene: Scene object
+        """
         if _debug: print "\tBASE: Called LinePlot.__init__()"
-        pass
+
+        self.renderer = scene.renderer
+
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
+        self.linestyle = None   # pyvisi-defined linestyle
+        self._linestyle = None  # renderer-specific linestyle
+
+        return
 
     def setData(self,data):
         if _debug: print "\tBASE: Called setData() in LinePlot()"
