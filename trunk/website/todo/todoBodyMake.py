@@ -4,7 +4,9 @@
 
 import xml.dom.minidom
 import re
+import time
 
+# the head string for the .part page
 headString = '''
 <!-- $Id$ -->
   <h1>Todo list</h1>
@@ -59,7 +61,9 @@ for note in notes:
     if note.hasAttribute('done'):
 	# grab the attributes
 	startTime = note.getAttribute('time')
+	startTime = time.strftime('%Y-%m-%d',time.localtime(float(startTime)))
 	doneTime = note.getAttribute('done')
+	doneTime = time.strftime('%Y-%m-%d',time.localtime(float(doneTime)))
 	priority = note.getAttribute('priority')
 	# grab the note text
 	noteText = note.firstChild.nodeValue
@@ -83,6 +87,7 @@ for note in notes:
     else:
 	# grab the attributes
 	startTime = note.getAttribute('time')
+	startTime = time.strftime('%Y-%m-%d',time.localtime(float(startTime)))
 	priority = note.getAttribute('priority')
 	# grab the note text
 	noteText = note.firstChild.nodeValue
