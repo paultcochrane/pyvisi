@@ -223,7 +223,10 @@ class Scene(BaseScene):
         This size is effectively the renderer window size.
 
         @param xSize: the size to set the x dimension
+        @type xSize: float
+
         @param ySize: the size to set the y dimension
+        @type ySize: float
         """
         if _debug: print "\t%s: Called Scene.setSize()" % rendererName
         return
