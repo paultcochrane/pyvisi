@@ -210,7 +210,7 @@ class LinePlot(Plot):
         # do some sanity checking on the data
         for i in range(len(dataList)):
             if len(dataList[0]) != len(dataList[i]):
-                raise DataError, "Input vectors must all be the same length"
+                raise ValueError, "Input vectors must all be the same length"
 
         # if have more than one array to plot, the first one is the x data
         if len(dataList) > 1:

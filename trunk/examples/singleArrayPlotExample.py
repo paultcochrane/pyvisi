@@ -112,7 +112,7 @@ elif method == 'vtk':
 
     # do a quick check to make sure x and y are same length
     if len(x) != len(y):
-        raise DataError, "x and y vectors must be same length"
+        raise ValueError, "x and y vectors must be same length"
 
     # set up the x and y data arrays to be able to accept the data (code
     # here adapted from the C++ of a vtk-users mailing list reply by Sander

@@ -306,7 +306,7 @@ class LinePlot(Plot):
         # do some sanity checking on the data
         for i in range(len(dataList)):
             if len(dataList[0]) != len(dataList[i]):
-                raise DataError, "Input vectors must all be the same length"
+                raise ValueError, "Input vectors must all be the same length"
 
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
