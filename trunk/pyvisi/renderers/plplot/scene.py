@@ -22,13 +22,13 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.plplot.common import debugMsg, overrideWarning
+from pyvisi.renderers.plplot.common import debugMsg
 
-from pyvisi.scene import BaseScene
+from pyvisi.scene import Scene as BaseScene
 
 from pyvisi.renderers.plplot.renderer import Renderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
     
 class Scene(BaseScene):
