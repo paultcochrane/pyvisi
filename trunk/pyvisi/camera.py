@@ -23,9 +23,9 @@ Class and functions associated with a pyvisi Camera object
 """
 
 from common import _debug
-from item import BaseItem
+from item import Item
 
-class BaseCamera(BaseItem):
+class Camera(Item):
     """
     Camera class
     """

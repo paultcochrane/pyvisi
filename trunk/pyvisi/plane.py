@@ -23,9 +23,9 @@ The classes associated with Planes
 """
 
 from common import _debug
-from item import BaseItem
+from item import Item
 
-class BasePlane(BaseItem):
+class Plane(Item):
     """
     Generic class for Plane objects
     """

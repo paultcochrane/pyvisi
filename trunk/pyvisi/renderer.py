@@ -24,7 +24,7 @@ This is the file for the Renderer class
 
 from common import _debug
 
-class BaseRenderer(object):
+class Renderer(object):
     """
     A generic object holding a renderer of a Scene().
     """

@@ -23,9 +23,9 @@ Class and functions associated with a pyvisi Image objects
 """
 
 from common import _debug
-from item import BaseItem
+from item import Item
 
-class BaseImage(BaseItem):
+class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
@@ -56,7 +56,7 @@ class BaseImage(BaseItem):
         if _debug: print "\tBASE: Called Image.load()"
         return
 
-class BaseJpegImage(BaseImage):
+class JpegImage(Image):
     """
     Subclass of Image class to explicitly handle jpeg images
     """

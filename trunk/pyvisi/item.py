@@ -24,7 +24,7 @@ This is the file of the base class for items within a scene
 
 from common import _debug
 
-class BaseItem(object):
+class Item(object):
     """
     This is the base class for items within a scene
     """

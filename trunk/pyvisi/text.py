@@ -26,7 +26,7 @@ from common import _debug
 
 from pyvisi.scene import *
 
-class BaseText(BaseScene):
+class Text(Scene):
     """
     Text
     """

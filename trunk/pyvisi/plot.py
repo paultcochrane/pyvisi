@@ -24,10 +24,10 @@ Class and functions associated with a pyvisi Plot objects
 
 from common import _debug
 
-from scene import BaseScene
-from item import BaseItem
+from scene import Scene
+from item import Item
 
-class BasePlot(BaseScene):
+class Plot(Scene):
     """
     Abstract plot class
     """
@@ -39,7 +39,7 @@ class BasePlot(BaseScene):
         if _debug: print "\tBASE: Called setData() in Plot()"
         return True
 
-class BaseArrowPlot(BasePlot):
+class ArrowPlot(Plot):
     """
     Arrow field plot
     """
@@ -51,7 +51,7 @@ class BaseArrowPlot(BasePlot):
         if _debug: print "\tBASE: Called setData() in ArrowPlot()"
         return True
 
-class BaseContourPlot(BasePlot):
+class ContourPlot(Plot):
     """
     Contour plot
     """
@@ -63,7 +63,7 @@ class BaseContourPlot(BasePlot):
         if _debug: print "\tBASE: Called setData() in ContourPlot()"
         return True
 
-class BaseLinePlot(BasePlot):
+class LinePlot(Plot):
     """
     Line plot
     """
