@@ -23,91 +23,114 @@ Class and functions associated with a pyvisi Plot objects
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.vtk.common \
+        import debugMsg
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.vtk.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Plot(Item):
     """
     Abstract plot class
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the abstract Plot class
         
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called Plot.__init__()" % rendererName
-        pass
+        Item.__init__(self)
+        debugMsg(" Called Plot.__init__()")
 
-    def setData(self,*dataList):
+        self.renderer = scene.renderer
+
+        # defaults for plot label-type stuff
+        self.title = None
+        
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
+    def setData(self, *dataList):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in Plot()" % rendererName
-        return True
+        debugMsg("Called setData() in Plot()")
 
-    def setTitle(self,title):
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
+
+    def setTitle(self, title):
         """
         Set the plot title
 
         @param title: the string holding the title to the plot
+        @type title: string
         """
-        if _debug: print "\t%s: Called setTitle() in Plot()" % rendererName
+        debugMsg("Called setTitle() in Plot()")
 
         self.title = title
 
         return
 
-    def setXLabel(self,label):
+    def setXLabel(self, label):
         """
         Set the label of the x-axis
 
         @param label: the string holding the label of the x-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setXLabel() in Plot()" % rendererName
+        debugMsg("Called setXLabel() in Plot()")
 
         self.xlabel = label
 
         return
 
-    def setYLabel(self,label):
+    def setYLabel(self, label):
         """
         Set the label of the y-axis
 
         @param label: the string holding the label of the y-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setYLabel() in Plot()" % rendererName
+        debugMsg("Called setYLabel() in Plot()")
 
         self.ylabel = label
 
         return
 
-    def setZLabel(self,label):
+    def setZLabel(self, label):
         """
         Set the label of the z-axis
 
         @param label: the string holding the label of the z-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setZLabel() in Plot()" % rendererName
+        debugMsg("Called setZLabel() in Plot()")
 
         self.zlabel = label
 
         return
 
-    def setLabel(self,axis,label):
+    def setLabel(self, axis, label):
         """
         Set the label of a given axis
 
         @param axis: string (Axis object maybe??) of the axis (e.g. x, y, z)
+        @type axis: string or Axis object
+
         @param label: string of the label to set for the axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setLabel() in Plot()" % rendererName
+        debugMsg("Called setLabel() in Plot()")
 
         # string-wise implementation (really budget implementation too)
         if axis == 'x' or axis == 'X':
@@ -125,7 +148,7 @@ class Plot(Item):
         """
         Render the Plot object
         """
-        if _debug: print "\t%s: Called Plot.render()" % rendererName
+        debugMsg("Called Plot.render()")
 
         return
 
@@ -133,77 +156,88 @@ class ArrowPlot(Plot):
     """
     Arrow field plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the ArrowPlot class
         
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
-        return
+        Plot.__init__(self, scene)
+        debugMsg("Called ArrowPlot.__init__()")
 
-    def setData(self,*dataList):
+        self.renderer = scene.renderer
+
+    def setData(self, *dataList):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
-        return True
+        debugMsg("Called setData() in ArrowPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
 
 class ContourPlot(Plot):
     """
     Contour plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the ContourPlot class
         
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
-        return
+        Plot.__init__(self, scene)
+        debugMsg("Called ContourPlot.__init__()")
 
-    def setData(self,*dataList):
+        self.renderer = scene.renderer
+
+    def setData(self, *dataList):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
-        return True
+        debugMsg("Called setData() in ContourPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        return
 
 class LinePlot(Plot):
     """
     Line plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the LinePlot class
         
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
+        Plot.__init__(self, scene)
+        debugMsg("Called LinePlot.__init__()")
 
         self.renderer = scene.renderer
         self.renderer.addToEvalStack("# LinePlot.__init__()")
         self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor()")
 
-        return True
-
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
+        debugMsg("Called setData() in LinePlot()")
 
         self.renderer.addToEvalStack("# LinePlot.setData()")
 
@@ -226,7 +260,7 @@ class LinePlot(Plot):
             dataList = dataList[1:]
             # if only have one array input, then autogenerate xData
         elif len(dataList) == 1:
-            xData = range(1,len(dataList[0])+1)
+            xData = range(1, len(dataList[0])+1)
             if len(xData) != len(dataList[0]):
                 errorString = "Autogenerated xData array length not "
                 errorString += "equal to input array length"
@@ -265,7 +299,7 @@ class LinePlot(Plot):
         for i in range(len(dataList)):
             evalString = \
             "_y%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
-            evalString += "_y%dData.SetNumberOfTuples(len(_y%d))" % (i,i)
+            evalString += "_y%dData.SetNumberOfTuples(len(_y%d))" % (i, i)
             self.renderer.addToEvalStack(evalString)
 
         ## x data
@@ -280,7 +314,7 @@ class LinePlot(Plot):
         self.renderer.addToEvalStack("for i in range(len(_x)):")
         # need to be careful here to remember to indent the code properly
         for i in range(len(dataList)):
-            evalString = "    _y%dData.SetTuple1(i,_y%d[i])" % (i,i)
+            evalString = "    _y%dData.SetTuple1(i,_y%d[i])" % (i, i)
             self.renderer.addToEvalStack(evalString)
 
         for i in range(len(dataList)):
@@ -291,13 +325,13 @@ class LinePlot(Plot):
             self.renderer.addToEvalStack(evalString)
             evalString = "_fieldData%d.AddArray(_xData)" % i
             self.renderer.addToEvalStack(evalString)
-            evalString = "_fieldData%d.AddArray(_y%dData)" % (i,i)
+            evalString = "_fieldData%d.AddArray(_y%dData)" % (i, i)
             self.renderer.addToEvalStack(evalString)
 
         for i in range(len(dataList)):
             # now put the field data into a data object
             evalString = "_dataObject%d = vtk.vtkDataObject()\n" % i
-            evalString += "_dataObject%d.SetFieldData(_fieldData%d)\n" % (i,i)
+            evalString += "_dataObject%d.SetFieldData(_fieldData%d)\n" % (i, i)
 
             # the actor should be set up, so add the data object to the actor
             evalString += "_plot.AddDataObjectInput(_dataObject%d)" % i
@@ -317,13 +351,13 @@ class LinePlot(Plot):
         # dimension for line plots (I'll have to do something a lot more
         # funky if I want that kind of functionality)
 
-        return True
+        return
 
     def render(self):
         """
         Does LinePlot object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
+        debugMsg("Called LinePlot.render()")
 
         self.renderer.addToEvalStack("# LinePlot.render()")
         self.renderer.addToEvalStack("_renderer.AddActor2D(_plot)")
