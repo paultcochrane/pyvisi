@@ -205,5 +205,54 @@ class BmpImage(Image):
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
+class TiffImage(Image):
+    """
+    Subclass of Image class to explicitly handle tiff images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the TiffImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: scene object
+        """
+        if _debug: print "\t%s: Called TiffImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        self.renderer.addToEvalStack("# TiffImage.__init__()")
+        self.renderer.addToEvalStack("_tiffReader = vtk.vtkTIFFReader()")
+        self.readerName = "_tiffReader"
+        
+        return
+
+    def load(self, file):
+        """
+        Loads tiff image data from file.
+
+        @param file: The filename from which to load tiff image data
+        """
+        if _debug: print "\t%s: Called TiffImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+        
+        self.renderer.addToEvalStack("# TiffImage.load()")
+        evalString = "_tiffReader.SetFileName(\"%s\")" % file
+        self.renderer.addToEvalStack(evalString)
+        return
+
+    def render(self):
+        """
+        Does TiffImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called TiffImage.render()" % rendererName
+
+        self.renderer.addToEvalStack("# TiffImage.render()")
+        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
+        self.renderer.addToEvalStack(\
+                "_imgActor.SetInput(_tiffReader.GetOutput())")
+        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        return
+
 
 # vim: expandtab shiftwidth=4:
