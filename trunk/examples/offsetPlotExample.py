@@ -41,7 +41,7 @@ plot = OffsetPlot(scene)
 
 # add some helpful info to the plot
 plot.title = 'OffsetPlot example - waves.dat'
-plot.xlabel = 'x'
+plot.xlabel = 't'
 plot.ylabel = 'y'
 
 # assign some data to the plot

@@ -39,9 +39,9 @@ scene = Scene()
 plot = OffsetPlot(scene)
 
 # add some helpful info to the plot
-plot.title = 'Sample seismic data - waves1d.dat'
-plot.xlabel = 'x'
-plot.ylabel = 'y'
+plot.title = 'Sample seismic data - waves1d.dat, using x and t data'
+plot.xlabel = 't'
+plot.ylabel = 'x'
 
 # assign some data to the plot
 plot.setData(t, x, data)

@@ -41,7 +41,7 @@ plot = OffsetPlot(scene)
 
 # add some helpful info to the plot
 plot.title = 'Sample seismic data - waves1d.dat'
-plot.xlabel = 'x'
+plot.xlabel = 't'
 plot.ylabel = 'y'
 
 # assign some data to the plot
