@@ -387,3 +387,4 @@ class PdfImage(Image):
         return
 
 # vim: expandtab shiftwidth=4:
+\n
