@@ -24,8 +24,8 @@ Example of loading and viewing an image using pyvisi
 Will hopefully help me write a decent interface.
 """
 
-method = 'vtk'
-format = 'jpeg'
+method = 'pyvisi'
+format = 'bmp'
 
 if method == 'pyvisi':
     ## this is the pyvisi code
@@ -54,6 +54,12 @@ if method == 'pyvisi':
         pngImage.load(file="Flinders_eval.png")
         pngImage.render()
 
+    elif format == 'bmp':
+        # add bmp image to the scene, and then load the file
+        bmpImage = BmpImage(scene)
+        bmpImage.load(file="Flinders_eval.bmp")
+        bmpImage.render()
+
     else:
         raise ValueError, "Unknown format: %s" % format
 
@@ -79,6 +85,11 @@ elif method == 'vtk':
         _pngReader = vtk.vtkPNGReader()
         _pngReader.SetFileName("Flinders_eval.png")
         _imgActor.SetInput(_pngReader.GetOutput())
+
+    elif format == 'bmp':
+        _bmpReader = vtk.vtkBMPReader()
+        _bmpReader.SetFileName("Flinders_eval.bmp")
+        _imgActor.SetInput(_bmpReader.GetOutput())
 
     else:
         raise ValueError, "Unknown format: %s" % format
