@@ -26,7 +26,7 @@ from plot import Plot
 
 class Axes(Plot):
     """
-    @brief Axes
+    Axes class
     """
     def __init__(self):
 	    print "\tCalled Axes.__init__()"
