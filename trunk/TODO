@@ -42,6 +42,15 @@
   renderer
   (added Mon Jan 10 13:21:52 2005, incomplete, priority high)
 
+- Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha
+  release)
+  (added Tue Jan 11 11:48:42 2005, incomplete, priority high)
+
+- Add a Development link to the web site and start putting stuff like renderers
+  used, how to add a new renderer, what to inherit, structure renderer module
+  should have and other coding guidelines
+  (added Tue Jan 11 14:16:41 2005, incomplete, priority high)
+
 - Write up student project description
   (added Fri Nov 19 14:03:51 2004, incomplete, priority medium)
 
