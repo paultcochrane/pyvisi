@@ -254,5 +254,55 @@ class TiffImage(Image):
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
+class PnmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pnm (ppm, pgm, pbm) images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PnmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: scene object
+        """
+        if _debug: print "\t%s: Called PnmImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        self.renderer.addToEvalStack("# PnmImage.__init__()")
+        self.renderer.addToEvalStack("_pnmReader = vtk.vtkPNMReader()")
+        self.readerName = "_pnmReader"
+        
+        return
+
+    def load(self, file):
+        """
+        Loads pnm (ppm, pgm, pbm) image data from file.
+
+        @param file: The filename from which to load pnm image data
+        """
+        if _debug: print "\t%s: Called PnmImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+        
+        self.renderer.addToEvalStack("# PnmImage.load()")
+        evalString = "_pnmReader.SetFileName(\"%s\")" % file
+        self.renderer.addToEvalStack(evalString)
+        return
+
+    def render(self):
+        """
+        Does PnmImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called PnmImage.render()" % rendererName
+
+        self.renderer.addToEvalStack("# PnmImage.render()")
+        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
+        self.renderer.addToEvalStack(\
+                "_imgActor.SetInput(_pnmReader.GetOutput())")
+        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        return
+
+
 
 # vim: expandtab shiftwidth=4:
