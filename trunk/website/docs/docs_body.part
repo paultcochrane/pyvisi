@@ -46,6 +46,6 @@
 
   <p>
   The command used was:<br />
-  epydoc --html -o doc/api_epydoc -n pyvisi pyvisi
+  <code>epydoc --html -o doc/api_epydoc -n pyvisi pyvisi</code>
   </p>
   
