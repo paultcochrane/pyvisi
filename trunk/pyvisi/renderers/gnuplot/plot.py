@@ -256,6 +256,8 @@ class LinePlot(Plot):
         """
         if _debug: print "\t%s: Called LinePlot.render()" % rendererName
 
+        self.renderer.addToEvalStack("# LinePlot.render()")
+
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
@@ -336,10 +338,13 @@ class LinePlot(Plot):
     def getLineStyle(self):
         """
         Gets the current linestyle of the LinePlot
+
+        @return: the linestyle as a string
         """
         if _debug: print "\t%s: Called LinePlot.getLineStyle()" % rendererName
 
         return self.linestyle
+
 
 # vim: expandtab shiftwidth=4:
 
