@@ -17,6 +17,12 @@ partsDir = htmlbuild/
 # where the css files are kept
 cssDir = css/
 
+# the directory of the html version of the latex manual
+htmlDir = docs/manual/pyvisi_doc/
+
+# the manual directory
+manDir = docs/manual/
+
 # publish stuff
 publishFiles = 
     $Files
@@ -31,10 +37,15 @@ publishFiles =
     docs/api_epydoc/public/*.html
     docs/api_epydoc/private/*.css
     docs/api_epydoc/private/*.html
+    $(manDir)pyvisi_doc.pdf
+    $(manDir)pyvisi_doc.ps.gz
+    $(manDir)pyvisi_doc.tar.gz
+    $(htmlDir)*.css
+    $(htmlDir)*.html
+    $(htmlDir)*.png
 :attr {publish = scp://paultcochrane@shell.sourceforge.net//home/groups/p/py/pyvisi/htdocs/%file%} $publishFiles
 
 # generating the source
-
 :print Executing the main aap file
 
 #all: $Files extras
