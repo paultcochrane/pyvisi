@@ -103,4 +103,195 @@ x-coordinate variable.  This example shows <code>y = sin(x)</code>,
 </tr>
 </table>
 
+<hr />
+
+<h2>contourPlotExample</h2>
+
+<p>
+This shows a two-dimensional contour map of a three-dimensional surface.
+The surface was generated with the equation 
+<code>z = x*exp(-x^2 - y^2)</code>.
+</p>
+
+<a href="examples/contourPlotExample.html">contourPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module 
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/contourPlotExampleGnuplot.png"><img 
+	    src="examples/contourPlotExampleGnuplotSmall.png" 
+	    alt="contourPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/contourPlotExampleGnuplot4.png"><img 
+	    src="examples/contourPlotExampleGnuplot4Small.png" 
+	    alt="contourPlotExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>surfacePlotExample</h2>
+
+<p>
+This shows a three-dimensional surface.  The surface was generated
+with the equation <code>z = x*exp(-x^2 - y^2)</code>.
+</p>
+
+<a href="examples/surfacePlotExample.html">surfacePlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/surfacePlotExampleGnuplot.png"><img 
+	    src="examples/surfacePlotExampleGnuplotSmall.png" 
+	    alt="surfacePlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/surfacePlotExampleGnuplot4.png"><img 
+	    src="examples/surfacePlotExampleGnuplot4Small.png" 
+	    alt="surfacePlotExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>surfaceAndContourPlotExample</h2>
+
+<p>
+This shows a three-dimensional surface, with its contour shown on the base
+of the axes.  The surface was generated with the equation 
+<code>z = x*exp(-x^2 - y^2)</code>.
+</p>
+
+<a href="examples/surfaceAndContourPlotExample.html">surfaceAndContourPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/surfaceAndContourPlotExampleGnuplot.png"><img 
+	    src="examples/surfaceAndContourPlotExampleGnuplotSmall.png" 
+	    alt="surfaceAndContourPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/surfaceAndContourPlotExampleGnuplot4.png"><img 
+	    src="examples/surfaceAndContourPlotExampleGnuplot4Small.png" 
+	    alt="surfaceAndContourPlotExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>scatterPlotExample</h2>
+
+<p>
+Here we have randomly generated x-y data plotted as a scatter plot.
+</p>
+
+<a href="examples/scatterPlotExample.html">scatterPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module 
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/scatterPlotExampleGnuplot.png"><img 
+	    src="examples/scatterPlotExampleGnuplotSmall.png" 
+	    alt="scatterPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/scatterPlotExampleGnuplot4.png"><img 
+	    src="examples/scatterPlotExampleGnuplot4Small.png" 
+	    alt="scatterPlotExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>scatterPlot3DExample</h2>
+
+<p>
+Here we have a three-dimensional scatter plot.  The x and y data are
+generated randomly, and the z value is calculated via 
+<code>z = exp(-x^2 - y^2)</code>.
+</p>
+
+<a href="examples/scatterPlot3DExample.html">scatterPlot3DExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 3.8)
+    </th>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+	(version 4.0)
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/scatterPlot3DExampleGnuplot.png"><img 
+	    src="examples/scatterPlot3DExampleGnuplotSmall.png" 
+	    alt="scatterPlot3DExampleGnuplot.png"/></a></td>
+    <td><a href="examples/scatterPlot3DExampleGnuplot4.png"><img 
+	    src="examples/scatterPlot3DExampleGnuplot4Small.png" 
+	    alt="scatterPlot3DExampleGnuplot4.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
 
