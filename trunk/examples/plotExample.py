@@ -16,7 +16,7 @@
 
 # $Id$
 
-## @file basicExample.py
+## @file plotExample.py
 
 """
 Example of plotting with pyvisi 
@@ -36,15 +36,15 @@ from Numeric import *
 x = arange(10, typecode=Float)
 y = x**2
 
-# plot it using one of the two methods
+# plot it using one of the three methods
 if method == 'pyvisi':
 
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    #from pyvisi.renderers.gnuplot import *   # gnuplot
-    from pyvisi.renderers.vtk import *       # vtk
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.vtk import *       # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
