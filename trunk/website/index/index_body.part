@@ -30,4 +30,9 @@
   independent, however, it is likely that it will run better on
   Unix/Linux-based operating systems.  
   </p>
+  <p>
+  The current version of pyvisi is: 0.1-pre-alpha-2, so it's still in its
+  infancy, however, the gnuplot renderer module has several features and is
+  quite useable.
+  </p>
 
