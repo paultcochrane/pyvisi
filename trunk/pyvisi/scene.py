@@ -242,9 +242,6 @@ class Scene(object):
         self.xSize = xSize
         self.ySize = ySize
 
-        # print a warning message if get to here
-        overrideWarning("Scene.setSize")
-
         return
 
     def getSize(self):
@@ -255,9 +252,6 @@ class Scene(object):
         of the x and y dimensions respectively, in pixel units(??).
         """
         debugMsg("Called Scene.getSize()")
-
-        # print a warning message if get to here
-        overrideWarning("Scene.getSize")
 
         return (self.xSize, self.ySize)
 
