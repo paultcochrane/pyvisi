@@ -120,8 +120,8 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        if _debug: print "\t%s: Flusing evaluation stack" % rendererName
-        renderer.resetEvalStack()
+        #if _debug: print "\t%s: Flusing evaluation stack" % rendererName
+        #renderer.resetEvalStack()
 
         return
 
@@ -136,6 +136,23 @@ class Scene(BaseScene):
         @type format: string
         """
         if _debug: print "\t%s: Called Scene.save()" % rendererName
+        self.renderer.addToEvalStack("# Scene.save()")
+
+        # set the output format
+        if format == "PS":
+            self.renderer.addToEvalStack("_gnuplot('set terminal postscript')")
+        elif format == "PNG":
+            self.renderer.addToEvalStack("_gnuplot('set terminal png')")
+        else:
+            raise ValueError, "Unknown graphics format."
+
+        # set the output filename
+        evalString = "_gnuplot('set output \"%s\"')" % file
+        self.renderer.addToEvalStack(evalString)
+
+        # now render the whole shebang (again)
+        self.render()
+
         return
 
     def setBackgroundColor(self,*color):
