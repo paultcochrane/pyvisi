@@ -155,7 +155,11 @@ _rendererName = \'%s\'
 _rendererVersion = \'Enter renderer version number\'
 _rendererRevision = \'Enter renderer revision text\'
 
-__revision__ = _rendererRevision
+__revision__ = \'$
+"""
+    # this bit here is to get around cvs keyword expansion issues
+    commonText += "Revision"
+    commonText += """$\'
 
     """ % moduleName.upper()
 
@@ -209,9 +213,13 @@ from pyvisi.renderers.%s.common import debugMsg, overrideWarning
 
 from pyvisi.renderers.%s.%s import %s
 
-__revision__ = 'some-revision-number-thing'
+__revision__ = '$
+"""
+    # this is here to get around cvs keyword expansion problems
+    fileHeaderStr += "Revision"
+    fileHeaderStr += """$'
 
-    \n""" % (moduleName, moduleName, baseClassName.lower(), baseClassName)
+""" % (moduleName, moduleName, baseClassName.lower(), baseClassName)
     return copyrightStr + fileDoxStr + fileHeaderStr
 
 def getBaseClassFileHeader(className, baseClassName):
