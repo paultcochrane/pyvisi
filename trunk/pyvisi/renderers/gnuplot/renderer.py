@@ -46,7 +46,7 @@ class Renderer(BaseRenderer):
 
         # initialise the renderer module
 
-        self.addToEvalStack("# Renderer.__init__")
+        self.addToEvalStack("# Renderer.__init__()")
         self.addToEvalStack("import Gnuplot")
         # Gnuplot package needs Numeric package
         self.addToEvalStack("from Numeric import *")
