@@ -62,18 +62,18 @@ elif method == 'gnuplot':
     _gnuplot.xlabel('x')
     _gnuplot.ylabel('x^2')
 
-    # set up the data
-    _data = Gnuplot.Data(x, y, with='lines')
+    for i in range(100):
+        # set up the data
+        _data = Gnuplot.Data(x, y, with='lines')
+    
+        # set up to save to file
+        _gnuplot('set terminal png')
+        _gnuplot('set output \"simplePlotMovieExample%03d.png\"'%i)
+    
+        # save it
+        _gnuplot.plot(_data)
 
-    # plot it
-    _gnuplot.plot(_data)
-
-    # set up to save to file
-    _gnuplot('set terminal png')
-    _gnuplot('set output \"simplePlotExample.png\"')
-
-    # save it
-    _gnuplot.plot(_data)
+        y = y*0.9
 
     raw_input('Press enter to continue...\n')
 

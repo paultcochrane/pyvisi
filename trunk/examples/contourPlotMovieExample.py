@@ -57,13 +57,8 @@ if method == 'pyvisi':
         # or (but more confusing depending upon one's naming conventions)
         #plot.setData(x=x, y=y, z=z)
     
-        # render the scene to screen
-        #scene.render(pause=True, interactive=True)
-    
         # save the scene to file
-        #scene.save(fname="contourPlotMovieExample%03d.png"%i, format=PngImage())
-        scene.save(fname="contourPlotMovieExample%03d.jpg"%i,format=JpegImage())
-        #scene.save(fname="contourPlotMovieExample.ps", format=PsImage())
+        scene.save(fname="contourPlotMovieExample%03d.png"%i, format=PngImage())
 
         # update the value of z to plot
         z = z*0.9
@@ -84,11 +79,18 @@ elif method == 'gnuplot':
     _gnuplot('set contour base')
     _gnuplot('set view 0, 0, 1, 1')
     _gnuplot('set nosurface')
+    _gnuplot('set terminal png')
 
-    # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=0)
+    for i in range(100):
+        plotString = "set output \"contourPlotMovieExample%03d.png\""%i
+        _gnuplot(plotString)
+        # set up the data
+        _data = Gnuplot.GridData(z,x,y, binary=0)
+    
+        _gnuplot.splot(_data)
 
-    _gnuplot.splot(_data)
+        # update the value of z to plot
+        z = z*0.9
 
     raw_input('Press enter to continue...')
 
