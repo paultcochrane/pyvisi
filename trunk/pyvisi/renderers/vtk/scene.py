@@ -83,22 +83,22 @@ class Scene(BaseScene):
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
-        renderer.addToEvalStack("# Scene.render()\n")
+        renderer.addToEvalStack("# Scene.render()")
 
         if interactive:
             renderer.addToEvalStack(\
-                    "_iRenderer = vtk.vtkRenderWindowInteractor()\n")
+                    "_iRenderer = vtk.vtkRenderWindowInteractor()")
             renderer.addToEvalStack(\
-                    "_iRenderer.SetRenderWindow(_renderWindow)\n")
+                    "_iRenderer.SetRenderWindow(_renderWindow)")
 
-        renderer.addToEvalStack("_renderWindow.Render()\n")
+        renderer.addToEvalStack("_renderWindow.Render()")
 
         if interactive:
-            renderer.addToEvalStack("_iRenderer.Start()\n")
+            renderer.addToEvalStack("_iRenderer.Start()")
 
         # add some code to pause after rendering if asked to
         if pause:
-            renderer.addToEvalStack("raw_input(\"Press enter to continue\")\n")
+            renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
         
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
@@ -160,7 +160,7 @@ class Scene(BaseScene):
             # ok, using rgb
             # probably should use a Color object or something
             # this will do in the meantime
-            evalString = "_renderer.SetBackground(%f,%f,%f)\n" % \
+            evalString = "_renderer.SetBackground(%f,%f,%f)" % \
                     (color[0], color[1], color[2])
             self.renderer.addToEvalStack(evalString)
         else:

@@ -51,15 +51,15 @@ class Camera(Item):
         self.renderer = scene.renderer
 
         # some vtk initialisation commands
-        self.renderer.addToEvalStack("# Camera.__init__()\n")
-        self.renderer.addToEvalStack("_camera = _renderer.GetActiveCamera()\n")
+        self.renderer.addToEvalStack("# Camera.__init__()")
+        self.renderer.addToEvalStack("_camera = _renderer.GetActiveCamera()")
 
         # initialise the position of the Camera
         self.setPosition(self.xPos, self.yPos, self.zPos)
         self.setFocalPoint(self.xFocalPoint, self.yFocalPoint, self.zFocalPoint)
-        self.renderer.addToEvalStack("_renderer.SetActiveCamera(_camera)\n")
+        self.renderer.addToEvalStack("_renderer.SetActiveCamera(_camera)")
         # dunno if this next line is exactly necessary
-        self.renderer.addToEvalStack("_renderer.ResetCamera()\n")
+        self.renderer.addToEvalStack("_renderer.ResetCamera()")
         return
 
     def setPosition(self,*pos):
@@ -78,8 +78,8 @@ class Camera(Item):
         self.zPos = pos[2]
 
         # now to set the position
-        self.renderer.addToEvalStack("# Camera.setPosition()\n")
-        evalString = "_camera.SetPosition(%f,%f,%f)\n" % \
+        self.renderer.addToEvalStack("# Camera.setPosition()")
+        evalString = "_camera.SetPosition(%f,%f,%f)" % \
                 (self.xPos, self.yPos, self.zPos)
         self.renderer.addToEvalStack(evalString)
 
@@ -111,8 +111,8 @@ class Camera(Item):
         self.zFocalPoint = pos[2]
 
         # now set the focal point position
-        self.renderer.addToEvalStack("#Camera.setFocalPoint()\n")
-        evalString = "_camera.SetFocalPoint(%f,%f,%f)\n" % \
+        self.renderer.addToEvalStack("#Camera.setFocalPoint()")
+        evalString = "_camera.SetFocalPoint(%f,%f,%f)" % \
                 (self.xFocalPoint, self.yFocalPoint, self.zFocalPoint)
         self.renderer.addToEvalStack(evalString)
 
@@ -138,7 +138,7 @@ class Camera(Item):
         if _debug: print "\t%s: Called Camera.setElevation()" % rendererName
 
         self.elevation = elevation
-        evalString = "_camera.Elevation(%f)\n" % elevation
+        evalString = "_camera.Elevation(%f)" % elevation
         self.renderer.addToEvalStack(evalString)
 
         return
@@ -160,7 +160,7 @@ class Camera(Item):
         if _debug: print "\t%s: Called Camera.setAzimuth()" % rendererName
 
         self.azimuth = azimuth
-        evalString = "_camera.Azimuth(%f)\n" % azimuth
+        evalString = "_camera.Azimuth(%f)" % azimuth
         self.renderer.addToEvalStack(evalString)
 
         return

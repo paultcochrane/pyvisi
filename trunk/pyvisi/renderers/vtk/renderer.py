@@ -19,7 +19,7 @@
 ## @file render.py
 
 """
-This is the file for the Renderer class
+This is the file for the vtk Renderer class
 """
 
 # generic imports
@@ -45,14 +45,13 @@ class Renderer(BaseRenderer):
         self._evalStack = ""
 
         # initialise the renderer module
-
-        self.addToEvalStack("# Renderer._initRendererModule\n")
-        self.addToEvalStack("import vtk\n")
-        self.addToEvalStack("_renderer = vtk.vtkRenderer()\n")
+        self.addToEvalStack("# Renderer._initRendererModule")
+        self.addToEvalStack("import vtk")
+        self.addToEvalStack("_renderer = vtk.vtkRenderer()")
         # this next line should only be done if we have an active display
-        self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()\n")
-        self.addToEvalStack("_renderWindow.AddRenderer(_renderer)\n")
-        evalString = "_renderWindow.SetSize(%d,%d)\n" % \
+        self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()")
+        self.addToEvalStack("_renderWindow.AddRenderer(_renderer)")
+        evalString = "_renderWindow.SetSize(%d,%d)" % \
                 (self.renderWindowWidth,self.renderWindowHeight)
         self.addToEvalStack(evalString)
 

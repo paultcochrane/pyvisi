@@ -51,9 +51,9 @@ class Plane(Item):
         # need to work out the name of the internal image object name
         imgObjectName = image.readerName
 
-        self.renderer.addToEvalStack("# Plane.mapImageToPlane()\n")
-        self.renderer.addToEvalStack("_tex = vtk.vtkTexture()\n")
-        evalString = "_tex.SetInput(%s.GetOutput())\n" % imgObjectName
+        self.renderer.addToEvalStack("# Plane.mapImageToPlane()")
+        self.renderer.addToEvalStack("_tex = vtk.vtkTexture()")
+        evalString = "_tex.SetInput(%s.GetOutput())" % imgObjectName
         self.renderer.addToEvalStack(evalString)
         self.renderer.addToEvalStack("_plane = vtk.vtkPlaneSource()\n")
         self.renderer.addToEvalStack(\

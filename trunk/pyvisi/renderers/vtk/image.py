@@ -71,8 +71,8 @@ class JpegImage(Image):
         """
         if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
         self.renderer = scene.renderer
-        self.renderer.addToEvalStack("# JpegImage.__init__()\n")
-        self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()\n")
+        self.renderer.addToEvalStack("# JpegImage.__init__()")
+        self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()")
         self.readerName = "_jpegReader"
         
         return
@@ -89,8 +89,8 @@ class JpegImage(Image):
         # *before* we add to the evalString, better to get the feedback
         # now rather than at the end of the script
         
-        self.renderer.addToEvalStack("# JpegImage.load()\n")
-        evalString = "_jpegReader.SetFileName(\"%s\")\n" % file
+        self.renderer.addToEvalStack("# JpegImage.load()")
+        evalString = "_jpegReader.SetFileName(\"%s\")" % file
         self.renderer.addToEvalStack(evalString)
         return
 
@@ -100,11 +100,11 @@ class JpegImage(Image):
         """
         if _debug: print "\t%s: Called JpegImage.render()" % rendererName
 
-        self.renderer.addToEvalStack("# JpegImage.render()\n")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()\n")
+        self.renderer.addToEvalStack("# JpegImage.render()")
+        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
         self.renderer.addToEvalStack(\
-                "_imgActor.SetInput(_jpegReader.GetOutput())\n")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)\n")
+                "_imgActor.SetInput(_jpegReader.GetOutput())")
+        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
 
