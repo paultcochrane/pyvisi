@@ -69,7 +69,7 @@ if method == 'pyvisi':
     plot.setData(x,y)
 
     # render the scene to screen
-    scene.render(pause=True)
+    scene.render(pause=True,interactive=True)
 
 elif method == 'gnuplot':
     #### original gnuplot code
