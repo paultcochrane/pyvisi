@@ -218,37 +218,37 @@ class ArrowPlot(Plot):
         # at least...
         # x data
         ## generate the evalString for the x data
-        evalString = "_x = ["
+        evalString = "_x = array(["
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
-        evalString += "%s]" % xData[-1]
+        evalString += "%s])" % xData[-1]
         # give it to the renderer
         self.renderer.addToEvalStack(evalString)
 
         # y data
         ## generate the evalString for the y data
-        evalString = "_y = ["
+        evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
-        evalString += "%s]" % yData[-1]
+        evalString += "%s])" % yData[-1]
         # give it to the renderer
         self.renderer.addToEvalStack(evalString)
 
         # dx data
         ## generate the evalString for the dx data
-        evalString = "_dx = ["
+        evalString = "_dx = array(["
         for j in range(len(dxData)-1):
             evalString += "%s, " % dxData[j]
-        evalString += "%s]" % dxData[-1]
+        evalString += "%s])" % dxData[-1]
         # give it to the renderer
         self.renderer.addToEvalStack(evalString)
 
         # dy data
         ## generate the evalString for the dy data
-        evalString = "_dy = ["
+        evalString = "_dy = array(["
         for j in range(len(dyData)-1):
             evalString += "%s, " % dyData[j]
-        evalString += "%s]" % dyData[-1]
+        evalString += "%s])" % dyData[-1]
         # give it to the renderer
         self.renderer.addToEvalStack(evalString)
 
@@ -353,27 +353,27 @@ class ContourPlot(Plot):
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         ## the x data
-        evalString = "_x = ["
+        evalString = "_x = array(["
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
-        evalString += "%s]" % xData[-1]
+        evalString += "%s])" % xData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the y data
-        evalString = "_y = ["
+        evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
-        evalString += "%s]" % yData[-1]
+        evalString += "%s])" % yData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the z data
-        evalString = "_z = ["
+        evalString = "_z = array(["
         for i in range(len(xData)):
             evalString += "["
             for j in range(len(yData)-1):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
-        evalString += "]"
+        evalString += "])"
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
@@ -721,27 +721,27 @@ class MeshPlot(Plot):
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         ## the x data
-        evalString = "_x = ["
+        evalString = "_x = array(["
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
-        evalString += "%s]" % xData[-1]
+        evalString += "%s])" % xData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the y data
-        evalString = "_y = ["
+        evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
-        evalString += "%s]" % yData[-1]
+        evalString += "%s])" % yData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the z data
-        evalString = "_z = ["
+        evalString = "_z = array(["
         for i in range(len(xData)):
             evalString += "["
             for j in range(len(yData)-1):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
-        evalString += "]"
+        evalString += "])"
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
@@ -842,10 +842,10 @@ class ScatterPlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## generate the evalString for the data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
             # don't need the first element of the dataList so get rid of it
@@ -859,17 +859,17 @@ class ScatterPlot(Plot):
                 raise ValueError, errorString
 
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # send it to the renderer
             self.renderer.addToEvalStack(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = [" % i
+            evalString = "_y%d = array([" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -877,7 +877,7 @@ class ScatterPlot(Plot):
 
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
-            evalString += "%s]" % data[-1]
+            evalString += "%s])" % data[-1]
             self.renderer.addToEvalStack(evalString)
 
             evalString = "_data%d = Gnuplot.Data(_x, " % i
@@ -999,27 +999,27 @@ class ScatterPlot3D(Plot):
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         ## the x data
-        evalString = "_x = ["
+        evalString = "_x = array(["
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
-        evalString += "%s]" % xData[-1]
+        evalString += "%s])" % xData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the y data
-        evalString = "_y = ["
+        evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
-        evalString += "%s]" % yData[-1]
+        evalString += "%s])" % yData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the z data
-        evalString = "_z = ["
+        evalString = "_z = array(["
         for i in range(len(xData)):
             evalString += "["
             for j in range(len(yData)-1):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
-        evalString += "]"
+        evalString += "])"
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
@@ -1135,27 +1135,27 @@ class SurfacePlot(Plot):
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         ## the x data
-        evalString = "_x = ["
+        evalString = "_x = array(["
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
-        evalString += "%s]" % xData[-1]
+        evalString += "%s])" % xData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the y data
-        evalString = "_y = ["
+        evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
-        evalString += "%s]" % yData[-1]
+        evalString += "%s])" % yData[-1]
         self.renderer.addToEvalStack(evalString)
 
         ## the z data
-        evalString = "_z = ["
+        evalString = "_z = array(["
         for i in range(len(xData)):
             evalString += "["
             for j in range(len(yData)-1):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
-        evalString += "]"
+        evalString += "])"
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
