@@ -267,7 +267,6 @@ class ContourPlot(Plot):
 
         return
 
-
 class LinePlot(Plot):
     """
     Line plot
@@ -306,10 +305,6 @@ class LinePlot(Plot):
 
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
-
-        # for the moment, make sure that there aren't more than two arrays
-        if len(dataList) != 2:
-            raise ValueError, "Must have two 1D arrays as input (at present)"
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -390,13 +385,13 @@ class LinePlot(Plot):
         relevant output from (in this case) gnuplot.
         
         Possible linestyles are:
-        1. lines ('-')
-        2. points ('o')
-        3. linespoints ('-o')
-        4. dots ('.')
-        5. dotted (':')
-        6. dashes ('--')
-        7. dotdashes ('-.')
+            1. lines ('-')
+            2. points ('o')
+            3. linespoints ('-o')
+            4. dots ('.')
+            5. dotted (':')
+            6. dashes ('--')
+            7. dotdashes ('-.')
 
         @param linestyle: the style to use for the lines
         @type linestyle: string
