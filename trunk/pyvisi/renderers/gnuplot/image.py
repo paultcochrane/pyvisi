@@ -150,4 +150,49 @@ class PngImage(Image):
 
         return
 
+class BmpImage(Image):
+    """
+    Subclass of Image class to explicitly handle bmp images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the BmpImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\t%s: Called BmpImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads bmp image data from file.
+
+        NOT supported by this renderer module
+
+        @param file: The filename from which to load bmp image data
+        @type file: string
+        """
+        if _debug: print "\t%s: Called BmpImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
+        
+        return
+
+    def render(self):
+        """
+        Does BmpImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called BmpImage.render()" % rendererName
+
+        return
+
+
 # vim: expandtab shiftwidth=4:
