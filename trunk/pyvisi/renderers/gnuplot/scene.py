@@ -92,7 +92,7 @@ class Scene(BaseScene):
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "%s: Here is the evaluation stack" % rendererName
+        if _debug: print "\t%s: Here is the evaluation stack" % rendererName
         if _debug: print 70*"#"
         if _debug: print renderer.getEvalStack()
         if _debug: print 70*"#"
@@ -108,7 +108,7 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        if _debug: print "%s: Flusing evaluation stack" % rendererName
+        if _debug: print "\t%s: Flusing evaluation stack" % rendererName
         renderer.resetEvalStack()
 
         return
