@@ -77,10 +77,11 @@ elif method == 'gnuplot':
     _gnuplot.title('Example surface plot')
     _gnuplot.xlabel('x')
     _gnuplot.ylabel('y')
-    #_gnuplot.zlabel('z')
+    _gnuplot('set zlabel \'z\'')
 
     # this is a surface plot, so...
     _gnuplot('set surface')
+    _gnuplot('set data style lines')
 
     # set up the data
     _data = Gnuplot.GridData(z,x,y, binary=0)
