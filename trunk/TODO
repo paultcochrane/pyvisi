@@ -24,19 +24,12 @@
 - convert numarrays to vtk structuredData objects
   (added 2004-11-19, 14:30, incomplete, priority high)
 
-- use a numarray to generate an x-y line plot
-  (added 2004-11-19, 14:31, incomplete, priority high)
-
 - Get shaded contour plots working
   (added 2004-11-24, 13:34, incomplete, priority high)
 
 - Get installation process working so that when pyvisi actually has features
   users can install it easily
   (added 2005-01-10, 13:18, incomplete, priority high)
-
-- Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha
-  release)
-  (added 2005-01-11, 11:48, incomplete, priority high)
 
 - Fully implement linestyles in renderers.gnuplot
   (added 2005-01-21, 13:44, incomplete, priority high)
@@ -78,10 +71,6 @@
 - Might need some kind of renderer module templating system for developers to
   work from.
   (added 2005-01-11, 14:50, incomplete, priority medium)
-
-- Add linestyles ability to LinePlots with words from gnuplot, and with symbols
-  from matlab
-  (added 2005-01-19, 10:45, incomplete, priority medium)
 
 - Move new method and class definitions from developing renderer modules into
   the base classes as they get added.  This is so that the interface that new
