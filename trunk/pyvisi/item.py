@@ -24,7 +24,7 @@ This is the file of the base class for items within a scene
 
 from pyvisi.common import debugMsg, overrideWarning
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Item(object):
     """

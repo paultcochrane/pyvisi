@@ -24,7 +24,7 @@ This is the file for the base Renderer class
 
 from pyvisi.common import debugMsg
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Renderer(object):
     """

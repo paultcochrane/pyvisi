@@ -29,7 +29,7 @@ from pyvisi.common import debugMsg, overrideWarning, unsupportedError, fileCheck
 
 from pyvisi.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Image(Item):
     """

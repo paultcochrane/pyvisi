@@ -27,7 +27,7 @@ from pyvisi.common import debugMsg, overrideWarning, fileCheck
 
 from pyvisi.renderer import Renderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Scene(object):
     """

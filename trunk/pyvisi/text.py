@@ -27,7 +27,7 @@ from pyvisi.common import debugMsg
 
 from pyvisi.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Text(Item):
     """

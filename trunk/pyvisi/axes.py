@@ -27,7 +27,7 @@ from pyvisi.common import debugMsg
 
 from pyvisi.plot import Plot
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Axes(Plot):
     """
