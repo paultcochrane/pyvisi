@@ -55,8 +55,8 @@ plot.render()  # need to tell some renderers to finish up stuff here
 scene.render(pause=True,interactive=True)
 
 # save the scene out to file
-#scene.save(fname="plotExample.png", format="PNG")
-scene.save(fname="plotExample.ps", format="PS")
+scene.save(fname="plotExample.png", format=PngImage())
+scene.save(fname="plotExample.ps", format=PsImage())
 \end{pythonCode}
 
 \ifpdf
