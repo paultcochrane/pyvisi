@@ -22,20 +22,26 @@
 Class and functions associated with a pyvisi Camera object
 """
 
-from common import _debug, overrideWarning
-from item import Item
+# generic imports
+from pyvisi.common import debugMsg, overrideWarning
+
+from pyvisi.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Camera(Item):
     """
     Camera class
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the Camera object
 
         @param scene: The Scene object to add the Camera object to
+        @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called Camera.__init__()"
+        Item.__init__(self)
+        debugMsg("Called Camera.__init__()")
 
         # default x,y,z positions of Camera (specific to vtk)
         self.xPos = 0.0
@@ -47,6 +53,10 @@ class Camera(Item):
         self.yFocalPoint = 0.0
         self.zFocalPoint = 0.0
 
+        # default elevation and azimuth
+        self.elevation = 30  ####### we should try for matlab defaults
+        self.azimuth = 30
+
         # keep a reference to the renderer so we can send stuff to it
         self.renderer = scene.renderer
 
@@ -56,15 +66,15 @@ class Camera(Item):
         # initialise the position of the Camera
         self.setPosition(self.xPos, self.yPos, self.zPos)
         self.setFocalPoint(self.xFocalPoint, self.yFocalPoint, self.zFocalPoint)
-        return
 
-    def setPosition(self,*pos):
+    def setPosition(self, *pos):
         """
         Set position of camera within scene
 
         @param pos: Position to set camera in terms of x,y,z coordinates
+        @type pos: tuple
         """
-        if _debug: print "\tBASE: Called Camera.setPosition()"
+        debugMsg("Called Camera.setPosition()")
 
         # I need to do some mucking around in here with coordinate systems
         # and so on, but at present, we'll just use vtk's coord system
@@ -86,17 +96,18 @@ class Camera(Item):
 
         Returns the position in a tuple of form (xPos, yPos, zPos)
         """
-        if _debug: print "\tBASE: Called Camera.getPosition()"
+        debugMsg("Called Camera.getPosition()")
 
         return (self.xPos, self.yPos, self.zPos)
 
-    def setFocalPoint(self,*pos):
+    def setFocalPoint(self, *pos):
         """
         Sets the focal point of the Camera with the Scene
 
         @param pos: Position to set the focal point
+        @type pos: tuple
         """
-        if _debug: print "\tBASE: Called Camera.setFocalPoint()"
+        debugMsg("Called Camera.setFocalPoint()")
 
         # print a warning message if get to here
         overrideWarning("Camera.setFocalPoint")
@@ -120,17 +131,18 @@ class Camera(Item):
         Returns the position of the focal point in a tuple of form 
         (xPos, yPos, zPos)
         """
-        if _debug: print "\tBASE: Called Camera.getFocalPoint()"
+        debugMsg("Called Camera.getFocalPoint()")
 
         return (self.xFocalPoint, self.yFocalPoint, self.zFocalPoint)
 
-    def setElevation(self,elevation):
+    def setElevation(self, elevation):
         """
         Set the elevation angle (in degrees) of the Camera
 
         @param elevation: The elevation angle (in degrees) of the Camera
+        @type elevation: float
         """
-        if _debug: print "\tBASE: Called Camera.setElevation()"
+        debugMsg("Called Camera.setElevation()")
 
         self.elevation = elevation
 
@@ -143,17 +155,18 @@ class Camera(Item):
         """
         Gets the elevation angle (in degrees) of the Camera
         """
-        if _debug: print "\tBASE: Called Camera.getElevation()"
+        debugMsg("Called Camera.getElevation()")
         
         return self.elevation
 
-    def setAzimuth(self,azimuth):
+    def setAzimuth(self, azimuth):
         """
         Set the azimuthal angle (in degrees) of the Camera
 
         @param azimuth: The azimuthal angle (in degrees) of the Camera
+        @type azimuth: float
         """
-        if _debug: print "\tBASE: Called Camera.setAzimuth()"
+        debugMsg("Called Camera.setAzimuth()")
 
         self.azimuth = azimuth
 
@@ -166,7 +179,7 @@ class Camera(Item):
         """
         Get the azimuthal angle (in degrees) of the Camera
         """
-        if _deubg: print "\tCalled Camera.getAzimuth()"
+        debugMsg("Called Camera.getAzimuth()")
 
         return self.azimuth
 
