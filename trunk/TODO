@@ -47,6 +47,10 @@
 - Add proper write() methods so that can actually output scenes to file
   (added 2005-01-21, 13:47, incomplete, priority high)
 
+- Add a single curve, single data example, and implement.  Single data meaning
+  that the x data is just the indices of the y data given.
+  (added 2005-01-24, 14:40, incomplete, priority high)
+
 - Write up student project description
   (added 2004-11-19, 14:03, incomplete, priority medium)
 
@@ -84,6 +88,14 @@
   renderer module writers should be writing to override, or at least meet, is in
   place.
   (added 2005-01-21, 13:20, incomplete, priority medium)
+
+- Need a log output file for user- and developer- debugging information.
+  (added 2005-01-21, 14:09, incomplete, priority medium)
+
+- At present, can only have one kind of linestyle per graph.  We need a way to
+  specify different linestyles for each individual line on a multi-line graph if
+  desired.
+  (added 2005-01-24, 15:56, incomplete, priority medium)
 
 - View a 2D vector field as an Arrow Plot
   (added 2004-11-19, 14:04, incomplete, priority low)
