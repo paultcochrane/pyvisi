@@ -35,10 +35,10 @@ doneHtml = '''
 <h2>Completed todo items</h2>
 <table class="todo">
   <tr>
-    <th>Task description</th>
-    <th>Date added</th>
-    <th>Date completed</th>
-    <th>Comment</th>
+    <th class="description">Task description</th>
+    <th class="dateAdded">Date added</th>
+    <th class="dateCompleted">Date completed</th>
+    <th class="comment">Comment</th>
   </tr>
 '''
 
@@ -47,9 +47,9 @@ todoHtml = '''
 <h2>Todo items</h2>
 <table class="todo">
   <tr>
-    <th>Task description</th>
-    <th>Date added</th>
-    <th>Priority</th>
+    <th class="description">Task description</th>
+    <th class="dateAdded">Date added</th>
+    <th class="priority">Priority</th>
   </tr>
 '''
 
@@ -74,10 +74,10 @@ for note in notes:
 
 	# now generate the html for 'done' items
 	doneHtml += "<tr class=\"done\">\n"
-	doneHtml += "  <td>%s</td>\n" % noteText
-	doneHtml += "  <td>%s</td>\n" % startTime
-	doneHtml += "  <td>%s</td>\n" % doneTime
-	doneHtml += "  <td>%s</td>\n" % commentText
+	doneHtml += "  <td class=\"description\">%s</td>\n" % noteText
+	doneHtml += "  <td class=\"dateAdded\">%s</td>\n" % startTime
+	doneHtml += "  <td class=\"dateCompleted\">%s</td>\n" % doneTime
+	doneHtml += "  <td class=\"comment\">%s</td>\n" % commentText
 	doneHtml += "</tr>\n"
 
     else:
@@ -91,9 +91,9 @@ for note in notes:
 	
 	# now generate the html for the 'todo' items
 	todoHtml += "<tr class=\"%s\">\n" % priority
-	todoHtml += "  <td>%s</td>\n" % noteText
-	todoHtml += "  <td>%s</td>\n" % startTime
-	todoHtml += "  <td>%s</td>\n" % priority
+	todoHtml += "  <td class=\"description\">%s</td>\n" % noteText
+	todoHtml += "  <td class=\"dateAdded\">%s</td>\n" % startTime
+	todoHtml += "  <td class=\"priority\">%s</td>\n" % priority
 	todoHtml += "</tr>\n"
 
 # finish off the html elements
