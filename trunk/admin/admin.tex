@@ -31,4 +31,14 @@ To add a new todo item, use the \texttt{devtodo} (\texttt{todo}) command.
 Then, to produce the TODO list, use \texttt{todo -T}, and commit the changes
 to the repository.
 
+\section{Pylint}
+
+Pylint is a handy tool to check the quality of the code.  It is like the old
+lint program for C, and gives a lot of checking and helpful output.  To
+generate html output from pylint use the following command from the pyvisi
+main directory:
+\begin{verbatim}
+pylint --html=y pyvisi > pylint.pyvisi.html
+\end{verbatim}
+
 \end{document}
