@@ -29,8 +29,8 @@ class Axes(Plot):
     Axes class
     """
     def __init__(self):
-	    print "\tCalled Axes.__init__()"
-	    pass
+        print "\tCalled Axes.__init__()"
+        pass
 
 
 # vim: expandtab shiftwidth=4:
