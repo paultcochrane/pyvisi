@@ -49,7 +49,7 @@ class Renderer(BaseRenderer):
         self.addToEvalStack("# Renderer.__init__")
         self.addToEvalStack("import Gnuplot")
         # Gnuplot package needs Numeric package
-        self.addToEvalStack("import Numeric")
+        self.addToEvalStack("from Numeric import *")
 
         # need to add a check here to see if the Numeric module has been
         # imported, and if not, throw an error.  The hard part about this
