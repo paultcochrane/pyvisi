@@ -65,6 +65,15 @@
 \newenvironment{shellCode}{\begin{alltt}}{\end{alltt}}
 \end{htmlonly}
 
+% this implements nicely formatted Python code in the latex and html
+% versions of the document
+%begin{latexonly}
+\lstnewenvironment{pythonCode}[1][]{\lstset{style=myPython}\lstset{#1}}{}
+%end{latexonly}
+\begin{htmlonly}
+\newenvironment{shellCode}{\begin{alltt}}{\end{alltt}}
+\end{htmlonly}
+
 % this implements nicely formatted C++ code in the latex and html
 % versions of the document
 %begin{latexonly}
