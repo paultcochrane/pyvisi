@@ -25,4 +25,19 @@ Variables common to all classes and functions
 _debug = 1
 pyvisiVersion = 0.1
 
+def overrideWarning(methodName):
+    """
+    Print a warning message for functions that need to be overridden but are
+    called.
+
+    @param methodName: The method name as a string.
+    """
+    # print a warning message if get to here
+    print "\nWarning!!  If you are reading this message, then the renderer"
+    print "           you have chosen hasn't overridden this method as"
+    print "           they should have.  Please contact the maintainer of"
+    print "           the renderer module, quoting the method name given"
+    print "           below, to get this problem fixed."
+    print "\nMethod: %s()\n" % methodName
+
 # vim: expandtab shiftwidth=4:
