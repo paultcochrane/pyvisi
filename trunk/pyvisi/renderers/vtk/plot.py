@@ -41,8 +41,8 @@ class Plot(Item):
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        Item.__init__(self)
         debugMsg(" Called Plot.__init__()")
+        Item.__init__(self)
 
         self.renderer = scene.renderer
 
@@ -162,8 +162,8 @@ class ArrowPlot(Plot):
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called ArrowPlot.__init__()")
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
 
@@ -192,10 +192,13 @@ class ContourPlot(Plot):
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called ContourPlot.__init__()")
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
+
+        # add the plot to the scene
+        scene.add(self)
 
     def setData(self, *dataList):
         """
@@ -211,6 +214,33 @@ class ContourPlot(Plot):
 
         return
 
+    def render(self):
+        """
+        Does ContourPlot object specific (pre)rendering stuff
+        """
+        debugMsg("Called ContourPlot.render()")
+
+        self.renderer.addToEvalStack("# ContourPlot.render()")
+
+        # set the title if set
+        if self.title is not None:
+            evalString = "_plot.SetTitle(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if an ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
+
+        self.renderer.addToEvalStack("_renderWindow.Render()")
+
+        return
+
 class LinePlot(Plot):
     """
     Line plot
@@ -222,12 +252,15 @@ class LinePlot(Plot):
         @param scene: The Scene to render the plot in
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called LinePlot.__init__()")
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
         self.renderer.addToEvalStack("# LinePlot.__init__()")
         self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor()")
+
+        # add the plot to the scene
+        scene.add(self)
 
     def setData(self, *dataList):
         """
@@ -375,6 +408,8 @@ class LinePlot(Plot):
         if self.ylabel is not None:
             evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
+
+        self.renderer.addToEvalStack("_renderWindow.Render()")
 
         return
 
