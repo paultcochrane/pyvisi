@@ -21,6 +21,12 @@ publishFiles =
     $(cssDir)pyvisi.css
     images/*.gif
     images/*.jpg
+    docs/api_epydoc/*.css
+    docs/api_epydoc/*.html
+    docs/api_epydoc/public/*.css
+    docs/api_epydoc/public/*.html
+    docs/api_epydoc/private/*.css
+    docs/api_epydoc/private/*.html
 :attr {publish = scp://paultcochrane@shell.sourceforge.net//home/groups/p/py/pyvisi/htdocs/%file%} $publishFiles
 
 # generating the source
