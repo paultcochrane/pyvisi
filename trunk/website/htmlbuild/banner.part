@@ -2,14 +2,17 @@
 
 <div class="banner">
   <p>
-    <a id="hbar" href="index.html"><img alt="pyvisi home" src="images/pyvisi_logo.gif" width="100" border="0"></a>
+  <!--
+    <a id="pyvisi" href="index.html"><img alt="pyvisi home" src="images/pyvisi_logo.gif" width="100" border="0"></a>
   </p>
+  -->
   <p>
     <a href="index.html">Home</a>
     <a href="news.html">News</a>
     <a href="docs.html">Documentation</a>
     <a href="contacts.html">Contact us</a>
     <a href="links.html">Links</a>
+    <a href="support.html">Support</a>
     <a href="http://sourceforge.net/projects/pyvisi">Project Page</a>
     <a href="http://sourceforge.net">
       <img src="http://sourceforge.net/sflogo.php?group_id=124511&amp;type=1" 
