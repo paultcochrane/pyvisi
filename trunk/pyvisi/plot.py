@@ -313,6 +313,85 @@ class LinePlot(Plot):
 
         return self.linestyle
 
+class ScatterPlot(Plot):
+    """
+    Scatter plot
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of ScatterPlot class
+
+        @param scene: the scene with which to associate the ScatterPlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called ScatterPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to ScatterPlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ScatterPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("ScatterPlot.setData")
+
+        return True
+
+class ScatterPlot3D(Plot):
+    """
+    Three dimensional scatter plot
+    """
+
+    def __init__(self, scene):
+        """
+        Intialisation of ScatterPlot3D class
+
+        @param scene: the scene with which to associate the ScatterPlot3D
+        @type scene: Scene object
+        """
+        debugMsg("Called ScatterPlot3D.__init__()")
+        Plot.__init__(self, scene)
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to a ScatterPlot3D
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ScatterPlot3D()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("ScatterPlot3D.setData")
+
+        return
+
+    def render(self):
+        """
+        Perform ScatterPlot3D specific rendering stuff
+        """
+
+        # print a warning message if get to here
+        overrideWarning("ScatterPlot3D.render")
+
+        return
+
 class SurfacePlot(Plot):
     """
     Surface plot
