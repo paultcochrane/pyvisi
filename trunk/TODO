@@ -30,6 +30,18 @@
 - Get shaded contour plots working
   (added Wed Nov 24 13:34:30 2004, incomplete, priority high)
 
+- Get installation process working so that when pyvisi actually has features
+  users can install it easily
+  (added Mon Jan 10 13:18:37 2005, incomplete, priority high)
+
+- Migrate all vtk specific code into renders.vtk
+  (added Mon Jan 10 13:20:06 2005, incomplete, priority high)
+
+- As part of removing the vtk specific code out of the main part of pyvisi,
+  replace the code that is there with objects to be overridden by the specific
+  renderer
+  (added Mon Jan 10 13:21:52 2005, incomplete, priority high)
+
 - Write up student project description
   (added Fri Nov 19 14:03:51 2004, incomplete, priority medium)
 
@@ -53,6 +65,15 @@
 - work out how to cope with axes in 2D and 3D
   (added Fri Nov 19 14:32:07 2004, incomplete, priority medium)
 
+- Start writing docs for the api so that other developers can contribute more
+  easily
+  (added Mon Jan 10 13:19:08 2005, incomplete, priority medium)
+
+- Start to define the objects and methods that all renderers should override or
+  at least give an error message or warning that that renderer doesn't support
+  that method/object
+  (added Mon Jan 10 13:22:38 2005, incomplete, priority medium)
+
 - View a 2D vector field as an Arrow Plot
   (added Fri Nov 19 14:04:33 2004, incomplete, priority low)
 
@@ -69,4 +90,7 @@
 - work out concept of line data for fault systems; is it a LinePlot or what is
   it?
   (added Fri Nov 19 14:33:03 2004, incomplete, priority low)
+
+- Try and get a simple gnuplot plot working using renderers.gnuplot
+  (added Mon Jan 10 13:20:57 2005, incomplete, priority verylow)
 
