@@ -46,4 +46,7 @@ class Text(Item):
         debugMsg("Called Text.__init__()")
         self.font = "Times"
 
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
 # vim: expandtab shiftwidth=4:
