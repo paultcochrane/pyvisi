@@ -315,19 +315,21 @@ class LinePlot(Plot):
             self._linestyle = 'dots'
         elif linestyle == 'dotted' or linestyle == ':':
             print "linestyle = %s" % linestyle
-            print "Sorry, haven't implemented this style for %s yet." % \
+            raise NotImplementedError, \
+                    "Sorry, haven't implemented this style for %s yet." % \
                     rendererName
         elif linestyle == 'dashes' or linestyle == '--':
             print "linestyle = %s" % linestyle
-            print "Sorry, haven't implemented this style for %s yet." % \
+            raise NotImplementedError, \
+                    "Sorry, haven't implemented this style for %s yet." % \
                     rendererName
         elif linestyle == 'dotdashes' or linestyle == '-.':
             print "linestyle = %s" % linestyle
-            print "Sorry, haven't implemented this style for %s yet." % \
+            raise NotImplementedError, \
+                    "Sorry, haven't implemented this style for %s yet." % \
                     rendererName
         else:
             print "Unknown linestyle!  I got \'%s\'" % linestyle
-
 
         return
 
@@ -338,7 +340,6 @@ class LinePlot(Plot):
         if _debug: print "\t%s: Called LinePlot.getLineStyle()" % rendererName
 
         return self.linestyle
-
 
 # vim: expandtab shiftwidth=4:
 
