@@ -4,7 +4,8 @@
   <hr class="top" />
 
   <p>
-  There aren't many examples yet, however, there are a few:
+  These are some simple examples showing the core functionality of the
+  currently available pyvisi plotting objects.
   </p>
 
 <h2>simplePlotExample</h2>
