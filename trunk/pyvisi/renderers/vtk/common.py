@@ -25,7 +25,7 @@ Variables common to all classes and functions
 _debug = 0
 _rendererName = "VTK"
 _rendererVersion = '0.1'
-_rendererRevision = 'pre-alpha-2'
+_rendererRevision = 'pre-alpha-3'
 
 __revision__ = '$Revision'
 

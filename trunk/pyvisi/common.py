@@ -24,7 +24,7 @@ Variables common to all classes and functions
 
 _debug = 0
 _pyvisiVersion = '0.1'
-_pyvisiRevision = 'pre-alpha-2'
+_pyvisiRevision = 'pre-alpha-3'
 
 __revision__ = _pyvisiRevision
 
