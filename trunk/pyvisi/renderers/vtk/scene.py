@@ -25,7 +25,7 @@ Class and functions associated with a pyvisi Scene
 from common import _debug
 from renderer import Renderer
 
-class Scene(object):
+class Scene(BaseScene):
     """
     The main object controlling the scene.
 
