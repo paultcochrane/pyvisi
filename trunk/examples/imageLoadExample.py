@@ -24,47 +24,51 @@ Example of loading and viewing an image using pyvisi
 Will hopefully help me write a decent interface.
 """
 
-import sys,os
+method = 'pyvisi'
 
-# this means that one can run the script from the examples directory
-sys.path.append('../')
+if method == 'pyvisi':
+    import sys
+    
+    # this means that one can run the script from the examples directory
+    sys.path.append('../')
+    
+    # import the python visualisation interface
+    from pyvisi import *
+    # this is now where the renderer is specified
+    from pyvisi.renderers.vtk import *
+    
+    # set up a scene
+    scene = Scene()
+    
+    # add a jpeg image to the scene, and then load the file
+    jpegImage = JpegImage(scene)
+    jpegImage.load(file="Flinders_eval.jpg")
+    jpegImage.render()  # this should be done at the scene.render step
+    
+    # render the scene, pausing so that the opengl window doesn't disappear
+    scene.render(pause=True,interactive=True)
+    
+elif method == 'vtk'
+    # this is the original vtk code
+    
+    import vtk 
+    _ren = vtkRenderer()
+    _renWin = vtkRenderWindow()
+    _renWin.AddRenderer(ren)
+    
+    _jpegReader = vtkJPEGReader()
+    _jpegReader.SetFileName("Flinders_eval.jpg")
+    
+    _imgActor = vtkImageActor()
+    _imgActor.SetInput(jpegReader.GetOutput())
+    
+    _ren.AddActor(imgActor)
+    _renWin.SetSize(400,400)
+    _ren.SetBackground(0.1,0.2,0.4)
+    _renWin.Render()
+    raw_input("Press any key to continue")
 
-# import the python visualisation interface
-from pyvisi import *
-# this is now where the renderer is specified
-from pyvisi.renderers.vtk import *
-
-# set up a scene
-scene = Scene()
-
-# add a jpeg image to the scene, and then load the file
-jpegImage = JpegImage(scene)
-jpegImage.load(file="Flinders_eval.jpg")
-jpegImage.render()  # this should be done at the scene.render step
-
-# render the scene, pausing so that the opengl window doesn't disappear
-scene.render(pause=True,interactive=True)
-
-sys.exit()
-
-
-# this is the original vtk code
-
-import vtk 
-ren = vtkRenderer()
-renWin = vtkRenderWindow()
-renWin.AddRenderer(ren)
-
-jpegReader = vtkJPEGReader()
-jpegReader.SetFileName("Flinders_eval.jpg")
-
-imgActor = vtkImageActor()
-imgActor.SetInput(jpegReader.GetOutput())
-
-ren.AddActor(imgActor)
-renWin.SetSize(400,400)
-ren.SetBackground(0.1,0.2,0.4)
-renWin.Render()
-raw_input("Press any key to continue")
-
+else:
+    print "Eeek!  What plotting method am I supposed to use???"
+    
 # vim: expandtab shiftwidth=4:
