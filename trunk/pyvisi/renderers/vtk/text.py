@@ -23,13 +23,14 @@ Class and functions associated with a pyvisi Text object
 """
 
 from pyvisi.scene import *
+from common import _debug
 
 class Text(Scene):
     """
     Text
     """
     def __init__(self):
-        print "\tCalled Text.__init__()"
+        if _debug: print "\tVTK: Called Text.__init__()"
         self.font = "Times"
         pass
 
