@@ -164,6 +164,13 @@ class ContourPlot(Plot):
         @type scene: Scene object
         """
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
+
+        self.renderer = scene.renderer
+
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+
         return
 
     def setData(self,*dataList):
@@ -190,7 +197,6 @@ class LinePlot(Plot):
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
 
         self.renderer = scene.renderer
-        self.renderer.addToEvalStack("# LinePlot.__init__()")
 
         self.title = None
         self.xlabel = None
