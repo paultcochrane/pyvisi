@@ -72,6 +72,21 @@
   <td class="dateAdded">2005-01-11</td>
   <td class="priority">high</td>
 </tr>
+<tr class="high">
+  <td class="description">Fully implement linestyles in renderers.gnuplot</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">Fully implement linestyles in renderers.vtk</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">Add proper write() methods so that can actually output scenes to file</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
 <tr class="medium">
   <td class="description">Write up student project description</td>
   <td class="dateAdded">2004-11-19</td>
@@ -117,6 +132,11 @@
   <td class="dateAdded">2005-01-19</td>
   <td class="priority">medium</td>
 </tr>
+<tr class="medium">
+  <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">medium</td>
+</tr>
 <tr class="low">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
@@ -140,6 +160,21 @@
 <tr class="low">
   <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
   <td class="dateAdded">2004-11-19</td>
+  <td class="priority">low</td>
+</tr>
+<tr class="low">
+  <td class="description">Get BallPlots working in vtk</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">low</td>
+</tr>
+<tr class="low">
+  <td class="description">Get BallPlots working in povray</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">low</td>
+</tr>
+<tr class="low">
+  <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
+  <td class="dateAdded">2005-01-21</td>
   <td class="priority">low</td>
 </tr>
 <tr class="verylow">
