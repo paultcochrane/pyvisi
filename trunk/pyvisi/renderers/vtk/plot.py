@@ -151,8 +151,8 @@ class LinePlot(Plot):
 
         # set up the vtkDataArray objects
         for i in range(len(dataList)):
-            evalString = 
-            "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)" % i
+            evalString = \
+              "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)" % i
             evalString += "x%dData.SetNumberOfTuples(len(_x%d))" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
@@ -210,6 +210,17 @@ class LinePlot(Plot):
         # funky if I want that kind of functionality)
 
         return True
+
+    def render(self):
+        """
+        Does LinePlot object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
+
+        self.renderer.addToEvalStack("# LinePlot.render()")
+        self.renderer.addToEvalStack("_renderer.AddActor2D(_plot)")
+
+        return
 
 # vim: expandtab shiftwidth=4:
 
