@@ -19,7 +19,7 @@
 ## @file scene.py
 
 """
-Class and functions associated with a pyvisi Scene
+Class and functions associated with a pyvisi Scene (gnuplot)
 """
 
 # generic imports
@@ -61,7 +61,7 @@ class Scene(BaseScene):
         @param obj The object to add to the scene
         """
         if _debug: print "\t%s: Called Scene.add()" % rendererName
-        self.addToEval
+        self.renderer.addToEvalStack("# Scene.add()")
 
         return
 
@@ -85,6 +85,8 @@ class Scene(BaseScene):
         """
         if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
+
+        renderer.addToEvalStack("_gnuplot.plot(_data)")
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
@@ -146,6 +148,7 @@ class Scene(BaseScene):
             # ok, using rgb
             # probably should use a Color object or something
             # this will do in the meantime
+            pass
         else:
             raise UserError, "Sorry, only RGB color is supported at present"
 
