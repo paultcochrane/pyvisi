@@ -1,92 +1,81 @@
-- Reimplement evaluation stack way of running low level code to more robust
-  model
-  (added Fri Nov 19 14:02:35 2004, incomplete, priority veryhigh)
+-Reimplement evaluation stack way of running low level code to more robust mode+
+  (added 19/11/04, 14:02, incomplete, priority veryhigh)
 
-- Work out how to find out the dimensions of an image in vtk
-  (added Fri Nov 19 14:28:43 2004, incomplete, priority veryhigh)
+-Work out how to find out the dimensions of an image in vtk
+  (added 19/11/04, 14:28, incomplete, priority veryhigh)
 
-- Implement render object talking directly to a python interpreter instance
-  sitting in a separate thread
-  (added Fri Nov 19 14:29:48 2004, incomplete, priority veryhigh)
+-Implement render object talking directly to a python interpreter instance sitt+
+  (added 19/11/04, 14:29, incomplete, priority veryhigh)
 
-- Investigate threading in python and how communication works between processes
-  (added Fri Nov 19 14:33:30 2004, incomplete, priority veryhigh)
+-Investigate threading in python and how communication works between processes
+  (added 19/11/04, 14:33, incomplete, priority veryhigh)
 
-- Load vtk unstructured mesh
-  (added Fri Nov 19 14:03:01 2004, incomplete, priority high)
+-Load vtk unstructured mesh
+  (added 19/11/04, 14:03, incomplete, priority high)
 
-- View vtk structured and unstructured meshes
-  (added Fri Nov 19 14:03:16 2004, incomplete, priority high)
+-View vtk structured and unstructured meshes
+  (added 19/11/04, 14:03, incomplete, priority high)
 
-- View a contour plot similar to contour() of Matlab
-  (added Fri Nov 19 14:05:04 2004, incomplete, priority high)
+-View a contour plot similar to contour() of Matlab
+  (added 19/11/04, 14:05, incomplete, priority high)
 
-- convert numarrays to vtk structuredData objects
-  (added Fri Nov 19 14:30:43 2004, incomplete, priority high)
+-convert numarrays to vtk structuredData objects
+  (added 19/11/04, 14:30, incomplete, priority high)
 
-- use a numarray to generate an x-y line plot
-  (added Fri Nov 19 14:31:24 2004, incomplete, priority high)
+-use a numarray to generate an x-y line plot
+  (added 19/11/04, 14:31, incomplete, priority high)
 
-- Get shaded contour plots working
-  (added Wed Nov 24 13:34:30 2004, incomplete, priority high)
+-Get shaded contour plots working
+  (added 24/11/04, 13:34, incomplete, priority high)
 
-- Get installation process working so that when pyvisi actually has features
-  users can install it easily
-  (added Mon Jan 10 13:18:37 2005, incomplete, priority high)
+-Get installation process working so that when pyvisi actually has features use+
+  (added 10/01/05, 13:18, incomplete, priority high)
 
-- Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha
-  release)
-  (added Tue Jan 11 11:48:42 2005, incomplete, priority high)
+-Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release+
+  (added 11/01/05, 11:48, incomplete, priority high)
 
-- Write up student project description
-  (added Fri Nov 19 14:03:51 2004, incomplete, priority medium)
+-Write up student project description
+  (added 19/11/04, 14:03, incomplete, priority medium)
 
-- Convert escript Data objects into relevant vtk objects
-  (added Fri Nov 19 14:04:15 2004, incomplete, priority medium)
+-Convert escript Data objects into relevant vtk objects
+  (added 19/11/04, 14:04, incomplete, priority medium)
 
-- Implement add()-ing objects to a scene without them being rendered or added
-  directly at instantiation
-  (added Fri Nov 19 14:29:19 2004, incomplete, priority medium)
+-Implement add()-ing objects to a scene without them being rendered or added di+
+  (added 19/11/04, 14:29, incomplete, priority medium)
 
-- scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up
-  the actor
-  (added Fri Nov 19 14:30:16 2004, incomplete, priority medium)
+-scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up t+
+  (added 19/11/04, 14:30, incomplete, priority medium)
 
-- use a numarray to generate a mesh plot
-  (added Fri Nov 19 14:31:02 2004, incomplete, priority medium)
+-use a numarray to generate a mesh plot
+  (added 19/11/04, 14:31, incomplete, priority medium)
 
-- use a numarray to generate a surf plot
-  (added Fri Nov 19 14:31:13 2004, incomplete, priority medium)
+-use a numarray to generate a surf plot
+  (added 19/11/04, 14:31, incomplete, priority medium)
 
-- Start writing docs for the api so that other developers can contribute more
-  easily
-  (added Mon Jan 10 13:19:08 2005, incomplete, priority medium)
+-Start writing docs for the api so that other developers can contribute more ea+
+  (added 10/01/05, 13:19, incomplete, priority medium)
 
-- Might need some kind of renderer module templating system for developers to
-  work from.
-  (added Tue Jan 11 14:50:36 2005, incomplete, priority medium)
+-Might need some kind of renderer module templating system for developers to wo+
+  (added 11/01/05, 14:50, incomplete, priority medium)
 
-- View a 2D vector field as an Arrow Plot
-  (added Fri Nov 19 14:04:33 2004, incomplete, priority low)
+-Add linestyles ability to LinePlots with words from gnuplot, and with symbols +
+  (added 19/01/05, 10:45, incomplete, priority medium)
 
-- View a 3D vector field as an Arrow Plot
-  (added Fri Nov 19 14:04:43 2004, incomplete, priority low)
+-View a 2D vector field as an Arrow Plot
+  (added 19/11/04, 14:04, incomplete, priority low)
 
-- View a 3D surface plot similar to surf() of Matlab
-  (added Fri Nov 19 14:04:52 2004, incomplete, priority low)
+-View a 3D vector field as an Arrow Plot
+  (added 19/11/04, 14:04, incomplete, priority low)
 
-- work out conceptual differences between a mesh plot (in matlab sense) and a
-  mesh in a mesh generator sense
-  (added Fri Nov 19 14:32:39 2004, incomplete, priority low)
+-View a 3D surface plot similar to surf() of Matlab
+  (added 19/11/04, 14:04, incomplete, priority low)
 
-- work out concept of line data for fault systems; is it a LinePlot or what is
-  it?
-  (added Fri Nov 19 14:33:03 2004, incomplete, priority low)
+-work out conceptual differences between a mesh plot (in matlab sense) and a me+
+  (added 19/11/04, 14:32, incomplete, priority low)
 
-- Try and get a simple gnuplot plot working using renderers.gnuplot
-  (added Mon Jan 10 13:20:57 2005, incomplete, priority verylow)
+-work out concept of line data for fault systems; is it a LinePlot or what is i+
+  (added 19/11/04, 14:33, incomplete, priority low)
 
-- Will need sections in the manual for the docs about each renderer module, or
-  possibly each module supplies their own.
-  (added Wed Jan 12 08:54:18 2005, incomplete, priority verylow)
+-Will need sections in the manual for the docs about each renderer module, or p+
+  (added 12/01/05, 08:54, incomplete, priority verylow)
 
