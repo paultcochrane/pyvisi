@@ -2,7 +2,7 @@
 
 # the generic stuff
 include README
-include CHANGES
+include ChangeLog
 include COPYING
 include TODO
 include BUGS
