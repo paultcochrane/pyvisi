@@ -172,6 +172,8 @@ class Scene(BaseScene):
 
         return
 
+    write = save
+
     def setBackgroundColor(self, *color):
         """
         Sets the background color of the Scene
