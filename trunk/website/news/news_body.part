@@ -4,6 +4,54 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Movies from sequences of images</div>
+      <div class="itemDate">07-Mar-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  I've changed the internal way that objects are handled so that one
+	  can now create sequences of images, and hence movies of functions
+	  which change over the course of a simulation.  This, however, has
+	  made other parts of the interface slightly different, and one must
+	  now call <code>setData()</code> just before each 
+	  <code>render()</code> or <code>save()</code> call, this I think
+	  isn't very good and so this syntax requirement will be removed in
+	  the future, when I get around to implementing the
+	  <code>Renderer</code> object properly.  Until then though, one is
+	  able to make movies from the data!
+	  </p>
+	  <p>
+	  Two new examples are in the <code>examples/</code> directory on
+	  the cvs and will be in the next distribution of the package.  They
+	  are:
+	  <ul>
+	      <li><code>simplePlotMovieExample.py</code></li>
+	      <li><code>contourPlotMovieExample.py</code></li>
+	  </ul>
+	  </p>
+      </div>
+  </div>
+  
+  <div class="item">
+      <div class="itemTitle">ArrowPlots available in gnuplot</div>
+      <div class="itemDate">07-Mar-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  I've added a very basic implementation of 2D vector field plots
+	  for the gnuplot renderer module.  Have a look at the new examples
+	  in the pyvisi cvs (soon to be in the distribution):
+	  <ul>
+	      <li><code>arrowPlotExample.py</code></li>
+	      <li><code>arrowPlotExample2.py</code></li>
+	  </ul>
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">More plotting types added for gnuplot
 	  renderer module</div>
       <div class="itemDate">24-Feb-2005</div>
