@@ -137,6 +137,11 @@
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">medium</td>
 </tr>
+<tr class="medium">
+  <td class="description">Need a log output file for user- and developer- debugging information.</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">medium</td>
+</tr>
 <tr class="low">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
