@@ -279,7 +279,7 @@ class %s(%s):
         %s.__init__(self)  # initialisation of base class
         debugMsg(\"Called %s.__init__()\")
     
-    def myfunc(myarg):
+    def myfunc(self, myarg):
         \"\"\"
         Brief description of what the function does
     
