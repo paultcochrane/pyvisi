@@ -16,8 +16,8 @@ include pyvisi/renderers/gnuplot *.py
 include examples/simplePlotExample.py
 include examples/singleArrayPlotExample.py
 include examples/multiCurvePlotExample.py
-include examples/imageLoadExample.py
-include examples/Flinders_eval*
+#include examples/imageLoadExample.py
+#include examples/Flinders_eval*
 # the pdf version of the documentation
 include doc/manual/pyvisi.pdf
 
