@@ -287,6 +287,50 @@ class PnmImage(Image):
 
         return
 
+class PbmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pbm images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PbmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        Image.__init__(self, scene)
+        debugMsg("Called PbmImage.__init__()")
+        self.renderer = scene.renderer
+        self.format = "pbm"
+
+    def load(self, fname):
+        """
+        Loads pbm image data from file.
+
+        @param fname: The filename from which to load pbm image data
+        @type fname: string
+        """
+        debugMsg("Called PbmImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
+
+        # print a warning message if get to here
+        overrideWarning("PbmImage.load")
+
+        return
+
+    def render(self):
+        """
+        Does PbmImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PbmImage.render()")
+
+        # print a warning message if get to here
+        overrideWarning("PbmImage.render")
+
+        return
+
 class PsImage(Image):
     """
     Subclass of Image class to explicitly handle ps images
