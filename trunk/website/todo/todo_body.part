@@ -54,11 +54,6 @@
   <td class="dateAdded">2005-02-24</td>
   <td class="priority">high</td>
 </tr>
-<tr class="high">
-  <td class="description">Release pyvisi-0.1-pre-alpha2</td>
-  <td class="dateAdded">2005-03-02</td>
-  <td class="priority">high</td>
-</tr>
 <tr class="medium">
   <td class="description">Write up student project description</td>
   <td class="dateAdded">2004-11-19</td>
@@ -71,11 +66,6 @@
 </tr>
 <tr class="medium">
   <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
-  <td class="description">use a numarray to generate a mesh plot</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
@@ -222,6 +212,12 @@
   <td class="comment">completed</td>
 </tr>
 <tr class="done">
+  <td class="description">Release pyvisi-0.1-pre-alpha2</td>
+  <td class="dateAdded">2005-03-02</td>
+  <td class="dateCompleted">2005-03-08</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
   <td class="description">Move project to sourceforge</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2004-11-26</td>
@@ -232,6 +228,12 @@
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-01-31</td>
   <td class="comment">not much point - more intuitive at the user level to just instantiate the object</td>
+</tr>
+<tr class="done">
+  <td class="description">use a numarray to generate a mesh plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-03-08</td>
+  <td class="comment">done in gnuplot</td>
 </tr>
 <tr class="done">
   <td class="description">use a numarray to generate a surf plot</td>
@@ -282,6 +284,12 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
+  <td class="description">View a 2D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-03-07</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">View a 3D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-02-24</td>
@@ -306,9 +314,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">View a 2D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-03-07</td>
-  <td class="comment">done in gnuplot</td>
+  <td class="description">Add offsets settings for LinePlots so Dion can do seismic stuff</td>
+  <td class="dateAdded">2005-03-08</td>
+  <td class="dateCompleted">2005-03-22</td>
+  <td class="comment">done in vtk and gnuplot</td>
 </tr>
 </table>
