@@ -919,7 +919,7 @@ class OffsetPlot(Plot):
             dataLen = yData.shape[1]
         else:
             raise ValueError,\
-                    "The second setData argument has the incorrect shape"
+                    "The last setData argument has the incorrect shape"
 
         for i in range(dataLen):
             evalString = "_y%d = array([" % i
