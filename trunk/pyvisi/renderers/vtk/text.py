@@ -26,9 +26,9 @@ Class and functions associated with a pyvisi Text object
 from common import _debug, rendererName
 
 # module specific imports
-from scene import Scene
+from item import Item
 
-class Text(Scene):
+class Text(Item):
     """
     Text
     """
