@@ -33,7 +33,7 @@ from pyvisi.item import Item
 from pyvisi.renderer import Renderer
 from pyvisi.scene import Scene
 from pyvisi.plot import Plot, \
-        ArrowPlot, ContourPlot, LinePlot
+        ArrowPlot, ContourPlot, LinePlot, SurfacePlot
 from pyvisi.camera import Camera
 from pyvisi.image import Image, \
         JpegImage, PdfImage, PngImage, PnmImage, TiffImage
