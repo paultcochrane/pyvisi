@@ -187,7 +187,7 @@ class ContourPlot(Plot):
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
 
-        # for the moment, make sure that there aren't more than two arrays
+        # for the moment, make sure that there are three arrays
         if len(dataList) != 3:
             raise ValueError, "Must have three arrays as input (at present)"
 
@@ -208,43 +208,34 @@ class ContourPlot(Plot):
             raise ValueError, "z data array is not of correct shape: %s" % \
                     zData.shape
 
-        #GOT TO HERE!!
-
-
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
-        for i in range(len(dataList)):
-            evalString = "_x%d = [" % i
-            data = dataList[i]
-            # check that the data here is a 1-D array
-            if len(data.shape) != 1:
-                raise ValueError, "Can only handle 1D arrays at present"
-            
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s]" % data[-1]
-            self.renderer.addToEvalStack(evalString)
-
-        evalString = "_data = Gnuplot.Data("
-        # loop over all bar the last data element 
-        # (the last one doesn't have a trailing comma)
-        for i in range(len(dataList)-1):
-            evalString += "_x%d, " % i
-        evalString += "_x%d" % (len(dataList)-1,)
-
-        # if there are any linestyle settings etc, add them here (gnuplot
-        # reasons)
-        if self.linestyle is not None:
-            # set the linestyle to the renderer-specific version (_linestyle)
-            self.setLineStyle(self.linestyle)
-            evalString += ", with=\'%s\'" % self._linestyle
-
-        # finish off the evalString
-        evalString += ")"
-
-        # and add it to the evalstack
+        ## the x data
+        evalString = "_x = ["
+        for j in range(len(xData)-1):
+            evalString += "%s, " % xData[j]
+        evalString += "%s]" % xData[-1]
         self.renderer.addToEvalStack(evalString)
 
+        ## the y data
+        evalString = "_y = ["
+        for j in range(len(yData)-1):
+            evalString += "%s, " % yData[j]
+        evalString += "%s]" % yData[-1]
+        self.renderer.addToEvalStack(evalString)
+
+        ## the z data
+        evalString = "_z = ["
+        for i in range(len(xData)):
+            evalString += "["
+            for j in range(len(yData)-1):
+                evalString += "%s, " % zData[i,j]
+            evalString += "%s],\n" % zData[i,-1]
+        evalString += "]"
+        self.renderer.addToEvalStack(evalString)
+
+        self.renderer.addToEvalStack(\
+                "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
 
         return True
 
@@ -255,6 +246,24 @@ class ContourPlot(Plot):
         if _debug: print "\t%s: Called ContourPlot.render()" % rendererName
 
         self.renderer.addToEvalStack("# ContourPlot.render()")
+        self.renderer.addToEvalStack("_gnuplot('set contour base')")
+        self.renderer.addToEvalStack("_gnuplot('set view 0, 0, 1, 1')")
+        self.renderer.addToEvalStack("_gnuplot('set nosurface')") # gnuplot 3.7
+
+         # if a title is set, put it here
+        if self.title is not None:
+            evalString = "_gnuplot.title(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
 
         return
 
