@@ -182,13 +182,34 @@ class ArrowPlot(Plot):
                     "Must have four vectors as input: x, y, dx, dy"
 
         for i in range(len(dataList)):
-            print len(dataList[i].shape)
-            if len(dataList[i].shape) != 1:
-                raise ValueError, "Can only handle 1D arrays at present"
+            if len(dataList[i].shape) != len(dataList[0].shape):
+                raise ValueError, "All arrays must be of the same shape"
+
+        for i in range(len(dataList)):
+            if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
+                errorString = \
+                        "Can only handle 1D or 2D arrays: dim=%d" % \
+                        len(dataList[i].shape)
+                raise ValueError, errorString
 
         for i in range(len(dataList)):
             if len(dataList[0]) != len(dataList[i]):
                 raise ValueError, "Input vectors must all be the same length"
+
+        # if we have 2D arrays as input, we need to flatten them to plot the
+        # data properly
+        if len(dataList[0].shape) == 1:
+            xData = dataList[0]
+            yData = dataList[1]
+            dxData = dataList[2]
+            dyData = dataList[3]
+        elif len(dataList[0].shape) == 2:
+            xData = dataList[0].flat
+            yData = dataList[1].flat
+            dxData = dataList[2].flat
+            dyData = dataList[3].flat
+        else:
+            raise ValueError, "Input vectors can only be 1D or 2D"
 
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
@@ -196,7 +217,6 @@ class ArrowPlot(Plot):
         # this is a bad, cut-and-paste way to code it, but it will get going
         # at least...
         # x data
-        xData = dataList[0]
         ## generate the evalString for the x data
         evalString = "_x = ["
         for j in range(len(xData)-1):
@@ -206,7 +226,6 @@ class ArrowPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         # y data
-        yData = dataList[1]
         ## generate the evalString for the y data
         evalString = "_y = ["
         for j in range(len(yData)-1):
@@ -216,7 +235,6 @@ class ArrowPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         # dx data
-        dxData = dataList[0]
         ## generate the evalString for the dx data
         evalString = "_dx = ["
         for j in range(len(dxData)-1):
@@ -226,7 +244,6 @@ class ArrowPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         # dy data
-        dyData = dataList[1]
         ## generate the evalString for the dy data
         evalString = "_dy = ["
         for j in range(len(dyData)-1):
