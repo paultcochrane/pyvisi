@@ -1,0 +1,11 @@
+# todo specific aap file
+# $Id$
+
+# generating the source
+:print Executing the todo aap file
+
+all: todoBodyMake
+
+todoBodyMake:
+    :sys python todoBodyMake.py
+
