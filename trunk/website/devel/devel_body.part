@@ -14,9 +14,14 @@
   Currently only <a href="http://www.vtk.org">vtk</a> and <a
       href="http://www.gnuplot.info">gnuplot</a> renderer modules are being
   used in development, however, the structure already exists for the
-  <a href="http://www.povray.org">povray</a> renderer, one merely needs to
+  <a href="http://www.povray.org">povray</a>, 
+  <a href="http://plplot.sourceforge.net">plplot</a> and 
+  <a href="http://www.opendx.org">opendx</a> renderers, one merely needs to
   write the relevant code (although there is some change going on, so expect
-  there to be more objects and methods to come).
+  there to be more objects and methods to come).  One can use the
+  <code>skel_module.py</code> script in the <code>admin/</code> directory to
+  generate the required structure if one wants to add another renderer
+  module to pyvisi.
   </p>
   <p>
   Other renderers are envisaged being added to the interface, such as 
