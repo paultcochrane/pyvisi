@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Plot objects
 """
 
 # generic imports
-from common import _debug, renName
+from common import _debug, rendererName
 
 # module specific imports
 from scene import Scene
@@ -34,11 +34,11 @@ class Plot(Scene):
     Abstract plot class
     """
     def __init__(self):
-        if _debug: print "\t%s: Called Plot.__init__()" % renName
+        if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         pass
 
     def setData(self,data):
-        if _debug: print "\t%s: Called setData() in Plot()" % renName
+        if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
 
 class ArrowPlot(Plot):
@@ -46,11 +46,11 @@ class ArrowPlot(Plot):
     Arrow field plot
     """
     def __init__(self):
-        if _debug: print "\t%s: Called ArrowPlot.__init__()" % renName
+        if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
         pass
 
     def setData(self,data):
-        if _debug: print "\t%s: Called setData() in ArrowPlot()" % renName
+        if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
         return True
 
 class ContourPlot(Plot):
@@ -58,11 +58,11 @@ class ContourPlot(Plot):
     Contour plot
     """
     def __init__(self):
-        if _debug: print "\t%s: Called ContourPlot.__init__()" % renName
+        if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
         pass
 
     def setData(self,data):
-        if _debug: print "\t%s: Called setData() in ContourPlot()" % renName
+        if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
         return True
 
 class LinePlot(Plot):
@@ -70,11 +70,11 @@ class LinePlot(Plot):
     Line plot
     """
     def __init__(self):
-        if _debug: print "\t%s: Called LinePlot.__init__()" % renName
+        if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
         pass
 
     def setData(self,data):
-        if _debug: print "\t%s: Called setData() in LinePlot()" % renName
+        if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         return True
 
 # vim: expandtab shiftwidth=4:

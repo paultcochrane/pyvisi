@@ -23,7 +23,7 @@ The classes associated with Planes
 """
 
 # generic imports
-from common import _debug
+from common import _debug, rendererName
 
 # module specific imports
 from item import Item
@@ -37,7 +37,7 @@ class Plane(Item):
         """
         Initialisation of the Plane object
         """
-        if _debug: print "\t%s: Called Plane.__init__()" % renName
+        if _debug: print "\t%s: Called Plane.__init__()" % rendererName
 
         self.renderer = scene.renderer
         return
@@ -46,7 +46,7 @@ class Plane(Item):
         """
         Maps an Image object onto a Plane object
         """
-        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % renName
+        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % rendererName
 
         # need to work out the name of the internal image object name
         imgObjectName = image.readerName
@@ -66,7 +66,7 @@ class Plane(Item):
         """
         Perform Plane object specific (pre)rendering tasks
         """
-        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % renName
+        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % rendererName
 
         self.renderer.addToEvalStack("# Plane.render()\n")
         self.renderer.addToEvalStack("_planeActor = vtk.vtkActor()\n")

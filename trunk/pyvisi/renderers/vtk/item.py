@@ -23,7 +23,7 @@ This is the file of the base class for items within a scene
 """
 
 # generic imports
-from common import _debug, renName
+from common import _debug, rendererName
 from pyvisi.item import BaseItem
 
 class Item(BaseItem):
@@ -37,7 +37,7 @@ class Item(BaseItem):
     
         @param dict A dictionary of attributes to set
         """
-        if _debug: print "\t%s: Called Item.__init__()" % renName
+        if _debug: print "\t%s: Called Item.__init__()" % rendererName
         return
 
 # vim: expandtab shiftwidth=4:

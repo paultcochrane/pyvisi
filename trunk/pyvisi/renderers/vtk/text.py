@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Text object
 """
 
 # generic imports
-from common import _debug, renName
+from common import _debug, rendererName
 
 # module specific imports
 from scene import Scene
@@ -33,7 +33,7 @@ class Text(Scene):
     Text
     """
     def __init__(self):
-        if _debug: print "\t%s: Called Text.__init__()" % renName
+        if _debug: print "\t%s: Called Text.__init__()" % rendererName
         self.font = "Times"
         pass
 
