@@ -18,20 +18,25 @@
 
 ## @file __init__.py
 
-from common import _debug, pyvisiVersion, pyvisiRevision
-print "This is PyVisi version %s-%s" % (pyvisiVersion, pyvisiRevision)
+"""
+Initialisation of the pyvisi base package
+"""
+
+from pyvisi.common import _pyvisiVersion, _pyvisiRevision
+print "This is PyVisi version %s-%s" % (_pyvisiVersion, _pyvisiRevision)
 
 __author__ = 'Paul Cochrane'
-__version__ = pyvisiVersion
-__revision__ = pyvisiRevision
+__version__ = _pyvisiVersion
+__revision__ = _pyvisiRevision
 
-from plot import *
-from camera import *
-from image import *
-from text import *
-from axes import *
-from renderer import *
-from scene import *
-from plane import *
+from pyvisi.item import Item
+from pyvisi.renderer import Renderer
+from pyvisi.scene import Scene
+from pyvisi.plot import *
+from pyvisi.camera import Camera
+from pyvisi.image import *
+from pyvisi.text import Text
+from pyvisi.axes import Axes
+from pyvisi.plane import Plane
 
 # vim: expandtab shiftwidth=4:
