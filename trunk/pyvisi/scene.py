@@ -169,6 +169,39 @@ class Scene(object):
 
         return
 
+    def setSize(self, xSize, ySize):
+        """
+        Sets the size of the scene.
+
+        This size is effectively the renderer window size.
+
+        @param xSize: the size to set the x dimension
+        @type xSize: float
+
+        @param ySize: the size to set the y dimension
+        @type xSize: float
+        """
+        if _debug: print "\tBASE: Called Scene.setSize()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.setSize")
+
+        return
+
+    def getSize(self):
+        """
+        Gets the current size of the scene
+
+        This size is effectively the renderer window size.  Returns a tuple
+        of the x and y dimensions respectively, in pixel units(??).
+        """
+        if _debug: print "\tBASE: Called Scene.getSize()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.getSize")
+
+        return
+
     def rendererCommand(self,command):
         """
         Allows the user to run a low-level renderer-specific command directly
