@@ -115,6 +115,8 @@ class LinePlot(Plot):
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
 
         self.renderer = scene.renderer
+        self.renderer.addToEvalStack("# LinePlot.__init__()")
+        self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor")
 
         return True
 
@@ -127,8 +129,54 @@ class LinePlot(Plot):
         """
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
 
-        
-        
+        self.renderer.addToEvalStack("# LinePlot.setData()")
+
+        # check the length of the data list
+        if (len(dataList)) != 2:
+            raise ValueError, "Must have two 1D arrays as input (at present)"
+
+        # now to add my dodgy hack until I have a decent way of sharing data
+        # objects around properly
+        for i in range(len(dataList)):
+            evalString = "_x%d = [" % i
+            data = dataList[i]
+            # check that the data here is a 1-D array
+            if len(data.shape) != 1:
+                raise ValueError, "Can only handle 1D arrays at present"
+
+            for j in range(len(data)-1):
+                evalString += "%s, " % data[j]
+            evalString += "%s]" % data[-1]
+            self.renderer.addToEvalStack(evalString)
+
+        # set up the vtkDataArray objects
+        for i in range(len(dataList)):
+            evalString = 
+            "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)" % i
+            evalString += "x%dData.SetNumberOfTuples(len(_x%d))" % (i,i)
+            self.renderer.addToEvalStack(evalString)
+
+        # put the data into the data arrays
+        self.renderer.addToEvalStack("for i in range(len(_x0)):")
+        # need to be careful here to remember to indent the code properly
+        for i in range(len(dataList)):
+            evalString = "    _x%dData.SetTuple1(i,_x%d[i])"
+            self.renderer.addToEvalStack(evalString)
+
+        # create the field data object
+        self.renderer.addToEvalStack("_fieldData = vtk.vtkFieldData()")
+        self.renderer.addToEvalStack("_fieldData.AllocateArrays(2)")
+        for i in range(len(dataList)):
+            evalString = "_fieldData.AddArray(_x%dArray)" % i
+            self.renderer.addToEvalStack(evalString)
+
+        # now put the field data into a data object
+        self.renderer.addToEvalStack("_dataObject = vtk.vtkDataObject()")
+        self.renderer.addToEvalStack("_dataObject.SetFieldData(_fieldData)")
+
+        # the actor should be set up, so add the data object to the actor
+        self.renderer.addToEvalStack("_plot.AddDataObjectInput(_dataObject)")
+
         return True
 
 # vim: expandtab shiftwidth=4:
