@@ -28,7 +28,7 @@ import sys
 sys.path.append('../')
 
 # what plotting method are we using?
-method = 'vtk'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -36,6 +36,8 @@ from Numeric import *
 x = arange(0,2*pi,0.1, typecode=Float)
 y1 = sin(x)
 y2 = cos(x)
+y3 = cos(x)**2
+y4 = sinh(x)**2
 
 # plot it using one of the three methods
 if method == 'pyvisi':
@@ -67,7 +69,7 @@ if method == 'pyvisi':
     plot.linestyle = 'lines'
     
     # assign some data to the plot
-    plot.setData(x,y1, x,y2)
+    plot.setData(x, y1, y2, y3, y4)
     plot.render()  # need to tell some renderers to finish up stuff here
 
     # render the scene to screen
@@ -130,20 +132,28 @@ elif method == 'vtk':
 
     # create a field data object 
     # (I think this is as a containter to hold the data arrays)
-    _fieldData = vtk.vtkFieldData()
-    _fieldData.AllocateArrays(3)
-    _fieldData.AddArray(_xData)
-    _fieldData.AddArray(_yData1)
-    _fieldData.AddArray(_yData2)
+    _fieldData1 = vtk.vtkFieldData()
+    _fieldData1.AllocateArrays(2)
+    _fieldData1.AddArray(_xData)
+    _fieldData1.AddArray(_yData1)
+
+    _fieldData2 = vtk.vtkFieldData()
+    _fieldData2.AllocateArrays(2)
+    _fieldData2.AddArray(_xData)
+    _fieldData2.AddArray(_yData2)
 
     # now put the field data object into a data object so that can add it as
     # input to the xyPlotActor
-    _dataObject = vtk.vtkDataObject()
-    _dataObject.SetFieldData(_fieldData)
+    _dataObject1 = vtk.vtkDataObject()
+    _dataObject1.SetFieldData(_fieldData1)
+
+    _dataObject2 = vtk.vtkDataObject()
+    _dataObject2.SetFieldData(_fieldData2)
 
     # set up the actor
     _plot = vtk.vtkXYPlotActor()
-    _plot.AddDataObjectInput(_dataObject)
+    _plot.AddDataObjectInput(_dataObject1)
+    _plot.AddDataObjectInput(_dataObject2)
 
     # set the title and stuff
     _plot.SetTitle("Example 2D plot")
@@ -154,7 +164,7 @@ elif method == 'vtk':
     # set which parts of the data object are to be used for which axis
     _plot.SetDataObjectXComponent(0,0)
     _plot.SetDataObjectYComponent(0,1)
-    _plot.SetDataObjectYComponent(0,2)
+    _plot.SetDataObjectYComponent(1,1)
 
     # add the actor
     _ren.AddActor2D(_plot)
