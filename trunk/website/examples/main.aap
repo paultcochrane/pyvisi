@@ -6,7 +6,13 @@ Files =
     arrowPlotExample2.html
     contourPlotExample.html
     contourPlotMovieExample.html
+    meshPlotExample.html
     multiCurvePlotExample.html
+    offsetLinePlotExample.html
+    offsetPlotExample.html
+    seismicOffsetPlotExample.html
+    seismicOffsetPlotExample2.html
+    seismicOffsetPlotExample3.html
     simplePlotExample.html
     simplePlotMovieExample.html
     singleArrayPlotExample.html
@@ -23,6 +29,12 @@ PyFiles =
     $(examplesDir)contourPlotExample.py
     $(examplesDir)contourPlotMovieExample.py
     $(examplesDir)multiCurvePlotExample.py
+    $(examplesDir)meshPlotExample.py
+    $(examplesDir)offsetLinePlotExample.py
+    $(examplesDir)offsetPlotExample.py
+    $(examplesDir)seismicOffsetPlotExample.py
+    $(examplesDir)seismicOffsetPlotExample2.py
+    $(examplesDir)seismicOffsetPlotExample3.py
     $(examplesDir)simplePlotExample.py
     $(examplesDir)simplePlotMovieExample.py
     $(examplesDir)singleArrayPlotExample.py
