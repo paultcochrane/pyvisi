@@ -23,7 +23,7 @@ This is the file for the Renderer class
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg, _gnuplot4
+from pyvisi.renderers.gnuplot.common import debugMsg
 from pyvisi.renderer import Renderer as BaseRenderer
 
 __revision__ = '$Revision'
@@ -53,10 +53,6 @@ class Renderer(BaseRenderer):
         # initialise the renderer module
         self.addToInitStack("# Renderer.__init__()")
         self.addToInitStack("import Gnuplot")
-        if (_gnuplot4):
-            evalString = "Gnuplot.GnuplotOpts.gnuplot_command="
-            evalString += "'/usr/local/bin/gnuplot4'"
-            self.addToInitStack(evalString)
         # Gnuplot package needs Numeric package
         self.addToInitStack("from Numeric import *")
 

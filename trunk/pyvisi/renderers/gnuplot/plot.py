@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg, _gnuplot4
+from pyvisi.renderers.gnuplot.common import debugMsg
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
@@ -253,12 +253,8 @@ class ArrowPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         # set up the data to plot
-        if _gnuplot4:
-            evalString = \
-                    "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vectors\')"
-        else:
-            evalString = \
-                    "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vector\')"
+        evalString = \
+                "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vectors\')"
         self.renderer.addToEvalStack(evalString)
 
         return
@@ -407,10 +403,7 @@ class ContourPlot(Plot):
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
 
-        # gnuplot 4 specific (I reckon I should bite the bullet with this
-        # one)
-        if _gnuplot4:
-            self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
@@ -778,9 +771,13 @@ class MeshPlot(Plot):
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
             self.renderer.addToEvalStack(evalString)
 
-        if not _gnuplot4:
-            evalString = "_gnuplot('set data style lines')"
-            self.renderer.addToEvalStack(evalString)
+        # sets the appropriate linestyle for mesh plots
+        evalString = "_gnuplot('set style data lines')"
+        self.renderer.addToEvalStack(evalString)
+
+        # makes sure that the lines are hidden
+        evalString = "_gnuplot('set hidden3d')"
+        self.renderer.addToEvalStack(evalString)
 
         # if contours is true, set the relevant option
         if self.contours:
@@ -1346,12 +1343,8 @@ class ScatterPlot3D(Plot):
         debugMsg("Called ScatterPlot3D.render()")
 
         self.renderer.addToEvalStack("# ScatterPlot3D.render()")
-        if _gnuplot4:
-            evalString = "_gnuplot('set style data points')"
-            self.renderer.addToEvalStack(evalString)
-        else:
-            evalString = "_gnuplot('set data style points')"
-            self.renderer.addToEvalStack(evalString)
+        evalString = "_gnuplot('set style data points')"
+        self.renderer.addToEvalStack(evalString)
 
         #self.renderer.addToEvalStack("_gnuplot('set surface')")
 
@@ -1504,18 +1497,20 @@ class SurfacePlot(Plot):
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
             self.renderer.addToEvalStack(evalString)
 
-        if not _gnuplot4:
-            evalString = "_gnuplot('set data style lines')"
-            self.renderer.addToEvalStack(evalString)
+        # dunno if need this - could be just for gnuplot3
+        evalString = "_gnuplot('set style data lines')"
+        self.renderer.addToEvalStack(evalString)
+
+        # makes sure that hidden lines are removed
+        evalString = "_gnuplot('set hidden3d')"
+        self.renderer.addToEvalStack(evalString)
 
         # if contours is true, set the relevant option
         if self.contours:
             evalString = "_gnuplot('set contour base')"
             self.renderer.addToEvalStack(evalString)
 
-        # this is gnuplot 4 specific, maybe should deprecate gnuplot 3.7...
-        if _gnuplot4:
-            self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"

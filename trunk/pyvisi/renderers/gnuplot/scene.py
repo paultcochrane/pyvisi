@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Scene (gnuplot)
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg, _gnuplot4
+from pyvisi.renderers.gnuplot.common import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
@@ -166,7 +166,7 @@ class Scene(BaseScene):
         elif format.format == "pbm":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal pbm color')")
-        elif format.format == "jpeg" and _gnuplot4:
+        elif format.format == "jpeg":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal jpeg')")
         else:
