@@ -33,7 +33,7 @@ class Camera(Item):
         """
         Initialisation of the Camera object
 
-        @param scene The Scene object to add the Camera object to
+        @param scene: The Scene object to add the Camera object to
         """
         if _debug: print "\t%s: Called Camera.__init__()" % rendererName
 
@@ -59,7 +59,7 @@ class Camera(Item):
         """
         Set position of camera within scene
 
-        @param pos Position to set camera in terms of x,y,z coordinates
+        @param pos: Position to set camera in terms of x,y,z coordinates
         """
         if _debug: print "\t%s: Called Camera.setPosition()" % rendererName
 
@@ -89,7 +89,7 @@ class Camera(Item):
         """
         Sets the focal point of the Camera with the Scene
 
-        @param pos Position to set the focal point
+        @param pos: Position to set the focal point
         """
         if _debug: print "\t%s: Called Camera.setFocalPoint()" % rendererName
 
@@ -120,7 +120,7 @@ class Camera(Item):
         """
         Set the elevation angle (in degrees) of the Camera
 
-        @param elevation The elevation angle (in degrees) of the Camera
+        @param elevation: The elevation angle (in degrees) of the Camera
         """
         if _debug: print "\t%s: Called Camera.setElevation()" % rendererName
 
@@ -140,7 +140,7 @@ class Camera(Item):
         """
         Set the azimuthal angle (in degrees) of the Camera
 
-        @param azimuth The azimuthal angle (in degrees) of the Camera
+        @param azimuth: The azimuthal angle (in degrees) of the Camera
         """
         if _debug: print "\t%s: Called Camera.setAzimuth()" % rendererName
 

@@ -39,8 +39,6 @@ class Scene(BaseScene):
     def __init__(self):
         """
         The init function
-
-        @param renderer The renderer object to use for the scene.
         """
         print "You are using PyVisi renderer module \"%s\" version %s" % \
                 (rendererName, rendererVersion)
@@ -58,7 +56,7 @@ class Scene(BaseScene):
         """
         Add a new item to the scene
 
-        @param obj The object to add to the scene
+        @param obj: The object to add to the scene
         """
         if _debug: print "\t%s: Called Scene.add()" % rendererName
         self.renderer.addToEvalStack("# Scene.add()")
@@ -69,7 +67,7 @@ class Scene(BaseScene):
         """
         Place an object within a scene
 
-        @param obj The object to place within the scene
+        @param obj: The object to place within the scene
         """
         if _debug: print "\t%s: Called Scene.place()" % rendererName
         return
@@ -80,8 +78,8 @@ class Scene(BaseScene):
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
-        @param pause Flag to wait at end of script evaluation for user input
-        @param interactive Whether or not to have interactive use of the output
+        @param pause: Flag to wait at end of script evaluation for user input
+        @param interactive: Whether or not to have interactive use of the output
         """
         if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
@@ -118,6 +116,9 @@ class Scene(BaseScene):
     def save(self,file,format):
         """
         Save the scene to a file
+
+        @param file: Name of output file
+        @param format: Graphics format of output file
         """
         if _debug: print "\t%s: Called Scene.save()" % rendererName
         return
@@ -126,7 +127,7 @@ class Scene(BaseScene):
         """
         Sets the background color of the Scene
 
-        @param clr The color to set the background to.  Can be RGB or CMYK
+        @param color: The color to set the background to.  Can be RGB or CMYK
         """
         if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
 

@@ -42,11 +42,11 @@ class Plot(Scene):
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         return
 
-    def setData(self,data):
+    def setData(self,*dataList):
         """
         Set data to Plot
 
-        @param data: the data to set to the plot (should be an array or list
+        @param dataList: the data to set to the plot (should be an array or list
         or something)
         """
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
@@ -134,7 +134,12 @@ class ArrowPlot(Plot):
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
         pass
 
-    def setData(self,data):
+    def setData(self,*dataList):
+        """
+        Sets the data to the given plot object.
+
+        @param dataList: list of data objects to plot
+        """
         if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
         return True
 
@@ -195,6 +200,9 @@ class LinePlot(Plot):
         for i in range(len(dataList)):
             evalString = "_x%d = [" % i
             data = dataList[i]
+            # check that the data here is a 1-D array
+            print data.shape
+            
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s]" % data[-1]

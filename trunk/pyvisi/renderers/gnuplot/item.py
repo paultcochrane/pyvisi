@@ -35,7 +35,7 @@ class Item(BaseItem):
         """
         Initialisation
     
-        @param dict A dictionary of attributes to set
+        @param dict: A dictionary of attributes to set
         """
         if _debug: print "\t%s: Called Item.__init__()" % rendererName
         return
