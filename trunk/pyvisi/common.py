@@ -41,4 +41,19 @@ def overrideWarning(methodName):
     print "           below, to get this problem fixed."
     print "\nMethod: %s()\n" % methodName
 
+    return
+
+def unsupportedError(rendererName):
+    """
+    Print an error message when a method is called that is defined in pyvisi
+    but is not supported at the renderer module level.
+
+    @param rendererName: the name of the renderer module
+    @type rendererName: string
+    """
+    errorString = "Sorry, but %s doesn't support this method." % rendererName
+    raise NotImplementedError(errorString)
+
+    return
+
 # vim: expandtab shiftwidth=4:
