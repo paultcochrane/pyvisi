@@ -22,35 +22,41 @@
 The classes associated with Planes
 """
 
-from common import _debug, overrideWarning
-from item import Item
+# generic imports
+from pyvisi.common import debugMsg, overrideWarning
+
+from pyvisi.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Plane(Item):
     """
     Generic class for Plane objects
     """
 
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the Plane object
 
         @param scene: the scene object within which the plane is
+        @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called Plane.__init__()"
+        Item.__init__(self)
+        debugMsg("Called Plane.__init__()")
 
         self.renderer = scene.renderer
-        return
 
-    def mapImageToPlane(self,image):
+    def mapImageToPlane(self, image):
         """
         Maps an Image object onto a Plane object
 
         @param image: the image object to be mapped
+        @type image: Image object
         """
-        if _debug: print "\tBASE: Called Plane.mapImageToPlane()"
+        debugMsg("Called Plane.mapImageToPlane()")
 
-        # need to work out the name of the internal image object name
-        imgObjectName = image.readerName
+        if image is None:
+            raise ValueError, "You must specify an image object"
 
         # print a warning message if get to here
         overrideWarning("Plane.mapImageToPlane")
@@ -61,7 +67,7 @@ class Plane(Item):
         """
         Perform Plane object specific (pre)rendering tasks
         """
-        if _debug: print "\tBASE: Called Plane.mapImageToPlane()"
+        debugMsg("Called Plane.mapImageToPlane()")
 
         # print a warning message if get to here
         overrideWarning("Plane.render")
