@@ -191,7 +191,8 @@ class LinePlot(Plot):
         self.ylabel = None
         self.zlabel = None
 
-        self.linestyle = None 
+        self.linestyle = None   # pyvisi-defined linestyle
+        self._linestyle = None  # renderer-specific linestyle
 
         return
 
@@ -234,9 +235,12 @@ class LinePlot(Plot):
             evalString += "_x%d, " % i
         evalString += "_x%d" % (len(dataList)-1,)
 
-        # if there are any linestyle settings etc, add them here
+        # if there are any linestyle settings etc, add them here (gnuplot
+        # reasons)
         if self.linestyle is not None:
-            evalString += ", with=\'%s\'" % self.linestyle
+            # set the linestyle to the renderer-specific version (_linestyle)
+            self.setLineStyle(self.linestyle)
+            evalString += ", with=\'%s\'" % self._linestyle
 
         # finish off the evalString
         evalString += ")"
@@ -300,14 +304,30 @@ class LinePlot(Plot):
         """
         if _debug: print "\t%s: Called LinePlot.setLineStyle()" % rendererName
 
-        # possible linestyles: borrowing the names from gnuplot
-        #                      borrowing the symbol shortcuts from matlab
-        # lines
-        # points
-        # linespoints
-        # dots
-        # dashes (note this isn't part of gnuplot)
-        # dotdashes (note this isn't part of gnuplot)
+        # now implement the gnuplot-specific way to do this
+        if linestyle == 'lines' or linestyle == '-':
+            self._linestyle = 'lines'
+        elif linestyle == 'points' or linestyle == 'o':
+            self._linestyle = 'points'
+        elif linestyle == 'linespoints' or linestyle == '-o':
+            self._linestyle = 'linespoints'
+        elif linestyle == 'dots' or linestyle == '.':
+            self._linestyle = 'dots'
+        elif linestyle == 'dotted' or linestyle == ':':
+            print "linestyle = %s" % linestyle
+            print "Sorry, haven't implemented this style for %s yet." % \
+                    rendererName
+        elif linestyle == 'dashes' or linestyle == '--':
+            print "linestyle = %s" % linestyle
+            print "Sorry, haven't implemented this style for %s yet." % \
+                    rendererName
+        elif linestyle == 'dotdashes' or linestyle == '-.':
+            print "linestyle = %s" % linestyle
+            print "Sorry, haven't implemented this style for %s yet." % \
+                    rendererName
+        else:
+            print "Unknown linestyle!  I got \'%s\'" % linestyle
+
 
         return
 
@@ -317,7 +337,7 @@ class LinePlot(Plot):
         """
         if _debug: print "\t%s: Called LinePlot.getLineStyle()" % rendererName
 
-        return
+        return self.linestyle
 
 
 # vim: expandtab shiftwidth=4:
