@@ -22,8 +22,8 @@
 Class and functions associated with a pyvisi Scene
 """
 
-# general imports
-from common import _debug, renName
+# generic imports
+from common import _debug, rendererName
 from pyvisi.scene import BaseScene
 
 # module specific imports
@@ -32,21 +32,20 @@ from renderer import Renderer
 class Scene(BaseScene):
     """
     The main object controlling the scene.
-
-    The scene object should be an abstract class that subsequent pyvisi modules
-    override.
+    
+    Scene object methods and classes overriding the BaseScene class.
     """
 
-    def __init__(self,renderer):
+    def __init__(self):
         """
         The init function
 
         @param renderer The renderer object to use for the scene.
         """
-        if _debug: print "\t%s: Called Scene.__init__()" % renName
-        self.renderer = Renderer(renderer)
-        if _debug: print "\t%s: Scenes will be rendered with %s" % \
-                (renName, self.renderer.rendererName)
+        if _debug: print "\t%s: Called Scene.__init__()" % rendererName
+        self.renderer = Renderer()
+
+        # kept around in the hope that it will be useful...
         numCameras = 0
 
         return
@@ -57,7 +56,7 @@ class Scene(BaseScene):
 
         @param obj The object to add to the scene
         """
-        if _debug: print "\t%s: Called Scene.add()" % renName
+        if _debug: print "\t%s: Called Scene.add()" % rendererName
         return
 
     def place(self, obj):
@@ -66,7 +65,7 @@ class Scene(BaseScene):
 
         @param obj The object to place within the scene
         """
-        if _debug: print "\t%s: Called Scene.place()" % renName
+        if _debug: print "\t%s: Called Scene.place()" % rendererName
         return
 
     def render(self,pause=False,interactive=False):
@@ -78,7 +77,7 @@ class Scene(BaseScene):
         @param pause Flag to wait at end of script evaluation for user input
         @param interactive Whether or not to have interactive use of the output
         """
-        if _debug: print "\t%s: Called Scene.render()" % renName
+        if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
@@ -101,7 +100,7 @@ class Scene(BaseScene):
         
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "%s: Here is the evaluation stack" % renName
+        if _debug: print "%s: Here is the evaluation stack" % rendererName
         if _debug: print 70*"#"
         if _debug: print renderer.getEvalStack()
         if _debug: print 70*"#"
@@ -117,7 +116,7 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        if _debug: print "%s: Flusing evaluation stack" % renName
+        if _debug: print "%s: Flusing evaluation stack" % rendererName
         renderer.resetEvalStack()
 
         return
@@ -126,7 +125,7 @@ class Scene(BaseScene):
         """
         Save the scene to a file
         """
-        if _debug: print "\t%s: Called Scene.save()" % renName
+        if _debug: print "\t%s: Called Scene.save()" % rendererName
         return
 
     def setBackgroundColor(self,*color):
@@ -135,7 +134,7 @@ class Scene(BaseScene):
 
         @param clr The color to set the background to.  Can be RGB or CMYK
         """
-        if _debug: print "\t%s: Called Scene.setBackgroundColor()" % renName
+        if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -171,7 +170,7 @@ class Scene(BaseScene):
         """
         Gets the current background colour/color setting of the Scene
         """
-        if _debug: print "\t%s: Called Scene.getBackgroundClr()" % renName
+        if _debug: print "\t%s: Called Scene.getBackgroundClr()" % rendererName
         return
 
     def vtkCommand(self,vtkcommand):
@@ -180,7 +179,7 @@ class Scene(BaseScene):
 
         @param vtkcommand The vtk command to run as a string
         """
-        if _debug: print "\t%s: Called Scene.vtkCommand()" % renName
+        if _debug: print "\t%s: Called Scene.vtkCommand()" % rendererName
         evalString = "%s\n" % vtkcommand
         self.renderer.addToEvalStack(evalString)
         return

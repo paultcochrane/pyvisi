@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Image objects
 """
 
 # generic imports
-from common import _debug, renName
+from common import _debug, rendererName
 
 # module specific imports
 from item import Item
@@ -39,10 +39,10 @@ class Image(Item):
         @param format The image format
         @param scene The Scene object to add to
         """
-        if _debug: print "\t%s: Called Image.__init__()" % renName
+        if _debug: print "\t%s: Called Image.__init__()" % rendererName
 
         if format == "jpeg":
-            if _debug: print "\t%s: Using jpeg image format" % renName
+            if _debug: print "\t%s: Using jpeg image format" % rendererName
             return JpegImage(scene)
         else:
             print "Unknown image format %s" % format
@@ -56,7 +56,7 @@ class Image(Item):
 
         @param fname The filename from which to load image data
         """
-        if _debug: print "\t%s: Called Image.load()" % renName
+        if _debug: print "\t%s: Called Image.load()" % rendererName
         return
 
 class JpegImage(Image):
@@ -69,16 +69,11 @@ class JpegImage(Image):
 
         @param scene The Scene object to add to
         """
-        if _debug: print "\t%s: Called JpegImage.__init__()" % renName
+        if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
         self.renderer = scene.renderer
-        rendererName = self.renderer.rendererName
-        if rendererName == "vtk":
-            self.renderer.addToEvalStack("# JpegImage.__init__()\n")
-            self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()\n")
-            self.readerName = "_jpegReader"
-        else:
-            print "Unknown renderer %s" % rendererName
-            return None
+        self.renderer.addToEvalStack("# JpegImage.__init__()\n")
+        self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()\n")
+        self.readerName = "_jpegReader"
         
         return
 
@@ -88,7 +83,7 @@ class JpegImage(Image):
 
         @param file The filename from which to load jpeg image data
         """
-        if _debug: print "\t%s: Called JpegImage.load()" % renName
+        if _debug: print "\t%s: Called JpegImage.load()" % rendererName
 
         # need to check that the file exists and is readable etc here
         # *before* we add to the evalString, better to get the feedback
@@ -103,7 +98,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called JpegImage.render()" % renName
+        if _debug: print "\t%s: Called JpegImage.render()" % rendererName
 
         self.renderer.addToEvalStack("# JpegImage.render()\n")
         self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()\n")
