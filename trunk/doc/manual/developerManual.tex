@@ -6,3 +6,58 @@
 In here should be docs on how people can contribute code, modules, renderers
 etc to the pyvisi project.
 
+
+\chapter{Objects and methods defined at base level}
+
+Developers of \pyvisi renderer modules need to provide the classes, subclasses
+and methods described below.  They need to be defined with stub classes or
+methods even if that functionality is not supported by the rendering backend.
+An error or warning message should be given if the user tries to call these
+null methods or classes, however they need to be there for completeness.
+
+\section{Fundamental objects}
+
+\subsection{Item}
+
+\subsection{Renderer}
+
+\subsection{Scene}
+
+\section{Derived objects}
+
+\subsection{Axes}
+
+\subsection{Camera}
+
+\subsection{Image}
+
+\subsubsection{JpegImage}
+
+\subsection{Plane}
+
+\subsection{Plot}
+
+\subsubsection{ArrowPlot}
+
+\subsubsection{ContourPlot}
+
+\subsubsection{LinePlot}
+
+\subsection{Text}
+
+
+%%%%
+\chapter{Renderer modules provided by \pyvisi}
+
+\section{vtk}
+
+In the process of being developed.
+
+\section{gnuplot}
+
+To come.
+
+\section{povray}
+
+To come.
+
