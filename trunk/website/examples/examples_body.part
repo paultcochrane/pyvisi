@@ -71,6 +71,10 @@
   scene.save(file="example.jpg", format="jpeg")
   </pre>
 
+<hr />
+
+<h2>plotExample.py</h2>
+
   <pre id="plotExample">
 """
 Example of plotting with pyvisi 
@@ -219,6 +223,31 @@ elif method == 'vtk':
 else:
     print "Eeek!  What plotting method am I supposed to use???"
   </pre>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+<th><a href="http://www.gnuplot.info">Gnuplot</a> renderer module</th>
+<th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
+</tr>
+<tr>
+<td><a href="examples/plotExampleGnuplot.png"><img 
+src="examples/plotExampleGnuplotSmall.png" 
+alt="plotExampleGnuplot.png"/></a></td>
+<td><a href="examples/plotExampleVtk.png"><img 
+src="examples/plotExampleVtkSmall.png" 
+alt="plotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>singleArrayPlotExample.py</h2>
 
   <pre id="singleArrayPlotExample">
 """
@@ -383,6 +412,31 @@ elif method == 'vtk':
 else:
     print "Eeek!  What plotting method am I supposed to use???"
 </pre>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+<th><a href="http://www.gnuplot.info">Gnuplot</a> renderer module</th>
+<th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
+</tr>
+<tr>
+<td><a href="examples/singleArrayPlotExampleGnuplot.png"><img 
+src="examples/singleArrayPlotExampleGnuplotSmall.png" 
+alt="singleArrayPlotExampleGnuplot.png"/></a></td>
+<td><a href="examples/singleArrayPlotExampleVtk.png"><img 
+src="examples/singleArrayPlotExampleVtkSmall.png" 
+alt="singleArrayPlotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>multiCurvePlotExample.py</h2>
 
 <pre id="multiCurvePlotExample">
 """
@@ -582,5 +636,26 @@ elif method == 'vtk':
 else:
     print "Eeek!  What plotting method am I supposed to use???"
 </pre>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+<th><a href="http://www.gnuplot.info">Gnuplot</a> renderer module</th>
+<th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
+</tr>
+<tr>
+    <td><a href="examples/multiCurvePlotExampleGnuplot.png"><img 
+	    src="examples/multiCurvePlotExampleGnuplotSmall.png" 
+	    alt="multiCurvePlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/multiCurvePlotExampleVtk.png"><img 
+	    src="examples/multiCurvePlotExampleVtkSmall.png" 
+	    alt="multiCurvePlotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
 
 
