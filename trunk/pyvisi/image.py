@@ -24,39 +24,54 @@ Class and functions associated with a pyvisi Image objects
 Base implementation.
 """
 
-from common import _debug, overrideWarning
-import inspect
-from item import Item
+# generic import
+from pyvisi.common import debugMsg, overrideWarning, unsupportedError, fileCheck
+
+from pyvisi.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
-    def __init__(self,format,scene):
+    def __init__(self, format, scene):
         """
         Initialises the Image class object
         
         @param format: The image format
+        @type format: string
+
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called Image.__init__()"
+        Item.__init__(self)
+        debugMsg("Called Image.__init__()")
 
-        if format == "jpeg":
-            if _debug: print "\tBASE: Using jpeg image format"
-            return JpegImage(scene)
-        else:
-            print "Unknown image format %s" % format
-            return None
-        
-        return
+        if format is None:
+            raise ValueError, "You must specify a format"
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene"
+
+        #if format == "jpeg":
+            #debugMsg("Using jpeg image format")
+            #return JpegImage(scene)
+        #else:
+            #print "Unknown image format %s" % format
+            #return None
+
+    def load(self, fname):
         """
         Loads image data from file.
 
-        @param file: The filename from which to load image data
+        @param fname: The filename from which to load image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called Image.load()"
+        debugMsg("Called Image.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("Image.load")
@@ -74,19 +89,21 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called JpegImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads jpeg image data from file.
 
-        @param file: The filename from which to load jpeg image data
-        @type file: string
+        @param fname: The filename from which to load jpeg image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called JpegImage.load()"
+        debugMsg("Called JpegImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("JpegImage.load")
@@ -97,7 +114,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called JpegImage.render()"
+        debugMsg("Called JpegImage.render()")
 
         # print a warning message if get to here
         overrideWarning("JpegImage.render")
@@ -115,19 +132,21 @@ class PngImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called PngImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads png image data from file.
 
-        @param file: The filename from which to load png image data
-        @type file: string
+        @param fname: The filename from which to load png image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called PngImage.load()"
+        debugMsg("Called PngImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("PngImage.load")
@@ -138,7 +157,7 @@ class PngImage(Image):
         """
         Does PngImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called PngImage.render()"
+        debugMsg("Called PngImage.render()")
 
         # print a warning message if get to here
         overrideWarning("PngImage.render")
@@ -156,19 +175,21 @@ class BmpImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called BmpImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called BmpImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads bmp image data from file.
 
-        @param file: The filename from which to load bmp image data
-        @type file: string
+        @param fname: The filename from which to load bmp image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called BmpImage.load()"
+        debugMsg("Called BmpImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("BmpImage.load")
@@ -179,7 +200,7 @@ class BmpImage(Image):
         """
         Does BmpImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called BmpImage.render()"
+        debugMsg("Called BmpImage.render()")
 
         # print a warning message if get to here
         overrideWarning("BmpImage.render")
@@ -197,19 +218,21 @@ class TiffImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called TiffImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called TiffImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads tiff image data from file.
 
-        @param file: The filename from which to load tiff image data
-        @type file: string
+        @param fname: The filename from which to load tiff image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called TiffImage.load()"
+        debugMsg("Called TiffImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("TiffImage.load")
@@ -220,7 +243,7 @@ class TiffImage(Image):
         """
         Does TiffImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called TiffImage.render()"
+        debugMsg("Called TiffImage.render()")
 
         # print a warning message if get to here
         overrideWarning("TiffImage.render")
@@ -238,19 +261,21 @@ class PnmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called PnmImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads pnm image data from file.
 
-        @param file: The filename from which to load pnm image data
-        @type file: string
+        @param fname: The filename from which to load pnm image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called PnmImage.load()"
+        debugMsg("Called PnmImage.load()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
 
         # print a warning message if get to here
         overrideWarning("PnmImage.load")
@@ -261,7 +286,7 @@ class PnmImage(Image):
         """
         Does PnmImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called PnmImage.render()"
+        debugMsg("Called PnmImage.render()")
 
         # print a warning message if get to here
         overrideWarning("PnmImage.render")
@@ -281,36 +306,34 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called PsImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called PsImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads ps image data from file.
 
         B{NOT} supported by this renderer module
 
-        @param file: The filename from which to load ps image data
-        @type file: string
+        @param fname: The filename from which to load ps image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called PsImage.load()"
-
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        debugMsg("Called PsImage.load()")
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError("BASE")
         
+        # do a check to see if the file exists
+        fileCheck(fname)
+
         return
 
     def render(self):
         """
         Does PsImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called PsImage.render()"
+        debugMsg("Called PsImage.render()")
 
         return
 
@@ -327,38 +350,39 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called PdfImage.__init__()"
+        Image.__init__(self)
+        debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads pdf image data from file.
 
         B{NOT} supported by this renderer module
 
-        @param file: The filename from which to load pdf image data
-        @type file: string
+        @param fname: The filename from which to load pdf image data
+        @type fname: string
         """
-        if _debug: print "\tBASE: Called PdfImage.load()"
+        debugMsg("Called PdfImage.load()")
 
         # need to check that the file exists and is readable etc here
         # *before* we add to the evalString, better to get the feedback
         # now rather than at the end of the script
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError("BASE")
         
+        # do a check to see if the file exists
+        fileCheck(fname)
+
         return
 
     def render(self):
         """
         Does PdfImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tBASE: Called PdfImage.render()"
+        debugMsg("Called PdfImage.render()")
 
         return
-
 
 # vim: expandtab shiftwidth=4:
