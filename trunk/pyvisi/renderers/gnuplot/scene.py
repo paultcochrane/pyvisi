@@ -57,6 +57,7 @@ class Scene(BaseScene):
         Add a new item to the scene
 
         @param obj: The object to add to the scene
+        @type obj: object
         """
         if _debug: print "\t%s: Called Scene.add()" % rendererName
         self.renderer.addToEvalStack("# Scene.add()")
@@ -68,6 +69,7 @@ class Scene(BaseScene):
         Place an object within a scene
 
         @param obj: The object to place within the scene
+        @type obj: object
         """
         if _debug: print "\t%s: Called Scene.place()" % rendererName
         return
@@ -79,7 +81,10 @@ class Scene(BaseScene):
         Render the scene, either to screen, or to a buffer waiting for a save
 
         @param pause: Flag to wait at end of script evaluation for user input
+        @type pause: boolean
+
         @param interactive: Whether or not to have interactive use of the output
+        @type interactive: boolean
         """
         if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
@@ -118,7 +123,10 @@ class Scene(BaseScene):
         Save the scene to a file
 
         @param file: Name of output file
+        @type file: string
+
         @param format: Graphics format of output file
+        @type format: string
         """
         if _debug: print "\t%s: Called Scene.save()" % rendererName
         return
@@ -128,6 +136,7 @@ class Scene(BaseScene):
         Sets the background color of the Scene
 
         @param color: The color to set the background to.  Can be RGB or CMYK
+        @type color: tuple
         """
         if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
 
