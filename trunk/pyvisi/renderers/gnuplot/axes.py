@@ -34,6 +34,6 @@ class Axes(Plot):
     """
     def __init__(self):
         if _debug: print "\t%s: Called Axes.__init__()" % rendererName
-        pass
+        return
 
 # vim: expandtab shiftwidth=4:
