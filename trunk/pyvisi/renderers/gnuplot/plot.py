@@ -184,6 +184,68 @@ class ContourPlot(Plot):
 
         self.renderer.addToEvalStack("# ContourPlot.setData()")
 
+        # this is a really dodgy way to get the data into the renderer
+        # I really have to find a better, more elegant way to do this
+
+        # for the moment, make sure that there aren't more than two arrays
+        if len(dataList) != 3:
+            raise ValueError, "Must have three arrays as input (at present)"
+
+        # do some sanity checks on the data
+        xData = dataList[0]
+        yData = dataList[1]
+        zData = dataList[2]
+
+        if len(xData.shape) != 1:
+            raise ValueError, "x data array is not of correct shape: %s" % \
+                    xData.shape
+
+        if len(yData.shape) != 1:
+            raise ValueError, "y data array is not of correct shape: %s" % \
+                    yData.shape
+
+        if len(zData.shape) != 2:
+            raise ValueError, "z data array is not of correct shape: %s" % \
+                    zData.shape
+
+        #GOT TO HERE!!
+
+
+        # range over the data, printing what the expansion of the array is
+        # and regenerate the data within the eval
+        for i in range(len(dataList)):
+            evalString = "_x%d = [" % i
+            data = dataList[i]
+            # check that the data here is a 1-D array
+            if len(data.shape) != 1:
+                raise ValueError, "Can only handle 1D arrays at present"
+            
+            for j in range(len(data)-1):
+                evalString += "%s, " % data[j]
+            evalString += "%s]" % data[-1]
+            self.renderer.addToEvalStack(evalString)
+
+        evalString = "_data = Gnuplot.Data("
+        # loop over all bar the last data element 
+        # (the last one doesn't have a trailing comma)
+        for i in range(len(dataList)-1):
+            evalString += "_x%d, " % i
+        evalString += "_x%d" % (len(dataList)-1,)
+
+        # if there are any linestyle settings etc, add them here (gnuplot
+        # reasons)
+        if self.linestyle is not None:
+            # set the linestyle to the renderer-specific version (_linestyle)
+            self.setLineStyle(self.linestyle)
+            evalString += ", with=\'%s\'" % self._linestyle
+
+        # finish off the evalString
+        evalString += ")"
+
+        # and add it to the evalstack
+        self.renderer.addToEvalStack(evalString)
+
+
         return True
 
     def render(self):
