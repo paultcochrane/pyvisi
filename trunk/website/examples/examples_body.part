@@ -7,7 +7,7 @@
   There aren't many examples yet, however, just to give you a feel for how
   one would use PyVisi in an actual code example, here's one now:
   </p>
-  <p>
+  <pre>
   """
   Basic example of pyvisi usage.  
 
@@ -63,4 +63,5 @@
   # saving a scene could also be written as (handy for PBS jobs?)
   # could try working out the format from the filename extension
   scene.save(file="example.jpg", format="jpeg")
-  </p>
+  </pre>
+
