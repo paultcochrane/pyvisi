@@ -27,6 +27,8 @@ Will hopefully help me write a decent interface.
 # example code for how a user would write a script in pyvisi
 from pyvisi import *          # base level visualisation stuff
 #from pyvisi.utils import *   # pyvisi specific utils
+# import the objects to render the scene using vtk
+from pyvisi.renderers.vtk import * 
 
 # these things are just here to make data to plot, not all of which are used
 from ESyS import *
@@ -36,15 +38,11 @@ import Finley
 mesh = Finley.Brick(3,5,7)  # a Finley mesh
 vectorData = mesh.Nodes().getX()  # get vector data from the mesh nodes
 
-# define the renderer to use, this will be vtk to start with
-# hopefully the structure will allow people to write others
-renderer = Renderer('vtk')
-
 # define the scene object
 # a Scene is a container for all of the kinds of things you want to put 
 # into your plot for instance, images, meshes, arrow/vector/quiver plots, 
 # contour plots, spheres etc.
-scene = Scene(r)
+scene = Scene()
 
 # define a camera object.  There will need to be one camera per scene.
 camera = Camera()
