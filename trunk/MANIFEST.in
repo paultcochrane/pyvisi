@@ -1,0 +1,12 @@
+# $Id$
+
+include README
+include CHANGES
+include COPYING
+include TODO
+include BUGS
+include setup.py
+recursive-include pyvisi *.py
+include examples/*.py
+include doc/manual/pyvisi.pdf
+
