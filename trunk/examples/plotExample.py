@@ -28,13 +28,13 @@ import sys
 sys.path.append('../')
 
 # what plotting method are we using?
-method = 'pyvisi'
+method = 'vtk'
 
 # set up some data to plot
 from Numeric import *
 
 x = arange(10, typecode=Float)
-y1 = x**2
+y = x**2
 
 # plot it using one of the two methods
 if method == 'pyvisi':
@@ -65,7 +65,7 @@ if method == 'pyvisi':
     plot.linestyle = 'lines'
     
     # assign some data to the plot
-    plot.setData(x,y1)
+    plot.setData(x,y)
 
     # render the scene to screen
     scene.render(pause=True)
@@ -82,7 +82,7 @@ elif method == 'gnuplot':
     _gnuplot.ylabel('x^2')
 
     # set up the data
-    _data = Gnuplot.Data(x, y1, with='lines')
+    _data = Gnuplot.Data(x, y, with='lines')
 
     # plot it
     _gnuplot.plot(_data)
@@ -95,15 +95,70 @@ elif method == 'vtk':
     import vtk
 
     # set up the renderer and the render window
-    _ren = vtkRenderer()
-    _renWin = vtkRenderWindow()
+    _ren = vtk.vtkRenderer()
+    _renWin = vtk.vtkRenderWindow()
     _renWin.AddRenderer(_ren)
+    _ren.SetBackground(1,1,1)
+    _renWin.SetSize(600,600)
+
+    # copy the data into vtk data objects
+    _x = vtk.vtkDoubleArray()
+    _x.SetName("x")
+    for i in range(len(x)):
+        _x.InsertNextValue(x[i])
+
+    _xData = vtk.vtkRectilinearGrid()
+    _xData.SetDimensions(len(x),1,1)
+    _xData.SetXCoordinates(_x)
+    # fundamental point: must set the points within the data, beforehand had
+    # only set up structural info.  So, must use SetScalars()
+    _xData.GetPointData().SetScalars(_x)
+
+    # and now for the y data
+    _y = vtk.vtkDoubleArray()
+    _y.SetName("y")
+    for i in range(len(y)):
+        _y.InsertNextValue(y[i])
+
+    _yData = vtk.vtkRectilinearGrid()
+    _yData.SetDimensions(len(y),1,1)
+    _yData.SetXCoordinates(_y)
+    _yData.GetPointData().SetScalars(_y)
+
+    # set up the actor
+    _plot = vtk.vtkXYPlotActor()
+    _plot.AddInput(_xData)
+    _plot.AddInput(_yData)
+
+    # set the title and stuff
+    _plot.SetTitle("Example 2D plot")
+    _plot.SetXTitle("x")
+    _plot.SetYTitle("x^2")
+    _plot.GetProperty().SetColor(0,0,0)
+    _plot.GetProperty().SetLineWidth(2)
+    print _plot
+    print _plot.GetPointComponent(1)
+    _plot.SetPointComponent(0,0)
+    _plot.SetXValuesToValue()
+    #print _plot
+    #print _plot.GetInputList()
+    #print _yData.GetPoint(2)
+    #print _xData.GetPoint(2)
+    #print _yData.GetNumberOfPoints()
+    print _plot.GetXValues()
+
+    # add the actor
+    _ren.AddActor2D(_plot)
     
     # render the scene
+    _iren = vtk.vtkRenderWindowInteractor()
+    _iren.SetRenderWindow(_renWin)
+    _iren.Initialize()
     _renWin.Render()
+    _iren.Start()
 
     # pause for input
-    raw_input('Press enter to continue...\n')
+    #raw_input('Press enter to continue...\n')
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
