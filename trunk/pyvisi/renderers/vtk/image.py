@@ -37,7 +37,10 @@ class Image(Item):
         Initialises the Image class object
         
         @param format: The image format
+        @type format: string
+
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called Image.__init__()" % rendererName
 
@@ -55,6 +58,7 @@ class Image(Item):
         Loads image data from file.
 
         @param file: The filename from which to load image data
+        @type file: string
         """
         if _debug: print "\t%s: Called Image.load()" % rendererName
         return
@@ -68,6 +72,7 @@ class JpegImage(Image):
         Initialises the JpegImage class object
 
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -82,6 +87,7 @@ class JpegImage(Image):
         Loads jpeg image data from file.
 
         @param file: The filename from which to load jpeg image data
+        @type file: string
         """
         if _debug: print "\t%s: Called JpegImage.load()" % rendererName
 
@@ -116,7 +122,7 @@ class PngImage(Image):
         Initialises the PngImage class object
 
         @param scene: The Scene object to add to
-        @type scene: scene object
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called PngImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -131,6 +137,7 @@ class PngImage(Image):
         Loads png image data from file.
 
         @param file: The filename from which to load png image data
+        @type file: string
         """
         if _debug: print "\t%s: Called PngImage.load()" % rendererName
 
@@ -165,7 +172,7 @@ class BmpImage(Image):
         Initialises the BmpImage class object
 
         @param scene: The Scene object to add to
-        @type scene: scene object
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called BmpImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -180,6 +187,7 @@ class BmpImage(Image):
         Loads bmp image data from file.
 
         @param file: The filename from which to load bmp image data
+        @type file: string
         """
         if _debug: print "\t%s: Called BmpImage.load()" % rendererName
 
@@ -214,7 +222,7 @@ class TiffImage(Image):
         Initialises the TiffImage class object
 
         @param scene: The Scene object to add to
-        @type scene: scene object
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called TiffImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -229,6 +237,7 @@ class TiffImage(Image):
         Loads tiff image data from file.
 
         @param file: The filename from which to load tiff image data
+        @type file: string
         """
         if _debug: print "\t%s: Called TiffImage.load()" % rendererName
 
@@ -263,7 +272,7 @@ class PnmImage(Image):
         Initialises the PnmImage class object
 
         @param scene: The Scene object to add to
-        @type scene: scene object
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called PnmImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -278,6 +287,7 @@ class PnmImage(Image):
         Loads pnm (ppm, pgm, pbm) image data from file.
 
         @param file: The filename from which to load pnm image data
+        @type file: string
         """
         if _debug: print "\t%s: Called PnmImage.load()" % rendererName
 
