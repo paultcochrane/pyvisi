@@ -156,4 +156,54 @@ class PngImage(Image):
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
+class BmpImage(Image):
+    """
+    Subclass of Image class to explicitly handle bmp images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the BmpImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: scene object
+        """
+        if _debug: print "\t%s: Called BmpImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        self.renderer.addToEvalStack("# BmpImage.__init__()")
+        self.renderer.addToEvalStack("_bmpReader = vtk.vtkBMPReader()")
+        self.readerName = "_bmpReader"
+        
+        return
+
+    def load(self, file):
+        """
+        Loads bmp image data from file.
+
+        @param file: The filename from which to load bmp image data
+        """
+        if _debug: print "\t%s: Called BmpImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+        
+        self.renderer.addToEvalStack("# BmpImage.load()")
+        evalString = "_bmpReader.SetFileName(\"%s\")" % file
+        self.renderer.addToEvalStack(evalString)
+        return
+
+    def render(self):
+        """
+        Does BmpImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called BmpImage.render()" % rendererName
+
+        self.renderer.addToEvalStack("# BmpImage.render()")
+        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
+        self.renderer.addToEvalStack(\
+                "_imgActor.SetInput(_bmpReader.GetOutput())")
+        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        return
+
+
 # vim: expandtab shiftwidth=4:
