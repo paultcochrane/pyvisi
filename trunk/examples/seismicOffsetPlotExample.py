@@ -17,7 +17,6 @@ for i in range(100):
     for j in range(13):
         line = fp.readline()
         arr = line.split()
-        print arr[0]
         t[i] = float(arr[0])
         x[j] = float(arr[1])
         data[i,j] = float(arr[2])
