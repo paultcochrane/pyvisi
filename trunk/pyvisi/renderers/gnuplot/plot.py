@@ -24,12 +24,12 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 
 # generic imports
 from pyvisi.renderers.gnuplot.common \
-        import debugMsg
+        import debugMsg, getRevision
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = getRevision()
 
 class Plot(Item):
     """

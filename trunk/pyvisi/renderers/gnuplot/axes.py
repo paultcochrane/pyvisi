@@ -23,12 +23,12 @@ Class and functions associated with a pyvisi Axes object
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg
+from pyvisi.renderers.gnuplot.common import debugMsg, getRevision
 
 # module specific imports
 from pyvisi.renderers.gnuplot.plot import Plot
 
-__revision__ = 'pre-alpha-1'
+__revision__ = getRevision()
 
 class Axes(Plot):
     """

@@ -24,14 +24,14 @@ Class and functions associated with a pyvisi Image objects
 
 # generic imports
 from pyvisi.renderers.gnuplot.common \
-        import debugMsg, unsupportedError
+        import debugMsg, unsupportedError, getRevision
 
 from pyvisi.common import fileCheck
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = getRevision()
 
 class Image(Item):
     """
