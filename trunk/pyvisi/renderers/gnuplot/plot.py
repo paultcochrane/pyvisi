@@ -311,6 +311,14 @@ class LinePlot(Plot):
 
         return
 
+    def getLineStyle(self):
+        """
+        Gets the current linestyle of the LinePlot
+        """
+        if _debug: print "\t%s: Called LinePlot.getLineStyle()" % rendererName
+
+        return
+
 
 # vim: expandtab shiftwidth=4:
 
