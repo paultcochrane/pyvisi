@@ -51,3 +51,4 @@ def unsupportedError():
     raise NotImplementedError, errorString
 
 # vim: expandtab shiftwidth=4:
+\n
