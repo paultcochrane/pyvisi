@@ -117,7 +117,7 @@ class Plot(Scene):
         elif axis == 'z' or axis == 'Z':
             self.zlabel = label
         else:
-            raise ValueError "axis must be x or y or z"
+            raise ValueError, "axis must be x or y or z"
 
         return
 
@@ -177,7 +177,7 @@ class LinePlot(Plot):
 
         return
 
-    def setData(self,**data):
+    def setData(self,*data):
         """
         Sets the data to the given plot object.
 
