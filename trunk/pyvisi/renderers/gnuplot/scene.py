@@ -23,14 +23,13 @@ Class and functions associated with a pyvisi Scene (gnuplot)
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.gnuplot.common import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
 from pyvisi.renderers.gnuplot.renderer import Renderer
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Scene(BaseScene):
     """

@@ -23,12 +23,11 @@ Class and functions associated with a pyvisi Camera object
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.gnuplot.common import debugMsg
 
 from pyvisi.renderers.gnuplot.item import Item
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Camera(Item):
     """

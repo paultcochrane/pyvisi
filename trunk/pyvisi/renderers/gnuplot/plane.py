@@ -23,13 +23,12 @@ The classes associated with Planes
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.gnuplot.common import debugMsg
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Plane(Item):
     """

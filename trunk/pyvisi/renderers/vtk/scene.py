@@ -23,14 +23,13 @@ Class and functions associated with a pyvisi Scene
 """
 
 # generic imports
-from pyvisi.renderers.vtk.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.vtk.common import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
 from pyvisi.renderers.vtk.renderer import Renderer
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Scene(BaseScene):
     """

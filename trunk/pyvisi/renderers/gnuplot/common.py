@@ -27,7 +27,7 @@ _rendererName = "GNUPLOT"
 _rendererVersion = '0.1'
 _rendererRevision = 'pre-alpha-1'
 
-__revision__ = _rendererRevision
+__revision__ = '$Revision$'
 
 def debugMsg(message):
     """
@@ -49,11 +49,5 @@ def unsupportedError():
     """
     errorString = "Sorry, but %s doesn't support this method." % _rendererName
     raise NotImplementedError, errorString
-
-def getRevision():
-    """
-    Get the revision string/number
-    """
-    return _rendererRevision
 
 # vim: expandtab shiftwidth=4:

@@ -23,12 +23,12 @@ Class and functions associated with a pyvisi Axes object
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg, getRevision
+from pyvisi.renderers.gnuplot.common import debugMsg
 
 # module specific imports
 from pyvisi.renderers.gnuplot.plot import Plot
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Axes(Plot):
     """

@@ -23,11 +23,10 @@ This is the file of the base class for items within a scene
 """
 
 # generic imports
-from pyvisi.renderers.vtk.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.vtk.common import debugMsg
 from pyvisi.item import Item as BaseItem
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Item(BaseItem):
     """

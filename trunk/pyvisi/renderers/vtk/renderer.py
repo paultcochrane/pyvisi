@@ -23,11 +23,10 @@ This is the file for the vtk Renderer class
 """
 
 # generic imports
-from pyvisi.renderers.vtk.common \
-        import debugMsg, getRevision
+from pyvisi.renderers.vtk.common import debugMsg
 from pyvisi.renderer import Renderer as BaseRenderer
 
-__revision__ = getRevision()
+__revision__ = '$Revision$'
 
 class Renderer(BaseRenderer):
     """
