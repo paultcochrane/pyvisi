@@ -31,9 +31,11 @@ sys.path.append('../')
 
 # import the python visualisation interface
 from pyvisi import *
+# this is now where the renderer is specified
+from pyvisi.renderers.vtk import *
 
-# set up a scene, using vtk to render it
-scene = Scene(renderer="vtk")
+# set up a scene
+scene = Scene()
 
 # add a jpeg image to the scene, and then load the file
 jpegImage = JpegImage(scene)

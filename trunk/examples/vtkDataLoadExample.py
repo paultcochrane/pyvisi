@@ -35,9 +35,11 @@ if not vtk:
     
     # import the python visualisation interface
     from pyvisi import *
+    # import vtk stuff
+    from pyvisi.renderers.vtk import *
     
     # start a scene, using vtk as the renderer
-    scene = Scene(renderer='vtk')
+    scene = Scene()
     scene.setBackgroundColor(1,1,1)
 
     # load some vtk data

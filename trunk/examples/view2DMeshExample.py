@@ -31,9 +31,11 @@ sys.path.append('../')
 
 # import the python visualisation interface
 from pyvisi import *
+# import vtk stuff
+from pyvisi.renderers.vtk import *
 
 # start a scene, using vtk as the renderer
-scene = Scene(renderer='vtk')
+scene = Scene()
 scene.setBackgroundColor(0,0,0)
 
 # render the scene

@@ -83,10 +83,10 @@ for i in xrange(len(x)):
         count += 1
 
 # now make the strips (whatever they are...)
-strips = vtk.vtkCellArray()
-strips.InsertNextCell(len(x)*len(y))  # number of points
-for i in xrange(len(x)*len(y)):
-    strips.InsertCellPoint(i)
+#strips = vtk.vtkCellArray()
+#strips.InsertNextCell(len(x)*len(y))  # number of points
+#for i in xrange(len(x)*len(y)):
+    #strips.InsertCellPoint(i)
 
 #strips.InsertCellPoint(0)
 #strips.InsertCellPoint(1)
@@ -96,6 +96,10 @@ for i in xrange(len(x)*len(y)):
 #strips.InsertCellPoint(3)
 #strips.InsertCellPoint(5)
 #strips.InsertCellPoint(4)
+
+strips = vtk.vtkCellArray()
+p2c = vtk.vtkPointDataToCellData()
+p2c.SetInput(points)
 
 # set up the polygonal data object
 polyData = vtk.vtkPolyData()
