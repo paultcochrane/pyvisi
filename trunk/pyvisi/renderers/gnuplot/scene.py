@@ -48,6 +48,9 @@ class Scene(BaseScene):
         self.renderer = Renderer()
         self.objectList = []
 
+        self.xSize = 640
+        self.ySize = 480
+
     def add(self, obj):
         """
         Add a new item to the scene
@@ -144,6 +147,7 @@ class Scene(BaseScene):
         Save the scene to a file
 
         Possible formats are:
+            - JPEG
             - Postscript
             - PNG
             - PBM
@@ -162,13 +166,23 @@ class Scene(BaseScene):
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal postscript color')")
         elif format.format == "png":
-            self.renderer.addToEvalStack("_gnuplot('set terminal png')")
+            evalString = "_gnuplot('set terminal png size %d, %d')" % \
+                    (self.xSize, self.ySize)
+            self.renderer.addToEvalStack(evalString)
         elif format.format == "pbm":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal pbm color')")
+            # set the size of the output
+            # have to scale properly to do this
+            xScale = float(self.xSize)/640.0
+            yScale = float(self.ySize)/480.0
+            evalString = "_gnuplot('set size %f, %f')" % \
+                    (xScale, yScale)
+            self.renderer.addToEvalStack(evalString)
         elif format.format == "jpeg":
-            self.renderer.addToEvalStack(\
-                    "_gnuplot('set terminal jpeg')")
+            evalString = "_gnuplot('set terminal jpeg size %d, %d')" % \
+                    (self.xSize, self.ySize)
+            self.renderer.addToEvalStack(evalString)
         else:
             raise ValueError, "Unknown graphics format.  I got: %s" % \
                     format.format
@@ -182,6 +196,7 @@ class Scene(BaseScene):
 
         return
 
+    # alias the save() method to write()
     write = save
 
     def setBackgroundColor(self, *color):
