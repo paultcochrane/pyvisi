@@ -72,6 +72,7 @@ class JpegImage(Image):
         Initialises the JpegImage class object
 
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         if _debug: print "\tBASE: Called JpegImage.__init__()"
         self.renderer = scene.renderer
@@ -83,6 +84,7 @@ class JpegImage(Image):
         Loads jpeg image data from file.
 
         @param file: The filename from which to load jpeg image data
+        @type file: string
         """
         if _debug: print "\tBASE: Called JpegImage.load()"
 
@@ -98,7 +100,48 @@ class JpegImage(Image):
         if _debug: print "\tBASE: Called JpegImage.render()"
 
         # print a warning message if get to here
-        overrideWarning("JpegeImage.render")
+        overrideWarning("JpegImage.render")
+
+        return
+
+class PngImage(Image):
+    """
+    Subclass of Image class to explicitly handle png images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PngImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\tBASE: Called PngImage.__init__()"
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads png image data from file.
+
+        @param file: The filename from which to load jpeg image data
+        @type file: string
+        """
+        if _debug: print "\tBASE: Called PngImage.load()"
+
+        # print a warning message if get to here
+        overrideWarning("PngImage.load")
+
+        return
+
+    def render(self):
+        """
+        Does PngImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\tBASE: Called PngImage.render()"
+
+        # print a warning message if get to here
+        overrideWarning("PngImage.render")
 
         return
 
