@@ -303,13 +303,41 @@ class LinePlot(Plot):
         
         self.renderer.addToEvalStack("# LinePlot.setData()")
 
+        # do some sanity checking on the data
+        for i in range(len(dataList)):
+            if len(dataList[0]) != len(dataList[i]):
+                raise DataError, "Input vectors must all be the same length"
+
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
+        
+        # if have more than one array to plot, the first one is the x data
+        if len(dataList) > 1:
+            xData = dataList[0]
+            ## generate the evalString for the x data
+            evalString = "_x = ["
+            for j in range(len(xData)-1):
+                evalString += "%s, " % xData[j]
+            evalString += "%s]" % xData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+            # don't need the first element of the dataList, so get rid of it
+            dataList = dataList[1:]
+        # if only have one array input, then autogenerate xData
+        elif len(dataList) == 1:
+            xData = arange(1,len(dataList[0]))
+            ## generate the evalString for the x data
+            evalString = "_x = ["
+            for j in range(len(xData)-1):
+                evalString += "%s, " % xData[j]
+            evalString += "%s]" % xData[-1]
+            # send it to the renderer
+            self.renderer.addToEvalStack(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_x%d = [" % i
+            evalString = "_y%d = [" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -320,27 +348,26 @@ class LinePlot(Plot):
             evalString += "%s]" % data[-1]
             self.renderer.addToEvalStack(evalString)
 
-        evalString = "_data = Gnuplot.Data("
-        # loop over all bar the last data element 
-        # (the last one doesn't have a trailing comma)
-        for i in range(len(dataList)-1):
-            evalString += "_x%d, " % i
-        evalString += "_x%d" % (len(dataList)-1,)
+            evalString = "_data%d = Gnuplot.Data(_x, " % i
+            evalString += "_y%d" % i
 
-        # if there are any linestyle settings etc, add them here (gnuplot
-        # reasons)
-        if self.linestyle is not None:
-            # set the linestyle to the renderer-specific version (_linestyle)
-            self.setLineStyle(self.linestyle)
-            evalString += ", with=\'%s\'" % self._linestyle
+            # if there are any linestyle settings etc, add them here (gnuplot
+            # reasons)
+            if self.linestyle is not None:
+                # set the linestyle to renderer-specific version (_linestyle)
+                self.setLineStyle(self.linestyle)
+                evalString += ", with=\'%s\'" % self._linestyle
 
-        # finish off the evalString
-        evalString += ")"
+            # finish off the evalString
+            evalString += ")"
 
-        # and add it to the evalstack
-        self.renderer.addToEvalStack(evalString)
+            # and add it to the evalstack
+            self.renderer.addToEvalStack(evalString)
 
-        return True
+        # return the number of data objects to plot
+        self.renderer.numDataObjects = len(dataList)
+
+        return
 
     def render(self):
         """
