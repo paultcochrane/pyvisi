@@ -1,0 +1,42 @@
+<!-- $Id$ -->
+<h1>Supporting institutions and software</h1>
+  
+<hr class="top">
+
+<h2>Supporting institutions</h2>
+
+This development wouldn't be possible without the greatly appreciated support
+of the following institutions:
+
+<h3>ACcESS</h3>
+
+<h3>ESSCC</h3>
+
+<h3>The Australian Research Council</h3>
+
+<h3>The University of Queensland</h3>
+
+<h3>SGI</h3>
+
+<h3>SourceForge</h3>
+
+<h2>Supporting software</h2>
+
+Any open source project benefits from the tools it uses, and these are the
+tools used to produce pyvisi.
+
+<h3>Python</h3>
+
+<h3>VTK</h3>
+
+<h3>Linux</h3>
+
+<h3>A-A-P</h3>
+
+<h3>Vim</h3>
+
+<h3>Epydoc</h3>
+
+<h3>CVS</h3>
+
+
