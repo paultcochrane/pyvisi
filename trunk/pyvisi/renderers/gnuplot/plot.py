@@ -192,8 +192,6 @@ class LinePlot(Plot):
         self.zlabel = None
 
         self.linestyle = None 
-        # possible linestyles: borrowing the names from gnuplot
-        #                      borrowing the symbol shortcuts from matlab
 
         return
 
@@ -275,6 +273,44 @@ class LinePlot(Plot):
             self.renderer.addToEvalStack(evalString)
 
         return True
+
+    def setLineStyle(self,linestyle):
+        """
+        Sets the linestyle of the LinePlot
+
+        Linestyles may be either a word in the Gnuplot style, or a symbol 
+        shortcut in the Matlab style.  Some of the options do not have a
+        Matlab equivalent but do have a Gnuplot equivalent, or vice versa.
+
+        What this method does, is take the linestyles possible as defined by
+        PyVisi, and then does some conversion as best it can to get the
+        relevant output from (in this case) gnuplot.
+        
+        Possible linestyles are:
+        1. lines ('-')
+        2. points ('o')
+        3. linespoints ('-o')
+        4. dots ('.')
+        5. dotted (':')
+        6. dashes ('--')
+        7. dotdashes ('-.')
+
+        @param linestyle: the style to use for the lines
+        @type linestyle: string
+        """
+        if _debug: print "\t%s: Called LinePlot.setLineStyle()" % rendererName
+
+        # possible linestyles: borrowing the names from gnuplot
+        #                      borrowing the symbol shortcuts from matlab
+        # lines
+        # points
+        # linespoints
+        # dots
+        # dashes (note this isn't part of gnuplot)
+        # dotdashes (note this isn't part of gnuplot)
+
+        return
+
 
 # vim: expandtab shiftwidth=4:
 
