@@ -45,6 +45,9 @@ class Renderer(object):
         # initialise the evalstack
         self._evalStack = ""
 
+        # keep the initial setup of the module for later reuse
+        self._initStack = ""
+
         # initialise the renderer module
 
     def setRenderWindowWidth(self, width):
@@ -118,6 +121,17 @@ class Renderer(object):
         """
         debugMsg("Called Renderer.addToEvalStack()")
         self._evalStack += evalString + '\n'
+        return
+
+    def addToInitStack(self, evalString):
+        """
+        Method to add commands to the reusable part of the evaluation stack
+
+        @param evalString: The string of commands to be added to the evalStack
+        @type evalString: string
+        """
+        debugMsg("Called Renderer.addToInitStack()")
+        self._initStack += evalString + '\n'
         return
 
     def resetEvalStack(self):
