@@ -28,7 +28,7 @@ import sys
 sys.path.append('../')
 
 # what plotting method are we using?
-method = 'vtk'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
