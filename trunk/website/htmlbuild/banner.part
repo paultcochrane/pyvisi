@@ -1,8 +1,8 @@
 <!-- $Id$ -->
 
 <div class="banner">
-  <p>
   <!--
+  <p>
     <a id="pyvisi" href="index.html"><img alt="pyvisi home" src="images/pyvisi_logo.gif" width="100" border="0"></a>
   </p>
   -->
@@ -12,6 +12,7 @@
     <a href="examples.html">Examples</a>
     <a href="docs.html">Documentation</a>
     <a href="devel.html">Development</a>
+    <a href="todo.html">Todo list</a>
     <a href="contacts.html">Contact us</a>
     <a href="links.html">Links</a>
     <a href="support.html">Support</a>
