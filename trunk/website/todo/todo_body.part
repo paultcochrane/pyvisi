@@ -54,6 +54,11 @@
   <td class="dateAdded">2005-02-24</td>
   <td class="priority">high</td>
 </tr>
+<tr class="high">
+  <td class="description">Release pyvisi-0.1-pre-alpha2</td>
+  <td class="dateAdded">2005-03-02</td>
+  <td class="priority">high</td>
+</tr>
 <tr class="medium">
   <td class="description">Write up student project description</td>
   <td class="dateAdded">2004-11-19</td>
@@ -105,11 +110,6 @@
   <td class="priority">medium</td>
 </tr>
 <tr class="low">
-  <td class="description">View a 2D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">low</td>
-</tr>
-<tr class="low">
   <td class="description">work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
@@ -149,6 +149,12 @@
     <th class="dateCompleted">Date completed</th>
     <th class="comment">Comment</th>
   </tr>
+<tr class="done">
+  <td class="description">Get saving to file without rendering to screen working in vtk</td>
+  <td class="dateAdded">2005-03-02</td>
+  <td class="dateCompleted">2005-03-07</td>
+  <td class="comment">done</td>
+</tr>
 <tr class="done">
   <td class="description">View vtk structured and unstructured meshes</td>
   <td class="dateAdded">2004-11-19</td>
@@ -282,6 +288,12 @@
   <td class="comment">working in gnuplot</td>
 </tr>
 <tr class="done">
+  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="dateCompleted">2005-01-25</td>
@@ -294,9 +306,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
+  <td class="description">View a 2D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-02-24</td>
+  <td class="dateCompleted">2005-03-07</td>
   <td class="comment">done in gnuplot</td>
 </tr>
 </table>
