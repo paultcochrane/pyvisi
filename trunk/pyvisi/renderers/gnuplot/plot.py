@@ -43,8 +43,60 @@ class Plot(Scene):
         return
 
     def setData(self,data):
+        """
+        Set data to Plot
+
+        @param data: the data to set to the plot (should be an array or list
+        or something)
+        """
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
+
+    def setTitle(self,title):
+        """
+        Set the plot title
+
+        @param title: the string holding the title to the plot
+        """
+        if _debug: print "\t%s: Called setTitle() in Plot()" % rendererName
+        return
+
+    def setXLabel(self,label):
+        """
+        Set the label of the x-axis
+
+        @param label: the string holding the label of the x-axis
+        """
+        if _debug: print "\t%s: Called setXLabel() in Plot()" % rendererName
+        return
+
+    def setYLabel(self,label):
+        """
+        Set the label of the y-axis
+
+        @param label: the string holding the label of the y-axis
+        """
+        if _debug: print "\t%s: Called setYLabel() in Plot()" % rendererName
+        return
+
+    def setZLabel(self,label):
+        """
+        Set the label of the z-axis
+
+        @param label: the string holding the label of the z-axis
+        """
+        if _debug: print "\t%s: Called setZLabel() in Plot()" % rendererName
+        return
+
+    def setLabel(self,axis,label):
+        """
+        Set the label of a given axis
+
+        @param axis: string (Axis object maybe??) of the axis (e.g. x, y, z)
+        @param label: string of the label to set for the axis
+        """
+        if _debug: print "\t%s: Called setLabel() in Plot()" % rendererName
+        return
 
 class ArrowPlot(Plot):
     """
@@ -92,6 +144,7 @@ class LinePlot(Plot):
         """
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
 
+        self.renderer = scene.renderer
         self.renderer.addToEvalStack("# LinePlot.__init__()")
 
         self.title = None
