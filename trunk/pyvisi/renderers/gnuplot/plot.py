@@ -329,7 +329,7 @@ class LinePlot(Plot):
                     "Sorry, haven't implemented this style for %s yet." % \
                     rendererName
         else:
-            print "Unknown linestyle!  I got \'%s\'" % linestyle
+            raise ValueError, "Unknown linestyle!  I got \'%s\'" % linestyle
 
         return
 
