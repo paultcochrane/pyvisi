@@ -23,11 +23,14 @@ Class and functions associated with a pyvisi Scene
 """
 
 # generic imports
-from common import _debug, rendererName, rendererVersion
+from pyvisi.renderers.vtk.common \
+        import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
-from renderer import Renderer
+from pyvisi.renderers.vtk.renderer import Renderer
+
+__revision__ = 'pre-alpha-1'
 
 class Scene(BaseScene):
     """
@@ -40,25 +43,26 @@ class Scene(BaseScene):
         """
         The init function
         """
-        print "You are using PyVisi renderer module \"%s\" version %s" % \
-                (rendererName, rendererVersion)
-
-        if _debug: print "\t%s: Called Scene.__init__()" % rendererName
+        BaseScene.__init__(self)
+        debugMsg("Called Scene.__init__()")
 
         self.renderer = Renderer()
 
-        # kept around in the hope that it will be useful...
-        numCameras = 0
-
-        return
+        self.xSize = 640
+        self.ySize = 480
 
     def add(self, obj):
         """
         Add a new item to the scene
 
         @param obj: The object to add to the scene
+        @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.add()" % rendererName
+        debugMsg("%s: Called Scene.add()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to add"
+
         return
 
     def place(self, obj):
@@ -66,20 +70,28 @@ class Scene(BaseScene):
         Place an object within a scene
 
         @param obj: The object to place within the scene
+        @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.place()" % rendererName
+        debugMsg("Called Scene.place()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to place"
+
         return
 
-    def render(self,pause=False,interactive=False):
+    def render(self, pause=False, interactive=False):
         """
         Render (or re-render) the scene
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
         @param pause: Flag to wait at end of script evaluation for user input
+        @type pause: boolean
+
         @param interactive: Whether or not to have interactive use of the output
+        @type interactive: boolean
         """
-        if _debug: print "\t%s: Called Scene.render()" % rendererName
+        debugMsg("Called Scene.render()")
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
@@ -102,10 +114,10 @@ class Scene(BaseScene):
         
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "%s: Here is the evaluation stack" % rendererName
-        if _debug: print 70*"#"
-        if _debug: print renderer.getEvalStack()
-        if _debug: print 70*"#"
+        debugMsg("Here is the evaluation stack")
+        debugMsg(70*"#")
+        debugMsg(renderer.getEvalStack())
+        debugMsg(70*"#")
 
         # now compile the string object into code, and execute it
         try:
@@ -118,12 +130,12 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        #if _debug: print "%s: Flusing evaluation stack" % rendererName
+        #debugMsg("Flusing evaluation stack")
         #renderer.resetEvalStack()
 
         return
 
-    def save(self,file,format):
+    def save(self, fname, format):
         """
         Save the scene to a file
 
@@ -135,13 +147,13 @@ class Scene(BaseScene):
             - BMP
             - PNM
 
-        @param file: Name of output file
-        @type file: string
+        @param fname: Name of output file
+        @type fname: string
 
         @param format: Graphics format of output file
         @type format: string
         """
-        if _debug: print "\t%s: Called Scene.save()" % rendererName
+        debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
 
         # need to pass the render window through a filter to an image object
@@ -174,7 +186,7 @@ class Scene(BaseScene):
         # set stuff up to write
         self.renderer.addToEvalStack(
                 "_outWriter.SetInput(_win2imgFilter.GetOutput())")
-        evalString = "_outWriter.SetFileName(\"%s\")" % file
+        evalString = "_outWriter.SetFileName(\"%s\")" % fname
         self.renderer.addToEvalStack(evalString)
         
         # write it
@@ -185,13 +197,14 @@ class Scene(BaseScene):
 
         return
 
-    def setBackgroundColor(self,*color):
+    def setBackgroundColor(self, *color):
         """
         Sets the background color of the Scene
 
         @param color: The color to set the background to.  Can be RGB or CMYK
+        @type color: tuple
         """
-        if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
+        debugMsg("Called Scene.setBackgroundColor()")
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -219,7 +232,7 @@ class Scene(BaseScene):
                     (color[0], color[1], color[2])
             self.renderer.addToEvalStack(evalString)
         else:
-            raise UserError, "Sorry, only RGB color is supported at present"
+            raise ValueError, "Sorry, only RGB color is supported at present"
 
         return
 
@@ -227,10 +240,10 @@ class Scene(BaseScene):
         """
         Gets the current background color setting of the Scene
         """
-        if _debug: print "\t%s: Called Scene.getBackgroundColor()"%rendererName
+        debugMsg("Called Scene.getBackgroundColor()")
         return
 
-    def setSize(self,xSize,ySize):
+    def setSize(self, xSize, ySize):
         """
         Sets the size of the scene.
 
@@ -242,7 +255,11 @@ class Scene(BaseScene):
         @param ySize: the size to set the y dimension
         @type ySize: float
         """
-        if _debug: print "\t%s: Called Scene.setSize()" % rendererName
+        debugMsg("Called Scene.setSize()")
+
+        self.xSize = xSize
+        self.ySize = ySize
+        
         return
 
     def getSize(self):
@@ -252,8 +269,8 @@ class Scene(BaseScene):
         This size is effectively the renderer window size.  Returns a tuple
         of the x and y dimensions respectively, in pixel units(??).
         """
-        if _debug: print "\t%s: Called Scene.getSize()" % rendererName
-        return
+        debugMsg("Called Scene.getSize()")
+        return (self.xSize, self.ySize)
 
 
 # vim: expandtab shiftwidth=4:
