@@ -1,0 +1,356 @@
+/* $Id$ */
+
+/* Main pyvisi CSS styles */
+
+/* main part of page */
+div.main {
+           margin: 0;
+           padding: 0;
+           font-size: 100%;
+           top: 1em;
+           left: 1em;
+           right: auto;
+           width: 100%;
+           }
+
+div.main hr { 
+              background: #4e66a5; 
+              }
+
+div.main hr.top { 
+                  text-align: center;
+                  width: 67%;
+                  }
+
+div.main ol.publications li { 
+                              background: #d7d4e7;
+                              margin: 0.5em;
+                              padding: 0.3em;
+                           }
+
+div.main ol.publications table { 
+                                 width: 17em;
+                                 }
+
+div.main ul.publications li { 
+                              background: #d7d4e7;
+                              margin: 0.5em;
+                              padding: 0.3em;
+                           }
+
+div.main div.jumpto {
+                      font-size: 50%; 
+                      }
+
+div.main h1,h2,h3 { 
+                    color : #eb9a64;
+                    text-align : center;
+                    }
+
+div.main h3 {
+              background: white;
+              text-align: left; 
+              color: #6eb320;
+              }
+
+div.main h4 { 
+              color: #8b0000;
+              }
+
+div.main p {
+             text-align: justify;
+             }
+
+div.main p.plain { 
+                   text-align: left;
+                   }
+
+div.main table {
+                 width: 100%;
+                 /* border: ridge; */  /* used for testing */
+                 }
+
+div.main table.content td.content { 
+                                    width: 100%;
+                                    /* border: ridge; */  /* used for testing */
+                                    }
+
+div.main th,td {
+                 text-align: left;
+                 }
+
+div.main table.title td {
+                          width: 100%;
+                          text-align: center;
+                          vertical-align: middle;
+                          font-size: 150%;
+                          color: #eb9a64;
+                          }
+
+div.main td.spacer { 
+                     width: 180px;
+                     }
+div.main img.spacer { 
+                     width: 180px;
+                     }
+
+div.main dt { 
+              color: #4e66a5;
+              font-size: 110%;
+              }
+
+
+/* funding support table at bottom of index page */
+table.funding {
+                width: 100%;
+                }
+
+table.funding td {
+                   text-align: center;
+                   }
+
+table.funding th {
+                   text-align: center;
+                   color: #eb9a64;
+                   font-size: 120%;
+                   }
+
+table.funding img { 
+                    border: none;
+                    height: 59px;
+                    }
+
+
+/* the last updated part at the bottom of the main page */
+td.updated { 
+             text-align: right;
+             font-size: 80%;
+             }
+
+
+/* the directors specified on the contacts page */
+div.director {
+               background: #d7d4e7;
+               }
+div.director h3 {
+                  background: white;
+                  color: #6eb320;
+                  }
+div.director td {
+                  padding: 10px 10px 10px 10px;
+                  vertical-align: top;
+                  text-align: left;
+                  }
+
+div.director td.photo { width: 20%; }
+div.director td.address { width: 45%; }
+div.director td.phone { width: 35%; }
+
+
+/* styles on the news and events page */
+
+div.newsItem {
+               background: #d7d4e7;
+               padding: 0px 5px 1px 5px;
+               margin: 7px;
+               }
+
+div.newsItem span.date { 
+                        color: #4e66a5;
+                        font-size: 50%;
+                        }
+
+div.newsItem p { 
+                 font-size: 75%;
+                 }
+
+/* styles for "Read More" links from news page */
+
+div.readMore {
+               background: #d7d4e7;
+               padding: 1px 5px 1px 5px;
+               margin: 7px;
+               }
+
+div.readMore img.picRight {
+                            float: right;
+                            padding: 0em 0em 0em 1em;
+                            }
+
+div.readMore img.picLeft {
+                           float: left;
+                           padding: 0em 1em 0em 0em;
+                           }
+
+div.readMore table.picRight {
+                              float: right;
+                              padding: 0em 0em 0em 1em;
+                              }
+
+div.readMore table.picRight td.caption { 
+                                         padding: 0px 5px;
+                                         text-align: justify; 
+                                         font-size: 70%;
+                                         }
+
+div.readMore table.picLeft {
+                             float: left;
+                             padding: 0em 1em 0em 0em;
+                             }
+
+div.readMore table.picLeft td.caption { 
+                                        padding: 0px 5px;
+                                        text-align: justify; 
+                                        font-size: 70%;
+                                        }
+
+div.readMore #PDKKAtomsOnWire { width: 193px; }
+div.readMore #OpeningHB { width: 252px; }
+div.readMore #OpeningBP { width: 256px; }
+div.readMore #Skyrmion2 { width: 128px; }
+div.readMore #WBPKLEureka { width: 225px; }
+div.readMore #KenBaldwinEureka { width: 225px; }
+div.readMore #HansAndClaude { width: 350px; }
+
+/* styles for events part of news page */
+
+div.lectures {
+               background: #d7d4e7;
+               padding: 0px 5px 1px 5px;
+               margin: 7px;
+               }
+
+div.conferences {
+                  background: #d7d4e7;
+                  padding: 0px 5px 1px 5px;
+                  margin: 7px;
+                  }
+
+div.meetings {
+               background: #d7d4e7;
+               padding: 0px 5px 1px 5px;
+               margin: 7px;
+               }
+
+/* styles for the people pages */
+table.people { width: 100%; }
+
+table.people th {
+                  text-align: left;
+                  vertical-align: top;
+                  color: #6eb320;
+                  font-size: 120%;
+                  margin: 0px;
+                  padding-top: 1em;
+                  }
+
+table.people th.photo { 
+                        text-align: right;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        }
+
+table.people td { 
+                  text-align: left;
+                  vertical-align: top;
+                  background: #d7d4e7;
+                  padding: 5px;
+                  }
+
+table.people li { 
+                  padding: 0.1em;
+                  }
+
+
+/* styles for the vacancies pages */
+table.vacancies { width: 100%; }
+
+table.vacancies th { 
+                     color: #4e66a5;
+                     }
+
+table.vacancies th.position { width: 50%; }
+table.vacancies th.appClose { width: 30%; }
+table.vacancies th.contact { width: 20%; }
+
+div.vacancies { 
+                background: #d7d4e7;
+                padding: 0.3em;
+                margin: 0.3em;
+                }
+
+div.vacancies dt { 
+                   color: #4e66a5;
+                   font-size: 110%;
+                   }
+
+
+/* styles for the gallery page */
+
+div.gallery img { 
+                  border: none;
+                  }
+
+div.gallery table { 
+                    vertical-align: middle;
+                    width: 100%;
+                    }
+
+div.gallery td { 
+                 background: #d7d4e7; 
+                 text-align: center;
+                 font-size: 50%;
+                 padding: 5px;
+                 margin: 2px;
+                 }
+
+/* styles for links page */
+
+div.hostUni {
+              background: #d7d4e7;
+              padding: 0px 5px 1px 5px;
+              margin: 7px;
+              }
+
+div.collaborators {
+                    background: #d7d4e7;
+                    padding: 1px 5px 1px 5px;
+                    margin: 7px;
+                    }
+
+div.links {
+            background: #d7d4e7;
+            padding: 1px 5px 1px 5px;
+            margin: 7px;
+            }
+
+/* styles for internal page */
+
+table.personalInfoForm td { 
+                            vertical-align: top;
+                            text-align: left;
+                            }
+
+input.nameField { 
+                  width: 20em;
+                  }
+
+input.webAddress { 
+                   width: 30em;
+                   }
+
+input.emailAddress { 
+                     width: 30em;
+                     }
+
+input.photoField { 
+                   width: 30em;
+                   }
+
+input.update { 
+               width: 0em;
+               }
+
+blockquote.aside { 
+                   font-size: 70%;
+                   }
