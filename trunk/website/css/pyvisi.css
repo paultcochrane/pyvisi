@@ -48,6 +48,7 @@ div.main h4 {
 
 div.main p {
              text-align: justify;
+             padding: 0em 1em 0em 1em;
              }
 
 div.main p.plain { 
