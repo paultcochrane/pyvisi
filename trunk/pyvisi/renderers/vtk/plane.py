@@ -39,8 +39,8 @@ class Plane(Item):
         """
         Initialisation of the Plane object
         """
-        Item.__init__(self)
         debugMsg("Called Plane.__init__()")
+        Item.__init__(self)
 
         self.renderer = scene.renderer
 

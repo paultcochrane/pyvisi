@@ -37,7 +37,7 @@ class Item(BaseItem):
         """
         Initialisation of Item class
         """
-        BaseItem.__init__(self)
         debugMsg("Called Item.__init__()")
+        BaseItem.__init__(self)
 
 # vim: expandtab shiftwidth=4:

@@ -41,8 +41,8 @@ class Text(Item):
         @param scene: the scene with which to associate the Text object
         @type scene: Scene object
         """
-        Item.__init__(self)
         debugMsg("Called Text.__init__()")
+        Item.__init__(self)
         self.font = "Times"
 
         if scene is None:
