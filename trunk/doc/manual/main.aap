@@ -57,15 +57,27 @@ StyFiles = apsrev.bst
 	lstmisc.sty
 	lstpatch.sty
 	quotchap.sty
+
+DiaFigs = ../pyvisi_class_structure.dia
 	
-EpsFigs = figures/*.eps
-PdfFigs = figures/*.pdf
+EpsFigs = figures/plotExampleGnuplot.eps
+        figures/plotExampleVTK.eps
+        figures/pyvisi_class_structure.eps
+
+PdfFigs = figures/plotExampleGnuplot.pdf
+        figures/plotExampleVTK.pdf
+        figures/pyvisi_class_structure.pdf
 
 webdir = ../../website/docs/manual
 	
 all: pyvisi_doc.dvi pyvisi_doc.ps pyvisi_doc.ps.gz pdf_figs pyvisi_doc.pdf pyvisi_doc.html pyvisi_doc.tar.gz
 
-pdf_figs: $PdfFigs
+dia_figs: $DiaFigs
+        :sys dia -n -t=eps ../pyvisi_class_structure.dia
+        :copy ../pyvisi_class_structure.eps figures/
+        :print Generating the eps figures from dia
+
+pdf_figs: $EpsFigs
 	:print Generating the pdf figures from the eps figures
 
 :rule figures/%.pdf : figures/%.eps
