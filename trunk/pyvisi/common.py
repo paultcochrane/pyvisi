@@ -22,9 +22,13 @@
 Variables common to all classes and functions
 """
 
-_debug = 1
-pyvisiVersion = 0.1
-pyvisiRevision = 1
+_debug = True
+_pyvisiVersion = '0.1'
+_pyvisiRevision = 'pre-alpha-1'
+
+__revision__ = _pyvisiRevision
+
+import os.path
 
 def overrideWarning(methodName):
     """
@@ -52,8 +56,31 @@ def unsupportedError(rendererName):
     @type rendererName: string
     """
     errorString = "Sorry, but %s doesn't support this method." % rendererName
-    raise NotImplementedError(errorString)
+    raise NotImplementedError, errorString
+
+def fileCheck(fname):
+    """
+    Check to see if the specified file exists, if not, raise an exception
+
+    @param fname: the name of the file to check for
+    @type fname: string
+    """
+    if os.path.exists(fname) is None:
+        raise ValueError, "File %s doesn't exist" % fname
 
     return
+
+def debugMsg(message):
+    """
+    Convenience function for debugging messages.
+
+    This function will print out a debugging message if the debug variable
+    is set.
+
+    @param message: the message to output if the debug flag is set
+    @type message: string
+    """
+    if _debug:
+        print "\tBASE: %s" % message
 
 # vim: expandtab shiftwidth=4:
