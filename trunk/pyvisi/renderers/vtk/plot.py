@@ -141,7 +141,7 @@ class ArrowPlot(Plot):
         @type scene: Scene object
         """
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
-        pass
+        return
 
     def setData(self,*dataList):
         """
@@ -165,7 +165,7 @@ class ContourPlot(Plot):
         @type scene: Scene object
         """
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
-        pass
+        return
 
     def setData(self,*dataList):
         """
@@ -207,9 +207,10 @@ class LinePlot(Plot):
 
         self.renderer.addToEvalStack("# LinePlot.setData()")
 
-        # check the length of the data list
-        if (len(dataList)) != 2:
-            raise ValueError, "Must have two 1D arrays as input (at present)"
+        # do some sanity checking on the data
+        for i in range(len(dataList)):
+            if len(dataList[0]) != len(dataList[i]):
+                raise DataError, "Input vectors must all be the same length"
 
         # now to add my dodgy hack until I have a decent way of sharing data
         # objects around properly
