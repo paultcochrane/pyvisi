@@ -44,6 +44,7 @@ publishFiles =
     $(htmlDir)*.css
     $(htmlDir)*.html
     $(htmlDir)*.png
+    examples/*.png
 :attr {publish = scp://paultcochrane@shell.sourceforge.net//home/groups/p/py/pyvisi/htdocs/%file%} $publishFiles
 
 # generating the source
