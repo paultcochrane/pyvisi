@@ -23,8 +23,11 @@ This is the file for the vtk Renderer class
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.vtk.common \
+        import debugMsg
 from pyvisi.renderer import Renderer as BaseRenderer
+
+__revision__ = 'pre-alpha-1'
 
 class Renderer(BaseRenderer):
     """
@@ -35,7 +38,8 @@ class Renderer(BaseRenderer):
         """
         Initialisation of Renderer() class
         """
-        if _debug: print "\t%s: Called Renderer.__init__()" % rendererName
+        BaseRenderer.__init__(self)
+        debugMsg("Called Renderer.__init__()")
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -54,7 +58,5 @@ class Renderer(BaseRenderer):
         evalString = "_renderWindow.SetSize(%d,%d)" % \
                 (self.renderWindowWidth,self.renderWindowHeight)
         self.addToEvalStack(evalString)
-
-        return
 
 # vim: expandtab shiftwidth=4:
