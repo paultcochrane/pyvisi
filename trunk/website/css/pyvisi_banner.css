@@ -65,7 +65,7 @@ div.banner p {
   margin: 0;
   padding: 0.3em 0.4em;
   font-family: Arial, Helvetica, sans-serif;
-  background: #005099;		/* Override according to type of page */
+  background: #005099;          /* Override according to type of page */
   border: thin outset #a39ac6;	/* Override this color together with bg */
   color: white;
 }
