@@ -195,13 +195,18 @@ class LinePlot(Plot):
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
 
+        # for the moment, make sure that there aren't more than two arrays
+        if len(dataList) != 2:
+            raise ValueError, "Must have two arrays as input (at present)"
+
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
             evalString = "_x%d = [" % i
             data = dataList[i]
             # check that the data here is a 1-D array
-            print data.shape
+            if len(data.shape) != 1:
+                raise ValueError, "Can only handle 1D arrays at present"
             
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
