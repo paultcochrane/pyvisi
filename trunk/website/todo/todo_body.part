@@ -14,137 +14,137 @@
   </tr>
 <tr class="veryhigh">
   <td class="description">Reimplement evaluation stack way of running low level code to more robust model</td>
-  <td class="dateAdded">1100836955</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
   <td class="description">Work out how to find out the dimensions of an image in vtk</td>
-  <td class="dateAdded">1100838523</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
   <td class="description">Implement render object talking directly to a python interpreter instance sitting in a separate thread</td>
-  <td class="dateAdded">1100838588</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
   <td class="description">Investigate threading in python and how communication works between processes</td>
-  <td class="dateAdded">1100838810</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">veryhigh</td>
 </tr>
 <tr class="high">
   <td class="description">Load vtk unstructured mesh</td>
-  <td class="dateAdded">1100836981</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">View vtk structured and unstructured meshes</td>
-  <td class="dateAdded">1100836996</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">View a contour plot similar to contour() of Matlab</td>
-  <td class="dateAdded">1100837104</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">convert numarrays to vtk structuredData objects</td>
-  <td class="dateAdded">1100838643</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">use a numarray to generate an x-y line plot</td>
-  <td class="dateAdded">1100838684</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">Get shaded contour plots working</td>
-  <td class="dateAdded">1101267270</td>
+  <td class="dateAdded">2004-11-24</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">Get installation process working so that when pyvisi actually has features users can install it easily</td>
-  <td class="dateAdded">1105327117</td>
+  <td class="dateAdded">2005-01-10</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
   <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
-  <td class="dateAdded">1105408122</td>
+  <td class="dateAdded">2005-01-11</td>
   <td class="priority">high</td>
 </tr>
 <tr class="medium">
   <td class="description">Write up student project description</td>
-  <td class="dateAdded">1100837031</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">Convert escript Data objects into relevant vtk objects</td>
-  <td class="dateAdded">1100837055</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
-  <td class="dateAdded">1100838559</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
-  <td class="dateAdded">1100838616</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">use a numarray to generate a mesh plot</td>
-  <td class="dateAdded">1100838662</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">use a numarray to generate a surf plot</td>
-  <td class="dateAdded">1100838673</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
-  <td class="dateAdded">1105327148</td>
+  <td class="dateAdded">2005-01-10</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
-  <td class="dateAdded">1105419036</td>
+  <td class="dateAdded">2005-01-11</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
   <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
-  <td class="dateAdded">1106095555</td>
+  <td class="dateAdded">2005-01-19</td>
   <td class="priority">medium</td>
 </tr>
 <tr class="low">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
-  <td class="dateAdded">1100837073</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
 <tr class="low">
   <td class="description">View a 3D vector field as an Arrow Plot</td>
-  <td class="dateAdded">1100837083</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
 <tr class="low">
   <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
-  <td class="dateAdded">1100837092</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
 <tr class="low">
   <td class="description">work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
-  <td class="dateAdded">1100838759</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
 <tr class="low">
   <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
-  <td class="dateAdded">1100838783</td>
+  <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
 <tr class="verylow">
   <td class="description">Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
-  <td class="dateAdded">1105484058</td>
+  <td class="dateAdded">2005-01-12</td>
   <td class="priority">verylow</td>
 </tr>
 </table>
@@ -159,50 +159,50 @@
   </tr>
 <tr class="done">
   <td class="description">Migrate all vtk specific code into renders.vtk</td>
-  <td class="dateAdded">1105327206</td>
-  <td class="dateCompleted">1105420867</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-11</td>
   <td class="comment">completed</td>
 </tr>
 <tr class="done">
   <td class="description">As part of removing the vtk specific code out of the main part of pyvisi, replace the code that is there with objects to be overridden by the specific renderer</td>
-  <td class="dateAdded">1105327312</td>
-  <td class="dateCompleted">1105489800</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-12</td>
   <td class="comment">added warnings if base method is called and not overridden</td>
 </tr>
 <tr class="done">
   <td class="description">Add a Development link to the web site and start putting stuff like renderers used, how to add a new renderer, what to inherit, structure renderer module should have and other coding guidelines</td>
-  <td class="dateAdded">1105417001</td>
-  <td class="dateCompleted">1105429114</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-01-11</td>
   <td class="comment">started, will be expanded over time</td>
 </tr>
 <tr class="done">
   <td class="description">Move project to sourceforge</td>
-  <td class="dateAdded">1100837021</td>
-  <td class="dateCompleted">1101432846</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2004-11-26</td>
   <td class="comment">done</td>
 </tr>
 <tr class="done">
   <td class="description">work out how to cope with axes in 2D and 3D</td>
-  <td class="dateAdded">1100838727</td>
-  <td class="dateCompleted">1105512047</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-01-12</td>
   <td class="comment">started</td>
 </tr>
 <tr class="done">
   <td class="description">Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
-  <td class="dateAdded">1105327358</td>
-  <td class="dateCompleted">1105490746</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-12</td>
   <td class="comment">implemented</td>
 </tr>
 <tr class="done">
   <td class="description">Start writing a manual, and add objects that are already supported.</td>
-  <td class="dateAdded">1105484015</td>
-  <td class="dateCompleted">1105512033</td>
+  <td class="dateAdded">2005-01-12</td>
+  <td class="dateCompleted">2005-01-12</td>
   <td class="comment">started</td>
 </tr>
 <tr class="done">
   <td class="description">Try and get a simple gnuplot plot working using renderers.gnuplot</td>
-  <td class="dateAdded">1105327257</td>
-  <td class="dateCompleted">1106092454</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-19</td>
   <td class="comment">done</td>
 </tr>
 </table>
