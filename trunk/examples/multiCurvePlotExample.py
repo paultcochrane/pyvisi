@@ -28,7 +28,7 @@ import sys
 sys.path.append('../')
 
 # what plotting method are we using?
-method = 'gnuplot'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -45,8 +45,8 @@ if method == 'pyvisi':
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    from pyvisi.renderers.gnuplot import *   # gnuplot
-    #from pyvisi.renderers.vtk import *       # vtk
+    #from pyvisi.renderers.gnuplot import *   # gnuplot
+    from pyvisi.renderers.vtk import *       # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
