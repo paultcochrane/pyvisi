@@ -1,9 +1,6 @@
-
 <!-- $Id$ -->
   <h1>Todo list</h1>
-  
   <hr class="top" />
-
 
 <h2>Todo items</h2>
 <table class="todo">
