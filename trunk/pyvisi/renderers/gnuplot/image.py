@@ -37,7 +37,7 @@ class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
-    def __init__(self, format, scene):
+    def __init__(self, scene, format):
         """
         Initialises the Image class object
         
@@ -85,7 +85,7 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="JPEG")
         debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
 
@@ -129,7 +129,7 @@ class PngImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="PNG")
         debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
 
@@ -173,7 +173,7 @@ class BmpImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="BMP")
         debugMsg("Called BmpImage.__init__()")
         self.renderer = scene.renderer
 
@@ -217,7 +217,7 @@ class TiffImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="TIFF")
         debugMsg("Called TiffImage.__init__()")
         self.renderer = scene.renderer
 
@@ -261,7 +261,7 @@ class PnmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="PNM")
         debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
 
@@ -307,7 +307,7 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="PS")
         debugMsg("Called PsImage.__init__()")
         self.renderer = scene.renderer
 
@@ -353,7 +353,7 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        #Image.__init__(self, scene)
+        Image.__init__(self, scene, format="PDF")
         debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
 
