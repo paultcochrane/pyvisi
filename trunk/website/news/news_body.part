@@ -46,6 +46,14 @@
       and there are many other things to work on before we get to there.
       </p>
       <p>
+      Note that to use the vtk renderer module, you must have vtk installed,
+      and have configured vtk for python (so that the python vtk wrappers
+      are available).  To use the gnuplot renderer module, you must have
+      gnuplot (version greater than or equal to 3.7) installed, and
+      <a href="http://gnuplot-py.sourceforge.net/">Gnuplot.py</a> (the
+      gnuplot python wrapper).
+      </p>
+      <p>
       Even with all of these caveats, have a look at the example code, and 
       tell me if you like the syntax (or not), if you have any comments or
       suggestions as to what I could do extra or what I could do differently,
