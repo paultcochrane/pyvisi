@@ -185,6 +185,35 @@ table.people li {
                   padding: 0.1em;
                   }
 
+/* styles for the todo list */
+
+table.todo {
+    border: solid;
+}
+
+table.todo tr.done {
+    color: gray;
+}
+
+table.todo tr.veryhigh {
+    color: red;
+}
+
+table.todo tr.high {
+    color: maroon;
+}
+
+table.todo tr.medium {
+    color: black;
+}
+
+table.todo tr.low {
+    color: aqua;
+}
+
+table.todo tr.verylow {
+    color: blue;
+}
 
 /* styles for the gallery page */
 
