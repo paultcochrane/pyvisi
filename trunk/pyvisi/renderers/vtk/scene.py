@@ -126,6 +126,20 @@ class Scene(BaseScene):
     def save(self,file,format):
         """
         Save the scene to a file
+
+        Possible formats are:
+            - Postscript
+            - PNG
+            - JPEG
+            - TIFF
+            - BMP
+            - PNM
+
+        @param file: Name of output file
+        @type file: string
+
+        @param format: Graphics format of output file
+        @type format: string
         """
         if _debug: print "\t%s: Called Scene.save()" % rendererName
         self.renderer.addToEvalStack("# Scene.save()")
