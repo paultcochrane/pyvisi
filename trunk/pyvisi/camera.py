@@ -35,7 +35,7 @@ class Camera(Item):
 
         @param scene The Scene object to add the Camera object to
         """
-        if _debug: print "\tCalled Camera.__init__()"
+        if _debug: print "\tBASE: Called Camera.__init__()"
 
         # default x,y,z positions of Camera (specific to vtk)
         self.xPos = 0.0
@@ -68,7 +68,7 @@ class Camera(Item):
 
         @param pos Position to set camera in terms of x,y,z coordinates
         """
-        if _debug: print "\tCalled Camera.setPosition()"
+        if _debug: print "\tBASE: Called Camera.setPosition()"
 
         # I need to do some mucking around in here with coordinate systems
         # and so on, but at present, we'll just use vtk's coord system
@@ -91,7 +91,7 @@ class Camera(Item):
 
         Returns the position in a tuple of form (xPos, yPos, zPos)
         """
-        if _debug: print "\tCalled Camera.getPosition()"
+        if _debug: print "\tBASE: Called Camera.getPosition()"
 
         return (self.xPos, self.yPos, self.zPos)
 
@@ -101,7 +101,7 @@ class Camera(Item):
 
         @param pos Position to set the focal point
         """
-        if _debug: print "\tCalled Camera.setFocalPoint()"
+        if _debug: print "\tBASE: Called Camera.setFocalPoint()"
 
         # I need to do some mucking around in here with coordinate systems
         # and so on, but at present, we'll just use vtk's coord system
@@ -125,7 +125,7 @@ class Camera(Item):
         Returns the position of the focal point in a tuple of form 
         (xPos, yPos, zPos)
         """
-        if _debug: print "\tCalled Camera.getFocalPoint()"
+        if _debug: print "\tBASE: Called Camera.getFocalPoint()"
 
         return (self.xFocalPoint, self.yFocalPoint, self.zFocalPoint)
 
@@ -135,7 +135,7 @@ class Camera(Item):
 
         @param elevation The elevation angle (in degrees) of the Camera
         """
-        if _debug: print "\tCalled Camera.setElevation()"
+        if _debug: print "\tBASE: Called Camera.setElevation()"
 
         self.elevation = elevation
         evalString = "_camera.Elevation(%f)\n" % elevation
@@ -147,7 +147,7 @@ class Camera(Item):
         """
         Gets the elevation angle (in degrees) of the Camera
         """
-        if _debug: print "\tCalled Camera.getElevation()"
+        if _debug: print "\tBASE: Called Camera.getElevation()"
         
         return self.elevation
 
@@ -157,7 +157,7 @@ class Camera(Item):
 
         @param azimuth The azimuthal angle (in degrees) of the Camera
         """
-        if _debug: print "\tCalled Camera.setAzimuth()"
+        if _debug: print "\tBASE: Called Camera.setAzimuth()"
 
         self.azimuth = azimuth
         evalString = "_camera.Azimuth(%f)\n" % azimuth

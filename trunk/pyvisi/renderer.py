@@ -35,9 +35,16 @@ class Renderer(object):
     
         @param rendererName The name of the renderer backend to use
         """
-        if _debug: print "\tCalled Renderer.__init__()"
+        if _debug: print "\tBASE: Called Renderer.__init__()"
         self.rendererName = rendererName
-        if _debug: print "\tRenderer name is %s" % rendererName
+        if _debug: print "\tBASE: Renderer name is %s" % rendererName
+
+        if rendererName == "vtk":
+            from pyvisi.renderers.vtk import *
+        else:
+           print "Unknown renderer"
+           return None
+
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -55,7 +62,7 @@ class Renderer(object):
 
         @param rendererName The name of the renderer to initialise
         """
-        if _debug: print "\tCalled Renderer._initRendererModule()"
+        if _debug: print "\tBASE: Called Renderer._initRendererModule()"
         # do a check to see if the renderer used is one of the known renderers
         if rendererName == "vtk":
             self.addToEvalStack("# Renderer._initRendererModule\n")
@@ -116,7 +123,7 @@ class Renderer(object):
         @param renderer The renderer whose evalStack to add to
         @param evalString The string of commands to be added to the evalStack
         """
-        if _debug: print "\tCalled Renderer.addToEvalStack()"
+        if _debug: print "\tBASE: Called Renderer.addToEvalStack()"
         self._evalStack += evalString
         return
 
@@ -124,7 +131,7 @@ class Renderer(object):
         """
         Reset/flush the evaluation stack
         """
-        if _debug: print "\tCalled Renderer.resetEvalStack()"
+        if _debug: print "\tBASE: Called Renderer.resetEvalStack()"
         self._evalStack = ""
         return
 
