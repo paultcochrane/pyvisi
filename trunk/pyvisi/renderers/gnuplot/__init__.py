@@ -26,6 +26,7 @@ from image import *
 from text import *
 from axes import *
 from renderer import *
+from scene import *
 from plane import *
 
 # vim: expandtab shiftwidth=4:
