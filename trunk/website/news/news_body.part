@@ -4,6 +4,48 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Simple 2D contour plotting not far away</div>
+      <div class="itemDate">24-Jan-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  Implementing simple contour plotting with just the <a
+	      href="http://www.gnuplot.info">gnuplot</a> renderer module has
+	  shown a couple of major holes that need plugging.  The main
+	  problem at present is that gnuplot requires a call to the
+	  <code>splot</code> command to plot contours and surfaces, but a
+	  call to the <code>plot</code> command to plot simple 2D graphs.
+	  Unfortunately, the call to plot the relevant graph is handled by
+	  the <code>render()</code> method within the <code>Scene</code>
+	  object, and consequently is just the <code>plot</code> command,
+	  which means that this is the wrong place for the object-specific
+	  rendering commands, and that the <code>Scene.render()</code>
+	  method should call the <code>render()</code> methods of the
+	  objects within the scene to do all of the rendering hard work.
+	  This may take a while to implement, but things will be more
+	  flexible in the future as a result.
+	  </p>
+	  <p>
+	  One of the other major problems that will need to be seen to is
+	  the sharing of data objects with the module actually doing the
+	  rendering and the pyvisi code actually being run by the user.
+	  There are many elements to work on here.  Essentially, we need to
+	  put the <code>Renderer</code> object into a separate <a
+	      href="http://www.python.org">python</a> process or thread, and
+	  then open a pipe to the process and pass commands and objects
+	  through to it.  This will sort of solve two problems
+	  simultaneously as we need a separate thread/process for the
+	  <code>Renderer</code> object anyway, and this may be the best way
+	  to share data objects around.  At present, I have implemented a
+	  really dodgy way of passing the data around which isn't scalable,
+	  but it managed to get the simple 2D plotting to go.  Again, this
+	  may take a while...
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
   <div class="itemTitle">Simple 2D plotting works!</div>
 
   <div class="itemDate">18-Jan-2005</div>
