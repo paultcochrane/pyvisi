@@ -61,10 +61,12 @@ if not gnuplot:
     plot.title = 'Example 2D plot'
     plot.xlabel = 'x'
     plot.ylabel = 'x^2'
+
+    plot.linestyle = 'lines'
     
     # assign some data to the plot
     plot.setData(x,y1)
-    
+
     # render the scene to screen
     scene.render(pause=True)
 
