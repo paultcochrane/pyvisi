@@ -34,10 +34,18 @@ class Plot(Scene):
     Abstract plot class
     """
     def __init__(self):
+        """
+        Initialisation of the abstract Plot class
+        """
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         pass
 
     def setData(self,*dataList):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        """
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
 
@@ -46,10 +54,18 @@ class ArrowPlot(Plot):
     Arrow field plot
     """
     def __init__(self):
+        """
+        Initialisation of the ArrowPlot class
+        """
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
         pass
 
     def setData(self,*dataList):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        """
         if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
         return True
 
@@ -58,10 +74,18 @@ class ContourPlot(Plot):
     Contour plot
     """
     def __init__(self):
+        """
+        Initialisation of the ContourPlot class
+        """
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
         pass
 
     def setData(self,*dataList):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        """
         if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
         return True
 
@@ -70,10 +94,18 @@ class LinePlot(Plot):
     Line plot
     """
     def __init__(self):
+        """
+        Initialisation of the LinePlot class
+        """
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
         pass
 
     def setData(self,*dataList):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        """
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         return True
 
