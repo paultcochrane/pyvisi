@@ -88,6 +88,10 @@ class Scene(BaseScene):
 
         renderer.addToEvalStack("_gnuplot.plot(_data)")
 
+        # add some code to pause after rendering if asked to
+        if pause:
+            renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
+
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
         if _debug: print "%s: Here is the evaluation stack" % rendererName
