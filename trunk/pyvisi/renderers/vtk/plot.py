@@ -546,14 +546,14 @@ class OffsetPlot(Plot):
             evalString = "_t = array(["
             for j in range(len(tData)-1):
                 evalString += "%s, " % tData[j]
-            evalString += "%s])" % tdata[-1]
+            evalString += "%s])" % tData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
             ## generate the evalString for the x data
             evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s])" % xdata[-1]
+            evalString += "%s])" % xData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
         else:
@@ -582,7 +582,7 @@ class OffsetPlot(Plot):
             if len(yData.shape) == 1:
                 data = yData
             else:
-                data = yData[:,i]
+                data = yData[:, i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
@@ -617,7 +617,7 @@ class OffsetPlot(Plot):
             # calculate the minimum delta x
             x1 = xData[:-1]
             x2 = xData[1:]
-            minDeltax - min(x2 - x1)
+            minDeltax = min(x2 - x1)
             evalString = "_scale = %f/(2.0*_yMaxAbs)" % minDeltax
             self.renderer.addToEvalStack(evalString)
 
