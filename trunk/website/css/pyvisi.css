@@ -188,7 +188,63 @@ table.people li {
 /* styles for the todo list */
 
 table.todo {
-    border: solid;
+    border: ridge;
+    /* border-width: thin; */
+}
+
+table.todo th {
+    border: ridge;
+    border-top: none;
+}
+
+table.todo td {
+    border: ridge;
+    border-top: none;
+    border-bottom: none;
+}
+
+table.todo th.description {
+    border-left: none;
+}
+
+table.todo td.description {
+    border-left: none;
+}
+
+table.todo th.dateAdded {
+    border-left: none;
+}
+
+table.todo td.dateAdded {
+    border-left: none;
+}
+
+table.todo th.dateCompleted {
+    border-left: none;
+}
+
+table.todo td.dateCompleted {
+    border-left: none;
+}
+
+table.todo th.priority {
+    border-left: none;
+    border-right: none;
+}
+
+table.todo td.priority {
+    border-left: none;
+    border-right: none;
+}
+
+table.todo th.comment {
+    border-left: none;
+    border-right: none;
+}
+
+table.todo td.comment {
+    border-left: none;
+    border-right: none;
 }
 
 table.todo tr.done {
