@@ -23,8 +23,8 @@ Class and functions associated with a pyvisi Scene
 """
 
 # generic imports
-from common import _debug, rendererName
-from pyvisi.scene import BaseScene
+from common import _debug, rendererName, rendererVersion
+from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
 from renderer import Renderer
@@ -42,7 +42,11 @@ class Scene(BaseScene):
 
         @param renderer The renderer object to use for the scene.
         """
+        print "You are using PyVisi renderer module \"%s\" version %s" % \
+                (rendererName, rendererVersion)
+
         if _debug: print "\t%s: Called Scene.__init__()" % rendererName
+
         self.renderer = Renderer()
 
         # kept around in the hope that it will be useful...
