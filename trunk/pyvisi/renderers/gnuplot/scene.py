@@ -105,8 +105,8 @@ class Scene(BaseScene):
         renderer.addToEvalStack("# Scene.render()")
 
         # get object added to the scene to render itself
-        for object in self.objectList:
-            object.render()
+        for obj in self.objectList:
+            obj.render()
         
         # add some code to pause after rendering if asked to
         if pause:

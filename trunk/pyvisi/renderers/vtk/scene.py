@@ -107,8 +107,8 @@ class Scene(BaseScene):
                     "_iRenderer.SetRenderWindow(_renderWindow)")
 
         # get all objects in the scene to render themselves
-        for object in self.objectList:
-            object.render()
+        for obj in self.objectList:
+            obj.render()
 
         renderer.addToEvalStack("_renderWindow.Render()")
 
