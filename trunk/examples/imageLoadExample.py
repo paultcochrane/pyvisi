@@ -45,31 +45,31 @@ if method == 'pyvisi':
     if format == 'jpeg':
         # add a jpeg image to the scene, and then load the file
         jpegImage = JpegImage(scene)
-        jpegImage.load(file="Flinders_eval.jpg")
+        jpegImage.load(fname="Flinders_eval.jpg")
         jpegImage.render()  # this should be done at the scene.render step
     
     elif format == 'png':
         # add png image to the scene, and then load the file
         pngImage = PngImage(scene)
-        pngImage.load(file="Flinders_eval.png")
+        pngImage.load(fname="Flinders_eval.png")
         pngImage.render()
 
     elif format == 'bmp':
         # add bmp image to the scene, and then load the file
         bmpImage = BmpImage(scene)
-        bmpImage.load(file="Flinders_eval.bmp")
+        bmpImage.load(fname="Flinders_eval.bmp")
         bmpImage.render()
 
     elif format == 'tiff':
         # add tiff image to the scene, and then load the file
         tiffImage = TiffImage(scene)
-        tiffImage.load(file="Flinders_eval.tiff")
+        tiffImage.load(fname="Flinders_eval.tiff")
         tiffImage.render()
 
     elif format == 'pnm':
         # add pnm (ppm, pgm, pbm) image to the scene, and then load the file
         pnmImage = PnmImage(scene)
-        pnmImage.load(file="Flinders_eval.pnm")
+        pnmImage.load(fname="Flinders_eval.pnm")
         pnmImage.render()
 
     else:
