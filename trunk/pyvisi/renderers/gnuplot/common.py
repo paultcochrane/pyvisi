@@ -22,7 +22,7 @@
 Variables common to all classes and functions
 """
 
-_debug = 1
+_debug = 0
 _rendererName = "GNUPLOT"
 _rendererVersion = '0.1'
 _rendererRevision = 'pre-alpha-2'
