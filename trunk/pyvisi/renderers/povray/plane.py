@@ -23,13 +23,12 @@ The classes associated with Planes
 """
 
 # generic imports
-from pyvisi.renderers.povray.common \
-        import debugMsg
+from pyvisi.renderers.povray.common import debugMsg
 
 # module specific imports
 from pyvisi.renderers.povray.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Plane(Item):
     """

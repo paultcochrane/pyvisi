@@ -28,7 +28,7 @@ from pyvisi.scene import Scene as BaseScene
 
 from pyvisi.renderers.opendx.renderer import Renderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
     
 class Scene(BaseScene):

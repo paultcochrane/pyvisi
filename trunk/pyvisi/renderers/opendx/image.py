@@ -26,7 +26,7 @@ from pyvisi.renderers.opendx.common import debugMsg
 
 from pyvisi.renderers.opendx.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
     
 class Image(Item):

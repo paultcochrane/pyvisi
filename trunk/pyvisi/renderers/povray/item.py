@@ -23,11 +23,10 @@ This is the file of the base class for items within a scene
 """
 
 # generic imports
-from pyvisi.renderers.povray.common \
-        import debugMsg
+from pyvisi.renderers.povray.common import debugMsg
 from pyvisi.item import Item as BaseItem
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Item(BaseItem):
     """

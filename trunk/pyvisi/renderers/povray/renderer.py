@@ -23,11 +23,10 @@ This is the file for the Renderer class
 """
 
 # generic imports
-from pyvisi.renderers.povray.common \
-        import debugMsg
+from pyvisi.renderers.povray.common import debugMsg
 from pyvisi.renderer import Renderer as BaseRenderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Renderer(BaseRenderer):
     """

@@ -22,12 +22,11 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.plplot.common import debugMsg, overrideWarning
+from pyvisi.renderers.plplot.common import debugMsg
 
 from pyvisi.renderers.plplot.plot import Plot
 
-__revision__ = 'pre-alpha-1'
-
+__revision__ = '$Revision$'
     
 class Axes(Plot):
     """

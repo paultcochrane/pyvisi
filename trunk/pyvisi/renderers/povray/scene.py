@@ -23,14 +23,13 @@ Class and functions associated with a pyvisi Scene
 """
 
 # generic imports
-from pyvisi.renderers.povray.common \
-        import debugMsg
+from pyvisi.renderers.povray.common import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
 from pyvisi.renderers.povray.renderer import Renderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Scene(BaseScene):
     """

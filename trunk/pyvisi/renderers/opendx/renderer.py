@@ -26,7 +26,7 @@ from pyvisi.renderers.opendx.common import debugMsg
 
 from pyvisi.renderer import Renderer as BaseRenderer
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
     
 class Renderer(BaseRenderer):

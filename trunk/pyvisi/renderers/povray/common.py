@@ -27,7 +27,7 @@ _rendererName = "POVRAY"
 _rendererVersion = '0.1'
 _rendererRevision = 'pre-alpha-1'
 
-__revision__ = _rendererRevision
+__revision__ = '$Revision$'
 
 def debugMsg(message):
     """

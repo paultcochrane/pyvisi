@@ -22,11 +22,10 @@
 Class and functions associated with a pyvisi Camera object
 """
 
-from pyvisi.renderers.povray.common \
-        import debugMsg
+from pyvisi.renderers.povray.common import debugMsg
 from pyvisi.renderers.povray.item import Item
 
-__revision__ = 'pre-alpha-1'
+__revision__ = '$Revision$'
 
 class Camera(Item):
     """
