@@ -59,7 +59,7 @@ class Scene(BaseScene):
         @param obj: The object to add to the scene
         @type obj: object
         """
-        debugMsg("%s: Called Scene.add()")
+        debugMsg("Called Scene.add()")
 
         if obj is None:
             raise ValueError, "You must specify an object to add"
