@@ -37,7 +37,10 @@ class Image(Item):
         Initialises the Image class object
         
         @param format: The image format
+        @type format: string
+
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called Image.__init__()" % rendererName
 
@@ -68,6 +71,7 @@ class JpegImage(Image):
         Initialises the JpegImage class object
 
         @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
         self.renderer = scene.renderer
@@ -78,13 +82,19 @@ class JpegImage(Image):
         """
         Loads jpeg image data from file.
 
+        NOT supported by this renderer module
+
         @param file: The filename from which to load jpeg image data
+        @type file: string
         """
         if _debug: print "\t%s: Called JpegImage.load()" % rendererName
 
         # need to check that the file exists and is readable etc here
         # *before* we add to the evalString, better to get the feedback
         # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
         
         return
 
@@ -96,5 +106,48 @@ class JpegImage(Image):
 
         return
 
+class PngImage(Image):
+    """
+    Subclass of Image class to explicitly handle png images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PngImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\t%s: Called PngImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads png image data from file.
+
+        NOT supported by this renderer module
+
+        @param file: The filename from which to load png image data
+        @type file: string
+        """
+        if _debug: print "\t%s: Called PngImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
+        
+        return
+
+    def render(self):
+        """
+        Does PngImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called PngImage.render()" % rendererName
+
+        return
 
 # vim: expandtab shiftwidth=4:
