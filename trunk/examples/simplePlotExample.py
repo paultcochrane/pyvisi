@@ -7,7 +7,6 @@ Will hopefully help me write a decent interface.
 """
 
 import sys
-sys.path.append('../')
 
 # what plotting method are we using?
 method = 'pyvisi'
@@ -25,8 +24,8 @@ if method == 'pyvisi':
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    #from pyvisi.renderers.gnuplot import *   # gnuplot
-    from pyvisi.renderers.vtk import *       # vtk
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.vtk import *       # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -45,15 +44,14 @@ if method == 'pyvisi':
     plot.linestyle = 'lines'
     
     # assign some data to the plot
-    plot.setData(x,y)
-    plot.render()  # need to tell some renderers to finish up stuff here
+    plot.setData(x, y)
 
     # render the scene to screen
-    #scene.render(pause=True,interactive=True)
+    scene.render(pause=True, interactive=True)
 
     # save the scene out to file
-    scene.save(fname="simplePlotExample.png", format=PngImage())
-    scene.save(fname="simplePlotExample.ps", format=PsImage())
+    #scene.save(fname="simplePlotExample.png", format=PngImage())
+    #scene.save(fname="simplePlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
