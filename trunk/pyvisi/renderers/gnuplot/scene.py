@@ -23,7 +23,7 @@ Class and functions associated with a pyvisi Scene (gnuplot)
 """
 
 # generic imports
-from pyvisi.renderers.gnuplot.common import debugMsg
+from pyvisi.renderers.gnuplot.common import debugMsg, _gnuplot4
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
@@ -56,11 +56,13 @@ class Scene(BaseScene):
         @type obj: object
         """
         debugMsg("Called Scene.add()")
-        self.renderer.addToEvalStack("# Scene.add()")
-        self.objectList.append(obj)
 
+        # make sure there is an object passed in
         if obj is None:
             raise ValueError, "You must specify an object to add"
+
+        self.renderer.addToEvalStack("# Scene.add()")
+        self.objectList.append(obj)
 
         return
 
@@ -110,6 +112,10 @@ class Scene(BaseScene):
         if pause:
             renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
 
+        # prepend the init stack to the eval stack
+        self.renderer._evalStack = self.renderer._initStack + \
+                self.renderer._evalStack
+
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
         debugMsg("Here is the evaluation stack")
@@ -128,8 +134,8 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        #debugMsg("Flusing evaluation stack")
-        #renderer.resetEvalStack()
+        debugMsg("Flusing evaluation stack")
+        renderer.resetEvalStack()
 
         return
 
@@ -160,8 +166,12 @@ class Scene(BaseScene):
         elif format.format == "pbm":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal pbm color')")
+        elif format.format == "jpeg" and _gnuplot4:
+            self.renderer.addToEvalStack(\
+                    "_gnuplot('set terminal jpeg')")
         else:
-            raise ValueError, "Unknown graphics format."
+            raise ValueError, "Unknown graphics format.  I got: %s" % \
+                    format.format
 
         # set the output filename
         evalString = "_gnuplot('set output \"%s\"')" % fname
