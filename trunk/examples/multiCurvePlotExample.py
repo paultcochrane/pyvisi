@@ -97,6 +97,11 @@ elif method == 'gnuplot':
     # plot it
     _gnuplot.plot(_data1, _data2, _data3)
 
+    # save it to file
+    _gnuplot('set terminal png')
+    _gnuplot('set output "plotExample.png"')
+    _gnuplot.plot(_data1, _data2, _data3)
+
     raw_input('Press enter to continue...\n')
 
 elif method == 'vtk':
