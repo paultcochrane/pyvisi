@@ -182,6 +182,11 @@ class ArrowPlot(Plot):
                     "Must have four vectors as input: x, y, dx, dy"
 
         for i in range(len(dataList)):
+            print len(dataList[i].shape)
+            if len(dataList[i].shape) != 1:
+                raise ValueError, "Can only handle 1D arrays at present"
+
+        for i in range(len(dataList)):
             if len(dataList[0]) != len(dataList[i]):
                 raise ValueError, "Input vectors must all be the same length"
 
