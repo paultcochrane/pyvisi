@@ -10,6 +10,7 @@ Files =
     contacts.html
     links.html
     support.html
+    todo.html
 
 # helper part files for building the html
 partsDir = htmlbuild/
@@ -61,7 +62,7 @@ all: $Files
 	:publishall
 @else:
     updatedStart = $(<)td class="updated"$(>)$BR $(<)i$(>)Last updated: 
-    updatedEnd = $(<)/i$(>)$(<)br$(>)$BR
+    updatedEnd = $(<)/i$(>)$(<)br /$(>)$BR
     comments = comments to: $(<)a href="mailto:paultcochrane@users.sourceforge.net"$(>)webmaster$(<)/a$(>)$BR $(<)/td$(>)$BR
 
     :rule %.html : $(partsDir)doctype.part %/%_header.part \
