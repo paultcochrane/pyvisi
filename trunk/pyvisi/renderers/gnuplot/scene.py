@@ -147,17 +147,17 @@ class Scene(BaseScene):
         @type fname: string
 
         @param format: Graphics format of output file
-        @type format: string
+        @type format: Image object
         """
         debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
 
         # set the output format
-        if format == "PS":
+        if format.format == "ps":
             self.renderer.addToEvalStack("_gnuplot('set terminal postscript')")
-        elif format == "PNG":
+        elif format.format == "png":
             self.renderer.addToEvalStack("_gnuplot('set terminal png')")
-        elif format == "PBM":
+        elif format.format == "pbm":
             self.renderer.addToEvalStack("_gnuplot('set terminal pbm')")
         else:
             raise ValueError, "Unknown graphics format."
