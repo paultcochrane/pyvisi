@@ -22,7 +22,7 @@
 Variables common to all classes and functions
 """
 
-_debug = 1
+_debug = 0
 _gnuplot4 = 1
 if _gnuplot4:
     _rendererName = "GNUPLOT4"
