@@ -37,6 +37,10 @@ class Plot(Scene):
 
     def setData(self,data):
         if _debug: print "\tBASE: Called setData() in Plot()"
+
+        # print a warning message if get to here
+        overrideWarning("Plot.setData")
+
         return True
 
 class ArrowPlot(Plot):
@@ -49,6 +53,10 @@ class ArrowPlot(Plot):
 
     def setData(self,data):
         if _debug: print "\tBASE: Called setData() in ArrowPlot()"
+
+        # print a warning message if get to here
+        overrideWarning("ArrowPlot.setData")
+
         return True
 
 class ContourPlot(Plot):
@@ -61,6 +69,10 @@ class ContourPlot(Plot):
 
     def setData(self,data):
         if _debug: print "\tBASE: Called setData() in ContourPlot()"
+
+        # print a warning message if get to here
+        overrideWarning("ContourPlot.setData")
+
         return True
 
 class LinePlot(Plot):
@@ -73,6 +85,10 @@ class LinePlot(Plot):
 
     def setData(self,data):
         if _debug: print "\tBASE: Called setData() in LinePlot()"
+
+        # print a warning message if get to here
+        overrideWarning("LinePlot.setData")
+
         return True
 
 # vim: expandtab shiftwidth=4:

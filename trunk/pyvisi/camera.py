@@ -22,7 +22,7 @@
 Class and functions associated with a pyvisi Camera object
 """
 
-from common import _debug
+from common import _debug, overrideWarning
 from item import Item
 
 class Camera(Item):
@@ -73,8 +73,10 @@ class Camera(Item):
         self.yPos = pos[1]
         self.zPos = pos[2]
 
+        # print a warning message if get to here
+        overrideWarning("Camera.setPosition")
+
         # now to set the position
-        self.renderer.addToEvalStack("# Camera.setPosition()\n")
 
         return
 
@@ -95,6 +97,9 @@ class Camera(Item):
         @param pos: Position to set the focal point
         """
         if _debug: print "\tBASE: Called Camera.setFocalPoint()"
+
+        # print a warning message if get to here
+        overrideWarning("Camera.setFocalPoint")
 
         # I need to do some mucking around in here with coordinate systems
         # and so on, but at present, we'll just use vtk's coord system
@@ -129,6 +134,9 @@ class Camera(Item):
 
         self.elevation = elevation
 
+        # print a warning message if get to here
+        overrideWarning("Camera.setElevation")
+
         return
 
     def getElevation(self):
@@ -148,6 +156,9 @@ class Camera(Item):
         if _debug: print "\tBASE: Called Camera.setAzimuth()"
 
         self.azimuth = azimuth
+
+        # print a warning message if get to here
+        overrideWarning("Camera.setAzimuth")
 
         return
 

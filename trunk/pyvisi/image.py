@@ -24,7 +24,8 @@ Class and functions associated with a pyvisi Image objects
 Base implementation.
 """
 
-from common import _debug
+from common import _debug, overrideWarning
+import inspect
 from item import Item
 
 class Image(Item):
@@ -58,12 +59,7 @@ class Image(Item):
         if _debug: print "\tBASE: Called Image.load()"
 
         # print a warning message if get to here
-        print "Warning!!  If you are reading this message, then the renderer"
-        print "           you have chosen hasn't overridden this method as"
-        print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module, quoting the method name given"
-        print "           below, asap to fix this problem."
-        print "\nMethod: Image.load()"
+        overrideWarning("Image.load")
 
         return
 
@@ -91,12 +87,7 @@ class JpegImage(Image):
         if _debug: print "\tBASE: Called JpegImage.load()"
 
         # print a warning message if get to here
-        print "Warning!!  If you are reading this message, then the renderer"
-        print "           you have chosen hasn't overridden this method as"
-        print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module, quoting the method name given"
-        print "           below, asap to fix this problem."
-        print "\nMethod: Image.load()"
+        overrideWarning("JpegImage.load")
 
         return
 
@@ -107,12 +98,7 @@ class JpegImage(Image):
         if _debug: print "\tBASE: Called JpegImage.render()"
 
         # print a warning message if get to here
-        print "Warning!!  If you are reading this message, then the renderer"
-        print "           you have chosen hasn't overridden this method as"
-        print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module, quoting the method name given"
-        print "           below, asap to fix this problem."
-        print "\nMethod: Image.load()"
+        overrideWarning("JpegeImage.render")
 
         return
 

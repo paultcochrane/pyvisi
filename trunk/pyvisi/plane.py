@@ -22,7 +22,7 @@
 The classes associated with Planes
 """
 
-from common import _debug
+from common import _debug, overrideWarning
 from item import Item
 
 class Plane(Item):
@@ -52,7 +52,9 @@ class Plane(Item):
         # need to work out the name of the internal image object name
         imgObjectName = image.readerName
 
-        self.renderer.addToEvalStack("# Plane.mapImageToPlane()\n")
+        # print a warning message if get to here
+        overrideWarning("Plane.mapImageToPlane")
+
         return
 
     def render(self):
@@ -61,7 +63,8 @@ class Plane(Item):
         """
         if _debug: print "\tBASE: Called Plane.mapImageToPlane()"
 
-        self.renderer.addToEvalStack("# Plane.render()\n")
+        # print a warning message if get to here
+        overrideWarning("Plane.render")
 
         return
     

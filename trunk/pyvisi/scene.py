@@ -22,7 +22,7 @@
 Class and functions associated with a pyvisi Scene
 """
 
-from common import _debug
+from common import _debug, overrideWarning
 from renderer import Renderer
 
 class Scene(object):
@@ -51,6 +51,10 @@ class Scene(object):
         @param obj: The object to add to the scene
         """
         if _debug: print "\tBASE: Called Scene.add()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.add")
+
         return
 
     def place(self, obj):
@@ -60,6 +64,10 @@ class Scene(object):
         @param obj: The object to place within the scene
         """
         if _debug: print "\tBASE: Called Scene.place()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.place")
+
         return
 
     def render(self,pause=False,interactive=False):
@@ -95,7 +103,7 @@ class Scene(object):
             return None
 
         # flush the evaluation stack
-        if _debug: print "BASE: Flusing evaluation stack"
+        if _debug: print "\tBASE: Flusing evaluation stack"
         renderer.resetEvalStack()
 
         return
@@ -105,6 +113,10 @@ class Scene(object):
         Save the scene to a file
         """
         if _debug: print "\tBASE: Called Scene.save()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.save")
+
         return
 
     def setBackgroundColor(self,*color):
@@ -114,6 +126,9 @@ class Scene(object):
         @param color: The color to set the background to.  Can be RGB or CMYK
         """
         if _debug: print "\tBASE: Called Scene.setBackgroundColor()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.setBackgroundColor")
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -143,11 +158,15 @@ class Scene(object):
 
         return
 
-    def getBackgroundClr(self):
+    def getBackgroundColor(self):
         """
-        Gets the current background colour/color setting of the Scene
+        Gets the current background color setting of the Scene
         """
-        if _debug: print "\tBASE: Called Scene.getBackgroundClr()"
+        if _debug: print "\tBASE: Called Scene.getBackgroundColor()"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.getBackgroundColor")
+
         return
 
     def rendererCommand(self,command):

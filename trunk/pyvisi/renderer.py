@@ -19,7 +19,7 @@
 ## @file render.py
 
 """
-This is the file for the Renderer class
+This is the file for the base Renderer class
 """
 
 from common import _debug
