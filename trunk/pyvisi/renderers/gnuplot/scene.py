@@ -42,10 +42,11 @@ class Scene(BaseScene):
         """
         The init function
         """
-        BaseScene.__init__(self)
         debugMsg("Called Scene.__init__()")
+        BaseScene.__init__(self)
 
         self.renderer = Renderer()
+        self.objectList = []
 
     def add(self, obj):
         """
@@ -56,6 +57,7 @@ class Scene(BaseScene):
         """
         debugMsg("Called Scene.add()")
         self.renderer.addToEvalStack("# Scene.add()")
+        self.objectList.append(obj)
 
         if obj is None:
             raise ValueError, "You must specify an object to add"
@@ -99,13 +101,11 @@ class Scene(BaseScene):
             interactive = False
 
         renderer.addToEvalStack("# Scene.render()")
-        # set up the evalString to use for plotting
-        evalString = "_gnuplot.plot("
-        for i in range(self.renderer.numDataObjects-1):
-            evalString += "_data%d, " % i
-        evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
-        renderer.addToEvalStack(evalString)
 
+        # get object added to the scene to render itself
+        for object in self.objectList:
+            object.render()
+        
         # add some code to pause after rendering if asked to
         if pause:
             renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
