@@ -254,5 +254,13 @@ class LinePlot(Plot):
 
         return True
 
+    def render(self):
+        """
+        Does LinePlot object specific (pre) rendering styff
+        """
+        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
+
+        return True
+
 # vim: expandtab shiftwidth=4:
 
