@@ -313,6 +313,97 @@ class PnmImage(Image):
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
+class PsImage(Image):
+    """
+    Subclass of Image class to explicitly handle ps images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PsImage class object
+
+        This object is B{only} used for generating postscript output
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\t%s: Called PsImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads ps image data from file.
+
+        B{NOT} supported by this renderer module
+
+        @param file: The filename from which to load ps image data
+        @type file: string
+        """
+        if _debug: print "\t%s: Called PsImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
+        
+        return
+
+    def render(self):
+        """
+        Does PsImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called PsImage.render()" % rendererName
+
+        return
+
+class PdfImage(Image):
+    """
+    Subclass of Image class to explicitly handle pdf images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PdfImage class object
+
+        This object is B{only} used for generating pdf output
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\t%s: Called PdfImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads pdf image data from file.
+
+        B{NOT} supported by this renderer module
+
+        @param file: The filename from which to load pdf image data
+        @type file: string
+        """
+        if _debug: print "\t%s: Called PdfImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
+        
+        return
+
+    def render(self):
+        """
+        Does PdfImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called PdfImage.render()" % rendererName
+
+        return
 
 
 # vim: expandtab shiftwidth=4:
