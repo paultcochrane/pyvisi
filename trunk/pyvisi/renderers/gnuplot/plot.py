@@ -442,10 +442,13 @@ class LinePlot(Plot):
         self.linestyle = None   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
+        # is the LinePlot data offset (vertically) from each other?
+        self.offset = False
+
         # now add the object to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Sets the data to the given plot object.
 
@@ -455,6 +458,12 @@ class LinePlot(Plot):
         debugMsg("Called setData() in LinePlot()")
         
         self.renderer.addToEvalStack("# LinePlot.setData()")
+
+        # grab the options if any
+        if options.has_key('offset'):
+            self.offset = options['offset']
+        else:
+            self.offset = False
 
         # do some sanity checking on the data
         for i in range(len(dataList)):
@@ -468,10 +477,10 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
             # don't need the first element of the dataList, so get rid of it
@@ -485,17 +494,17 @@ class LinePlot(Plot):
                 raise ValueError, errorString
                         
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # send it to the renderer
             self.renderer.addToEvalStack(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = [" % i
+            evalString = "_y%d = array([" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -503,9 +512,34 @@ class LinePlot(Plot):
             
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
-            evalString += "%s]" % data[-1]
+            evalString += "%s])" % data[-1]
             self.renderer.addToEvalStack(evalString)
 
+        # if offset is true, then shift the data up accordingly
+        if self.offset:
+            # concatenate the data
+            evalString = "_yAll = concatenate(["
+            for i in range(len(dataList)-1):
+                evalString += "_y%d," % i
+            evalString += "_y%d])" % int(len(dataList)-1)
+            self.renderer.addToEvalStack(evalString)
+
+            # find its min and max
+            self.renderer.addToEvalStack("_yMax = max(_yAll)")
+            self.renderer.addToEvalStack("_yMin = min(_yAll)")
+
+            # keep the data apart a bit with a constant
+            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+
+            # shift the data up
+            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+
+            for i in range(len(dataList)):
+                evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
+                self.renderer.addToEvalStack(evalString)
+
+        # give the data to gnuplot
+        for i in range(len(dataList)):
             evalString = "_data%d = Gnuplot.Data(_x, " % i
             evalString += "_y%d" % i
 
