@@ -63,7 +63,7 @@ class Renderer(object):
             self.addToEvalStack("_renderer = vtk.vtkRenderer()\n")
             # this next line should only be done if we have an active display
             self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()\n")
-            self._evalStack += "_renderWindow.AddRenderer(_renderer)\n")
+            self.addToEvalStack("_renderWindow.AddRenderer(_renderer)\n")
             evalString = "_renderWindow.SetSize(%d,%d)\n" % \
                     (self.renderWindowWidth,self.renderWindowHeight)
             self.addToEvalStack(evalString)
