@@ -180,6 +180,12 @@ def unsupportedError():
     \"\"\"
     errorString = \"Sorry, but %s doesn't support this method.\" % _rendererName
     raise NotImplementedError, errorString
+
+def getRevision():
+    \"\"\"
+    Get the revision string/number
+    \"\"\"
+    return _rendererRevision
     """
 
     fname = moduleName + '/common.py'
@@ -218,7 +224,7 @@ def getBaseClassFileHeader(className, baseClassName):
 Brief introduction to what the file contains/does
 \"\"\"
 
-from pyvisi.renderers.%s.common import debugMsg, overrideWarning
+from pyvisi.renderers.%s.common import debugMsg, overrideWarning, getRevision
 
 from pyvisi.%s import %s
 """ % (moduleName, className.lower(), baseClassName)
@@ -230,7 +236,7 @@ from pyvisi.renderers.%s.renderer import Renderer
 
     fileHeaderStr += """
 
-__revision__ = 'some-revision-number-thing'
+__revision__ = getRevision()
 
 """ 
     return copyrightStr + fileDoxStr + fileHeaderStr
