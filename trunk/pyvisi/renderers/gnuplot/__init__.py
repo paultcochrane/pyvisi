@@ -31,14 +31,14 @@ __author__ = 'Paul Cochrane'
 __version__ = _rendererVersion
 __revision__ = _rendererRevision
 
-from pyvisi.renderers.gnuplot.item import *
-from pyvisi.renderers.gnuplot.renderer import *
-from pyvisi.renderers.gnuplot.scene import *
+from pyvisi.renderers.gnuplot.item import Item
+from pyvisi.renderers.gnuplot.renderer import Renderer
+from pyvisi.renderers.gnuplot.scene import Scene
 from pyvisi.renderers.gnuplot.plot import *
-from pyvisi.renderers.gnuplot.camera import *
+from pyvisi.renderers.gnuplot.camera import Camera
 from pyvisi.renderers.gnuplot.image import *
-from pyvisi.renderers.gnuplot.text import *
-from pyvisi.renderers.gnuplot.axes import *
-from pyvisi.renderers.gnuplot.plane import *
+from pyvisi.renderers.gnuplot.text import Text
+from pyvisi.renderers.gnuplot.axes import Axes
+from pyvisi.renderers.gnuplot.plane import Plane
 
 # vim: expandtab shiftwidth=4:

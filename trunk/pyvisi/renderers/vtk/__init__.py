@@ -31,14 +31,14 @@ __author__ = 'Paul Cochrane'
 __version__ = _rendererVersion
 __revision__ = _rendererRevision
 
-from pyvisi.renderers.vtk.item import *
+from pyvisi.renderers.vtk.item import Item
+from pyvisi.renderers.vtk.renderer import Renderer
+from pyvisi.renderers.vtk.scene import Scene
 from pyvisi.renderers.vtk.plot import *
-from pyvisi.renderers.vtk.renderer import *
-from pyvisi.renderers.vtk.scene import *
-from pyvisi.renderers.vtk.camera import *
+from pyvisi.renderers.vtk.camera import Camera
 from pyvisi.renderers.vtk.image import *
-from pyvisi.renderers.vtk.text import *
-from pyvisi.renderers.vtk.axes import *
-from pyvisi.renderers.vtk.plane import *
+from pyvisi.renderers.vtk.text import Text
+from pyvisi.renderers.vtk.axes import Axes
+from pyvisi.renderers.vtk.plane import Plane
 
 # vim: expandtab shiftwidth=4:
