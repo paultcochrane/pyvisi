@@ -153,11 +153,13 @@ class Scene(BaseScene):
 
         # set the output format
         if format.format == "ps":
-            self.renderer.addToEvalStack("_gnuplot('set terminal postscript')")
+            self.renderer.addToEvalStack(\
+                    "_gnuplot('set terminal postscript color')")
         elif format.format == "png":
             self.renderer.addToEvalStack("_gnuplot('set terminal png')")
         elif format.format == "pbm":
-            self.renderer.addToEvalStack("_gnuplot('set terminal pbm')")
+            self.renderer.addToEvalStack(\
+                    "_gnuplot('set terminal pbm color')")
         else:
             raise ValueError, "Unknown graphics format."
 
