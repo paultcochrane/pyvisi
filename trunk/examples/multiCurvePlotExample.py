@@ -2,8 +2,6 @@
 
 """
 Example of plotting multiple curves with pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
 # what plotting method are we using?
