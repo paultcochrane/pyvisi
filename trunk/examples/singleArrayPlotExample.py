@@ -43,8 +43,8 @@ if method == 'pyvisi':
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    #from pyvisi.renderers.gnuplot import *   # gnuplot
-    from pyvisi.renderers.vtk import *       # vtk
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.vtk import *       # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -73,8 +73,8 @@ if method == 'pyvisi':
     scene.render(pause=True,interactive=True)
 
     # save the scene to file
-    #scene.save(file="multiCurvePlotExample.png", format="PNG")
-    scene.save(file="singleArrayPlotExample.ps", format="PS")
+    scene.save(file="singleArrayPlotExample.png", format="PNG")
+    #scene.save(file="singleArrayPlotExample.ps", format="PS")
 
 elif method == 'gnuplot':
     #### original gnuplot code
