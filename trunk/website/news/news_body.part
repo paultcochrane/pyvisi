@@ -4,6 +4,35 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Scenes can now be saved to file</div>
+      <div class="itemData">24-Jan-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  It is now possible to save the scenes that you have rendered!
+	  Previously, scenes were displayed to the screen and that was all,
+	  however now the <code>Scene.save()</code> method has been
+	  implemented in both the <a
+	      href="http://www.gnuplot.info">gnuplot</a> and <a
+	      href="http://www.vtk.org">vtk</a> renderer modules.  The
+	  syntax of the <code>save()</code> method will change (in that the
+	  <code>format</code> argument will become an object), nevertheless,
+	  one is now actually able to save one's work.
+	  </p>
+	  <p>
+	  The gnuplot renderer module can handle png and postscript output
+	  at present.  With gnuplot 4.0 more output formats will be
+	  available.
+	  </p>
+	  <p>
+	  The vtk renderer module can handle png, postscript, jpeg, bmp,
+	  pnm, and tiff formats.
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">Multiple curves on 2D plots are now possible</div>
       <div class="itemDate">24-Jan-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
