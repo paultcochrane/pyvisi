@@ -22,7 +22,9 @@
 This is the file for the base Renderer class
 """
 
-from common import _debug
+from pyvisi.common import debugMsg
+
+__revision__ = 'pre-alpha-1'
 
 class Renderer(object):
     """
@@ -33,7 +35,8 @@ class Renderer(object):
         """
         Initialisation of Renderer() class
         """
-        if _debug: print "\tBASE: Called Renderer.__init__()"
+        object.__init__(self)
+        debugMsg("Called Renderer.__init__()")
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -44,22 +47,22 @@ class Renderer(object):
 
         # initialise the renderer module
 
-        return
-
-    def setRenderWindowWidth(self,width):
+    def setRenderWindowWidth(self, width):
         """
         Sets the render window width
         
         @param width: The width of the render window
+        @type width: float
         """
         self.renderWindowWidth = width
         return
 
-    def setRenderWindowHeight(self,height):
+    def setRenderWindowHeight(self, height):
         """
         Sets the render window height
 
         @param height: The height of the render window
+        @type height: float
         """
         self.renderWindowHeight = height
         return
@@ -106,13 +109,14 @@ class Renderer(object):
         """
         return self._evalStack
 
-    def addToEvalStack(self,evalString):
+    def addToEvalStack(self, evalString):
         """
         Method to add commands to the evaluation stack
         
         @param evalString: The string of commands to be added to the evalStack
+        @type evalString: string
         """
-        if _debug: print "\tBASE: Called Renderer.addToEvalStack()"
+        debugMsg("Called Renderer.addToEvalStack()")
         self._evalStack += evalString + '\n'
         return
 
@@ -120,7 +124,7 @@ class Renderer(object):
         """
         Reset/flush the evaluation stack
         """
-        if _debug: print "\tBASE: Called Renderer.resetEvalStack()"
+        debugMsg("Called Renderer.resetEvalStack()")
         self._evalStack = ""
         return
 
