@@ -129,6 +129,11 @@ class Scene(BaseScene):
         """
         Save the scene to a file
 
+        Possible formats are:
+            - Postscript
+            - PNG
+            - PBM
+
         @param file: Name of output file
         @type file: string
 
@@ -143,6 +148,8 @@ class Scene(BaseScene):
             self.renderer.addToEvalStack("_gnuplot('set terminal postscript')")
         elif format == "PNG":
             self.renderer.addToEvalStack("_gnuplot('set terminal png')")
+        elif format == "PBM":
+            self.renderer.addToEvalStack("_gnuplot('set terminal pbm')")
         else:
             raise ValueError, "Unknown graphics format."
 
