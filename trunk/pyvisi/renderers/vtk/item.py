@@ -24,7 +24,7 @@ This is the file of the base class for items within a scene
 
 # generic imports
 from common import _debug, rendererName
-from pyvisi.item import BaseItem
+from pyvisi.item import Item as BaseItem
 
 class Item(BaseItem):
     """

@@ -24,7 +24,7 @@ This is the file for the Renderer class
 
 # generic imports
 from common import _debug, rendererName
-from pyvisi.renderer import BaseRenderer
+from pyvisi.renderer import Renderer as BaseRenderer
 
 class Renderer(BaseRenderer):
     """
