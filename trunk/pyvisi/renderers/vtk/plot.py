@@ -121,6 +121,14 @@ class Plot(Item):
 
         return
 
+    def render(self):
+        """
+        Render the Plot object
+        """
+        if _debug: print "\t%s: Called Plot.render()" % rendererName
+
+        return
+
 class ArrowPlot(Plot):
     """
     Arrow field plot
