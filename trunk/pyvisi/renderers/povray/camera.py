@@ -38,8 +38,8 @@ class Camera(Item):
         @param scene: The Scene object to add the Camera object to
         @type scene: Scene object
         """
-        Item.__init__()
         debugMsg("Called Camera.__init__()")
+        Item.__init__()
 
         # default x,y,z positions of Camera (specific to vtk)
         self.xPos = 0.0

@@ -37,8 +37,8 @@ class Renderer(BaseRenderer):
         """
         Initialisation of Renderer() class
         """
-        BaseRenderer.__init__()
         debugMsg("Called Renderer.__init__()")
+        BaseRenderer.__init__()
 
         # initialise some attributes
         self.renderWindowWidth = 640

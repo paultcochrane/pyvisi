@@ -45,8 +45,8 @@ class Image(Item):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Item.__init__()
         debugMsg("Called Image.__init__()")
+        Item.__init__()
 
         #if format == "jpeg":
             #if _debug: print "\t%s: Using jpeg image format" % rendererName
@@ -85,8 +85,8 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__()
         debugMsg("Called JpegImage.__init__()")
+        Image.__init__()
         self.renderer = scene.renderer
 
     def load(self, fname):

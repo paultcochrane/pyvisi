@@ -41,8 +41,8 @@ class Plot(Item):
         @param scene: the scene with which to associate the plot
         @type scene: Scene object
         """
-        Item.__init__()
         debugMsg("Called Plot.__init__()")
+        Item.__init__()
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -72,8 +72,8 @@ class ArrowPlot(Plot):
         @param scene: the scene with which to associate the arrow plot
         @type scene: Scene object
         """
-        Plot.__init__()
         debugMsg("Called ArrowPlot.__init__()")
+        Plot.__init__()
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -103,8 +103,8 @@ class ContourPlot(Plot):
         @param scene: the scene with which to associate the contour plot
         @type scene: Scene object
         """
-        Plot.__init__()
         debugMsg("Called ContourPlot.__init__()")
+        Plot.__init__()
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -134,8 +134,8 @@ class LinePlot(Plot):
         @param scene: the scene with which to associate the line plot
         @type scene: Scene object
         """
-        Plot.__init__()
         debugMsg("Called LinePlot.__init__()")
+        Plot.__init__()
 
         if scene is None:
             raise ValueError, "You must specify a scene object"

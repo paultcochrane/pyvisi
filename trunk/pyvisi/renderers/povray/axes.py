@@ -38,7 +38,7 @@ class Axes(Plot):
         """
         Initialisation of Axes class
         """
-        Plot.__init__()
         debugMsg("Called Axes.__init__()")
+        Plot.__init__()
 
 # vim: expandtab shiftwidth=4:

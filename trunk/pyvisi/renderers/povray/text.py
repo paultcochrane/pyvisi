@@ -41,8 +41,8 @@ class Text(Item):
         @param scene: the scene with which to associate the text object
         @type scene: scene object
         """
-        Item.__init__()
         debugMsg("Called Text.__init__()")
+        Item.__init__()
 
         if scene is None:
             raise ValueError, "You must specify a scene object"

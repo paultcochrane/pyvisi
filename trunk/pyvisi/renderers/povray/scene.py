@@ -42,8 +42,8 @@ class Scene(BaseScene):
         """
         The init function
         """
-        BaseScene.__init__()
         debugMsg("Called Scene.__init__()")
+        BaseScene.__init__()
 
         self.renderer = Renderer()
 
