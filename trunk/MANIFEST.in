@@ -1,12 +1,23 @@
 # $Id$
 
+# the generic stuff
 include README
 include CHANGES
 include COPYING
 include TODO
 include BUGS
 include setup.py
-recursive-include pyvisi *.py
-include examples/*.py
+# the base classes
+include pyvisi *.py
+# the renderer modules
+include pyvisi/renderers/vtk *.py
+include pyvisi/renderers/gnuplot *.py
+# these are the examples to include so far
+include examples/plotExample.py
+include examples/singleArrayPlotExample.py
+include examples/mutliCurvePlotExample.py
+include examples/imageLoadExample.py
+include examples/Flinders_eval*
+# the pdf version of the documentation
 include doc/manual/pyvisi.pdf
 
