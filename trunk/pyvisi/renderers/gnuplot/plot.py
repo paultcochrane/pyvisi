@@ -40,6 +40,12 @@ class Plot(Item):
         @type scene: Scene object
         """
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
+
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
         return
 
     def setData(self,*dataList):
