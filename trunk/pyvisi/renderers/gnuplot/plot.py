@@ -186,9 +186,27 @@ class LinePlot(Plot):
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         
         self.renderer.addToEvalStack("# LinePlot.setData()")
-        dataLen = len(data)
-        print "dataLen = %s" % dataLen
-        self.renderer.addToEvalStack("_data = Gnuplot.Data(x, y1)")
+
+        # this is a really dodgy way to get the data into the renderer
+        # I really have to find a better, more elegant way to do this
+
+        # range over the data, printing what the expansion of the array is
+        # and regenerate the data within the eval
+        for i in range(len(data)):
+            evalString = "_x%d = [" % i
+            info = data[i]
+            for j in range(len(info)-1):
+                evalString += "%s, " % info[j]
+            evalString += "%s]" % info[-1]
+            self.renderer.addToEvalStack(evalString)
+
+        evalString = "_data = Gnuplot.Data("
+        # loop over all bar the last data element 
+        # (the last one doesn't have a trailing comma)
+        for i in range(len(data)-1):
+            evalString += "_x%d, " % i
+        evalString += "_x%d)" % (len(data)-1,)
+        self.renderer.addToEvalStack(evalString)
 
         return True
 
