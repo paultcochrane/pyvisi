@@ -54,13 +54,9 @@
       called something like _renWin (or _renderWindow if you like).
       </li>
       <li>
-      Debug statements should contain the name of the renderer module in them.
-      It is best to follow the vtk module example of declaring a rendererName
-      global variable in common.py and then adding that to the debug string, 
-      something along the lines of:  <br />
-      <pre>
-      if _debug: print "%s: debug message" % rendererName
-      </pre>
+      Debug statements are useful, and for this purpose one should use the
+      <code>debugMsg()</code> function defined in the module's
+      <code>common.py</code> file.
       </li>
       <li>
       All objects and methods specified in the API should be provided, even
