@@ -17,9 +17,9 @@ PyFiles =
 :print Executing the examples aap file
 
 all: $PyFiles $Files
-    :sys cp ../../examples/multiCurvePlotExample.py .
-    :sys cp ../../examples/simplePlotExample.py .
-    :sys cp ../../examples/singleArrayPlotExample.py .
+    :sys cp $(examplesDir)multiCurvePlotExample.py .
+    :sys cp $(examplesDir)simplePlotExample.py .
+    :sys cp $(examplesDir)singleArrayPlotExample.py .
 
 :rule %.html : %.py
     :sys enscript -Epython --lang=html --color -o $target --title=$source $source
