@@ -82,7 +82,7 @@ class Scene(BaseScene):
 
         return
 
-    def render(self, pause=False, interactive=False):
+    def render(self, pause=False, interactive=False, save=False):
         """
         Render (or re-render) the scene
         
@@ -110,15 +110,28 @@ class Scene(BaseScene):
         for obj in self.objectList:
             obj.render()
 
-        renderer.addToEvalStack("_renderWindow.Render()")
+        # if saving to file, try not to render to the screen
+        if save:
+            renderer.addToEvalStack("_renderWindow.OffScreenRenderingOn()")
+            renderer.addToEvalStack("_renderWindow.Render()")
+        else:
+            renderer.addToEvalStack("_renderWindow.Render()")
 
         if interactive:
             renderer.addToEvalStack("_iRenderer.Start()")
 
+        # write it
+        if save:
+            self.renderer.addToEvalStack("_outWriter.Write()")
+
         # add some code to pause after rendering if asked to
         if pause:
             renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
-        
+
+        # prepend the init stack to the eval stack
+        self.renderer._evalStack = self.renderer._initStack + \
+                self.renderer._evalStack
+
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
         debugMsg("Here is the evaluation stack")
@@ -137,8 +150,8 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        #debugMsg("Flusing evaluation stack")
-        #renderer.resetEvalStack()
+        debugMsg("Flusing evaluation stack")
+        renderer.resetEvalStack()
 
         return
 
@@ -196,14 +209,12 @@ class Scene(BaseScene):
         evalString = "_outWriter.SetFileName(\"%s\")" % fname
         self.renderer.addToEvalStack(evalString)
         
-        # write it
-        self.renderer.addToEvalStack("_outWriter.Write()")
-
         # rerender the scene to get the output
-        self.render()
+        self.render(save=True)
 
         return
 
+    # set up an alias for the save method
     write = save
 
     def setBackgroundColor(self, *color):

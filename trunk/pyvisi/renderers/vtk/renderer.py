@@ -47,15 +47,19 @@ class Renderer(BaseRenderer):
         # initialise the evalstack
         self._evalStack = ""
 
+        # keep the initial setup of the module for later reuse
+        self._initStack = ""
+
         # initialise the renderer module
         self.addToEvalStack("# Renderer._initRendererModule")
-        self.addToEvalStack("import vtk")
-        self.addToEvalStack("_renderer = vtk.vtkRenderer()")
+        self.addToInitStack("import vtk")
+        self.addToInitStack("from Numeric import *")
+        self.addToInitStack("_renderer = vtk.vtkRenderer()")
         # this next line should only be done if we have an active display
-        self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()")
-        self.addToEvalStack("_renderWindow.AddRenderer(_renderer)")
+        self.addToInitStack("_renderWindow = vtk.vtkRenderWindow()")
+        self.addToInitStack("_renderWindow.AddRenderer(_renderer)")
         evalString = "_renderWindow.SetSize(%d,%d)" % \
                 (self.renderWindowWidth,self.renderWindowHeight)
-        self.addToEvalStack(evalString)
+        self.addToInitStack(evalString)
 
 # vim: expandtab shiftwidth=4:

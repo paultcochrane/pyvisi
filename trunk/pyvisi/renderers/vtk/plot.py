@@ -254,13 +254,16 @@ class LinePlot(Plot):
         Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
-        self.renderer.addToEvalStack("# LinePlot.__init__()")
-        self.renderer.addToEvalStack("_plot = vtk.vtkXYPlotActor()")
+        self.renderer.addToInitStack("# LinePlot.__init__()")
+        self.renderer.addToInitStack("_plot = vtk.vtkXYPlotActor()")
+
+        # offset the data in the lineplot?
+        self.offset = False
 
         # add the plot to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Set data to the plot
 
@@ -271,6 +274,12 @@ class LinePlot(Plot):
 
         self.renderer.addToEvalStack("# LinePlot.setData()")
 
+        # if offset is used, process it
+        if options.has_key('offset'):
+            self.offset = options['offset']
+        else:
+            self.offset = False
+
         # do some sanity checking on the data
         for i in range(len(dataList)):
             if len(dataList[0]) != len(dataList[i]):
@@ -280,10 +289,10 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
             # don't need the first element of the dataList, so get rid of it
@@ -296,10 +305,10 @@ class LinePlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # send it to the renderer
             self.renderer.addToEvalStack(evalString)
 
@@ -314,7 +323,7 @@ class LinePlot(Plot):
         # now to add my dodgy hack until I have a decent way of sharing data
         # objects around properly
         for i in range(len(dataList)):
-            evalString = "_y%d = [" % i
+            evalString = "_y%d = array([" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -322,8 +331,30 @@ class LinePlot(Plot):
 
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
-            evalString += "%s]" % data[-1]
+            evalString += "%s])" % data[-1]
             self.renderer.addToEvalStack(evalString)
+
+        # if offset is true then shift the data
+        if self.offset:
+            # concatenate the data
+            evalString = "_yAll = concatenate(["
+            for i in range(len(dataList)-1):
+                evalString += "_y%d," % i
+            evalString += "_y%d])" % int(len(dataList)-1)
+            self.renderer.addToEvalStack(evalString)
+
+            # grab the min and max values
+            self.renderer.addToEvalStack("_yMax = max(_yAll)")
+            self.renderer.addToEvalStack("_yMin = min(_yAll)")
+
+            # keep the data apart a bit
+            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+
+            # now shift the data
+            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            for i in range(len(dataList)):
+                evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
+                self.renderer.addToEvalStack(evalString)
 
         # set up the vtkDataArray objects
         for i in range(len(dataList)):
