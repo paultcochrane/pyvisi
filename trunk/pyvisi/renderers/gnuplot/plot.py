@@ -177,11 +177,11 @@ class LinePlot(Plot):
 
         return
 
-    def setData(self,*data):
+    def setData(self,*dataList):
         """
         Sets the data to the given plot object.
 
-        @param data: list of data objects to plot
+        @param dataList: list of data objects to plot
         """
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         
@@ -192,20 +192,20 @@ class LinePlot(Plot):
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
-        for i in range(len(data)):
+        for i in range(len(dataList)):
             evalString = "_x%d = [" % i
-            info = data[i]
-            for j in range(len(info)-1):
-                evalString += "%s, " % info[j]
-            evalString += "%s]" % info[-1]
+            data = dataList[i]
+            for j in range(len(data)-1):
+                evalString += "%s, " % data[j]
+            evalString += "%s]" % data[-1]
             self.renderer.addToEvalStack(evalString)
 
         evalString = "_data = Gnuplot.Data("
         # loop over all bar the last data element 
         # (the last one doesn't have a trailing comma)
-        for i in range(len(data)-1):
+        for i in range(len(dataList)-1):
             evalString += "_x%d, " % i
-        evalString += "_x%d)" % (len(data)-1,)
+        evalString += "_x%d)" % (len(dataList)-1,)
         self.renderer.addToEvalStack(evalString)
 
         return True
