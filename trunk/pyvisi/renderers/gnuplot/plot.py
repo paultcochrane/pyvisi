@@ -37,6 +37,7 @@ class Plot(Item):
         Initialisation of abstract Plot class
 
         @param scene: the scene with which to associate the Plot
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         return
@@ -47,8 +48,9 @@ class Plot(Item):
 
         @param dataList: the data to set to the plot (should be an array or list
         or something)
+        @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setData()" % rendererName
         return True
 
     def setTitle(self,title):
@@ -56,8 +58,9 @@ class Plot(Item):
         Set the plot title
 
         @param title: the string holding the title to the plot
+        @type title: string
         """
-        if _debug: print "\t%s: Called setTitle() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setTitle()" % rendererName
 
         self.title = title
 
@@ -68,8 +71,9 @@ class Plot(Item):
         Set the label of the x-axis
 
         @param label: the string holding the label of the x-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setXLabel() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setXLabel()" % rendererName
 
         self.xlabel = label
 
@@ -80,8 +84,9 @@ class Plot(Item):
         Set the label of the y-axis
 
         @param label: the string holding the label of the y-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setYLabel() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setYLabel()" % rendererName
 
         self.ylabel = label
 
@@ -92,8 +97,9 @@ class Plot(Item):
         Set the label of the z-axis
 
         @param label: the string holding the label of the z-axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setZLabel() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setZLabel()" % rendererName
 
         self.zlabel = label
 
@@ -104,9 +110,11 @@ class Plot(Item):
         Set the label of a given axis
 
         @param axis: string (Axis object maybe??) of the axis (e.g. x, y, z)
+
         @param label: string of the label to set for the axis
+        @type label: string
         """
-        if _debug: print "\t%s: Called setLabel() in Plot()" % rendererName
+        if _debug: print "\t%s: Called Plot.setLabel()" % rendererName
 
         # string-wise implementation (really budget implementation too)
         if axis == 'x' or axis == 'X':
@@ -129,17 +137,19 @@ class ArrowPlot(Plot):
         Initialisation of ArrowPlot class
 
         @param scene: the scene with which to associate the ArrowPlot
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
-        pass
+        return
 
     def setData(self,*dataList):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
+        @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
+        if _debug: print "\t%s: Called ArrowPlot.setData()" % rendererName
         return True
 
 class ContourPlot(Plot):
@@ -151,12 +161,13 @@ class ContourPlot(Plot):
         Initialisation of ContourPlot class
 
         @param scene: the scene with which to associate the ContourPlot
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
-        pass
+        return
 
     def setData(self,data):
-        if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
+        if _debug: print "\t%s: Called ContourPlot.setData()"%rendererName
         return True
 
 class LinePlot(Plot):
@@ -168,6 +179,7 @@ class LinePlot(Plot):
         Initialisation of LinePlot class
 
         @param scene: the scene with which to associate the LinePlot
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
 
@@ -179,7 +191,7 @@ class LinePlot(Plot):
         self.ylabel = None
         self.zlabel = None
 
-        self.linestyle = None   # 'lines'
+        self.linestyle = None 
 
         return
 
@@ -188,6 +200,7 @@ class LinePlot(Plot):
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
+        @type dataList: tuple
         """
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
         
