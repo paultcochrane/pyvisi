@@ -50,6 +50,7 @@ plotClassNames = [
                     'ArrowPlot',
                     'ContourPlot',
                     'LinePlot',
+                    'SurfacePlot',
                     ]
 
 # this is the name of the module, and the name of the directory to create
