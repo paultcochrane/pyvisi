@@ -20,7 +20,7 @@
   </p>
   <p>
   Other renderers are envisaged being added to the interface, such as 
-  <a href="http://www.rsinc.com/idl/">IDL</a>, 
+  <!-- <a href="http://www.rsinc.com/idl/">IDL</a>,  -->
   <a href="http://plplot.sourceforge.net">PLplot</a>, 
   <a href="http://www.mps.mpg.de/dislin/">DISLIN</a>, 
   <a href="http://ngwww.ucar.edu/ncl/pyngl/">PyNGL</a>, 
