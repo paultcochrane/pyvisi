@@ -57,9 +57,6 @@ if method == 'pyvisi':
     # create a LinePlot object
     plot = LinePlot(scene)
     
-    # add the plot to the scene
-    scene.add(plot)
-
     # add some helpful info to the plot
     plot.title = 'Example 2D plot'
     plot.xlabel = 'x'
@@ -75,8 +72,8 @@ if method == 'pyvisi':
     scene.render(pause=True,interactive=True)
 
     # save the scene to file
-    #scene.save(file="multiCurvePlotExample.png", format="PNG")
-    scene.save(file="multiCurvePlotExample.ps", format="PS")
+    scene.save(fname="multiCurvePlotExample.png", format="PNG")
+    #scene.save(fname="multiCurvePlotExample.ps", format="PS")
 
 elif method == 'gnuplot':
     #### original gnuplot code

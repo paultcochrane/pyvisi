@@ -55,9 +55,6 @@ if method == 'pyvisi':
     # create a LinePlot object
     plot = LinePlot(scene)
     
-    # add the plot to the scene
-    scene.add(plot)
-
     # add some helpful info to the plot
     plot.title = 'Example 2D plot'
     plot.xlabel = 'x'
@@ -73,8 +70,8 @@ if method == 'pyvisi':
     scene.render(pause=True,interactive=True)
 
     # save the scene out to file
-    #scene.save(file="plotExample.png", format="PNG")
-    scene.save(file="plotExample.ps", format="PS")
+    scene.save(fname="plotExample.png", format="PNG")
+    #scene.save(fname="plotExample.ps", format="PS")
 
 elif method == 'gnuplot':
     #### original gnuplot code
