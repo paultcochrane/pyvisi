@@ -72,19 +72,33 @@ for i in range(len(x)):
     for j in range(len(y)):
         distnvtk.InsertNextValue(distn[i,j])
 
+# make the points to put into the grid
+points = vtk.vtkPoints()
+count = 0
+for i in xrange(len(x)):
+    for j in xrange(len(y)):
+        #points.InsertPoint(i+j, x[i], y[j], distn[i,j])
+        points.InsertPoint(count, x[i], y[j], x[i]*y[j])
+        count += 1
+
+# now make the strips (whatever they are...)
+strips = vtk.vtkCellArray()
+strips.InsertNextCell(len(x)*len(y))  # number of points
+for i in xrange(len(x)*len(y)):
+    strips.InsertCellPoint(i)
+
+# set up the polygonal data object
 polyData = vtk.vtkPolyData()
+polyData.SetPoints(points)
+polyData.SetStrips(strips)
 polyData.GetPointData().SetScalars(distnvtk)
 
-dataSet = vtk.vtkDataObjectToDataSetFilter()
-dataSet.SetInput(polyData)
-
 warp = vtk.vtkWarpScalar()
-warp.SetInput(dataSet.GetOutput())
-warp.XYPlaneOn()
+warp.SetInput(polyData)
 
 contMapper = vtk.vtkPolyDataMapper()
-contMapper.SetInput(warp.GetOutput())
-contMapper.SetScalarRange(0.0, 1.2)
+contMapper.SetInput(warp.GetPolyDataOutput())
+contMapper.SetScalarRange(polyData.GetScalarRange())
 
 contActor = vtk.vtkActor()
 contActor.SetMapper(contMapper)
@@ -97,7 +111,8 @@ iren.SetRenderWindow(renWin)
 
 ren.AddActor(contActor)
 renWin.SetSize(400,400)
-ren.SetBackground(0.1,0.2,0.4)
+ren.SetBackground(1,1,1)
+iren.Initialize()
 renWin.Render()
 iren.Start()
 #raw_input("Press enter to continue")
