@@ -11,12 +11,12 @@
   <h2>Renderers</h2>
 
   <p>
-  Currently only the <a href="http://www.vtk.org">vtk</a> renderer is being
-  used in development, however, the structure already exists for  
-  <a href="http://www.gnuplot.info">gnuplot</a> and 
-  <a href="http://www.povray.org">povray</a> renderers, one merely needs to
+  Currently only <a href="http://www.vtk.org">vtk</a> and <a
+      href="http://www.gnuplot.info">gnuplot</a> renderer modules are being
+  used in development, however, the structure already exists for the
+  <a href="http://www.povray.org">povray</a> renderer, one merely needs to
   write the relevant code (although there is some change going on, so expect
-  there to be more objects and methods to come).  
+  there to be more objects and methods to come).
   </p>
   <p>
   Other renderers are envisaged being added to the interface, such as 
