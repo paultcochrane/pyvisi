@@ -181,7 +181,21 @@ class ContourPlot(Plot):
         @type dataList: tuple
         """
         if _debug: print "\t%s: Called ContourPlot.setData()"%rendererName
+
+        self.renderer.addToEvalStack("# ContourPlot.setData()")
+
         return True
+
+    def render(self):
+        """
+        Does ContourPlot object specific (pre) rendering styff
+        """
+        if _debug: print "\t%s: Called ContourPlot.render()" % rendererName
+
+        self.renderer.addToEvalStack("# ContourPlot.render()")
+
+        return
+
 
 class LinePlot(Plot):
     """
