@@ -121,9 +121,9 @@ class Scene(object):
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
         debugMsg("Here is the evaluation stack")
-        debugMsg(70*"#")
+        debugMsg(60*"#")
         debugMsg(renderer.getEvalStack())
-        debugMsg(70*"#")
+        debugMsg(60*"#")
 
         # now compile the string object into code, and execute it
         try:
