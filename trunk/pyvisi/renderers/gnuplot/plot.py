@@ -26,10 +26,9 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 from common import _debug, rendererName
 
 # module specific imports
-from scene import Scene
 from item import Item
 
-class Plot(Scene):
+class Plot(Item):
     """
     Abstract plot class
     """
