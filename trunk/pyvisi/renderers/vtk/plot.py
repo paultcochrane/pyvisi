@@ -31,11 +31,11 @@ class Plot(Scene):
     Abstract plot class
     """
     def __init__(self):
-        if _debug: print "\tCalled Plot.__init__()"
+        if _debug: print "\tVTK: Called Plot.__init__()"
         pass
 
     def setData(self,data):
-        if _debug: print "\tCalled setData() in Plot()"
+        if _debug: print "\tVTK: Called setData() in Plot()"
         return True
 
 class ArrowPlot(Plot):
@@ -43,11 +43,11 @@ class ArrowPlot(Plot):
     Arrow field plot
     """
     def __init__(self):
-        if _debug: print "\tCalled ArrowPlot.__init__()"
+        if _debug: print "\tVTK: Called ArrowPlot.__init__()"
         pass
 
     def setData(self,data):
-        if _debug: print "\tCalled setData() in ArrowPlot()"
+        if _debug: print "\tVTK: Called setData() in ArrowPlot()"
         return True
 
 class ContourPlot(Plot):
@@ -55,11 +55,11 @@ class ContourPlot(Plot):
     Contour plot
     """
     def __init__(self):
-        if _debug: print "\tCalled ContourPlot.__init__()"
+        if _debug: print "\tVTK: Called ContourPlot.__init__()"
         pass
 
     def setData(self,data):
-        if _debug: print "\tCalled setData() in ContourPlot()"
+        if _debug: print "\tVTK: Called setData() in ContourPlot()"
         return True
 
 class LinePlot(Plot):
@@ -67,11 +67,11 @@ class LinePlot(Plot):
     Line plot
     """
     def __init__(self):
-        if _debug: print "\tCalled LinePlot.__init__()"
+        if _debug: print "\tVTK: Called LinePlot.__init__()"
         pass
 
     def setData(self,data):
-        if _debug: print "\tCalled setData() in LinePlot()"
+        if _debug: print "\tVTK: Called setData() in LinePlot()"
         return True
 
 # vim: expandtab shiftwidth=4:

@@ -35,7 +35,7 @@ class Item(object):
     
         @param dict A dictionary of attributes to set
         """
-        if _debug: print "\tCalled Item.__init__()"
+        if _debug: print "\tVTK: Called Item.__init__()"
         return
 
 # vim: expandtab shiftwidth=4:

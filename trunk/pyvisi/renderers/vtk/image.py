@@ -36,10 +36,10 @@ class Image(Item):
         @param format The image format
         @param scene The Scene object to add to
         """
-        if _debug: print "\tCalled Image.__init__()"
+        if _debug: print "\tVTK: Called Image.__init__()"
 
         if format == "jpeg":
-            if _debug: print "\tUsing jpeg image format"
+            if _debug: print "\tVTK: Using jpeg image format"
             return JpegImage(scene)
         else:
             print "Unknown image format %s" % format
@@ -53,7 +53,7 @@ class Image(Item):
 
         @param fname The filename from which to load image data
         """
-        if _debug: print "\tCalled Image.load()"
+        if _debug: print "\tVTK: Called Image.load()"
         return
 
 class JpegImage(Image):
@@ -66,7 +66,7 @@ class JpegImage(Image):
 
         @param scene The Scene object to add to
         """
-        if _debug: print "\tCalled JpegImage.__init__()"
+        if _debug: print "\tVTK: Called JpegImage.__init__()"
         self.renderer = scene.renderer
         rendererName = self.renderer.rendererName
         if rendererName == "vtk":
@@ -85,7 +85,7 @@ class JpegImage(Image):
 
         @param file The filename from which to load jpeg image data
         """
-        if _debug: print "\tCalled JpegImage.load()"
+        if _debug: print "\tVTK: Called JpegImage.load()"
 
         # need to check that the file exists and is readable etc here
         # *before* we add to the evalString, better to get the feedback
@@ -100,7 +100,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\tCalled JpegImage.render()"
+        if _debug: print "\tVTK: Called JpegImage.render()"
 
         self.renderer.addToEvalStack("# JpegImage.render()\n")
         self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()\n")

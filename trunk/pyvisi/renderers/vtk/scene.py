@@ -39,9 +39,9 @@ class Scene(object):
 
         @param renderer The renderer object to use for the scene.
         """
-        if _debug: print "\tCalled Scene.__init__()"
+        if _debug: print "\tVTK: Called Scene.__init__()"
         self.renderer = Renderer(renderer)
-        if _debug: print "\tScenes will be rendered with %s" % \
+        if _debug: print "\tVTK: Scenes will be rendered with %s" % \
                 self.renderer.rendererName
         numCameras = 0
 
@@ -53,7 +53,7 @@ class Scene(object):
 
         @param obj The object to add to the scene
         """
-        if _debug: print "\tCalled Scene.add()"
+        if _debug: print "\tVTK: Called Scene.add()"
         return
 
     def place(self, obj):
@@ -62,7 +62,7 @@ class Scene(object):
 
         @param obj The object to place within the scene
         """
-        if _debug: print "\tCalled Scene.place()"
+        if _debug: print "\tVTK: Called Scene.place()"
         return
 
     def render(self,pause=False,interactive=False):
@@ -74,7 +74,7 @@ class Scene(object):
         @param pause Flag to wait at end of script evaluation for user input
         @param interactive Whether or not to have interactive use of the output
         """
-        if _debug: print "\tCalled Scene.render()"
+        if _debug: print "\tVTK: Called Scene.render()"
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
@@ -97,7 +97,7 @@ class Scene(object):
         
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "Here is the evaluation stack"
+        if _debug: print "VTK: Here is the evaluation stack"
         if _debug: print 70*"#"
         if _debug: print renderer.getEvalStack()
         if _debug: print 70*"#"
@@ -113,7 +113,7 @@ class Scene(object):
             return None
 
         # flush the evaluation stack
-        if _debug: print "Flusing evaluation stack"
+        if _debug: print "VTK: Flusing evaluation stack"
         renderer.resetEvalStack()
 
         return
@@ -122,7 +122,7 @@ class Scene(object):
         """
         Save the scene to a file
         """
-        if _debug: print "\tCalled Scene.save()"
+        if _debug: print "\tVTK: Called Scene.save()"
         return
 
     def setBackgroundColor(self,*color):
@@ -131,7 +131,7 @@ class Scene(object):
 
         @param clr The color to set the background to.  Can be RGB or CMYK
         """
-        if _debug: print "\tCalled Scene.setBackgroundColor()"
+        if _debug: print "\tVTK: Called Scene.setBackgroundColor()"
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -167,7 +167,7 @@ class Scene(object):
         """
         Gets the current background colour/color setting of the Scene
         """
-        if _debug: print "\tCalled Scene.getBackgroundClr()"
+        if _debug: print "\tVTK: Called Scene.getBackgroundClr()"
         return
 
     def vtkCommand(self,vtkcommand):
@@ -176,7 +176,7 @@ class Scene(object):
 
         @param vtkcommand The vtk command to run as a string
         """
-        if _debug: print "\tCalled Scene.vtkCommand()"
+        if _debug: print "\tVTK: Called Scene.vtkCommand()"
         evalString = "%s\n" % vtkcommand
         self.renderer.addToEvalStack(evalString)
         return

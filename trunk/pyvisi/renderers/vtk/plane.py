@@ -34,7 +34,7 @@ class Plane(Item):
         """
         Initialisation of the Plane object
         """
-        if _debug: print "\tCalled Plane.__init__()"
+        if _debug: print "\tVTK: Called Plane.__init__()"
 
         self.renderer = scene.renderer
         return
@@ -43,7 +43,7 @@ class Plane(Item):
         """
         Maps an Image object onto a Plane object
         """
-        if _debug: print "\tCalled Plane.mapImageToPlane()"
+        if _debug: print "\tVTK: Called Plane.mapImageToPlane()"
 
         # need to work out the name of the internal image object name
         imgObjectName = image.readerName
@@ -63,7 +63,7 @@ class Plane(Item):
         """
         Perform Plane object specific (pre)rendering tasks
         """
-        if _debug: print "\tCalled Plane.mapImageToPlane()"
+        if _debug: print "\tVTK: Called Plane.mapImageToPlane()"
 
         self.renderer.addToEvalStack("# Plane.render()\n")
         self.renderer.addToEvalStack("_planeActor = vtk.vtkActor()\n")
