@@ -35,8 +35,8 @@ from pyvisi.renderers.gnuplot.item import Item
 from pyvisi.renderers.gnuplot.renderer import Renderer
 from pyvisi.renderers.gnuplot.scene import Scene
 from pyvisi.renderers.gnuplot.plot import Plot, \
-        ArrowPlot, ContourPlot, LinePlot, ScatterPlot, ScatterPlot3D, \
-        SurfacePlot
+        ArrowPlot, ContourPlot, LinePlot, MeshPlot, \
+        ScatterPlot, ScatterPlot3D, SurfacePlot
 from pyvisi.renderers.gnuplot.camera import Camera
 from pyvisi.renderers.gnuplot.image import Image, \
         JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
