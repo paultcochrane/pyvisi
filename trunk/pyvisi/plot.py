@@ -22,9 +22,12 @@
 Base class and functions associated with a pyvisi Plot objects
 """
 
-from common import _debug
+# generic imports
+from pyvisi.common import debugMsg, overrideWarning
 
-from item import Item
+from pyvisi.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Plot(Item):
     """
@@ -37,91 +40,97 @@ class Plot(Item):
         @param scene: the scene with which to associate the Plot
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called Plot.__init__()"
+        Item.__init__(self)
+        debugMsg("Called Plot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
 
         self.title = None
         self.xlabel = None
         self.ylabel = None
         self.zlabel = None
 
-        return
-
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Set data to Plot
 
         @param dataList: the data to set to the plot
         @type dataList: tuple
         """
-        if _debug: print "\tBASE: Called setData() in Plot()"
+        debugMsg("Called setData() in Plot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
 
         # print a warning message if get to here
         overrideWarning("Plot.setData")
 
         return True
 
-    def setTitle(self,title):
+    def setTitle(self, title):
         """
         Set the plot title
 
         @param title: the string holding the title to the plot
         @type title: string
         """
-        if _debug: print "\tBASE: Called Plot.setTitle()"
+        debugMsg("Called Plot.setTitle()")
 
         self.title = title
 
         return
 
-    def setXLabel(self,label):
+    def setXLabel(self, label):
         """
         Set the label of the x-axis
 
         @param label: the string holding the label of the x-axis
         @type label: string
         """
-        if _debug: print "\tBASE: Called Plot.setXLabel()"
+        debugMsg("Called Plot.setXLabel()")
 
         self.xlabel = label
 
         return
 
-    def setYLabel(self,label):
+    def setYLabel(self, label):
         """
         Set the label of the y-axis
 
         @param label: the string holding the label of the y-axis
         @type label: string
         """
-        if _debug: print "\tBASE: Called Plot.setYLabel()"
+        debugMsg("Called Plot.setYLabel()")
 
         self.ylabel = label
 
         return
 
-    def setZLabel(self,label):
+    def setZLabel(self, label):
         """
         Set the label of the z-axis
 
         @param label: the string holding the label of the z-axis
         @type label: string
         """
-        if _debug: print "\tBASE: Called Plot.setZLabel()"
+        debugMsg("Called Plot.setZLabel()")
 
         self.zlabel = label
 
         return
 
-    def setLabel(self,axis,label):
+    def setLabel(self, axis, label):
         """
         Set the label of a given axis
 
         @param axis: string (Axis object maybe??) of the axis (e.g. x, y, z,)
+        @type axis: string or Axis object
 
         @param label: string of the label to set for the axis
         @type label: string
         """
-        if _debug: print "\tBASE: Called Plot.setLabel()"
+        debugMsg("Called Plot.setLabel()")
 
         # string-wise implementation
         if axis == 'x' or axis == 'X':
@@ -139,12 +148,30 @@ class ArrowPlot(Plot):
     """
     Arrow field plot
     """
-    def __init__(self):
-        if _debug: print "\tBASE: Called ArrowPlot.__init__()"
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of ArrowPlot class
 
-    def setData(self,data):
-        if _debug: print "\tBASE: Called setData() in ArrowPlot()"
+        @param scene: the scene with which to associate the ArrowPlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called ArrowPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to ArrowPlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ArrowPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
 
         # print a warning message if get to here
         overrideWarning("ArrowPlot.setData")
@@ -155,12 +182,30 @@ class ContourPlot(Plot):
     """
     Contour plot
     """
-    def __init__(self):
-        if _debug: print "\tBASE: Called ContourPlot.__init__()"
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of ContourPlot class
 
-    def setData(self,data):
-        if _debug: print "\tBASE: Called setData() in ContourPlot()"
+        @param scene: the scene with which to associate the ContourPlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called ContourPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to ContourPlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ContourPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
 
         # print a warning message if get to here
         overrideWarning("ContourPlot.setData")
@@ -174,16 +219,20 @@ class LinePlot(Plot):
     This is the abstract base class of all LinePlot objects.  Renderer
     modules must inherit and override the methods defined here.
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of LinePlot class
 
         @param scene: the scene with which to associate the LinePlot
         @type scene: Scene object
         """
-        if _debug: print "\tBASE: Called LinePlot.__init__()"
+        Plot.__init__(self, scene)
+        debugMsg("Called LinePlot.__init__()")
 
         self.renderer = scene.renderer
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
 
         self.title = None
         self.xlabel = None
@@ -193,16 +242,17 @@ class LinePlot(Plot):
         self.linestyle = None   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
-        return
-
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
         """
-        if _debug: print "\tBASE: Called setData() in LinePlot()"
+        debugMsg("Called setData() in LinePlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
 
         # print a warning message if get to here
         overrideWarning("LinePlot.setData")
@@ -213,14 +263,14 @@ class LinePlot(Plot):
         """
         Does LinePlot object specific (pre) rendering stuff
         """
-        if _debug: print "\tBASE: Called LinePlot.render()"
+        debugMsg("Called LinePlot.render()")
 
         # print a warning message if get to here
         overrideWarning("LinePlot.render")
 
         return
 
-    def setLineStyle(self,linestyle):
+    def setLineStyle(self, linestyle):
         """
         Sets the linestyle of the LinePlot
 
@@ -244,7 +294,9 @@ class LinePlot(Plot):
         @param linestyle: the style to use for the lines
         @type linestyle: string
         """
-        if _debug: print "\tBASE: Called LinePlot.setLineStyle()"
+        debugMsg("Called LinePlot.setLineStyle()")
+
+        self.linestyle = linestyle
 
         # print a warning if get to here
         overrideWarning("LinePlot.setLineStyle")
@@ -257,7 +309,7 @@ class LinePlot(Plot):
 
         @return: the linestyle as a string
         """
-        if _debug: print "\tBASE: Called LinePlot.getLineStyle()"
+        debugMsg("Called LinePlot.getLineStyle()")
 
         return self.linestyle
 
