@@ -52,6 +52,75 @@ class Plot(Item):
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
 
+    def setTitle(self,title):
+        """
+        Set the plot title
+
+        @param title: the string holding the title to the plot
+        """
+        if _debug: print "\t%s: Called setTitle() in Plot()" % rendererName
+
+        self.title = title
+
+        return
+
+    def setXLabel(self,label):
+        """
+        Set the label of the x-axis
+
+        @param label: the string holding the label of the x-axis
+        """
+        if _debug: print "\t%s: Called setXLabel() in Plot()" % rendererName
+
+        self.xlabel = label
+
+        return
+
+    def setYLabel(self,label):
+        """
+        Set the label of the y-axis
+
+        @param label: the string holding the label of the y-axis
+        """
+        if _debug: print "\t%s: Called setYLabel() in Plot()" % rendererName
+
+        self.ylabel = label
+
+        return
+
+    def setZLabel(self,label):
+        """
+        Set the label of the z-axis
+
+        @param label: the string holding the label of the z-axis
+        """
+        if _debug: print "\t%s: Called setZLabel() in Plot()" % rendererName
+
+        self.zlabel = label
+
+        return
+
+    def setLabel(self,axis,label):
+        """
+        Set the label of a given axis
+
+        @param axis: string (Axis object maybe??) of the axis (e.g. x, y, z)
+        @param label: string of the label to set for the axis
+        """
+        if _debug: print "\t%s: Called setLabel() in Plot()" % rendererName
+
+        # string-wise implementation (really budget implementation too)
+        if axis == 'x' or axis == 'X':
+            self.xlabel = label
+        elif axis == 'y' or axis == 'Y':
+            self.ylabel = label
+        elif axis == 'z' or axis == 'Z':
+            self.zlabel = label
+        else:
+            raise ValueError, "axis must be x or y or z"
+
+        return
+
 class ArrowPlot(Plot):
     """
     Arrow field plot
