@@ -124,7 +124,7 @@ class PngImage(Image):
         """
         Loads png image data from file.
 
-        @param file: The filename from which to load jpeg image data
+        @param file: The filename from which to load png image data
         @type file: string
         """
         if _debug: print "\tBASE: Called PngImage.load()"
@@ -144,6 +144,48 @@ class PngImage(Image):
         overrideWarning("PngImage.render")
 
         return
+
+class BmpImage(Image):
+    """
+    Subclass of Image class to explicitly handle bmp images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the BmpImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\tBASE: Called BmpImage.__init__()"
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads bmp image data from file.
+
+        @param file: The filename from which to load bmp image data
+        @type file: string
+        """
+        if _debug: print "\tBASE: Called BmpImage.load()"
+
+        # print a warning message if get to here
+        overrideWarning("BmpImage.load")
+
+        return
+
+    def render(self):
+        """
+        Does BmpImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\tBASE: Called BmpImage.render()"
+
+        # print a warning message if get to here
+        overrideWarning("BmpImage.render")
+
+        return
+
 
 
 # vim: expandtab shiftwidth=4:
