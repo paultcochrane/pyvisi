@@ -89,7 +89,7 @@ class Renderer(object):
         @param evalString: The string of commands to be added to the evalStack
         """
         if _debug: print "\tBASE: Called Renderer.addToEvalStack()"
-        self._evalStack += evalString
+        self._evalStack += evalString + '\n'
         return
 
     def resetEvalStack(self):
