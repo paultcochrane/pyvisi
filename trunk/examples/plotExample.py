@@ -27,8 +27,8 @@ Will hopefully help me write a decent interface.
 import sys
 sys.path.append('../')
 
-# are we using the original gnuplot code?
-gnuplot = False
+# what plotting method are we using?
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -37,7 +37,7 @@ x = arange(10, typecode=Float)
 y1 = x**2
 
 # plot it using one of the two methods
-if not gnuplot:
+if method == 'pyvisi':
 
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
@@ -70,8 +70,7 @@ if not gnuplot:
     # render the scene to screen
     scene.render(pause=True)
 
-
-else:
+elif method == 'gnuplot':
     #### original gnuplot code
     
     import Gnuplot
@@ -89,4 +88,25 @@ else:
     _gnuplot.plot(_data)
 
     raw_input('Press enter to continue...\n')
+
+elif method == 'vtk':
+    #### original vtk code
+
+    import vtk
+
+    # set up the renderer and the render window
+    _ren = vtkRenderer()
+    _renWin = vtkRenderWindow()
+    _renWin.AddRenderer(_ren)
+    
+    # render the scene
+    _renWin.Render()
+
+    # pause for input
+    raw_input('Press enter to continue...\n')
+
+else:
+    print "Eeek!  What plotting method am I supposed to use???"
+
+# vim: expandtab shiftwidth=4:
 
