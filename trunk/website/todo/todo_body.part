@@ -8,201 +8,201 @@
 <h2>Todo items</h2>
 <table class="todo">
   <tr>
-    <th>Task description</th>
-    <th>Date added</th>
-    <th>Priority</th>
+    <th class="description">Task description</th>
+    <th class="dateAdded">Date added</th>
+    <th class="priority">Priority</th>
   </tr>
 <tr class="veryhigh">
-  <td>Reimplement evaluation stack way of running low level code to more robust model</td>
-  <td>1100836955</td>
-  <td>veryhigh</td>
+  <td class="description">Reimplement evaluation stack way of running low level code to more robust model</td>
+  <td class="dateAdded">1100836955</td>
+  <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
-  <td>Work out how to find out the dimensions of an image in vtk</td>
-  <td>1100838523</td>
-  <td>veryhigh</td>
+  <td class="description">Work out how to find out the dimensions of an image in vtk</td>
+  <td class="dateAdded">1100838523</td>
+  <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
-  <td>Implement render object talking directly to a python interpreter instance sitting in a separate thread</td>
-  <td>1100838588</td>
-  <td>veryhigh</td>
+  <td class="description">Implement render object talking directly to a python interpreter instance sitting in a separate thread</td>
+  <td class="dateAdded">1100838588</td>
+  <td class="priority">veryhigh</td>
 </tr>
 <tr class="veryhigh">
-  <td>Investigate threading in python and how communication works between processes</td>
-  <td>1100838810</td>
-  <td>veryhigh</td>
+  <td class="description">Investigate threading in python and how communication works between processes</td>
+  <td class="dateAdded">1100838810</td>
+  <td class="priority">veryhigh</td>
 </tr>
 <tr class="high">
-  <td>Load vtk unstructured mesh</td>
-  <td>1100836981</td>
-  <td>high</td>
+  <td class="description">Load vtk unstructured mesh</td>
+  <td class="dateAdded">1100836981</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>View vtk structured and unstructured meshes</td>
-  <td>1100836996</td>
-  <td>high</td>
+  <td class="description">View vtk structured and unstructured meshes</td>
+  <td class="dateAdded">1100836996</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>View a contour plot similar to contour() of Matlab</td>
-  <td>1100837104</td>
-  <td>high</td>
+  <td class="description">View a contour plot similar to contour() of Matlab</td>
+  <td class="dateAdded">1100837104</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>convert numarrays to vtk structuredData objects</td>
-  <td>1100838643</td>
-  <td>high</td>
+  <td class="description">convert numarrays to vtk structuredData objects</td>
+  <td class="dateAdded">1100838643</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>use a numarray to generate an x-y line plot</td>
-  <td>1100838684</td>
-  <td>high</td>
+  <td class="description">use a numarray to generate an x-y line plot</td>
+  <td class="dateAdded">1100838684</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>Get shaded contour plots working</td>
-  <td>1101267270</td>
-  <td>high</td>
+  <td class="description">Get shaded contour plots working</td>
+  <td class="dateAdded">1101267270</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>Get installation process working so that when pyvisi actually has features users can install it easily</td>
-  <td>1105327117</td>
-  <td>high</td>
+  <td class="description">Get installation process working so that when pyvisi actually has features users can install it easily</td>
+  <td class="dateAdded">1105327117</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td>Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
-  <td>1105408122</td>
-  <td>high</td>
+  <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
+  <td class="dateAdded">1105408122</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="medium">
-  <td>Write up student project description</td>
-  <td>1100837031</td>
-  <td>medium</td>
+  <td class="description">Write up student project description</td>
+  <td class="dateAdded">1100837031</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>Convert escript Data objects into relevant vtk objects</td>
-  <td>1100837055</td>
-  <td>medium</td>
+  <td class="description">Convert escript Data objects into relevant vtk objects</td>
+  <td class="dateAdded">1100837055</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
-  <td>1100838559</td>
-  <td>medium</td>
+  <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
+  <td class="dateAdded">1100838559</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
-  <td>1100838616</td>
-  <td>medium</td>
+  <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
+  <td class="dateAdded">1100838616</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>use a numarray to generate a mesh plot</td>
-  <td>1100838662</td>
-  <td>medium</td>
+  <td class="description">use a numarray to generate a mesh plot</td>
+  <td class="dateAdded">1100838662</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>use a numarray to generate a surf plot</td>
-  <td>1100838673</td>
-  <td>medium</td>
+  <td class="description">use a numarray to generate a surf plot</td>
+  <td class="dateAdded">1100838673</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>Start writing docs for the api so that other developers can contribute more easily</td>
-  <td>1105327148</td>
-  <td>medium</td>
+  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
+  <td class="dateAdded">1105327148</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>Might need some kind of renderer module templating system for developers to work from.</td>
-  <td>1105419036</td>
-  <td>medium</td>
+  <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
+  <td class="dateAdded">1105419036</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td>Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
-  <td>1106095555</td>
-  <td>medium</td>
+  <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
+  <td class="dateAdded">1106095555</td>
+  <td class="priority">medium</td>
 </tr>
 <tr class="low">
-  <td>View a 2D vector field as an Arrow Plot</td>
-  <td>1100837073</td>
-  <td>low</td>
+  <td class="description">View a 2D vector field as an Arrow Plot</td>
+  <td class="dateAdded">1100837073</td>
+  <td class="priority">low</td>
 </tr>
 <tr class="low">
-  <td>View a 3D vector field as an Arrow Plot</td>
-  <td>1100837083</td>
-  <td>low</td>
+  <td class="description">View a 3D vector field as an Arrow Plot</td>
+  <td class="dateAdded">1100837083</td>
+  <td class="priority">low</td>
 </tr>
 <tr class="low">
-  <td>View a 3D surface plot similar to surf() of Matlab</td>
-  <td>1100837092</td>
-  <td>low</td>
+  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
+  <td class="dateAdded">1100837092</td>
+  <td class="priority">low</td>
 </tr>
 <tr class="low">
-  <td>work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
-  <td>1100838759</td>
-  <td>low</td>
+  <td class="description">work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
+  <td class="dateAdded">1100838759</td>
+  <td class="priority">low</td>
 </tr>
 <tr class="low">
-  <td>work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
-  <td>1100838783</td>
-  <td>low</td>
+  <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
+  <td class="dateAdded">1100838783</td>
+  <td class="priority">low</td>
 </tr>
 <tr class="verylow">
-  <td>Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
-  <td>1105484058</td>
-  <td>verylow</td>
+  <td class="description">Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
+  <td class="dateAdded">1105484058</td>
+  <td class="priority">verylow</td>
 </tr>
 </table>
 
 <h2>Completed todo items</h2>
 <table class="todo">
   <tr>
-    <th>Task description</th>
-    <th>Date added</th>
-    <th>Date completed</th>
-    <th>Comment</th>
+    <th class="description">Task description</th>
+    <th class="dateAdded">Date added</th>
+    <th class="dateCompleted">Date completed</th>
+    <th class="comment">Comment</th>
   </tr>
 <tr class="done">
-  <td>Migrate all vtk specific code into renders.vtk</td>
-  <td>1105327206</td>
-  <td>1105420867</td>
-  <td>completed</td>
+  <td class="description">Migrate all vtk specific code into renders.vtk</td>
+  <td class="dateAdded">1105327206</td>
+  <td class="dateCompleted">1105420867</td>
+  <td class="comment">completed</td>
 </tr>
 <tr class="done">
-  <td>As part of removing the vtk specific code out of the main part of pyvisi, replace the code that is there with objects to be overridden by the specific renderer</td>
-  <td>1105327312</td>
-  <td>1105489800</td>
-  <td>added warnings if base method is called and not overridden</td>
+  <td class="description">As part of removing the vtk specific code out of the main part of pyvisi, replace the code that is there with objects to be overridden by the specific renderer</td>
+  <td class="dateAdded">1105327312</td>
+  <td class="dateCompleted">1105489800</td>
+  <td class="comment">added warnings if base method is called and not overridden</td>
 </tr>
 <tr class="done">
-  <td>Add a Development link to the web site and start putting stuff like renderers used, how to add a new renderer, what to inherit, structure renderer module should have and other coding guidelines</td>
-  <td>1105417001</td>
-  <td>1105429114</td>
-  <td>started, will be expanded over time</td>
+  <td class="description">Add a Development link to the web site and start putting stuff like renderers used, how to add a new renderer, what to inherit, structure renderer module should have and other coding guidelines</td>
+  <td class="dateAdded">1105417001</td>
+  <td class="dateCompleted">1105429114</td>
+  <td class="comment">started, will be expanded over time</td>
 </tr>
 <tr class="done">
-  <td>Move project to sourceforge</td>
-  <td>1100837021</td>
-  <td>1101432846</td>
-  <td>done</td>
+  <td class="description">Move project to sourceforge</td>
+  <td class="dateAdded">1100837021</td>
+  <td class="dateCompleted">1101432846</td>
+  <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td>work out how to cope with axes in 2D and 3D</td>
-  <td>1100838727</td>
-  <td>1105512047</td>
-  <td>started</td>
+  <td class="description">work out how to cope with axes in 2D and 3D</td>
+  <td class="dateAdded">1100838727</td>
+  <td class="dateCompleted">1105512047</td>
+  <td class="comment">started</td>
 </tr>
 <tr class="done">
-  <td>Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
-  <td>1105327358</td>
-  <td>1105490746</td>
-  <td>implemented</td>
+  <td class="description">Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
+  <td class="dateAdded">1105327358</td>
+  <td class="dateCompleted">1105490746</td>
+  <td class="comment">implemented</td>
 </tr>
 <tr class="done">
-  <td>Start writing a manual, and add objects that are already supported.</td>
-  <td>1105484015</td>
-  <td>1105512033</td>
-  <td>started</td>
+  <td class="description">Start writing a manual, and add objects that are already supported.</td>
+  <td class="dateAdded">1105484015</td>
+  <td class="dateCompleted">1105512033</td>
+  <td class="comment">started</td>
 </tr>
 <tr class="done">
-  <td>Try and get a simple gnuplot plot working using renderers.gnuplot</td>
-  <td>1105327257</td>
-  <td>1106092454</td>
-  <td>done</td>
+  <td class="description">Try and get a simple gnuplot plot working using renderers.gnuplot</td>
+  <td class="dateAdded">1105327257</td>
+  <td class="dateCompleted">1106092454</td>
+  <td class="comment">done</td>
 </tr>
 </table>
