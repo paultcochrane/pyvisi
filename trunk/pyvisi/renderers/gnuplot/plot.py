@@ -813,7 +813,7 @@ class OffsetPlot(Plot):
         self.xlabel = None
         self.ylabel = None
 
-        self.linestyle = None   # pyvisi-defined linestyle
+        self.linestyle = 'lines'   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
         self.offset = None
