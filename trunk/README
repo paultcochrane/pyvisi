@@ -61,8 +61,8 @@ present, the vtk and gnuplot renderer modules are being developed.
     from http://www.gnuplot.info.  
     Note that gnuplot version 4 is not yet supported by pyvisi.
 
-    You must have the Gnuplot.py python wrapper for gnuplot.  You can get 
-    this from http://gnuplot-py.sourceforge.net/
+    You must have the Gnuplot.py (version 1.7 or greater) python wrapper for
+    gnuplot.  You can get this from http://gnuplot-py.sourceforge.net/.  
 
   * VTK renderer module
 
