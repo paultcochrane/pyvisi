@@ -9,6 +9,11 @@
 
 <h2>simplePlotExample</h2>
 
+<p>
+This is a very simple example showing how one would produce a line plot
+using pyvisi.  It shows a graph of <code>y = x^2</code>.
+</p>
+
 <a href="examples/simplePlotExample.html">simplePlotExample.py</a>
 
 <h3>Example pyvisi output</h3>
@@ -36,6 +41,12 @@ alt="simplePlotExampleVtk.png"/></a></td>
 
 <h2>singleArrayPlotExample</h2>
 
+<p>
+This example shows a graph of <code>y = sin(x)</code>.  However, what is
+special about it is that one only specifies the y-coordinate, and pyvisi
+uses the indicies of the y array as the x-coordinate points.
+</p>
+
 <a href="examples/singleArrayPlotExample.html">singleArrayPlotExample.py</a>
 
 <h3>Example pyvisi output</h3>
@@ -62,6 +73,12 @@ alt="singleArrayPlotExampleVtk.png"/></a></td>
 <hr />
 
 <h2>multiCurvePlotExample</h2>
+
+<p>
+Here we have an example of how to plot multiple curves with the same
+x-coordinate variable.  This example shows <code>y = sin(x)</code>, 
+<code>y = cos(x)</code> and <code>y = cos(x)^2</code>.
+</p>
 
 <a href="examples/multiCurvePlotExample.html">multiCurvePlotExample.py</a>
 
