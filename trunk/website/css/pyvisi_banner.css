@@ -65,12 +65,10 @@ div.banner p {
   margin: 0;
   padding: 0.3em 0.4em;
   font-family: Arial, Helvetica, sans-serif;
-  background: #4e66a5;		/* Override according to type of page */
+  background: #005099;		/* Override according to type of page */
   border: thin outset #a39ac6;	/* Override this color together with bg */
   color: white;
 }
-
-div.banner p.nodes { background: #a39ac6 }
 
 /*
 div.banner a { display: block; margin: 0 0.5em }
@@ -85,7 +83,6 @@ div.banner em { color: #CFC }
 div.banner a:link { text-decoration: none; color: white }
 div.banner a:active { border: 2px inset #a39ac6 }
 div.banner a:visited { text-decoration: none; color: #a39ac6 }
-div.banner a.nodes:visited { text-decoration: none; color: #4e66a5; }
 div.banner a:hover { 
                      background: #2d2e7e; 
                      color: white;
