@@ -22,9 +22,9 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.opendx.common import debugMsg, overrideWarning
+from pyvisi.renderers.opendx.common import debugMsg
 
-from pyvisi.item import BaseItem
+from pyvisi.item import Item as BaseItem
 
 __revision__ = 'pre-alpha-1'
 

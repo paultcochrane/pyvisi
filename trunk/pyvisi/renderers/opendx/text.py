@@ -22,7 +22,7 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.opendx.common import debugMsg, overrideWarning
+from pyvisi.renderers.opendx.common import debugMsg
 
 from pyvisi.renderers.opendx.item import Item
 
