@@ -1,12 +1,10 @@
 # $Id$
 
 """
-Example of plotting with pyvisi 
+Example of contour plotting with pyvisi 
 
 Will hopefully help me write a decent interface.
 """
-
-import sys
 
 # what plotting method are we using?
 method = 'pyvisi'
@@ -85,7 +83,7 @@ elif method == 'gnuplot':
     _gnuplot('set nosurface')
 
     # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=1)
+    _data = Gnuplot.GridData(z,x,y, binary=0)
 
     _gnuplot.splot(_data)
 

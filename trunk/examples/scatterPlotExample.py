@@ -6,8 +6,6 @@ Example of a scatter plot in pyvisi
 Will hopefully help me write a decent interface.
 """
 
-import sys
-
 # what plotting method are we using?
 method = 'pyvisi'
 

@@ -6,8 +6,6 @@ Example of plotting multiple curves with pyvisi
 Will hopefully help me write a decent interface.
 """
 
-import sys
-
 # what plotting method are we using?
 method = 'pyvisi'
 

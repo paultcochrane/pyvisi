@@ -6,8 +6,6 @@ Example of plotting surfaces with pyvisi
 Will hopefully help me write a decent interface.
 """
 
-import sys
-
 # what plotting method are we using?
 method = 'pyvisi'
 
@@ -50,6 +48,7 @@ if method == 'pyvisi':
     plot.title = 'Example surface plot'
     plot.xlabel = 'x'
     plot.ylabel = 'y'
+    plot.zlabel = 'z'
 
     # assign the data to the plot
     # this version assumes that we have x, then y, then z and that z is 2D
