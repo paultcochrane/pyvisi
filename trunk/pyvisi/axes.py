@@ -23,9 +23,11 @@ Class and functions associated with a pyvisi Axes object
 """
 
 # generic imports
-from common import _debug
+from pyvisi.common import debugMsg
 
-from plot import Plot
+from pyvisi.plot import Plot
+
+__revision__ = 'pre-alpha-1'
 
 class Axes(Plot):
     """
@@ -36,7 +38,7 @@ class Axes(Plot):
     module implementing them.
     """
     def __init__(self):
-        if _debug: print "\tBASE: Called Axes.__init__()"
-        return
+        #Plot.__init__(self)
+        debugMsg("Called Axes.__init__()")
 
 # vim: expandtab shiftwidth=4:
