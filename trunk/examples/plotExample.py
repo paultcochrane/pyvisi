@@ -93,6 +93,13 @@ elif method == 'gnuplot':
     # plot it
     _gnuplot.plot(_data)
 
+    # set up to save to file
+    _gnuplot('set terminal png')
+    _gnuplot('set output \"plotExample.png\"')
+
+    # save it
+    _gnuplot.plot(_data)
+
     raw_input('Press enter to continue...\n')
 
 elif method == 'vtk':
@@ -158,6 +165,16 @@ elif method == 'vtk':
     _iren.Initialize()
     _renWin.Render()
     _iren.Start()
+
+    # convert the render window to an image
+    _win2imgFilter = vtk.vtkWindowToImageFilter()
+    _win2imgFilter.SetInput(_renWin)
+
+    # save the image to file
+    _outWriter = vtk.vtkPNGWriter()
+    _outWriter.SetInput(_win2imgFilter.GetOutput())
+    _outWriter.SetFileName("plotExample.png")
+    _outWriter.Write()
 
     # pause for input
     #raw_input('Press enter to continue...\n')
