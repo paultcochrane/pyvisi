@@ -49,14 +49,6 @@ class Plane(Item):
         imgObjectName = image.readerName
 
         self.renderer.addToEvalStack("# Plane.mapImageToPlane()\n")
-        self.renderer.addToEvalStack("_tex = vtk.vtkTexture()\n")
-        evalString = "_tex.SetInput(%s.GetOutput())\n" % imgObjectName
-        self.renderer.addToEvalStack(evalString)
-        self.renderer.addToEvalStack("_plane = vtk.vtkPlaneSource()\n")
-        self.renderer.addToEvalStack(\
-                "_planeMapper = vtk.vtkPolyDataMapper()\n")
-        self.renderer.addToEvalStack(\
-                "_planeMapper.SetInput(_plane.GetOutput())\n")
         return
 
     def render(self):
@@ -66,10 +58,6 @@ class Plane(Item):
         if _debug: print "\tBASE: Called Plane.mapImageToPlane()"
 
         self.renderer.addToEvalStack("# Plane.render()\n")
-        self.renderer.addToEvalStack("_planeActor = vtk.vtkActor()\n")
-        self.renderer.addToEvalStack("_planeActor.SetMapper(_planeMapper)\n")
-        self.renderer.addToEvalStack("_planeActor.SetTexture(_tex)\n")
-        self.renderer.addToEvalStack("_renderer.AddActor(_planeActor)\n")
 
         return
     

@@ -68,14 +68,6 @@ class JpegImage(Image):
         """
         if _debug: print "\tBASE: Called JpegImage.__init__()"
         self.renderer = scene.renderer
-        rendererName = self.renderer.rendererName
-        if rendererName == "vtk":
-            self.renderer.addToEvalStack("# JpegImage.__init__()\n")
-            self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()\n")
-            self.readerName = "_jpegReader"
-        else:
-            print "Unknown renderer %s" % rendererName
-            return None
         
         return
 
@@ -92,8 +84,6 @@ class JpegImage(Image):
         # now rather than at the end of the script
         
         self.renderer.addToEvalStack("# JpegImage.load()\n")
-        evalString = "_jpegReader.SetFileName(\"%s\")\n" % file
-        self.renderer.addToEvalStack(evalString)
         return
 
     def render(self):
@@ -103,10 +93,6 @@ class JpegImage(Image):
         if _debug: print "\tBASE: Called JpegImage.render()"
 
         self.renderer.addToEvalStack("# JpegImage.render()\n")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()\n")
-        self.renderer.addToEvalStack(\
-                "_imgActor.SetInput(_jpegReader.GetOutput())\n")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)\n")
         return
 
 

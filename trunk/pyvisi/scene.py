@@ -33,7 +33,7 @@ class Scene(object):
     methods overridden.  
     """
 
-    def __init__(self,renderer):
+    def __init__(self):
         """
         The init function
 
@@ -41,9 +41,7 @@ class Scene(object):
         """
         if _debug: print "\tBASE: Called Scene.__init__()"
 
-        self.renderer = Renderer(renderer)
-        if _debug: print "\tBASE: Scenes will be rendered with %s" % \
-                self.renderer.rendererName
+        self.renderer = Renderer()
         numCameras = 0
 
         return
@@ -81,21 +79,6 @@ class Scene(object):
         # I don't yet know where to put this, but just to get stuff going...
         renderer.addToEvalStack("# Scene.render()\n")
 
-        if interactive:
-            renderer.addToEvalStack(\
-                    "_iRenderer = vtk.vtkRenderWindowInteractor()\n")
-            renderer.addToEvalStack(\
-                    "_iRenderer.SetRenderWindow(_renderWindow)\n")
-
-        renderer.addToEvalStack("_renderWindow.Render()\n")
-
-        if interactive:
-            renderer.addToEvalStack("_iRenderer.Start()\n")
-
-        # add some code to pause after rendering if asked to
-        if pause:
-            renderer.addToEvalStack("raw_input(\"Press enter to continue\")\n")
-        
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
         if _debug: print "BASE: Here is the evaluation stack"
@@ -156,9 +139,6 @@ class Scene(object):
             # ok, using rgb
             # probably should use a Color object or something
             # this will do in the meantime
-            evalString = "_renderer.SetBackground(%f,%f,%f)\n" % \
-                    (color[0], color[1], color[2])
-            self.renderer.addToEvalStack(evalString)
         else:
             raise UserError, "Sorry, only RGB color is supported at present"
 
@@ -171,14 +151,14 @@ class Scene(object):
         if _debug: print "\tBASE: Called Scene.getBackgroundClr()"
         return
 
-    def vtkCommand(self,vtkcommand):
+    def rendererCommand(self,command):
         """
-        Allows the user to run a vtk command directly
+        Allows the user to run a low-level renderer-specific command directly
 
-        @param vtkcommand The vtk command to run as a string
+        @param command The renderer command to run as a string
         """
-        if _debug: print "\tBASE: Called Scene.vtkCommand()"
-        evalString = "%s\n" % vtkcommand
+        if _debug: print "\tBASE: Called Scene.rendererCommand()"
+        evalString = "%s\n" % command
         self.renderer.addToEvalStack(evalString)
         return
 
