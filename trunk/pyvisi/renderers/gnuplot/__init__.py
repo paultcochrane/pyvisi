@@ -18,15 +18,27 @@
 
 ## @file __init__.py
 
-__author__ = 'Paul Cochrane'
+"""
+Initialisation of the gnuplot renderer module
+"""
 
-from plot import *
-from camera import *
-from image import *
-from text import *
-from axes import *
-from renderer import *
-from scene import *
-from plane import *
+from pyvisi.renderers.gnuplot.common \
+        import _rendererName, _rendererVersion, _rendererRevision
+print "This is the \"%s\" renderer module version %s-%s" % \
+        (_rendererName, _rendererVersion, _rendererRevision)
+
+__author__ = 'Paul Cochrane'
+__version__ = _rendererVersion
+__revision__ = _rendererRevision
+
+from pyvisi.renderers.gnuplot.item import *
+from pyvisi.renderers.gnuplot.renderer import *
+from pyvisi.renderers.gnuplot.scene import *
+from pyvisi.renderers.gnuplot.plot import *
+from pyvisi.renderers.gnuplot.camera import *
+from pyvisi.renderers.gnuplot.image import *
+from pyvisi.renderers.gnuplot.text import *
+from pyvisi.renderers.gnuplot.axes import *
+from pyvisi.renderers.gnuplot.plane import *
 
 # vim: expandtab shiftwidth=4:

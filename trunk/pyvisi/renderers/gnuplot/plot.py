@@ -23,10 +23,13 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.gnuplot.common \
+        import debugMsg
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.gnuplot.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Plot(Item):
     """
@@ -39,16 +42,18 @@ class Plot(Item):
         @param scene: the scene with which to associate the Plot
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called Plot.__init__()" % rendererName
+        Item.__init__(self)
+        debugMsg("Called Plot.__init__()")
 
         self.title = None
         self.xlabel = None
         self.ylabel = None
         self.zlabel = None
 
-        return
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
 
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Set data to Plot
 
@@ -56,62 +61,66 @@ class Plot(Item):
         or something)
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called Plot.setData()" % rendererName
-        return True
+        debugMsg("Called Plot.setData()")
 
-    def setTitle(self,title):
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
+
+    def setTitle(self, title):
         """
         Set the plot title
 
         @param title: the string holding the title to the plot
         @type title: string
         """
-        if _debug: print "\t%s: Called Plot.setTitle()" % rendererName
+        debugMsg("Called Plot.setTitle()")
 
         self.title = title
 
         return
 
-    def setXLabel(self,label):
+    def setXLabel(self, label):
         """
         Set the label of the x-axis
 
         @param label: the string holding the label of the x-axis
         @type label: string
         """
-        if _debug: print "\t%s: Called Plot.setXLabel()" % rendererName
+        debugMsg("Called Plot.setXLabel()")
 
         self.xlabel = label
 
         return
 
-    def setYLabel(self,label):
+    def setYLabel(self, label):
         """
         Set the label of the y-axis
 
         @param label: the string holding the label of the y-axis
         @type label: string
         """
-        if _debug: print "\t%s: Called Plot.setYLabel()" % rendererName
+        debugMsg("Called Plot.setYLabel()")
 
         self.ylabel = label
 
         return
 
-    def setZLabel(self,label):
+    def setZLabel(self, label):
         """
         Set the label of the z-axis
 
         @param label: the string holding the label of the z-axis
         @type label: string
         """
-        if _debug: print "\t%s: Called Plot.setZLabel()" % rendererName
+        debugMsg("Called Plot.setZLabel()")
 
         self.zlabel = label
 
         return
 
-    def setLabel(self,axis,label):
+    def setLabel(self, axis, label):
         """
         Set the label of a given axis
 
@@ -120,7 +129,7 @@ class Plot(Item):
         @param label: string of the label to set for the axis
         @type label: string
         """
-        if _debug: print "\t%s: Called Plot.setLabel()" % rendererName
+        debugMsg("Called Plot.setLabel()")
 
         # string-wise implementation (really budget implementation too)
         if axis == 'x' or axis == 'X':
@@ -138,38 +147,46 @@ class ArrowPlot(Plot):
     """
     Arrow field plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of ArrowPlot class
 
         @param scene: the scene with which to associate the ArrowPlot
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
-        return
+        Plot.__init__(self, scene)
+        debugMsg("Called ArrowPlot.__init__()")
 
-    def setData(self,*dataList):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called ArrowPlot.setData()" % rendererName
-        return True
+        debugMsg("Called ArrowPlot.setData()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data List"
+        
+        return
 
 class ContourPlot(Plot):
     """
     Contour plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of ContourPlot class
 
         @param scene: the scene with which to associate the ContourPlot
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
+        Plot.__init__(self, scene)
+        debugMsg("Called ContourPlot.__init__()")
 
         self.renderer = scene.renderer
 
@@ -177,16 +194,14 @@ class ContourPlot(Plot):
         self.xlabel = None
         self.ylabel = None
 
-        return
-
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Sets the data to the Plot
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called ContourPlot.setData()"%rendererName
+        debugMsg("Called ContourPlot.setData()")
 
         self.renderer.addToEvalStack("# ContourPlot.setData()")
 
@@ -235,8 +250,8 @@ class ContourPlot(Plot):
         for i in range(len(xData)):
             evalString += "["
             for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i,j]
-            evalString += "%s],\n" % zData[i,-1]
+                evalString += "%s, " % zData[i, j]
+            evalString += "%s],\n" % zData[i, -1]
         evalString += "]"
         self.renderer.addToEvalStack(evalString)
 
@@ -249,7 +264,7 @@ class ContourPlot(Plot):
         """
         Does ContourPlot object specific (pre) rendering styff
         """
-        if _debug: print "\t%s: Called ContourPlot.render()" % rendererName
+        debugMsg("Called ContourPlot.render()")
 
         self.renderer.addToEvalStack("# ContourPlot.render()")
         self.renderer.addToEvalStack("_gnuplot('set contour base')")
@@ -277,14 +292,15 @@ class LinePlot(Plot):
     """
     Line plot
     """
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of LinePlot class
 
         @param scene: the scene with which to associate the LinePlot
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
+        Plot.__init__(self, scene)
+        debugMsg("Called LinePlot.__init__()")
 
         self.renderer = scene.renderer
 
@@ -296,16 +312,14 @@ class LinePlot(Plot):
         self.linestyle = None   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
-        return
-
-    def setData(self,*dataList):
+    def setData(self, *dataList):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
         """
-        if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
+        debugMsg("Called setData() in LinePlot()")
         
         self.renderer.addToEvalStack("# LinePlot.setData()")
 
@@ -331,7 +345,7 @@ class LinePlot(Plot):
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
         elif len(dataList) == 1:
-            xData = range(1,len(dataList[0])+1)
+            xData = range(1, len(dataList[0])+1)
             if len(xData) != len(dataList[0]):
                 errorString = "Autogenerated xData array length not "
                 errorString += "equal to input array length"
@@ -384,7 +398,7 @@ class LinePlot(Plot):
         """
         Does LinePlot object specific (pre) rendering styff
         """
-        if _debug: print "\t%s: Called LinePlot.render()" % rendererName
+        debugMsg("Called LinePlot.render()")
 
         self.renderer.addToEvalStack("# LinePlot.render()")
 
@@ -410,7 +424,7 @@ class LinePlot(Plot):
 
         return True
 
-    def setLineStyle(self,linestyle):
+    def setLineStyle(self, linestyle):
         """
         Sets the linestyle of the LinePlot
 
@@ -434,7 +448,7 @@ class LinePlot(Plot):
         @param linestyle: the style to use for the lines
         @type linestyle: string
         """
-        if _debug: print "\t%s: Called LinePlot.setLineStyle()" % rendererName
+        debugMsg("Called LinePlot.setLineStyle()")
 
         # now implement the gnuplot-specific way to do this
         if linestyle == 'lines' or linestyle == '-':
@@ -448,18 +462,15 @@ class LinePlot(Plot):
         elif linestyle == 'dotted' or linestyle == ':':
             print "linestyle = %s" % linestyle
             raise NotImplementedError, \
-                    "Sorry, haven't implemented this style for %s yet." % \
-                    rendererName
+                    "Sorry, haven't implemented this style yet."
         elif linestyle == 'dashes' or linestyle == '--':
             print "linestyle = %s" % linestyle
             raise NotImplementedError, \
-                    "Sorry, haven't implemented this style for %s yet." % \
-                    rendererName
+                    "Sorry, haven't implemented this style yet."
         elif linestyle == 'dotdashes' or linestyle == '-.':
             print "linestyle = %s" % linestyle
             raise NotImplementedError, \
-                    "Sorry, haven't implemented this style for %s yet." % \
-                    rendererName
+                    "Sorry, haven't implemented this style yet."
         else:
             raise ValueError, "Unknown linestyle!  I got \'%s\'" % linestyle
 
@@ -471,10 +482,9 @@ class LinePlot(Plot):
 
         @return: the linestyle as a string
         """
-        if _debug: print "\t%s: Called LinePlot.getLineStyle()" % rendererName
+        debugMsg("Called LinePlot.getLineStyle()")
 
         return self.linestyle
-
 
 # vim: expandtab shiftwidth=4:
 

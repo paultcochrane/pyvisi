@@ -23,11 +23,14 @@ Class and functions associated with a pyvisi Scene (gnuplot)
 """
 
 # generic imports
-from common import _debug, rendererName, rendererVersion
+from pyvisi.renderers.gnuplot.common \
+        import debugMsg
 from pyvisi.scene import Scene as BaseScene
 
 # module specific imports
-from renderer import Renderer
+from pyvisi.renderers.gnuplot.renderer import Renderer
+
+__revision__ = 'pre-alpha-1'
 
 class Scene(BaseScene):
     """
@@ -40,17 +43,10 @@ class Scene(BaseScene):
         """
         The init function
         """
-        print "You are using PyVisi renderer module \"%s\" version %s" % \
-                (rendererName, rendererVersion)
-
-        if _debug: print "\t%s: Called Scene.__init__()" % rendererName
+        BaseScene.__init__(self)
+        debugMsg("Called Scene.__init__()")
 
         self.renderer = Renderer()
-
-        # kept around in the hope that it will be useful...
-        numCameras = 0
-
-        return
 
     def add(self, obj):
         """
@@ -59,8 +55,11 @@ class Scene(BaseScene):
         @param obj: The object to add to the scene
         @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.add()" % rendererName
+        debugMsg("Called Scene.add()")
         self.renderer.addToEvalStack("# Scene.add()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to add"
 
         return
 
@@ -71,10 +70,14 @@ class Scene(BaseScene):
         @param obj: The object to place within the scene
         @type obj: object
         """
-        if _debug: print "\t%s: Called Scene.place()" % rendererName
+        debugMsg("Called Scene.place()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to add"
+
         return
 
-    def render(self,pause=False,interactive=False):
+    def render(self, pause=False, interactive=False):
         """
         Render (or re-render) the scene
         
@@ -87,8 +90,14 @@ class Scene(BaseScene):
         output (not available in all renderer modules)
         @type interactive: boolean
         """
-        if _debug: print "\t%s: Called Scene.render()" % rendererName
+        debugMsg("Called Scene.render()")
         renderer = self.renderer
+
+        # gnuplot doesn't support interactive stuff (I think)
+        if interactive:
+            print "Gnuplot does not support scene interaction"
+            print "Setting interactive to false"
+            interactive = False
 
         renderer.addToEvalStack("# Scene.render()")
         # set up the evalString to use for plotting
@@ -104,10 +113,10 @@ class Scene(BaseScene):
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "\t%s: Here is the evaluation stack" % rendererName
-        if _debug: print 70*"#"
-        if _debug: print renderer.getEvalStack()
-        if _debug: print 70*"#"
+        debugMsg("Here is the evaluation stack")
+        debugMsg(70*"#")
+        debugMsg(renderer.getEvalStack())
+        debugMsg(70*"#")
 
         # now compile the string object into code, and execute it
         try:
@@ -120,12 +129,12 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        #if _debug: print "\t%s: Flusing evaluation stack" % rendererName
+        #debugMsg("Flusing evaluation stack")
         #renderer.resetEvalStack()
 
         return
 
-    def save(self,file,format):
+    def save(self, fname, format):
         """
         Save the scene to a file
 
@@ -134,13 +143,13 @@ class Scene(BaseScene):
             - PNG
             - PBM
 
-        @param file: Name of output file
-        @type file: string
+        @param fname: Name of output file
+        @type fname: string
 
         @param format: Graphics format of output file
         @type format: string
         """
-        if _debug: print "\t%s: Called Scene.save()" % rendererName
+        debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
 
         # set the output format
@@ -154,7 +163,7 @@ class Scene(BaseScene):
             raise ValueError, "Unknown graphics format."
 
         # set the output filename
-        evalString = "_gnuplot('set output \"%s\"')" % file
+        evalString = "_gnuplot('set output \"%s\"')" % fname
         self.renderer.addToEvalStack(evalString)
 
         # now render the whole shebang (again)
@@ -162,14 +171,14 @@ class Scene(BaseScene):
 
         return
 
-    def setBackgroundColor(self,*color):
+    def setBackgroundColor(self, *color):
         """
         Sets the background color of the Scene
 
         @param color: The color to set the background to.  Can be RGB or CMYK
         @type color: tuple
         """
-        if _debug: print "\t%s: Called Scene.setBackgroundColor()"%rendererName
+        debugMsg("Called Scene.setBackgroundColor()")
 
         # pity this code doesn't work....
         # need to check on the values given in the *color array.
@@ -195,7 +204,7 @@ class Scene(BaseScene):
             # this will do in the meantime
             pass
         else:
-            raise UserError, "Sorry, only RGB color is supported at present"
+            raise ValueError, "Sorry, only RGB color is supported at present"
 
         return
 
@@ -203,7 +212,7 @@ class Scene(BaseScene):
         """
         Gets the current background color setting of the Scene
         """
-        if _debug: print "\t%s: Called Scene.getBackgroundColor()"%rendererName
+        debugMsg("Called Scene.getBackgroundColor()")
         return
 
 # vim: expandtab shiftwidth=4:

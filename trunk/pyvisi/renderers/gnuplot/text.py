@@ -23,18 +23,24 @@ Class and functions associated with a pyvisi Text object
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.gnuplot.common \
+        import debugMsg
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.gnuplot.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Text(Item):
     """
     Text
     """
     def __init__(self):
-        if _debug: print "\t%s: Called Text.__init__()" % rendererName
+        """
+        Initialisation of the Text object
+        """
+        Item.__init__(self)
+        debugMsg("Called Text.__init__()")
         self.font = "Times"
-        pass
 
 # vim: expandtab shiftwidth=4:

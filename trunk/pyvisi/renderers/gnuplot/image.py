@@ -23,16 +23,21 @@ Class and functions associated with a pyvisi Image objects
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.gnuplot.common \
+        import debugMsg, unsupportedError
+
+from pyvisi.common import fileCheck
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.gnuplot.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
-    def __init__(self,format,scene):
+    def __init__(self, format, scene):
         """
         Initialises the Image class object
         
@@ -42,24 +47,31 @@ class Image(Item):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called Image.__init__()" % rendererName
+        Item.__init__(self)
+        debugMsg("Called Image.__init__()")
 
-        if format == "jpeg":
-            if _debug: print "\t%s: Using jpeg image format" % rendererName
-            return JpegImage(scene)
-        else:
-            print "Unknown image format %s" % format
-            return None
+        #if format == "jpeg":
+            #debugMsg("Using jpeg image format")
+            #return JpegImage(scene)
+        #else:
+            #print "Unknown image format %s" % format
+            #return None
+
+        if format is None:
+            raise ValueError, "You must specify an image format"
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
         
-        return
-
-    def load(self, file):
+    def load(self, fname):
         """
         Loads image data from file.
 
-        @param file: The filename from which to load image data
+        @param fname: The filename from which to load image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called Image.load()" % rendererName
+        debugMsg("Called Image.load()")
+        fileCheck(fname)
         return
 
 class JpegImage(Image):
@@ -73,28 +85,28 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads jpeg image data from file.
 
         NOT supported by this renderer module
 
-        @param file: The filename from which to load jpeg image data
-        @type file: string
+        @param fname: The filename from which to load jpeg image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called JpegImage.load()" % rendererName
+        debugMsg("Called JpegImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -102,7 +114,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called JpegImage.render()" % rendererName
+        debugMsg("Called JpegImage.render()")
 
         return
 
@@ -117,28 +129,28 @@ class PngImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called PngImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads png image data from file.
 
         NOT supported by this renderer module
 
-        @param file: The filename from which to load png image data
-        @type file: string
+        @param fname: The filename from which to load png image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called PngImage.load()" % rendererName
+        debugMsg("Called PngImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -146,7 +158,7 @@ class PngImage(Image):
         """
         Does PngImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called PngImage.render()" % rendererName
+        debugMsg("Called PngImage.render()")
 
         return
 
@@ -161,28 +173,28 @@ class BmpImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called BmpImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called BmpImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads bmp image data from file.
 
         NOT supported by this renderer module
 
-        @param file: The filename from which to load bmp image data
-        @type file: string
+        @param fname: The filename from which to load bmp image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called BmpImage.load()" % rendererName
+        debugMsg("Called BmpImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -190,7 +202,7 @@ class BmpImage(Image):
         """
         Does BmpImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called BmpImage.render()" % rendererName
+        debugMsg("Called BmpImage.render()")
 
         return
 
@@ -205,28 +217,28 @@ class TiffImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called TiffImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called TiffImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads tiff image data from file.
 
         NOT supported by this renderer module
 
-        @param file: The filename from which to load tiff image data
-        @type file: string
+        @param fname: The filename from which to load tiff image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called TiffImage.load()" % rendererName
+        debugMsg("Called TiffImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -234,7 +246,7 @@ class TiffImage(Image):
         """
         Does TiffImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called TiffImage.render()" % rendererName
+        debugMsg("Called TiffImage.render()")
 
         return
 
@@ -249,28 +261,28 @@ class PnmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called PnmImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads pnm image data from file.
 
         NOT supported by this renderer module
 
-        @param file: The filename from which to load pnm image data
-        @type file: string
+        @param fname: The filename from which to load pnm image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called PnmImage.load()" % rendererName
+        debugMsg("Called PnmImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -278,7 +290,7 @@ class PnmImage(Image):
         """
         Does PnmImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called PnmImage.render()" % rendererName
+        debugMsg("Called PnmImage.render()")
 
         return
 
@@ -295,28 +307,28 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called PsImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called PsImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads ps image data from file.
 
         B{NOT} supported by this renderer module
 
-        @param file: The filename from which to load ps image data
-        @type file: string
+        @param fname: The filename from which to load ps image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called PsImage.load()" % rendererName
+        debugMsg("Called PsImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -324,7 +336,7 @@ class PsImage(Image):
         """
         Does PsImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called PsImage.render()" % rendererName
+        debugMsg("Called PsImage.render()")
 
         return
 
@@ -341,28 +353,28 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        if _debug: print "\t%s: Called PdfImage.__init__()" % rendererName
+        #Image.__init__(self, scene)
+        debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads pdf image data from file.
 
         B{NOT} supported by this renderer module
 
-        @param file: The filename from which to load pdf image data
-        @type file: string
+        @param fname: The filename from which to load pdf image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called PdfImage.load()" % rendererName
+        debugMsg("Called PdfImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
 
         # this ability not handled by this renderer module
-        unsupportedError(rendererName)
+        unsupportedError()
         
         return
 
@@ -370,7 +382,7 @@ class PdfImage(Image):
         """
         Does PdfImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called PdfImage.render()" % rendererName
+        debugMsg("Called PdfImage.render()")
 
         return
 

@@ -23,21 +23,22 @@ This is the file of the base class for items within a scene
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.gnuplot.common \
+        import debugMsg
 from pyvisi.item import Item as BaseItem
+
+__revision__ = 'pre-alpha-1'
 
 class Item(BaseItem):
     """
     This is the base class for items within a scene
     """
 
-    def __init__(self,**dict):
+    def __init__(self):
         """
         Initialisation
-    
-        @param dict: A dictionary of attributes to set
         """
-        if _debug: print "\t%s: Called Item.__init__()" % rendererName
-        return
+        BaseItem.__init__(self)
+        debugMsg("Called Item.__init__()")
 
 # vim: expandtab shiftwidth=4:
