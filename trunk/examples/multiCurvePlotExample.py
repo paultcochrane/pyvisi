@@ -72,8 +72,8 @@ if method == 'pyvisi':
     scene.render(pause=True,interactive=True)
 
     # save the scene to file
-    scene.save(fname="multiCurvePlotExample.png", format="PNG")
-    #scene.save(fname="multiCurvePlotExample.ps", format="PS")
+    scene.save(fname="multiCurvePlotExample.png", format=PngImage())
+    scene.save(fname="multiCurvePlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code

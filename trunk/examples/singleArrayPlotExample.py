@@ -70,8 +70,8 @@ if method == 'pyvisi':
     scene.render(pause=True,interactive=True)
 
     # save the scene to file
-    scene.save(fname="singleArrayPlotExample.png", format="PNG")
-    #scene.save(fname="singleArrayPlotExample.ps", format="PS")
+    scene.save(fname="singleArrayPlotExample.png", format=PngImage())
+    scene.save(fname="singleArrayPlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
