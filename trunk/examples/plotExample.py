@@ -101,51 +101,51 @@ elif method == 'vtk':
     _ren.SetBackground(1,1,1)
     _renWin.SetSize(600,600)
 
-    # copy the data into vtk data objects
-    _x = vtk.vtkDoubleArray()
-    _x.SetName("x")
+    # do a quick check to make sure x and y are same length
+    if len(x) != len(y):
+        raise DataError, "x and y vectors must be same length"
+
+    # set up the x and y data arrays to be able to accept the data (code
+    # here adapted from the C++ of a vtk-users mailing list reply by Sander
+    # Niemeijer)
+    _xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)
+    _xData.SetNumberOfTuples(len(x))
+
+    _yData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)
+    _yData.SetNumberOfTuples(len(y))
+
+    # put the data into the data arrays
     for i in range(len(x)):
-        _x.InsertNextValue(x[i])
+        _xData.SetTuple1(i,x[i])
+        _yData.SetTuple1(i,y[i])
 
-    _xData = vtk.vtkRectilinearGrid()
-    _xData.SetDimensions(len(x),1,1)
-    _xData.SetXCoordinates(_x)
-    # fundamental point: must set the points within the data, beforehand had
-    # only set up structural info.  So, must use SetScalars()
-    _xData.GetPointData().SetScalars(_x)
+    # create a field data object 
+    # (I think this is as a containter to hold the data arrays)
+    _fieldData = vtk.vtkFieldData()
+    _fieldData.AllocateArrays(2)
+    _fieldData.AddArray(_xData)
+    _fieldData.AddArray(_yData)
 
-    # and now for the y data
-    _y = vtk.vtkDoubleArray()
-    _y.SetName("y")
-    for i in range(len(y)):
-        _y.InsertNextValue(y[i])
-
-    _yData = vtk.vtkRectilinearGrid()
-    _yData.SetDimensions(len(y),1,1)
-    _yData.SetXCoordinates(_y)
-    _yData.GetPointData().SetScalars(_y)
+    # now put the field data object into a data object so that can add it as
+    # input to the xyPlotActor
+    _dataObject = vtk.vtkDataObject()
+    _dataObject.SetFieldData(_fieldData)
 
     # set up the actor
     _plot = vtk.vtkXYPlotActor()
-    _plot.AddInput(_xData)
-    _plot.AddInput(_yData)
+    _plot.AddDataObjectInput(_dataObject)
 
     # set the title and stuff
     _plot.SetTitle("Example 2D plot")
     _plot.SetXTitle("x")
     _plot.SetYTitle("x^2")
+    _plot.SetXValuesToValue()
     _plot.GetProperty().SetColor(0,0,0)
     _plot.GetProperty().SetLineWidth(2)
-    print _plot
-    print _plot.GetPointComponent(1)
-    _plot.SetPointComponent(0,0)
-    _plot.SetXValuesToValue()
-    #print _plot
-    #print _plot.GetInputList()
-    #print _yData.GetPoint(2)
-    #print _xData.GetPoint(2)
-    #print _yData.GetNumberOfPoints()
-    print _plot.GetXValues()
+
+    # set which parts of the data object are to be used for which axis
+    _plot.SetDataObjectXComponent(0,0)
+    _plot.SetDataObjectYComponent(0,1)
 
     # add the actor
     _ren.AddActor2D(_plot)
