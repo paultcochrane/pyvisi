@@ -22,7 +22,9 @@
 This is the file of the base class for items within a scene
 """
 
-from common import _debug
+from pyvisi.common import debugMsg, overrideWarning
+
+__revision__ = 'pre-alpha-1'
 
 class Item(object):
     """
@@ -33,15 +35,14 @@ class Item(object):
         """
         Initialisation
         """
-        if _debug: print "\tBASE: Called Item.__init__()"
-
-        return
+        object.__init__(self)
+        debugMsg("Called Item.__init__()")
 
     def render(self):
         """
         Render the object
         """
-        if _debug: print "\tBASE: Called Item.render()"
+        debugMsg("Called Item.render()")
 
         # print a warning if get to here
         overrideWarning("Item.render")
