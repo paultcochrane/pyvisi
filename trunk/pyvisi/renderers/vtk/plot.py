@@ -186,6 +186,29 @@ class LinePlot(Plot):
         self.renderer.addToEvalStack("_plot.SetDataObjectYComponent(0,1)")
 
 
+        # don't really know if this should go in here or somewhere else...
+        # I've got this kind of code in this method in the gnuplot library,
+        # and maybe it's not the best place to have it.
+
+        # set the title if set
+        if self.title is not None:
+            evalString = "_plot.SetTitle(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if an ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
+
+        # note: am ignoring zlabels as vtk xyPlot doesn't support that
+        # dimension for line plots (I'll have to do something a lot more
+        # funky if I want that kind of functionality)
+
         return True
 
 # vim: expandtab shiftwidth=4:
