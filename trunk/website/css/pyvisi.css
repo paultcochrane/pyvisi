@@ -88,6 +88,10 @@ div.main dt {
               font-size: 110%;
               }
 
+/* put the sourceforge.net-provided stuff in italics */
+div.banner a.sfnet {
+    font-style: italic;
+}
 
 /* funding support table at bottom of index page */
 table.funding {
