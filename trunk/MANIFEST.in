@@ -16,14 +16,17 @@ include pyvisi/renderers/vtk *.py
 include pyvisi/renderers/gnuplot *.py
 
 # these are the examples to include so far
-include examples/simplePlotExample.py
-include examples/singleArrayPlotExample.py
-include examples/multiCurvePlotExample.py
+include examples/arrowPlotExample.py
 include examples/contourPlotExample.py
-include examples/surfaceAndContourPlotExample.py
-include examples/surfacePlotExample.py
+include examples/contourPlotMovieExample.py
+include examples/multiCurvePlotExample.py
 include examples/scatterPlotExample.py
 include examples/scatterPlot3DExample.py
+include examples/simplePlotMovieExample.py
+include examples/simplePlotExample.py
+include examples/singleArrayPlotExample.py
+include examples/surfaceAndContourPlotExample.py
+include examples/surfacePlotExample.py
 #include examples/imageLoadExample.py
 #include examples/Flinders_eval*
 
