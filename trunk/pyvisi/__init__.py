@@ -18,6 +18,9 @@
 
 ## @file __init__.py
 
+from common import _debug, pyvisiVersion
+print "This is PyVisi version %s" % pyvisiVersion
+
 from plot import *
 from camera import *
 from image import *
