@@ -377,7 +377,7 @@ class ContourPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
-                "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
+                "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
 
@@ -851,7 +851,7 @@ class ScatterPlot3D(Plot):
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
-                "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
+                "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
 
@@ -987,7 +987,7 @@ class SurfacePlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         self.renderer.addToEvalStack(\
-                "_data = Gnuplot.GridData(_z, _x, _y, binary=0)")
+                "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
 
