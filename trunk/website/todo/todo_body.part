@@ -35,28 +35,8 @@
   <td class="priority">high</td>
 </tr>
 <tr class="high">
-  <td class="description">View vtk structured and unstructured meshes</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">View a contour plot similar to contour() of Matlab</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
   <td class="description">convert numarrays to vtk structuredData objects</td>
   <td class="dateAdded">2004-11-19</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Get shaded contour plots working</td>
-  <td class="dateAdded">2004-11-24</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Get installation process working so that when pyvisi actually has features users can install it easily</td>
-  <td class="dateAdded">2005-01-10</td>
   <td class="priority">high</td>
 </tr>
 <tr class="high">
@@ -67,6 +47,11 @@
 <tr class="high">
   <td class="description">Fully implement linestyles in renderers.vtk</td>
   <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">View vtk structured and unstructured meshes</td>
+  <td class="dateAdded">2005-02-24</td>
   <td class="priority">high</td>
 </tr>
 <tr class="medium">
@@ -90,26 +75,6 @@
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td class="description">use a numarray to generate a surf plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
-  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
-  <td class="dateAdded">2005-01-10</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
-  <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
-  <td class="dateAdded">2005-01-11</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
-  <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
   <td class="description">Need a log output file for user- and developer- debugging information.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">medium</td>
@@ -129,18 +94,18 @@
   <td class="dateAdded">2005-01-27</td>
   <td class="priority">medium</td>
 </tr>
+<tr class="medium">
+  <td class="description">Add options dictionaries to objects, so that things like xlabel, ylabel etc can be set at object instantiation time.</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="priority">medium</td>
+</tr>
+<tr class="medium">
+  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="priority">medium</td>
+</tr>
 <tr class="low">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">low</td>
-</tr>
-<tr class="low">
-  <td class="description">View a 3D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">low</td>
-</tr>
-<tr class="low">
-  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="priority">low</td>
 </tr>
@@ -164,6 +129,11 @@
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">low</td>
 </tr>
+<tr class="low">
+  <td class="description">View a 3D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="priority">low</td>
+</tr>
 <tr class="verylow">
   <td class="description">Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
   <td class="dateAdded">2005-01-12</td>
@@ -180,10 +150,34 @@
     <th class="comment">Comment</th>
   </tr>
 <tr class="done">
+  <td class="description">View vtk structured and unstructured meshes</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">View a contour plot similar to contour() of Matlab</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">use a numarray to generate an x-y line plot</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-01-24</td>
   <td class="comment">completed, but with a Numeric python object.  Should work at present with either.</td>
+</tr>
+<tr class="done">
+  <td class="description">Get shaded contour plots working</td>
+  <td class="dateAdded">2004-11-24</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">Get installation process working so that when pyvisi actually has features users can install it easily</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">doen</td>
 </tr>
 <tr class="done">
   <td class="description">Migrate all vtk specific code into renders.vtk</td>
@@ -228,16 +222,40 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
+  <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-01-31</td>
+  <td class="comment">not much point - more intuitive at the user level to just instantiate the object</td>
+</tr>
+<tr class="done">
+  <td class="description">use a numarray to generate a surf plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">work out how to cope with axes in 2D and 3D</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-01-12</td>
   <td class="comment">started</td>
 </tr>
 <tr class="done">
+  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">in progress</td>
+</tr>
+<tr class="done">
   <td class="description">Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
   <td class="dateAdded">2005-01-10</td>
   <td class="dateCompleted">2005-01-12</td>
   <td class="comment">implemented</td>
+</tr>
+<tr class="done">
+  <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done; see skel_module.py in admin directory</td>
 </tr>
 <tr class="done">
   <td class="description">Start writing a manual, and add objects that are already supported.</td>
@@ -252,6 +270,18 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
+  <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">View a 3D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="dateCompleted">2005-01-25</td>
@@ -264,9 +294,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
+  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
   <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-01-31</td>
-  <td class="comment">not much point - more intuitive at the user level to just instantiate the object</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done in gnuplot</td>
 </tr>
 </table>
