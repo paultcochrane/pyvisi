@@ -51,6 +51,42 @@ for i in range(len(x)):
 if method == 'pyvisi':
     #### pyvisi version of code
 
+    # import the general pyvisi stuff
+    from pyvisi import *
+    # import the gnuplot overrides of the interface
+    from pyvisi.renderers.gnuplot import *
+
+    # define a scene object
+    # a Scene is a container for all of the kinds of things you want to put
+    # into your plot, for instance, images, meshes, arrow/vector/quiver
+    # plots, contour plots, spheres etc.
+    scene = Scene()
+
+    # create a ContourPlot object
+    plot = ContourPlot(scene)
+
+    # add the plot to the scene (really don't think I should have to do this)
+    scene.add(plot)
+
+    # add some helpful info to the plot
+    plot.title = 'Example contour plot'
+    plot.xlabel = 'x'
+    plot.ylabel = 'y'
+
+    # assign the data to the plot
+    # this version assumes that we have x, then y, then z and that z is 2D
+    # and that x and y are 1D arrays
+    plot.setData(x,y,z)
+    # alternative syntax
+    #plot.setData(xData=x, yData=y, zData=z)
+    # or (but more confusing depending upon one's naming conventions)
+    #plot.setData(x=x, y=y, z=z)
+
+    plot.render()  # need to tell some renderers to finish up stuff here
+
+    # render the scene to screen
+    scene.render(pause=True, interactive=True)
+
 elif method == 'gnuplot':
     #### original gnuplot code
     
@@ -78,5 +114,7 @@ elif method == 'gnuplot':
 elif method == 'vtk':
     pass
 
+else:
+    print "Eeek!  What plotting method am I supposed to use???"
 
 # vim: expandtab shiftwidth=4:
