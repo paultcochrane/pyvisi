@@ -41,7 +41,7 @@
 
   <div class="item">
       <div class="itemTitle">First release of pre-alpha version of pyvisi</div>
-      <div class="itemDate">??-Feb-2005</div>
+      <div class="itemDate">08-Feb-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
 
       <div class="itemText">
@@ -62,7 +62,7 @@
 	  <p>
 	  <strong>Download</strong>: you can download pyvisi from the
 	  sourceforge.net web site by visiting <a
-	      href="http://pyvisi.sourceforge.net">pyvisi.sourceforge.net</a>
+	      href="http://sourceforge.net/project/showfiles.php?group_id=124511">pyvisi download files page</a>
 	  </p>
       </div>
   </div>
