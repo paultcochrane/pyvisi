@@ -23,17 +23,23 @@ Class and functions associated with a pyvisi Axes object
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.povray.common \
+        import debugMsg
 
 # module specific imports
-from plot import Plot
+from pyvisi.renderers.povray.plot import Plot
+
+__revision__ = 'pre-alpha-1'
 
 class Axes(Plot):
     """
     Axes class
     """
     def __init__(self):
-        if _debug: print "\t%s: Called Axes.__init__()" % rendererName
-        pass
+        """
+        Initialisation of Axes class
+        """
+        Plot.__init__()
+        debugMsg("Called Axes.__init__()")
 
 # vim: expandtab shiftwidth=4:
