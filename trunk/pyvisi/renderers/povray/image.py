@@ -23,40 +23,56 @@ Class and functions associated with a pyvisi Image objects
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.povray.common \
+        import debugMsg
+from pyvisi.common import fileCheck
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.povray.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
-    def __init__(self,format,scene):
+    def __init__(self, format, scene):
         """
         Initialises the Image class object
         
-        @param format The image format
-        @param scene The Scene object to add to
+        @param format: The image format
+        @type format: string
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
-        if _debug: print "\t%s: Called Image.__init__()" % rendererName
+        Item.__init__()
+        debugMsg("Called Image.__init__()")
 
-        if format == "jpeg":
-            if _debug: print "\t%s: Using jpeg image format" % rendererName
-            return JpegImage(scene)
-        else:
-            print "Unknown image format %s" % format
-            return None
-        
-        return
+        #if format == "jpeg":
+            #if _debug: print "\t%s: Using jpeg image format" % rendererName
+            #return JpegImage(scene)
+        #else:
+            #print "Unknown image format %s" % format
+            #return None
 
-    def load(self, file):
+        if format is None:
+            raise ValueError, "You must specify an image format"
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def load(self, fname):
         """
         Loads image data from file.
 
-        @param fname The filename from which to load image data
+        @param fname: The filename from which to load image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called Image.load()" % rendererName
+        debugMsg("Called Image.load()")
+
+        fileCheck(fname)
+
         return
 
 class JpegImage(Image):
@@ -67,24 +83,23 @@ class JpegImage(Image):
         """
         Initialises the JpegImage class object
 
-        @param scene The Scene object to add to
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
-        if _debug: print "\t%s: Called JpegImage.__init__()" % rendererName
+        Image.__init__()
+        debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
-        
-        return
 
-    def load(self, file):
+    def load(self, fname):
         """
         Loads jpeg image data from file.
 
-        @param file The filename from which to load jpeg image data
+        @param fname: The filename from which to load jpeg image data
+        @type fname: string
         """
-        if _debug: print "\t%s: Called JpegImage.load()" % rendererName
+        debugMsg("Called JpegImage.load()")
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
+        fileCheck(fname)
         
         return
 
@@ -92,7 +107,7 @@ class JpegImage(Image):
         """
         Does JpegImage object specific (pre)rendering stuff
         """
-        if _debug: print "\t%s: Called JpegImage.render()" % rendererName
+        debugMsg("Called JpegImage.render()")
 
         return
 
