@@ -44,3 +44,4 @@ class Text(Item):
         self.font = "Times"
 
 # vim: expandtab shiftwidth=4:
+\n
