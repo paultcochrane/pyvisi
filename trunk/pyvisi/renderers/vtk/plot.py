@@ -212,10 +212,41 @@ class LinePlot(Plot):
             if len(dataList[0]) != len(dataList[i]):
                 raise DataError, "Input vectors must all be the same length"
 
+        # if have more than one array to plot, the first one is the x data
+        if len(dataList) > 1:
+            xData = dataList[0]
+            ## generate the evalString for the x data
+            evalString = "_x = ["
+            for j in range(len(xData)-1):
+                evalString += "%s, " % xData[j]
+            evalString += "%s]" % xData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+            # don't need the first element of the dataList, so get rid of it
+            dataList = dataList[1:]
+            # if only have one array input, then autogenerate xData
+        elif len(dataList) == 1:
+            xData = arange(1,len(dataList[0]))
+            ## generate the evalString for the x data
+            evalString = "_x = ["
+            for j in range(len(xData)-1):
+                evalString += "%s, " % xData[j]
+            evalString += "%s]" % xData[-1]
+            # send it to the renderer
+            self.renderer.addToEvalStack(evalString)
+
+        # set up the vtkDataArray object for the x data
+        self.renderer.addToEvalStack(
+                "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
+        self.renderer.addToEvalStack(
+                "_xData.SetNumberOfTuples(len(_x))")
+
+        ## now to handle the y data
+
         # now to add my dodgy hack until I have a decent way of sharing data
         # objects around properly
         for i in range(len(dataList)):
-            evalString = "_x%d = [" % i
+            evalString = "_y%d = [" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -229,30 +260,44 @@ class LinePlot(Plot):
         # set up the vtkDataArray objects
         for i in range(len(dataList)):
             evalString = \
-            "_x%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
-            evalString += "_x%dData.SetNumberOfTuples(len(_x%d))" % (i,i)
+            "_y%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
+            evalString += "_y%dData.SetNumberOfTuples(len(_y%d))" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
+        ## x data
         # put the data into the data arrays
-        self.renderer.addToEvalStack("for i in range(len(_x0)):")
+        self.renderer.addToEvalStack("for i in range(len(_x)):")
+        # need to be careful here to remember to indent the code properly
+        evalString = "    _xData.SetTuple1(i,_x[i])"
+        self.renderer.addToEvalStack(evalString)
+
+        ## y data
+        # put the data into the data arrays
+        self.renderer.addToEvalStack("for i in range(len(_x)):")
         # need to be careful here to remember to indent the code properly
         for i in range(len(dataList)):
-            evalString = "    _x%dData.SetTuple1(i,_x%d[i])" % (i,i)
+            evalString = "    _y%dData.SetTuple1(i,_y%d[i])" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
-        # create the field data object
-        self.renderer.addToEvalStack("_fieldData = vtk.vtkFieldData()")
-        self.renderer.addToEvalStack("_fieldData.AllocateArrays(2)")
         for i in range(len(dataList)):
-            evalString = "_fieldData.AddArray(_x%dData)" % i
+            # create the field data object
+            evalString = "_fieldData%d = vtk.vtkFieldData()" % i
+            self.renderer.addToEvalStack(evalString)
+            evalString = "_fieldData%d.AllocateArrays(2)" % i
+            self.renderer.addToEvalStack(evalString)
+            evalString = "_fieldData%d.AddArray(_xData)" % i
+            self.renderer.addToEvalStack(evalString)
+            evalString = "_fieldData%d.AddArray(_y%dData)" % (i,i)
             self.renderer.addToEvalStack(evalString)
 
-        # now put the field data into a data object
-        self.renderer.addToEvalStack("_dataObject = vtk.vtkDataObject()")
-        self.renderer.addToEvalStack("_dataObject.SetFieldData(_fieldData)")
+        for i in range(len(dataList)):
+            # now put the field data into a data object
+            evalString = "_dataObject%d = vtk.vtkDataObject()\n" % i
+            evalString += "_dataObject%d.SetFieldData(_fieldData%d)\n" % (i,i)
 
-        # the actor should be set up, so add the data object to the actor
-        self.renderer.addToEvalStack("_plot.AddDataObjectInput(_dataObject)")
+            # the actor should be set up, so add the data object to the actor
+            evalString += "_plot.AddDataObjectInput(_dataObject%d)" % i
+            self.renderer.addToEvalStack(evalString)
 
         # tell the actor to use the x values for the x values (rather than
         # the index)
@@ -260,26 +305,8 @@ class LinePlot(Plot):
 
         # set which parts of the data object are to be used for which axis
         self.renderer.addToEvalStack("_plot.SetDataObjectXComponent(0,0)")
-        self.renderer.addToEvalStack("_plot.SetDataObjectYComponent(0,1)")
-
-
-        # don't really know if this should go in here or somewhere else...
-        # I've got this kind of code in this method in the gnuplot library,
-        # and maybe it's not the best place to have it.
-
-        # set the title if set
-        if self.title is not None:
-            evalString = "_plot.SetTitle(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
-
-        # if an xlabel is set, add it
-        if self.xlabel is not None:
-            evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
-
-        # if an ylabel is set, add it
-        if self.ylabel is not None:
-            evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+        for i in range(len(dataList)):
+            evalString = "_plot.SetDataObjectYComponent(%d,1)" % i
             self.renderer.addToEvalStack(evalString)
 
         # note: am ignoring zlabels as vtk xyPlot doesn't support that
@@ -296,6 +323,21 @@ class LinePlot(Plot):
 
         self.renderer.addToEvalStack("# LinePlot.render()")
         self.renderer.addToEvalStack("_renderer.AddActor2D(_plot)")
+
+        # set the title if set
+        if self.title is not None:
+            evalString = "_plot.SetTitle(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if an ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
 
         return
 
