@@ -83,14 +83,20 @@ class Scene(BaseScene):
         @param pause: Flag to wait at end of script evaluation for user input
         @type pause: boolean
 
-        @param interactive: Whether or not to have interactive use of the output
+        @param interactive: Whether or not to have interactive use of the 
+        output (not available in all renderer modules)
         @type interactive: boolean
         """
         if _debug: print "\t%s: Called Scene.render()" % rendererName
         renderer = self.renderer
 
         renderer.addToEvalStack("# Scene.render()")
-        renderer.addToEvalStack("_gnuplot.plot(_data)")
+        # set up the evalString to use for plotting
+        evalString = "_gnuplot.plot("
+        for i in range(self.renderer.numDataObjects-1):
+            evalString += "_data%d, " % i
+        evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
+        renderer.addToEvalStack(evalString)
 
         # add some code to pause after rendering if asked to
         if pause:
