@@ -118,8 +118,8 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        if _debug: print "%s: Flusing evaluation stack" % rendererName
-        renderer.resetEvalStack()
+        #if _debug: print "%s: Flusing evaluation stack" % rendererName
+        #renderer.resetEvalStack()
 
         return
 
@@ -128,6 +128,47 @@ class Scene(BaseScene):
         Save the scene to a file
         """
         if _debug: print "\t%s: Called Scene.save()" % rendererName
+        self.renderer.addToEvalStack("# Scene.save()")
+
+        # need to pass the render window through a filter to an image object
+        self.renderer.addToEvalStack(
+                "_win2imgFilter = vtk.vtkWindowToImageFilter()")
+        self.renderer.addToEvalStack("_win2imgFilter.SetInput(_renderWindow)")
+
+        # set the output format
+        if format == "PS":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkPostScriptWriter()")
+        elif format == "PNG":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkPNGWriter()")
+        elif format == "JPEG":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkJPEGWriter()")
+        elif format == "TIFF":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkTIFFWriter()")
+        elif format == "BMP":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkBMPWriter()")
+        elif format == "PNM":
+            self.renderer.addToEvalStack(
+                    "_outWriter = vtk.vtkPNMWriter()")
+        else:
+            raise ValueError, "Unknown graphics format."
+
+        # set stuff up to write
+        self.renderer.addToEvalStack(
+                "_outWriter.SetInput(_win2imgFilter.GetOutput())")
+        evalString = "_outWriter.SetFileName(\"%s\")" % file
+        self.renderer.addToEvalStack(evalString)
+        
+        # write it
+        self.renderer.addToEvalStack("_outWriter.Write()")
+
+        # rerender the scene to get the output
+        self.render()
+
         return
 
     def setBackgroundColor(self,*color):
