@@ -2,8 +2,6 @@
 
 """
 Example of plotting with pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
 # what plotting method are we using?
@@ -24,6 +22,7 @@ if method == 'pyvisi':
     # import the objects to render the scene using the specific renderer
     from pyvisi.renderers.gnuplot import *   # gnuplot
     #from pyvisi.renderers.vtk import *       # vtk
+    #from pyvisi.renderers.plplot import *       # plplot
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -48,14 +47,29 @@ if method == 'pyvisi':
     scene.render(pause=True, interactive=True)
 
     # save the scene out to file
+    ## png
     plot.setData(x, y)  # have to do this now because we've already
                         # render()ed the scene, will be removed in the
                         # future
     scene.save(fname="simplePlotExample.png", format=PngImage())
+
+    ## postscript
     plot.setData(x, y)  # have to do this now because we've already save()d
                         # the scene.  This requirement will be removed in
                         # the future
     scene.save(fname="simplePlotExample.ps", format=PsImage())
+    
+    ## pbm
+    plot.setData(x, y)  # have to do this now because we've already save()d
+                        # the scene.  This requirement will be removed in
+                        # the future
+    scene.save(fname="simplePlotExample.pbm", format=PbmImage())
+
+    ## jpeg
+    plot.setData(x, y)  # have to do this now because we've already save()d
+                        # the scene.  This requirement will be removed in
+                        # the future
+    scene.save(fname="simplePlotExample.jpeg", format=JpegImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
@@ -159,6 +173,36 @@ elif method == 'vtk':
 
     # pause for input
     #raw_input('Press enter to continue...\n')
+
+elif method == 'plplot':
+
+    import plplot
+
+    plplot.plsdev("xwin")
+    plplot.plinit()
+    plplot.plenv(min(x), max(x), min(y), max(y), 0, 1)
+    plplot.pllab("x", "x**2", "Example 2D plot")
+    plplot.plline(x, y)
+    plplot.plend()
+
+    # to save as well, have to set everything up again, and replot
+    # save as png
+    plplot.plsdev("png")
+    plplot.plsfnam("simplePlotExample.png")
+    plplot.plinit()
+    plplot.plenv(min(x), max(x), min(y), max(y), 0, 1)
+    plplot.pllab("x", "x**2", "Example 2D plot")
+    plplot.plline(x, y)
+    plplot.plend()
+
+    # save as postscript
+    plplot.plsdev("psc")
+    plplot.plsfnam("simplePlotExample.ps")
+    plplot.plinit()
+    plplot.plenv(min(x), max(x), min(y), max(y), 0, 1)
+    plplot.pllab("x", "x**2", "Example 2D plot")
+    plplot.plline(x, y)
+    plplot.plend()
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
