@@ -29,13 +29,20 @@ class Item(object):
     This is the base class for items within a scene
     """
 
-    def __init__(self,**dict):
+    def __init__(self):
         """
         Initialisation
-    
-        @param dict: A dictionary of attributes to set
         """
         if _debug: print "\tBASE: Called Item.__init__()"
+
+        return
+
+    def render(self):
+        """
+        Render the object
+        """
+        if _debug: print "\tBASE: Called Item.render()"
+
         return
 
 # vim: expandtab shiftwidth=4:
