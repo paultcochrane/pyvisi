@@ -7,6 +7,7 @@ Files =
     news.html
     contacts.html
     links.html
+    support.html
 
 # helper part files for building the html
 partsDir = htmlbuild/
