@@ -43,8 +43,8 @@ class Image(Item):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Item.__init__(self)
         debugMsg("Called Image.__init__()")
+        Item.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -73,14 +73,16 @@ class JpegImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called JpegImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
             self.renderer.addToEvalStack("# JpegImage.__init__()")
             self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()")
             self.readerName = "_jpegReader"
+            # add the image to the scene
+            scene.add(self)
 
         self.format = "jpeg"
 
@@ -113,6 +115,7 @@ class JpegImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_jpegReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PngImage(Image):
@@ -126,14 +129,16 @@ class PngImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PngImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
             self.renderer.addToEvalStack("# PngImage.__init__()")
             self.renderer.addToEvalStack("_pngReader = vtk.vtkPNGReader()")
             self.readerName = "_pngReader"
+            # add the image to the scene
+            scene.add(self)
 
         self.format = "png"
 
@@ -165,6 +170,7 @@ class PngImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_pngReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class BmpImage(Image):
@@ -178,14 +184,16 @@ class BmpImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called BmpImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
             self.renderer.addToEvalStack("# BmpImage.__init__()")
             self.renderer.addToEvalStack("_bmpReader = vtk.vtkBMPReader()")
             self.readerName = "_bmpReader"
+            # add the image to the scene
+            scene.add(self)
 
         self.format = "bmp"
 
@@ -217,6 +225,7 @@ class BmpImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_bmpReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class TiffImage(Image):
@@ -230,14 +239,16 @@ class TiffImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called TiffImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
             self.renderer.addToEvalStack("# TiffImage.__init__()")
             self.renderer.addToEvalStack("_tiffReader = vtk.vtkTIFFReader()")
             self.readerName = "_tiffReader"
+            # add the image to the scene
+            scene.add(self)
 
         self.format = "tiff"
 
@@ -269,6 +280,7 @@ class TiffImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_tiffReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PnmImage(Image):
@@ -282,14 +294,16 @@ class PnmImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PnmImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
             self.renderer.addToEvalStack("# PnmImage.__init__()")
             self.renderer.addToEvalStack("_pnmReader = vtk.vtkPNMReader()")
             self.readerName = "_pnmReader"
+            # add the image to the scene
+            scene.add(self)
 
         self.format = "pnm"
         
@@ -321,6 +335,7 @@ class PnmImage(Image):
         self.renderer.addToEvalStack(\
                 "_imgActor.SetInput(_pnmReader.GetOutput())")
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.addToEvalStack("_renderWindow.Render()")
         return
 
 class PsImage(Image):
@@ -336,8 +351,8 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PsImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
@@ -384,8 +399,8 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self)
         debugMsg("Called PdfImage.__init__()")
+        Image.__init__(self)
 
         if scene is not None:
             self.renderer = scene.renderer
