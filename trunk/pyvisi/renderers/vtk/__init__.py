@@ -18,6 +18,8 @@
 
 ## @file __init__.py
 
+__author__ = 'Paul Cochrane'
+
 from plot import *
 from camera import *
 from image import *

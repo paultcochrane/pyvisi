@@ -18,4 +18,6 @@
 
 ## @file __init__.py
 
+__author__ = 'Paul Cochrane'
+
 # vim: expandtab shiftwidth=4:
