@@ -23,59 +23,137 @@ Class and functions associated with a pyvisi Plot objects
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.povray.common \
+        import debugMsg
 
 # module specific imports
-from scene import Scene
-from item import Item
+from pyvisi.renderers.povray.item import Item
 
-class Plot(Scene):
+__revision__ = 'pre-alpha-1'
+
+class Plot(Item):
     """
     Abstract plot class
     """
-    def __init__(self):
-        if _debug: print "\t%s: Called Plot.__init__()" % rendererName
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of Plot class
 
-    def setData(self,data):
-        if _debug: print "\t%s: Called setData() in Plot()" % rendererName
-        return True
+        @param scene: the scene with which to associate the plot
+        @type scene: Scene object
+        """
+        Item.__init__()
+        debugMsg("Called Plot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set the data to the plot
+
+        @param dataList: list of data objects to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in Plot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
 
 class ArrowPlot(Plot):
     """
     Arrow field plot
     """
-    def __init__(self):
-        if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of the ArrowPlot class
 
-    def setData(self,data):
-        if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
-        return True
+        @param scene: the scene with which to associate the arrow plot
+        @type scene: Scene object
+        """
+        Plot.__init__()
+        debugMsg("Called ArrowPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to the plot
+
+        @param dataList: list/tuple of data objects to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ArrowPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
 
 class ContourPlot(Plot):
     """
     Contour plot
     """
-    def __init__(self):
-        if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of the ContourPlot class
+        
+        @param scene: the scene with which to associate the contour plot
+        @type scene: Scene object
+        """
+        Plot.__init__()
+        debugMsg("Called ContourPlot.__init__()")
 
-    def setData(self,data):
-        if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
-        return True
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to the plot
+
+        @param dataList: list/tuple of data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ContourPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
 
 class LinePlot(Plot):
     """
     Line plot
     """
-    def __init__(self):
-        if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
-        pass
+    def __init__(self, scene):
+        """
+        Initialisation of the ContourPlot class
+        
+        @param scene: the scene with which to associate the line plot
+        @type scene: Scene object
+        """
+        Plot.__init__()
+        debugMsg("Called LinePlot.__init__()")
 
-    def setData(self,data):
-        if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
-        return True
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to the plot
+
+        @param dataList: list/tuple of data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in LinePlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
 
 # vim: expandtab shiftwidth=4:
 
