@@ -2,6 +2,10 @@
 
 /* Main pyvisi CSS styles */
 
+/* ACcESS logo green: #78c245 */
+/* ACcESS logo orange: #e79122 */
+/* ACcESS logo blue: #005099 */
+
 /* main part of page */
 div.main {
            margin: 0;
@@ -14,7 +18,7 @@ div.main {
            }
 
 div.main hr { 
-              background: #4e66a5; 
+              background: #005099; 
               }
 
 div.main hr.top { 
@@ -22,29 +26,14 @@ div.main hr.top {
                   width: 67%;
                   }
 
-div.main ol.publications li { 
-                              background: #d7d4e7;
-                              margin: 0.5em;
-                              padding: 0.3em;
-                           }
-
-div.main ol.publications table { 
-                                 width: 17em;
-                                 }
-
-div.main ul.publications li { 
-                              background: #d7d4e7;
-                              margin: 0.5em;
-                              padding: 0.3em;
-                           }
-
-div.main div.jumpto {
-                      font-size: 50%; 
-                      }
-
-div.main h1,h2,h3 { 
-                    color : #eb9a64;
+div.main h1 { 
+                    color : #e79122;
                     text-align : center;
+                    }
+
+div.main h2,h3 { 
+                    color : #e79122;
+                    text-align : left;
                     }
 
 div.main h3 {
@@ -54,7 +43,7 @@ div.main h3 {
               }
 
 div.main h4 { 
-              color: #8b0000;
+              color: #78c245;
               }
 
 div.main p {
