@@ -6,7 +6,10 @@ Files =
     multiCurvePlotExample.html
     simplePlotExample.html
     singleArrayPlotExample.html
+    surfaceAndContourPlotExample.html
     surfacePlotExample.html
+    scatterPlotExample.html
+    scatterPlot3DExample.html
 
 examplesDir = ../../examples/
 
@@ -15,12 +18,17 @@ PyFiles =
     $(examplesDir)multiCurvePlotExample.py
     $(examplesDir)simplePlotExample.py
     $(examplesDir)singleArrayPlotExample.py
+    $(examplesDir)surfaceAndContourPlotExample.py
     $(examplesDir)surfacePlotExample.py
+    $(examplesDir)scatterPlotExample.py
+    $(examplesDir)scatterPlot3DExample.py
 
 # generating the source
 :print Executing the examples aap file
 
-all: $PyFiles $Files
+all: copy $PyFiles $Files
+
+copy: $PyFiles
     :sys cp $PyFiles .
 
 :rule %.html : %.py
