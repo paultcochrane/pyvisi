@@ -20,6 +20,8 @@
 
 """
 Class and functions associated with a pyvisi Image objects
+
+Base implementation.
 """
 
 from common import _debug
@@ -54,6 +56,14 @@ class Image(Item):
         @param file: The filename from which to load image data
         """
         if _debug: print "\tBASE: Called Image.load()"
+
+        # print a warning message if get to here
+        print "Warning!!  If you are reading this message, then the renderer"
+        print "           you have chosen hasn't overridden this method as"
+        print "           they should have.  Please contact the maintainer of"
+        print "           the renderer module asap to fix this problem."
+        print "\nMethod: Image.load()"
+
         return
 
 class JpegImage(Image):
@@ -79,11 +89,13 @@ class JpegImage(Image):
         """
         if _debug: print "\tBASE: Called JpegImage.load()"
 
-        # need to check that the file exists and is readable etc here
-        # *before* we add to the evalString, better to get the feedback
-        # now rather than at the end of the script
-        
-        self.renderer.addToEvalStack("# JpegImage.load()\n")
+        # print a warning message if get to here
+        print "Warning!!  If you are reading this message, then the renderer"
+        print "           you have chosen hasn't overridden this method as"
+        print "           they should have.  Please contact the maintainer of"
+        print "           the renderer module asap to fix this problem."
+        print "\nMethod: JpegImage.load()"
+
         return
 
     def render(self):
@@ -92,7 +104,13 @@ class JpegImage(Image):
         """
         if _debug: print "\tBASE: Called JpegImage.render()"
 
-        self.renderer.addToEvalStack("# JpegImage.render()\n")
+        # print a warning message if get to here
+        print "Warning!!  If you are reading this message, then the renderer"
+        print "           you have chosen hasn't overridden this method as"
+        print "           they should have.  Please contact the maintainer of"
+        print "           the renderer module asap to fix this problem."
+        print "\nMethod: JpegImage.render()"
+
         return
 
 
