@@ -18,14 +18,17 @@
 - View vtk structured and unstructured meshes
   (added Fri Nov 19 14:03:16 2004, incomplete, priority high)
 
+- View a contour plot similar to contour() of Matlab
+  (added Fri Nov 19 14:05:04 2004, incomplete, priority high)
+
 - convert numarrays to vtk structuredData objects
   (added Fri Nov 19 14:30:43 2004, incomplete, priority high)
 
+- use a numarray to generate an x-y line plot
+  (added Fri Nov 19 14:31:24 2004, incomplete, priority high)
+
 - Get shaded contour plots working
   (added Wed Nov 24 13:34:30 2004, incomplete, priority high)
-
-- Move project to sourceforge
-  (added Fri Nov 19 14:03:41 2004, incomplete, priority medium)
 
 - Write up student project description
   (added Fri Nov 19 14:03:51 2004, incomplete, priority medium)
@@ -47,9 +50,6 @@
 - use a numarray to generate a surf plot
   (added Fri Nov 19 14:31:13 2004, incomplete, priority medium)
 
-- use a numarray to generate an x-y line plot
-  (added Fri Nov 19 14:31:24 2004, incomplete, priority medium)
-
 - work out how to cope with axes in 2D and 3D
   (added Fri Nov 19 14:32:07 2004, incomplete, priority medium)
 
@@ -61,9 +61,6 @@
 
 - View a 3D surface plot similar to surf() of Matlab
   (added Fri Nov 19 14:04:52 2004, incomplete, priority low)
-
-- View a contour plot similar to contour() of Matlab
-  (added Fri Nov 19 14:05:04 2004, incomplete, priority low)
 
 - work out conceptual differences between a mesh plot (in matlab sense) and a
   mesh in a mesh generator sense
