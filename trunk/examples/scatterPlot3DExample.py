@@ -11,10 +11,19 @@ method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
+import random
 
 # the x and y axes
 x = arange(-2, 2, 0.2, typecode=Float)
 y = arange(-3, 3, 0.2, typecode=Float)
+
+# make the data a bit more scatter-like by using random numbers
+random.seed()
+for i in range(len(x)):
+    x[i] = x[i]*random.random()
+
+for i in range(len(y)):
+    y[i] = y[i]*random.random()
 
 # pick some interesting function to generate the data in the third dimension
 # this is the one used in the matlab docs: z = x*exp(-x^2-y^2)

@@ -13,10 +13,13 @@ method = 'pyvisi'
 from Numeric import *
 import random
 
-x = arange(10, typecode=Float)
-y = zeros(10, typecode=Float)
+x = arange(30, typecode=Float)
+y = arange(30, typecode=Float)
+
+# make the data a bit more scatter-like by using random numbers
 random.seed()
 for i in range(len(x)):
+    x[i] = random.random()
     y[i] = random.random()
 
 # plot it using one of the three methods
