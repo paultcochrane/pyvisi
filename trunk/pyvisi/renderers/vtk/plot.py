@@ -177,6 +177,15 @@ class LinePlot(Plot):
         # the actor should be set up, so add the data object to the actor
         self.renderer.addToEvalStack("_plot.AddDataObjectInput(_dataObject)")
 
+        # tell the actor to use the x values for the x values (rather than
+        # the index)
+        self.renderer.addToEvalStack("_plot.SetXValuesToValue()")
+
+        # set which parts of the data object are to be used for which axis
+        self.renderer.addToEvalStack("_plot.SetDataObjectXComponent(0,0)")
+        self.renderer.addToEvalStack("_plot.SetDataObjectYComponent(0,1)")
+
+
         return True
 
 # vim: expandtab shiftwidth=4:
