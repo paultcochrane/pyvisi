@@ -175,15 +175,4 @@ class Scene(BaseScene):
         if _debug: print "\t%s: Called Scene.getBackgroundClr()" % rendererName
         return
 
-    def vtkCommand(self,vtkcommand):
-        """
-        Allows the user to run a vtk command directly
-
-        @param vtkcommand: The vtk command to run as a string
-        """
-        if _debug: print "\t%s: Called Scene.vtkCommand()" % rendererName
-        evalString = "%s\n" % vtkcommand
-        self.renderer.addToEvalStack(evalString)
-        return
-
 # vim: expandtab shiftwidth=4:
