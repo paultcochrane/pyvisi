@@ -175,5 +175,27 @@ class Scene(BaseScene):
         if _debug: print "\t%s: Called Scene.getBackgroundColor()"%rendererName
         return
 
+    def setSize(self,xSize,ySize):
+        """
+        Sets the size of the scene.
+
+        This size is effectively the renderer window size.
+
+        @param xSize: the size to set the x dimension
+        @param ySize: the size to set the y dimension
+        """
+        if _debug: print "\t%s: Called Scene.setSize()" % rendererName
+        return
+
+    def getSize(self):
+        """
+        Gets the current size of the scene
+
+        This size is effectively the renderer window size.  Returns a tuple
+        of the x and y dimensions respectively, in pixel units(??).
+        """
+        if _debug: print "\t%s: Called Scene.getSize()" % rendererName
+        return
+
 
 # vim: expandtab shiftwidth=4:
