@@ -6,32 +6,23 @@
 
   <h2>Introduction</h2>
 
-<p>
-These are some of my ideas behind how the python visualisation stuff should be
-structured. This is intended to be an implementation independent way of
-interacting with a visualisation system. For instance, it is intended that one
-could use the one set of code to display data using vtk, gnuplot, OpenGL, or
-OpenDX for example. To get a feeling of the structure that I have in mind at
-present, please see the class structure diagram (the diagram was output at
-1024x768, and then I am scaling it within the browser to the width of the
-browser window, hence why it looks so crappy in the window). Please be aware
-that I am very open-minded about this, and if you wish we can discuss other
-ways of implementing things here, or possibly different words to use for
-various objects/ideas. This I feel is an important point for users to have a
-consistent, logical and meaningful interface to actually get their relevant job
-done. Also keep in mind that this structure will change.
+<p> 
+
+Pyvisi is intended to be a generic, Python-language-based generic interface to
+many packages used in scientific visualisation. The idea is that the user
+writes one set of code to plot a set of data (say), and then can choose to use
+one of many "backends" to actually perform the task of visualising the data.
+For instance, one could use vtk to visualise certain kinds of three-dimensional
+data, but then for very high quality output, one might wish to use PovRay, or
+Renderman for the same data. With pyvisi, one would have to change one line of
+code (that specifying the underlying renderer for the visualisation) in order
+to use the relevant package. The interface then goes off and handles all of the
+messy internal details about dealing with that particular engine, leaving a
+consistent interface for the user. It is intended that the software will have a
+good overall structure, and API, in order that developers can reasonably easily
+add new backends to the interface, and these can just be imported as modules in
+the usual way in Python. The code is written in Python, and is therefore
+platform independent, however, it is likely that it will run better on
+Unix/Linux-based operating systems.  
 </p>
 
-<p>
-One of the big ideas here is to build up libraries for the various renderers
-that one can have, so that at the beginning of your script, you can specify
-that you are using vtk (say), and go from there. Maybe you want to use POVRay
-or RenderMan; you can change one line of code at the top of the script, and
-then use that as the engine for displaying the data--the interface goes off and
-handles all of the messy internal details about dealing with that particular
-engine. Having many different kinds of renderers means that we need a nice
-consistent interface, and this is what I'm trying to work towards.
-</p>
-
-
-  
