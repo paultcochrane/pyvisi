@@ -31,17 +31,28 @@ __revision__ = '$Revision$'
     
 class Renderer(BaseRenderer):
     """
-    Brief introduction to what the class does
+    Generic object holding a renderer of a Scene()
     """
 
-    def __init__(self, arg):
+    def __init__(self):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialisation
         """
         debugMsg("Called Renderer.__init__()")
         BaseRenderer.__init__(self)  # initialisation of base class
     
+        # initialise some attributes
+        self.renderWindowWidth = 640
+        self.renderWindowHeight = 480
+
+        # initialise the evalstack
+        self._evalStack = ""
+
+        # keep the initial setup of the module for later reuse
+        self._initStack = ""
+
+        # initialise the renderer module
+        self.addToInitStack("# Renderer.__init__()")
+        self.addToInitStack("import plplot")
+
 # vim: expandtab shiftwidth=4:

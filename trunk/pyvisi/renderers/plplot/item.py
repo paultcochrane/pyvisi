@@ -28,20 +28,16 @@ from pyvisi.item import Item as BaseItem
 
 __revision__ = '$Revision$'
 
-    
 class Item(BaseItem):
     """
-    Brief introduction to what the class does
+    This is the base class for items within a scene
     """
 
-    def __init__(self, arg):
+    def __init__(self):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialisation
         """
         debugMsg("Called Item.__init__()")
-        BaseItem.__init__(self)  # initialisation of base class
+        BaseItem.__init__(self)
     
 # vim: expandtab shiftwidth=4:

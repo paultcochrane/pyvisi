@@ -22,7 +22,9 @@
 Brief introduction to what the file contains/does
 """
 
-from pyvisi.renderers.plplot.common import debugMsg
+from pyvisi.renderers.plplot.common import debugMsg, unsupportedError
+
+from pyvisi.common import fileCheck
 
 from pyvisi.renderers.plplot.item import Item
 
@@ -30,122 +32,394 @@ __revision__ = '$Revision$'
     
 class Image(Item):
     """
-    Brief introduction to what the class does
+    Image class.  Generic class to handle image data.
     """
-
-    def __init__(self, arg):
+    def __init__(self, scene=None):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialises the Image class object
+        
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         debugMsg("Called Image.__init__()")
-        Item.__init__(self)  # initialisation of base class
-    
+        Item.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+        
+    def load(self, fname):
+        """
+        Loads image data from file.
+
+        @param fname: The filename from which to load image data
+        @type fname: string
+        """
+        debugMsg("Called Image.load()")
+        fileCheck(fname)
+        return
+
 class JpegImage(Image):
     """
-    Brief introduction to what the class does
+    Subclass of Image class to explicitly handle jpeg images
     """
-
-    def __init__(self, arg):
+    def __init__(self, scene=None):
         """
-        Brief description of the init function
+        Initialises the JpegImage class object
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         debugMsg("Called JpegImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
-class PbmImage(Image):
-    """
-    Brief introduction to what the class does
-    """
+        Image.__init__(self)
 
-    def __init__(self, arg):
-        """
-        Brief description of the init function
+        if scene is not None:
+            self.renderer = scene.renderer
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
-        """
-        debugMsg("Called PbmImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
-class PdfImage(Image):
-    """
-    Brief introduction to what the class does
-    """
+        self.format = "jpeg"
 
-    def __init__(self, arg):
+    def load(self, fname):
         """
-        Brief description of the init function
+        Loads jpeg image data from file.
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load jpeg image data
+        @type fname: string
         """
-        debugMsg("Called PdfImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
+        debugMsg("Called JpegImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does JpegImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called JpegImage.render()")
+
+        return
+
 class PngImage(Image):
     """
-    Brief introduction to what the class does
+    Subclass of Image class to explicitly handle png images
     """
-
-    def __init__(self, arg):
+    def __init__(self, scene=None):
         """
-        Brief description of the init function
+        Initialises the PngImage class object
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         debugMsg("Called PngImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
-class PnmImage(Image):
-    """
-    Brief introduction to what the class does
-    """
+        Image.__init__(self)
 
-    def __init__(self, arg):
-        """
-        Brief description of the init function
+        if scene is not None:
+            self.renderer = scene.renderer
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        self.format = "png"
+
+    def load(self, fname):
         """
-        debugMsg("Called PnmImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
-class PsImage(Image):
+        Loads png image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load png image data
+        @type fname: string
+        """
+        debugMsg("Called PngImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PngImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PngImage.render()")
+
+        return
+
+class BmpImage(Image):
     """
-    Brief introduction to what the class does
+    Subclass of Image class to explicitly handle bmp images
     """
-
-    def __init__(self, arg):
+    def __init__(self, scene=None):
         """
-        Brief description of the init function
+        Initialises the BmpImage class object
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
-        debugMsg("Called PsImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
+        debugMsg("Called BmpImage.__init__()")
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "bmp"
+
+    def load(self, fname):
+        """
+        Loads bmp image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load bmp image data
+        @type fname: string
+        """
+        debugMsg("Called BmpImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does BmpImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called BmpImage.render()")
+
+        return
+
 class TiffImage(Image):
     """
-    Brief introduction to what the class does
+    Subclass of Image class to explicitly handle tiff images
     """
-
-    def __init__(self, arg):
+    def __init__(self, scene=None):
         """
-        Brief description of the init function
+        Initialises the TiffImage class object
 
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        @param scene: The Scene object to add to
+        @type scene: Scene object
         """
         debugMsg("Called TiffImage.__init__()")
-        Image.__init__(self)  # initialisation of base class
-    
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "tiff"
+
+    def load(self, fname):
+        """
+        Loads tiff image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load tiff image data
+        @type fname: string
+        """
+        debugMsg("Called TiffImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does TiffImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called TiffImage.render()")
+
+        return
+
+class PnmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pnm images
+    """
+    def __init__(self, scene=None):
+        """
+        Initialises the PnmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        debugMsg("Called PnmImage.__init__()")
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "pnm"
+
+    def load(self, fname):
+        """
+        Loads pnm image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load pnm image data
+        @type fname: string
+        """
+        debugMsg("Called PnmImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PnmImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PnmImage.render()")
+
+        return
+
+class PbmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pbm images
+    """
+    def __init__(self, scene=None):
+        """
+        Initialises the PbmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        debugMsg("Called PbmImage.__init__()")
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "pbm"
+
+    def load(self, fname):
+        """
+        Loads pnm image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load pbm image data
+        @type fname: string
+        """
+        debugMsg("Called PnmImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PbmImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PbmImage.render()")
+
+        return
+
+class PsImage(Image):
+    """
+    Subclass of Image class to explicitly handle ps images
+    """
+    def __init__(self, scene=None):
+        """
+        Initialises the PsImage class object
+
+        This object is B{only} used for generating postscript output
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        debugMsg("Called PsImage.__init__()")
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "ps"
+
+    def load(self, fname):
+        """
+        Loads ps image data from file.
+
+        B{NOT} supported by this renderer module
+
+        @param fname: The filename from which to load ps image data
+        @type fname: string
+        """
+        debugMsg("Called PsImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PsImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PsImage.render()")
+
+        return
+
+class PdfImage(Image):
+    """
+    Subclass of Image class to explicitly handle pdf images
+    """
+    def __init__(self, scene=None):
+        """
+        Initialises the PdfImage class object
+
+        This object is B{only} used for generating pdf output
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        debugMsg("Called PdfImage.__init__()")
+        Image.__init__(self)
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "pdf"
+
+    def load(self, fname):
+        """
+        Loads pdf image data from file.
+
+        B{NOT} supported by this renderer module
+
+        @param fname: The filename from which to load pdf image data
+        @type fname: string
+        """
+        debugMsg("Called PdfImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PdfImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PdfImage.render()")
+
+        return
+
 # vim: expandtab shiftwidth=4:
