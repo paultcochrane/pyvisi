@@ -24,6 +24,7 @@ Variables common to all classes and functions
 
 _debug = 1
 pyvisiVersion = 0.1
+pyvisiRevision = 1
 
 def overrideWarning(methodName):
     """
