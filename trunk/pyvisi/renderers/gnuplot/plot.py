@@ -166,7 +166,13 @@ class ContourPlot(Plot):
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
         return
 
-    def setData(self,data):
+    def setData(self,*dataList):
+        """
+        Sets the data to the Plot
+
+        @param dataList: list of data objects to plot
+        @type dataList: tuple
+        """
         if _debug: print "\t%s: Called ContourPlot.setData()"%rendererName
         return True
 
