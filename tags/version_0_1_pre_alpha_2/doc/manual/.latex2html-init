@@ -1,0 +1,13 @@
+# $Id$
+
+$BOTTOM_NAVIGATION = 1;
+$LOCAL_ICONS = 1;
+$HTML_VERSION = "4.0";
+$NO_SIMPLE_MATH = 1;
+$DESTDIR = "../../website/docs/manual/pyvisi_doc/";
+$MAX_SPLIT_DEPTH = 5;
+$TMP = "/var/tmp";
+$IMAGE_TYPE = "png";
+$ADDRESS = "<I>Paul Cochrane</I>\n<BR><I>$address_data[1]</I>";
+$alltt_rx = 'shellCode|xmdsCode|matlabCode|scilabCode|pythonCode';
+
