@@ -85,7 +85,7 @@ elif method == 'gnuplot':
         plotString = "set output \"contourPlotMovieExample%03d.png\""%i
         _gnuplot(plotString)
         # set up the data
-        _data = Gnuplot.GridData(z,x,y, binary=0)
+        _data = Gnuplot.GridData(z,x,y, binary=1)
     
         _gnuplot.splot(_data)
 

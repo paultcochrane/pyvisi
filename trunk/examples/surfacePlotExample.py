@@ -89,7 +89,7 @@ elif method == 'gnuplot':
     _gnuplot('set data style lines')
 
     # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=0)
+    _data = Gnuplot.GridData(z,x,y, binary=1)
 
     _gnuplot.splot(_data)
 
