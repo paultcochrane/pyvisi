@@ -103,7 +103,7 @@ Initialisation of the %s renderer module
     initText += """
 from pyvisi.renderers.%s.common \\
         import _rendererName, _rendererVersion, _rendererRevision
-print \"This is the\\\"%%s\\\" renderer module version %%s-%%s\" %% \\
+print \"This is the \\\"%%s\\\" renderer module version %%s-%%s\" %% \\
         (_rendererName, _rendererVersion, _rendererRevision)
 
 __author__ = 'Insert author name here'
@@ -226,8 +226,8 @@ Brief introduction to what the file contains/does
 
 from pyvisi.renderers.%s.common import debugMsg, overrideWarning, getRevision
 
-from pyvisi.%s import %s
-""" % (moduleName, className.lower(), baseClassName)
+from pyvisi.%s import %s as %s
+""" % (moduleName, className.lower(), className.capitalize(), baseClassName)
 
     if className.lower() == 'scene':
         fileHeaderStr += """
@@ -253,7 +253,9 @@ def getClassFileBody(className, baseClassName):
     """
 
     # the class body skeleton, with epydoc strings added, and a dummy function
-    classStr = "class %s(%s):" % (className, baseClassName)
+    classStr = """
+class %s(%s):
+""" % (className, baseClassName)
     classStr += """
     \"\"\"
     Brief introduction to what the class does
