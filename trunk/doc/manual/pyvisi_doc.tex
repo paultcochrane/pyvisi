@@ -2,8 +2,8 @@
 
 % $Id$
 
-\setcounter{secnumdepth}{4}
-\setcounter{tocdepth}{4}
+%\setcounter{secnumdepth}{4}
+%\setcounter{tocdepth}{4}
 
 \input{pyvisi_defs}
 \input{misc_defs}
@@ -15,15 +15,15 @@
 \include{titlepage}
 \include{abstract}
 \tableofcontents
-\listoffigures
-\listoftables
+%\listoffigures
+%\listoftables
 
 \mainmatter
 
 \part{Tutorial}
 \label{part:tutorial}
 
-% \include{tutFromScratch}
+\include{tutFromScratch}
 
 \part{User Manual}
 \label{part:userManual}
@@ -38,6 +38,8 @@
 \part{Developer Manual}
 \label{part:developerManual}
 
+\include{developerManual}
+
 \part{Appendix}
 \label{part:appendix}
 
@@ -49,6 +51,7 @@
 \backmatter
 
 \bibliography{pyvisi_doc}
-\printindex
+%\printindex
 
 \end{document}
+
