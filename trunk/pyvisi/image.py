@@ -61,7 +61,8 @@ class Image(Item):
         print "Warning!!  If you are reading this message, then the renderer"
         print "           you have chosen hasn't overridden this method as"
         print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module asap to fix this problem."
+        print "           the renderer module, quoting the method name given"
+        print "           below, asap to fix this problem."
         print "\nMethod: Image.load()"
 
         return
@@ -93,8 +94,9 @@ class JpegImage(Image):
         print "Warning!!  If you are reading this message, then the renderer"
         print "           you have chosen hasn't overridden this method as"
         print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module asap to fix this problem."
-        print "\nMethod: JpegImage.load()"
+        print "           the renderer module, quoting the method name given"
+        print "           below, asap to fix this problem."
+        print "\nMethod: Image.load()"
 
         return
 
@@ -108,8 +110,9 @@ class JpegImage(Image):
         print "Warning!!  If you are reading this message, then the renderer"
         print "           you have chosen hasn't overridden this method as"
         print "           they should have.  Please contact the maintainer of"
-        print "           the renderer module asap to fix this problem."
-        print "\nMethod: JpegImage.render()"
+        print "           the renderer module, quoting the method name given"
+        print "           below, asap to fix this problem."
+        print "\nMethod: Image.load()"
 
         return
 
