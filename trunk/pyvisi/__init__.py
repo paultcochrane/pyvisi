@@ -18,8 +18,8 @@
 
 ## @file __init__.py
 
-from common import _debug, pyvisiVersion
-print "This is PyVisi version %s" % pyvisiVersion
+from common import _debug, pyvisiVersion, pyvisiRevision
+print "This is PyVisi version %s-%s" % (pyvisiVersion, pyvisiRevision)
 
 from plot import *
 from camera import *
