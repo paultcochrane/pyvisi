@@ -6,8 +6,6 @@ Example of plotting surfaces with contours in pyvisi
 Will hopefully help me write a decent interface.
 """
 
-import sys
-
 # what plotting method are we using?
 method = 'pyvisi'
 
@@ -47,9 +45,10 @@ if method == 'pyvisi':
     plot = SurfacePlot(scene)
 
     # add some helpful info to the plot
-    plot.title = 'Example surface plot'
+    plot.title = 'Example surface plot with contour on base'
     plot.xlabel = 'x'
     plot.ylabel = 'y'
+    plot.zlabel = 'z'
 
     # add a contour to the base of the axes
     plot.contours = True
@@ -77,13 +76,15 @@ elif method == 'gnuplot':
 
     # set the plot up
     _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example surface plot')
+    _gnuplot.title('Example surface plot with contour on base')
     _gnuplot.xlabel('x')
     _gnuplot.ylabel('y')
-    #_gnuplot.zlabel('z')
+    _gnuplot('set zlabel \'z\'')
 
     # this is a surface plot, so...
     _gnuplot('set surface')
+    _gnuplot('set data style lines')
+    _gnuplot('set contour base')
 
     # set up the data
     _data = Gnuplot.GridData(z,x,y, binary=0)
