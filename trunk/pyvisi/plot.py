@@ -66,7 +66,7 @@ class Plot(Item):
         # print a warning message if get to here
         overrideWarning("Plot.setData")
 
-        return True
+        return
 
     def setTitle(self, title):
         """
@@ -176,7 +176,41 @@ class ArrowPlot(Plot):
         # print a warning message if get to here
         overrideWarning("ArrowPlot.setData")
 
-        return True
+        return
+
+class BallPlot(Plot):
+    """
+    Ball plot
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of BallPlot class
+
+        @param scene: the scene with which to associate the BallPlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called BallPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to BallPlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in BallPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("BallPlot.setData")
+
+        return
 
 class ContourPlot(Plot):
     """
@@ -210,7 +244,41 @@ class ContourPlot(Plot):
         # print a warning message if get to here
         overrideWarning("ContourPlot.setData")
 
-        return True
+        return
+
+class IsosurfacePlot(Plot):
+    """
+    Isosurface plot
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of IsosurfacePlot class
+
+        @param scene: the scene with which to associate the IsosurfacePlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called IsosurfacePlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to IsosurfacePlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in IsosurfacePlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("IsosurfacePlot.setData")
+
+        return
 
 class LinePlot(Plot):
     """
@@ -257,7 +325,7 @@ class LinePlot(Plot):
         # print a warning message if get to here
         overrideWarning("LinePlot.setData")
 
-        return True
+        return
 
     def render(self):
         """
@@ -345,7 +413,7 @@ class ScatterPlot(Plot):
         # print a warning message if get to here
         overrideWarning("ScatterPlot.setData")
 
-        return True
+        return
 
 class ScatterPlot3D(Plot):
     """
