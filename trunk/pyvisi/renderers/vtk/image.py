@@ -107,5 +107,53 @@ class JpegImage(Image):
         self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
         return
 
+class PngImage(Image):
+    """
+    Subclass of Image class to explicitly handle png images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PngImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: scene object
+        """
+        if _debug: print "\t%s: Called PngImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        self.renderer.addToEvalStack("# PngImage.__init__()")
+        self.renderer.addToEvalStack("_pngReader = vtk.vtkPNGReader()")
+        self.readerName = "_pngReader"
+        
+        return
+
+    def load(self, file):
+        """
+        Loads png image data from file.
+
+        @param file: The filename from which to load png image data
+        """
+        if _debug: print "\t%s: Called PngImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+        
+        self.renderer.addToEvalStack("# PngImage.load()")
+        evalString = "_pngReader.SetFileName(\"%s\")" % file
+        self.renderer.addToEvalStack(evalString)
+        return
+
+    def render(self):
+        """
+        Does PngImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called PngImage.render()" % rendererName
+
+        self.renderer.addToEvalStack("# PngImage.render()")
+        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
+        self.renderer.addToEvalStack(\
+                "_imgActor.SetInput(_pngReader.GetOutput())")
+        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        return
 
 # vim: expandtab shiftwidth=4:
