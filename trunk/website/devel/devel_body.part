@@ -33,8 +33,10 @@
   <p>
   If you are interested in
   contributing code, grab a copy of the cvs:<br>
-  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi login<br>
-  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi co pyvisi<br>
+  <pre>
+  cvs -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi login
+  cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/pyvisi co pyvisi
+  </pre>
   and send patches to:
   <a href="mailto:paultcochrane@users.sourceforge.net">paultcochrane at users
       dot sourceforge dot net</a>.
@@ -54,7 +56,9 @@
       It is best to follow the vtk module example of declaring a rendererName
       global variable in common.py and then adding that to the debug string, 
       something along the lines of:  <br>
+      <pre>
       if _debug: print "%s: debug message" % rendererName
+      </pre>
       </li>
       <li>
       All objects and methods specified in the API should be provided, even
