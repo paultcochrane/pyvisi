@@ -24,9 +24,11 @@ Example of loading and viewing an image using pyvisi
 Will hopefully help me write a decent interface.
 """
 
-method = 'pyvisi'
+method = 'vtk'
+format = 'jpeg'
 
 if method == 'pyvisi':
+    ## this is the pyvisi code
     import sys
     
     # this means that one can run the script from the examples directory
@@ -40,29 +42,48 @@ if method == 'pyvisi':
     # set up a scene
     scene = Scene()
     
-    # add a jpeg image to the scene, and then load the file
-    jpegImage = JpegImage(scene)
-    jpegImage.load(file="Flinders_eval.jpg")
-    jpegImage.render()  # this should be done at the scene.render step
+    if format == 'jpeg':
+        # add a jpeg image to the scene, and then load the file
+        jpegImage = JpegImage(scene)
+        jpegImage.load(file="Flinders_eval.jpg")
+        jpegImage.render()  # this should be done at the scene.render step
     
+    elif format == 'png':
+        # add png image to the scene, and then load the file
+        pngImage = PngImage(scene)
+        pngImage.load(file="Flinders_eval.png")
+        pngImage.render()
+
+    else:
+        raise ValueError, "Unknown format: %s" % format
+
     # render the scene, pausing so that the opengl window doesn't disappear
     scene.render(pause=True,interactive=True)
-    
-elif method == 'vtk'
-    # this is the original vtk code
+
+elif method == 'vtk':
+    ## this is the original vtk code
     
     import vtk 
-    _ren = vtkRenderer()
-    _renWin = vtkRenderWindow()
-    _renWin.AddRenderer(ren)
+    _ren = vtk.vtkRenderer()
+    _renWin = vtk.vtkRenderWindow()
+    _renWin.AddRenderer(_ren)
     
-    _jpegReader = vtkJPEGReader()
-    _jpegReader.SetFileName("Flinders_eval.jpg")
+    _imgActor = vtk.vtkImageActor()
+
+    if format == 'jpeg':
+        _jpegReader = vtk.vtkJPEGReader()
+        _jpegReader.SetFileName("Flinders_eval.jpg")
+        _imgActor.SetInput(_jpegReader.GetOutput())
+
+    elif format == 'png':
+        _pngReader = vtk.vtkPNGReader()
+        _pngReader.SetFileName("Flinders_eval.png")
+        _imgActor.SetInput(_pngReader.GetOutput())
+
+    else:
+        raise ValueError, "Unknown format: %s" % format
     
-    _imgActor = vtkImageActor()
-    _imgActor.SetInput(jpegReader.GetOutput())
-    
-    _ren.AddActor(imgActor)
+    _ren.AddActor(_imgActor)
     _renWin.SetSize(400,400)
     _ren.SetBackground(0.1,0.2,0.4)
     _renWin.Render()
