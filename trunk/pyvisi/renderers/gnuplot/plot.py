@@ -156,8 +156,14 @@ class ArrowPlot(Plot):
         debugMsg("Called ArrowPlot.__init__()")
         Plot.__init__(self, scene)
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
+        self.renderer = scene.renderer
+
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+
+        # now add the object to the scene
+        scene.add(self)
 
     def setData(self, *dataList):
         """
@@ -166,11 +172,102 @@ class ArrowPlot(Plot):
         @param dataList: list of data objects to plot
         @type dataList: tuple
         """
-        debugMsg("Called ArrowPlot.setData()")
-
-        if dataList is None:
-            raise ValueError, "You must specify a data List"
+        debugMsg("Called setData() in ArrowPlot()")
         
+        self.renderer.addToEvalStack("# ArrowPlot.setData()")
+
+        # do some sanity checking on the data
+        if len(dataList) != 4:
+            raise ValueError, \
+                    "Must have four vectors as input: x, y, dx, dy"
+
+        for i in range(len(dataList)):
+            if len(dataList[0]) != len(dataList[i]):
+                raise ValueError, "Input vectors must all be the same length"
+
+        # this is a really dodgy way to get the data into the renderer
+        # I really have to find a better, more elegant way to do this
+        
+        # this is a bad, cut-and-paste way to code it, but it will get going
+        # at least...
+        # x data
+        xData = dataList[0]
+        ## generate the evalString for the x data
+        evalString = "_x = ["
+        for j in range(len(xData)-1):
+            evalString += "%s, " % xData[j]
+        evalString += "%s]" % xData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # y data
+        yData = dataList[1]
+        ## generate the evalString for the y data
+        evalString = "_y = ["
+        for j in range(len(yData)-1):
+            evalString += "%s, " % yData[j]
+        evalString += "%s]" % yData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # dx data
+        dxData = dataList[0]
+        ## generate the evalString for the dx data
+        evalString = "_dx = ["
+        for j in range(len(dxData)-1):
+            evalString += "%s, " % dxData[j]
+        evalString += "%s]" % dxData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # dy data
+        dyData = dataList[1]
+        ## generate the evalString for the dy data
+        evalString = "_dy = ["
+        for j in range(len(dyData)-1):
+            evalString += "%s, " % dyData[j]
+        evalString += "%s]" % dyData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the data to plot
+        if _gnuplot4:
+            evalString = \
+                    "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vectors\')"
+        else:
+            evalString = \
+                    "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vector\')"
+        self.renderer.addToEvalStack(evalString)
+
+        return
+
+    def render(self):
+        """
+        Does ArrowPlot object specific rendering stuff
+        """
+        debugMsg("Called ArrowPlot.render()")
+
+        self.renderer.addToEvalStack("# ArrowPlot.render()")
+
+        # if a title is set, put it here
+        if self.title is not None:
+            evalString = "_gnuplot.title(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
+
+        # set up the evalString to use for plotting
+        evalString = "_gnuplot.plot(_data)"
+        self.renderer.addToEvalStack(evalString)
+
         return
 
 class ContourPlot(Plot):
