@@ -36,8 +36,6 @@ class Scene(object):
     def __init__(self):
         """
         The init function
-
-        @param renderer The renderer object to use for the scene.
         """
         if _debug: print "\tBASE: Called Scene.__init__()"
 
@@ -50,7 +48,7 @@ class Scene(object):
         """
         Add a new item to the scene
 
-        @param obj The object to add to the scene
+        @param obj: The object to add to the scene
         """
         if _debug: print "\tBASE: Called Scene.add()"
         return
@@ -59,7 +57,7 @@ class Scene(object):
         """
         Place an object within a scene
 
-        @param obj The object to place within the scene
+        @param obj: The object to place within the scene
         """
         if _debug: print "\tBASE: Called Scene.place()"
         return
@@ -70,8 +68,8 @@ class Scene(object):
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
-        @param pause Flag to wait at end of script evaluation for user input
-        @param interactive Whether or not to have interactive use of the output
+        @param pause: Flag to wait at end of script evaluation for user input
+        @param interactive: Whether or not to have interactive use of the output
         """
         if _debug: print "\tBASE: Called Scene.render()"
         renderer = self.renderer
@@ -113,7 +111,7 @@ class Scene(object):
         """
         Sets the background color of the Scene
 
-        @param clr The color to set the background to.  Can be RGB or CMYK
+        @param color: The color to set the background to.  Can be RGB or CMYK
         """
         if _debug: print "\tBASE: Called Scene.setBackgroundColor()"
 
@@ -156,7 +154,7 @@ class Scene(object):
         """
         Allows the user to run a low-level renderer-specific command directly
 
-        @param command The renderer command to run as a string
+        @param command: The renderer command to run as a string
         """
         if _debug: print "\tBASE: Called Scene.rendererCommand()"
         evalString = "%s\n" % command

@@ -62,7 +62,7 @@ class Renderer(BaseRenderer):
         """
         Sets the render window width
         
-        @param width The width of the render window
+        @param width: The width of the render window
         """
         self.renderWindowWidth = width
         return
@@ -71,7 +71,7 @@ class Renderer(BaseRenderer):
         """
         Sets the render window height
 
-        @param height The height of the render window
+        @param height: The height of the render window
         """
         self.renderWindowHeight = height
         return
@@ -98,8 +98,7 @@ class Renderer(BaseRenderer):
         """
         Method to add commands to the evaluation stack
         
-        @param renderer The renderer whose evalStack to add to
-        @param evalString The string of commands to be added to the evalStack
+        @param evalString: The string of commands to be added to the evalStack
         """
         if _debug: print "\t%s: Called Renderer.addToEvalStack()" % rendererName
         self._evalStack += evalString

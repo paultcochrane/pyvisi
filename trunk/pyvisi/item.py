@@ -33,7 +33,7 @@ class Item(object):
         """
         Initialisation
     
-        @param dict A dictionary of attributes to set
+        @param dict: A dictionary of attributes to set
         """
         if _debug: print "\tBASE: Called Item.__init__()"
         return

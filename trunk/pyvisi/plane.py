@@ -33,6 +33,8 @@ class Plane(Item):
     def __init__(self,scene):
         """
         Initialisation of the Plane object
+
+        @param scene: the scene object within which the plane is
         """
         if _debug: print "\tBASE: Called Plane.__init__()"
 
@@ -42,6 +44,8 @@ class Plane(Item):
     def mapImageToPlane(self,image):
         """
         Maps an Image object onto a Plane object
+
+        @param image: the image object to be mapped
         """
         if _debug: print "\tBASE: Called Plane.mapImageToPlane()"
 

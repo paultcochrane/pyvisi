@@ -33,8 +33,8 @@ class Image(Item):
         """
         Initialises the Image class object
         
-        @param format The image format
-        @param scene The Scene object to add to
+        @param format: The image format
+        @param scene: The Scene object to add to
         """
         if _debug: print "\tBASE: Called Image.__init__()"
 
@@ -51,7 +51,7 @@ class Image(Item):
         """
         Loads image data from file.
 
-        @param fname The filename from which to load image data
+        @param file: The filename from which to load image data
         """
         if _debug: print "\tBASE: Called Image.load()"
         return
@@ -64,7 +64,7 @@ class JpegImage(Image):
         """
         Initialises the JpegImage class object
 
-        @param scene The Scene object to add to
+        @param scene: The Scene object to add to
         """
         if _debug: print "\tBASE: Called JpegImage.__init__()"
         self.renderer = scene.renderer
@@ -75,7 +75,7 @@ class JpegImage(Image):
         """
         Loads jpeg image data from file.
 
-        @param file The filename from which to load jpeg image data
+        @param file: The filename from which to load jpeg image data
         """
         if _debug: print "\tBASE: Called JpegImage.load()"
 
