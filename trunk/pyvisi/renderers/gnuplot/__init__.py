@@ -39,7 +39,7 @@ from pyvisi.renderers.gnuplot.plot import Plot, \
         ScatterPlot, ScatterPlot3D, SurfacePlot
 from pyvisi.renderers.gnuplot.camera import Camera
 from pyvisi.renderers.gnuplot.image import Image, \
-        JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
+        JpegImage, PbmImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
 from pyvisi.renderers.gnuplot.text import Text
 from pyvisi.renderers.gnuplot.axes import Axes
 from pyvisi.renderers.gnuplot.plane import Plane
