@@ -9,11 +9,11 @@ include BUGS
 include setup.py
 
 # the base classes
-include pyvisi *.py
+include pyvisi/*.py
 
 # the renderer modules
-include pyvisi/renderers/vtk *.py
-include pyvisi/renderers/gnuplot *.py
+include pyvisi/renderers/vtk/*.py
+include pyvisi/renderers/gnuplot/*.py
 
 # these are the examples to include so far
 include examples/arrowPlotExample.py
@@ -42,5 +42,5 @@ include examples/waves.dat
 include examples/waves1d.dat
 
 # the pdf version of the documentation
-include doc/manual/pyvisi.pdf
+include doc/manual/pyvisi_doc.pdf
 
