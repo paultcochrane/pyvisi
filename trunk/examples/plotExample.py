@@ -42,8 +42,9 @@ if method == 'pyvisi':
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
-    # import the objects to render the scene using gnuplot
-    from pyvisi.renderers.gnuplot import * 
+    # import the objects to render the scene using the specific renderer
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.vtk import *       # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -98,8 +99,6 @@ elif method == 'vtk':
     _ren = vtk.vtkRenderer()
     _renWin = vtk.vtkRenderWindow()
     _renWin.AddRenderer(_ren)
-    _ren.SetBackground(1,1,1)
-    _renWin.SetSize(600,600)
 
     # do a quick check to make sure x and y are same length
     if len(x) != len(y):
@@ -140,8 +139,6 @@ elif method == 'vtk':
     _plot.SetXTitle("x")
     _plot.SetYTitle("x^2")
     _plot.SetXValuesToValue()
-    _plot.GetProperty().SetColor(0,0,0)
-    _plot.GetProperty().SetLineWidth(2)
 
     # set which parts of the data object are to be used for which axis
     _plot.SetDataObjectXComponent(0,0)
