@@ -7,13 +7,11 @@ import re
 import time
 
 # the head string for the .part page
-headString = '''
-<!-- $Id$ -->
-  <h1>Todo list</h1>
-  
-  <hr class="top" />
-
-'''
+headString = '<!-- $'
+headString += 'Id'
+headString += '$ -->\n'
+headString += '  <h1>Todo list</h1>\n'
+headString += '  <hr class="top" />\n'
 
 # open the todo file
 f = open('../../.todo','r')
