@@ -44,6 +44,9 @@
 - Fully implement linestyles in renderers.vtk
   (added 2005-01-21, 13:44, incomplete, priority high)
 
+- Add proper write() methods so that can actually output scenes to file
+  (added 2005-01-21, 13:47, incomplete, priority high)
+
 - Write up student project description
   (added 2004-11-19, 14:03, incomplete, priority medium)
 
