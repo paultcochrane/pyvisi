@@ -33,9 +33,12 @@ class Plot(Scene):
     """
     Abstract plot class
     """
-    def __init__(self):
+    def __init__(self,scene):
         """
         Initialisation of the abstract Plot class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called Plot.__init__()" % rendererName
         pass
@@ -45,6 +48,7 @@ class Plot(Scene):
         Set data to the plot
 
         @param dataList: List of data to set to the plot
+        @type dataList: tuple
         """
         if _debug: print "\t%s: Called setData() in Plot()" % rendererName
         return True
@@ -53,9 +57,12 @@ class ArrowPlot(Plot):
     """
     Arrow field plot
     """
-    def __init__(self):
+    def __init__(self,scene):
         """
         Initialisation of the ArrowPlot class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called ArrowPlot.__init__()" % rendererName
         pass
@@ -65,6 +72,7 @@ class ArrowPlot(Plot):
         Set data to the plot
 
         @param dataList: List of data to set to the plot
+        @type dataList: tuple
         """
         if _debug: print "\t%s: Called setData() in ArrowPlot()" % rendererName
         return True
@@ -73,9 +81,12 @@ class ContourPlot(Plot):
     """
     Contour plot
     """
-    def __init__(self):
+    def __init__(self,scene):
         """
         Initialisation of the ContourPlot class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called ContourPlot.__init__()" % rendererName
         pass
@@ -85,6 +96,7 @@ class ContourPlot(Plot):
         Set data to the plot
 
         @param dataList: List of data to set to the plot
+        @type dataList: tuple
         """
         if _debug: print "\t%s: Called setData() in ContourPlot()"%rendererName
         return True
@@ -93,20 +105,30 @@ class LinePlot(Plot):
     """
     Line plot
     """
-    def __init__(self):
+    def __init__(self,scene):
         """
         Initialisation of the LinePlot class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
         """
         if _debug: print "\t%s: Called LinePlot.__init__()" % rendererName
-        pass
+
+        self.renderer = scene.renderer
+
+        return True
 
     def setData(self,*dataList):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
+        @type dataList: tuple
         """
         if _debug: print "\t%s: Called setData() in LinePlot()" % rendererName
+
+        
+        
         return True
 
 # vim: expandtab shiftwidth=4:
