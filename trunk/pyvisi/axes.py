@@ -30,9 +30,13 @@ from plot import Plot
 class Axes(Plot):
     """
     Axes class
+
+    This class is just a template for the more specific renderer module class.
+    The methods defined in this class should be overridden by the renderer
+    module implementing them.
     """
     def __init__(self):
-        print "\tBASE: Called Axes.__init__()"
-        pass
+        if _debug: print "\tBASE: Called Axes.__init__()"
+        return
 
 # vim: expandtab shiftwidth=4:
