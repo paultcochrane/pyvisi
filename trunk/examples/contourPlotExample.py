@@ -1,22 +1,4 @@
-# Copyright (C) 2004 Paul Cochrane
-# 
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
 # $Id$
-
-## @file contourPlotExample.py
 
 """
 Example of plotting with pyvisi 
@@ -25,7 +7,6 @@ Will hopefully help me write a decent interface.
 """
 
 import sys
-sys.path.append('../')
 
 # what plotting method are we using?
 method = 'pyvisi'
@@ -65,9 +46,6 @@ if method == 'pyvisi':
     # create a ContourPlot object
     plot = ContourPlot(scene)
 
-    # add the plot to the scene (really don't think I should have to do this)
-    scene.add(plot)
-
     # add some helpful info to the plot
     plot.title = 'Example contour plot'
     plot.xlabel = 'x'
@@ -82,10 +60,12 @@ if method == 'pyvisi':
     # or (but more confusing depending upon one's naming conventions)
     #plot.setData(x=x, y=y, z=z)
 
-    plot.render()  # need to tell some renderers to finish up stuff here
-
     # render the scene to screen
     scene.render(pause=True, interactive=True)
+
+    # save the scene to file
+    scene.save(fname="contourPlotExample.png", format=PngImage())
+    scene.save(fname="contourPlotExample.ps", format=PsImage())
 
 elif method == 'gnuplot':
     #### original gnuplot code
@@ -112,7 +92,7 @@ elif method == 'gnuplot':
     raw_input('Press enter to continue...')
 
 elif method == 'vtk':
-    pass
+    print "vtk contour plotting not yet implemented"
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
