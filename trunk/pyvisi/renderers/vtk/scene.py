@@ -42,13 +42,15 @@ class Scene(BaseScene):
         """
         The init function
         """
-        BaseScene.__init__(self)
         debugMsg("Called Scene.__init__()")
+        BaseScene.__init__(self)
 
         self.renderer = Renderer()
 
         self.xSize = 640
         self.ySize = 480
+
+        self.objectList = []
 
     def add(self, obj):
         """
@@ -61,6 +63,8 @@ class Scene(BaseScene):
 
         if obj is None:
             raise ValueError, "You must specify an object to add"
+
+        self.objectList.append(obj)
 
         return
 
@@ -102,7 +106,11 @@ class Scene(BaseScene):
             renderer.addToEvalStack(\
                     "_iRenderer.SetRenderWindow(_renderWindow)")
 
-        renderer.addToEvalStack("_renderWindow.Render()")
+        # get all objects in the scene to render themselves
+        for object in self.objectList:
+            object.render()
+
+        #renderer.addToEvalStack("_renderWindow.Render()")
 
         if interactive:
             renderer.addToEvalStack("_iRenderer.Start()")
