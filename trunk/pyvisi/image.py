@@ -48,6 +48,8 @@ class Image(Item):
         if scene is None:
             raise ValueError, "You must specify a scene"
 
+        self.renderer = scene.renderer
+
     def load(self, fname):
         """
         Loads image data from file.
@@ -79,6 +81,7 @@ class JpegImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "jpeg"
 
     def load(self, fname):
         """
@@ -122,6 +125,7 @@ class PngImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "png"
 
     def load(self, fname):
         """
@@ -165,6 +169,7 @@ class BmpImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called BmpImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "bmp"
 
     def load(self, fname):
         """
@@ -208,6 +213,7 @@ class TiffImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called TiffImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "tiff"
 
     def load(self, fname):
         """
@@ -251,6 +257,7 @@ class PnmImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "pnm"
 
     def load(self, fname):
         """
@@ -296,6 +303,7 @@ class PsImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PsImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "ps"
 
     def load(self, fname):
         """
@@ -340,6 +348,7 @@ class PdfImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "pdf"
 
     def load(self, fname):
         """
