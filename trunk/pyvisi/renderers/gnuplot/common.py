@@ -29,7 +29,7 @@ if _gnuplot4:
 else:
     _rendererName = "GNUPLOT"
 _rendererVersion = '0.1'
-_rendererRevision = 'pre-alpha-1'
+_rendererRevision = 'pre-alpha-2'
 
 __revision__ = '$Revision$'
 
