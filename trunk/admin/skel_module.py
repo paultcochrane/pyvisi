@@ -130,7 +130,7 @@ __revision__ = _rendererRevision
         else:
             initText += "from pyvisi.renderers.%s.%s import %s\n" % \
                     (moduleName, baseClass.lower(), baseClass.capitalize())
-
+        
     fname = moduleName + '/__init__.py'
     f = open(fname, 'w')
     f.write(copyrightStr)
@@ -221,10 +221,18 @@ Brief introduction to what the file contains/does
 from pyvisi.renderers.%s.common import debugMsg, overrideWarning
 
 from pyvisi.%s import %s
+""" % (moduleName, className.lower(), baseClassName)
+
+    if className.lower() == 'scene':
+        fileHeaderStr += """
+from pyvisi.renderers.%s.renderer import Renderer
+""" % moduleName
+
+    fileHeaderStr += """
 
 __revision__ = 'some-revision-number-thing'
 
-    \n""" % (moduleName, className.lower(), baseClassName)
+""" 
     return copyrightStr + fileDoxStr + fileHeaderStr
    
 def getClassFileBody(className, baseClassName):
