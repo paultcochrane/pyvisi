@@ -22,8 +22,12 @@
 Class and functions associated with a pyvisi Scene
 """
 
-from common import _debug, overrideWarning
-from renderer import Renderer
+# generic imports
+from pyvisi.common import debugMsg, overrideWarning, fileCheck
+
+from pyvisi.renderer import Renderer
+
+__revision__ = 'pre-alpha-1'
 
 class Scene(object):
     """
@@ -37,23 +41,45 @@ class Scene(object):
         """
         The init function
         """
-        if _debug: print "\tBASE: Called Scene.__init__()"
+        object.__init__(self)
+        debugMsg("Called Scene.__init__()")
 
         self.renderer = Renderer()
-        numCameras = 0
 
-        return
+        self.xSize = 640
+        self.ySize = 480
 
     def add(self, obj):
         """
         Add a new item to the scene
 
         @param obj: The object to add to the scene
+        @type obj: object
         """
-        if _debug: print "\tBASE: Called Scene.add()"
+        debugMsg("Called Scene.add()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to add"
 
         # print a warning message if get to here
         overrideWarning("Scene.add")
+
+        return
+
+    def delete(self, obj):
+        """
+        Delete an item from the scene
+
+        @param obj: The object to remove
+        @type obj: object
+        """
+        debugMsg("Called Scene.delete()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to delete"
+
+        # print a warning message if get to here
+        overrideWarning("Scene.delete")
 
         return
 
@@ -62,24 +88,31 @@ class Scene(object):
         Place an object within a scene
 
         @param obj: The object to place within the scene
+        @type obj: object
         """
-        if _debug: print "\tBASE: Called Scene.place()"
+        debugMsg("Called Scene.place()")
+
+        if obj is None:
+            raise ValueError, "You must specify an object to place"
 
         # print a warning message if get to here
         overrideWarning("Scene.place")
 
         return
 
-    def render(self,pause=False,interactive=False):
+    def render(self, pause=False, interactive=False):
         """
         Render (or re-render) the scene
         
         Render the scene, either to screen, or to a buffer waiting for a save
 
         @param pause: Flag to wait at end of script evaluation for user input
+        @type pause: boolean
+        
         @param interactive: Whether or not to have interactive use of the output
+        @type interactive: boolean
         """
-        if _debug: print "\tBASE: Called Scene.render()"
+        debugMsg("Called Scene.render()")
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
@@ -87,10 +120,10 @@ class Scene(object):
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
-        if _debug: print "BASE: Here is the evaluation stack"
-        if _debug: print 70*"#"
-        if _debug: print renderer.getEvalStack()
-        if _debug: print 70*"#"
+        debugMsg("Here is the evaluation stack")
+        debugMsg(70*"#")
+        debugMsg(renderer.getEvalStack())
+        debugMsg(70*"#")
 
         # now compile the string object into code, and execute it
         try:
@@ -103,29 +136,50 @@ class Scene(object):
             return None
 
         # flush the evaluation stack
-        if _debug: print "\tBASE: Flusing evaluation stack"
-        renderer.resetEvalStack()
+        #debugMsg("Flusing evaluation stack")
+        #renderer.resetEvalStack()
+
+        # this is just to stop lint from complaining that pause and
+        # interactive aren't used
+        if pause is None:
+            raise ValueError, "\'pause\' must be either True or False"
+
+        if interactive is None:
+            raise ValueError, "\'interactive\' must be either True or False"
 
         return
 
-    def save(self,file,format):
+    def save(self, fname, format):
         """
         Save the scene to a file
+
+        @param fname: The name of the file to save the scene to
+        @type fname: string
+
+        @param format: The format in which to save the scene
+        @type format: string
         """
-        if _debug: print "\tBASE: Called Scene.save()"
+        debugMsg("Called Scene.save()")
+
+        # do a check to see if the file exists
+        fileCheck(fname)
+
+        if format is None:
+            raise ValueError, "You must specify an image format"
 
         # print a warning message if get to here
         overrideWarning("Scene.save")
 
         return
 
-    def setBackgroundColor(self,*color):
+    def setBackgroundColor(self, *color):
         """
         Sets the background color of the Scene
 
         @param color: The color to set the background to.  Can be RGB or CMYK
+        @type color: tuple
         """
-        if _debug: print "\tBASE: Called Scene.setBackgroundColor()"
+        debugMsg("Called Scene.setBackgroundColor()")
 
         # print a warning message if get to here
         overrideWarning("Scene.setBackgroundColor")
@@ -138,7 +192,7 @@ class Scene(object):
             #if color[i] > 1:
                 #maxColor = color[i]
                 #print maxColor
-#
+
         ## if a maximum colour is found, then scale the colours
         #if maxColor is not None:
             #for i in range(len(color)):
@@ -154,7 +208,7 @@ class Scene(object):
             # this will do in the meantime
             pass
         else:
-            raise UserError, "Sorry, only RGB color is supported at present"
+            raise ValueError, "Sorry, only RGB color is supported at present"
 
         return
 
@@ -162,7 +216,7 @@ class Scene(object):
         """
         Gets the current background color setting of the Scene
         """
-        if _debug: print "\tBASE: Called Scene.getBackgroundColor()"
+        debugMsg("Called Scene.getBackgroundColor()")
 
         # print a warning message if get to here
         overrideWarning("Scene.getBackgroundColor")
@@ -181,7 +235,10 @@ class Scene(object):
         @param ySize: the size to set the y dimension
         @type ySize: float
         """
-        if _debug: print "\tBASE: Called Scene.setSize()"
+        debugMsg("Called Scene.setSize()")
+
+        self.xSize = xSize
+        self.ySize = ySize
 
         # print a warning message if get to here
         overrideWarning("Scene.setSize")
@@ -195,20 +252,21 @@ class Scene(object):
         This size is effectively the renderer window size.  Returns a tuple
         of the x and y dimensions respectively, in pixel units(??).
         """
-        if _debug: print "\tBASE: Called Scene.getSize()"
+        debugMsg("Called Scene.getSize()")
 
         # print a warning message if get to here
         overrideWarning("Scene.getSize")
 
-        return
+        return (self.xSize, self.ySize)
 
-    def rendererCommand(self,command):
+    def rendererCommand(self, command):
         """
         Allows the user to run a low-level renderer-specific command directly
 
         @param command: The renderer command to run as a string
+        @type command: string
         """
-        if _debug: print "\tBASE: Called Scene.rendererCommand()"
+        debugMsg("Called Scene.rendererCommand()")
         evalString = "%s\n" % command
         self.renderer.addToEvalStack(evalString)
         return
