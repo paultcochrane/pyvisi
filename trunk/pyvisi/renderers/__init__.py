@@ -23,6 +23,6 @@ __init__ file to make the renderers/ directory into a package
 """
 
 __author__ = 'Paul Cochrane'
-__revision__ = 'pre-alpha-1'
+__revision__ = $Revision$
 
 # vim: expandtab shiftwidth=4:
