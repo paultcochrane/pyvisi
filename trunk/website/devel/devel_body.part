@@ -26,7 +26,8 @@
   <a href="http://ngwww.ucar.edu/ncl/pyngl/">PyNGL</a>, 
   <a href="http://www.opengl.org/">OpenGL</a>,
   <a href="http://www.renderman.org/">RenderMan</a>,
-  and many more.  Once the structure is in place
+  <a href="http://www.opendx.org/">OpenDX</a>,
+  and more.  Once the structure is in place
   to add a renderer module, it is just a matter of writing the code to
   the interface.
   </p>
