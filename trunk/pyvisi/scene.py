@@ -23,14 +23,14 @@ Class and functions associated with a pyvisi Scene
 """
 
 from common import _debug
-from renderer import Renderer
+from renderer import BaseRenderer
 
-class Scene(object):
+class BaseScene(object):
     """
     The main object controlling the scene.
 
-    The scene object should be an abstract class that subsequent pyvisi modules
-    override.
+    This is the base Scene object.  It should be inherited, and then its 
+    methods overridden.  
     """
 
     def __init__(self,renderer):
@@ -40,6 +40,7 @@ class Scene(object):
         @param renderer The renderer object to use for the scene.
         """
         if _debug: print "\tBASE: Called Scene.__init__()"
+
         self.renderer = Renderer(renderer)
         if _debug: print "\tBASE: Scenes will be rendered with %s" % \
                 self.renderer.rendererName

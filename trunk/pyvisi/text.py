@@ -22,10 +22,11 @@
 Class and functions associated with a pyvisi Text object
 """
 
-from pyvisi.scene import *
 from common import _debug
 
-class Text(Scene):
+from pyvisi.scene import *
+
+class BaseText(BaseScene):
     """
     Text
     """

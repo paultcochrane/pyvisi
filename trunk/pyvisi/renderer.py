@@ -24,7 +24,7 @@ This is the file for the Renderer class
 
 from common import _debug
 
-class Renderer(object):
+class BaseRenderer(object):
     """
     A generic object holding a renderer of a Scene().
     """
@@ -39,11 +39,11 @@ class Renderer(object):
         self.rendererName = rendererName
         if _debug: print "\tBASE: Renderer name is %s" % rendererName
 
-        if rendererName == "vtk":
-            from pyvisi.renderers.vtk import *
-        else:
-           print "Unknown renderer"
-           return None
+        #if rendererName == "vtk":
+            #from pyvisi.renderers.vtk import *
+        #else:
+           #print "Unknown renderer"
+           #return None
 
 
         # initialise some attributes

@@ -24,5 +24,4 @@ Variables common to all classes and functions
 
 _debug = 1
 
-
 # vim: expandtab shiftwidth=4:

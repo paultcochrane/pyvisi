@@ -22,10 +22,10 @@
 Class and functions associated with a pyvisi Axes object
 """
 
-from plot import Plot
+from plot import BasePlot
 from common import _debug
 
-class Axes(Plot):
+class BaseAxes(BasePlot):
     """
     Axes class
     """
