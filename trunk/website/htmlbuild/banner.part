@@ -17,9 +17,9 @@
     <a href="support.html">Support</a>
     <a href="http://sourceforge.net/projects/pyvisi" 
 	class="sfnet">Project Page</a>
-    <a href="http://sourceforge.net/tracker/?group_id=124511&atid=699604" 
+    <a href="http://sourceforge.net/tracker/?group_id=124511&amp;atid=699604" 
 	class="sfnet">Bug Tracker</a>
-    <a href="http://sourceforge.net/tracker/?group_id=124511&atid=699607"
+    <a href="http://sourceforge.net/tracker/?group_id=124511&amp;atid=699607"
 	class="sfnet">Feature Requests</a>
     <a href="http://sourceforge.net/forum/?group_id=124511" 
 	class="sfnet">Forums</a>
