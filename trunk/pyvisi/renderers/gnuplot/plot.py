@@ -41,8 +41,8 @@ class Plot(Item):
         @param scene: the scene with which to associate the Plot
         @type scene: Scene object
         """
-        Item.__init__(self)
         debugMsg("Called Plot.__init__()")
+        Item.__init__(self)
 
         self.title = None
         self.xlabel = None
@@ -153,8 +153,8 @@ class ArrowPlot(Plot):
         @param scene: the scene with which to associate the ArrowPlot
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called ArrowPlot.__init__()")
+        Plot.__init__(self, scene)
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -184,14 +184,17 @@ class ContourPlot(Plot):
         @param scene: the scene with which to associate the ContourPlot
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called ContourPlot.__init__()")
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
 
         self.title = None
         self.xlabel = None
         self.ylabel = None
+
+        # now add the plot to the scene
+        scene.add(self)
 
     def setData(self, *dataList):
         """
@@ -285,6 +288,14 @@ class ContourPlot(Plot):
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
 
+        # gnuplot 4 specific (I reckon I should bite the bullet with this
+        # one)
+        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+
+        # set up the evalString to use for plotting
+        evalString = "_gnuplot.splot(_data)"
+        self.renderer.addToEvalStack(evalString)
+
         return
 
 class LinePlot(Plot):
@@ -298,8 +309,8 @@ class LinePlot(Plot):
         @param scene: the scene with which to associate the LinePlot
         @type scene: Scene object
         """
-        Plot.__init__(self, scene)
         debugMsg("Called LinePlot.__init__()")
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
 
@@ -310,6 +321,9 @@ class LinePlot(Plot):
 
         self.linestyle = None   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
+
+        # now add the object to the scene
+        scene.add(self)
 
     def setData(self, *dataList):
         """
@@ -421,7 +435,14 @@ class LinePlot(Plot):
             evalString = "_gnuplot.zlabel(\'%s\')" % self.zlabel
             self.renderer.addToEvalStack(evalString)
 
-        return True
+        # set up the evalString to use for plotting
+        evalString = "_gnuplot.plot("
+        for i in range(self.renderer.numDataObjects-1):
+            evalString += "_data%d, " % i
+        evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
+        self.renderer.addToEvalStack(evalString)
+
+        return
 
     def setLineStyle(self, linestyle):
         """
