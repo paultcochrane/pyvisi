@@ -83,6 +83,10 @@
   that method/object
   (added Mon Jan 10 13:22:38 2005, incomplete, priority medium)
 
+- Might need some kind of renderer module templating system for developers to
+  work from.
+  (added Tue Jan 11 14:50:36 2005, incomplete, priority medium)
+
 - View a 2D vector field as an Arrow Plot
   (added Fri Nov 19 14:04:33 2004, incomplete, priority low)
 
