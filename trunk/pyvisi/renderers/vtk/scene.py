@@ -151,7 +151,7 @@ class Scene(BaseScene):
         @type fname: string
 
         @param format: Graphics format of output file
-        @type format: string
+        @type format: Image object
         """
         debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
@@ -162,22 +162,22 @@ class Scene(BaseScene):
         self.renderer.addToEvalStack("_win2imgFilter.SetInput(_renderWindow)")
 
         # set the output format
-        if format == "PS":
+        if format.format == "ps":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPostScriptWriter()")
-        elif format == "PNG":
+        elif format.format == "png":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPNGWriter()")
-        elif format == "JPEG":
+        elif format.format == "jpeg":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkJPEGWriter()")
-        elif format == "TIFF":
+        elif format.format == "tiff":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkTIFFWriter()")
-        elif format == "BMP":
+        elif format.format == "bmp":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkBMPWriter()")
-        elif format == "PNM":
+        elif format.format == "pnm":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPNMWriter()")
         else:
