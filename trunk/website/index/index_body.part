@@ -12,7 +12,7 @@
   interface to many packages used in scientific visualisation. The idea is
   that the user writes one set of code to plot a set of data (say), and then
   can choose to use one of many "backends" or 
-  <a href="renderers/renderers.html">"renderer modules"</a> to actually 
+  <a href="renderers.html">"renderer modules"</a> to actually 
   perform the task of visualising the data.  For instance, one could use 
   <a href="http://www.vtk.org">vtk</a> to visualise certain
   kinds of three-dimensional data, but then for very high quality output, one
