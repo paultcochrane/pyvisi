@@ -227,6 +227,47 @@ class TiffImage(Image):
 
         return
 
+class PnmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pnm images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the PnmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\tBASE: Called PnmImage.__init__()"
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads pnm image data from file.
+
+        @param file: The filename from which to load pnm image data
+        @type file: string
+        """
+        if _debug: print "\tBASE: Called PnmImage.load()"
+
+        # print a warning message if get to here
+        overrideWarning("PnmImage.load")
+
+        return
+
+    def render(self):
+        """
+        Does PnmImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\tBASE: Called PnmImage.render()"
+
+        # print a warning message if get to here
+        overrideWarning("PnmImage.render")
+
+        return
+
 
 
 # vim: expandtab shiftwidth=4:
