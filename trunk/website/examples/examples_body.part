@@ -86,9 +86,9 @@ method = 'pyvisi'
 from Numeric import *
 
 x = arange(10, typecode=Float)
-y = sin(x)  # x**2
+y = x**2
 
-# plot it using one of the two methods
+# plot it using one of the three methods
 if method == 'pyvisi':
 
     # example code for how a user would write a script in pyvisi
@@ -124,6 +124,10 @@ if method == 'pyvisi':
     # render the scene to screen
     scene.render(pause=True,interactive=True)
 
+    # save the scene out to file
+    #scene.save(file="plotExample.png", format="PNG")
+    scene.save(file="plotExample.ps", format="PS")
+
 elif method == 'gnuplot':
     #### original gnuplot code
     
@@ -155,7 +159,7 @@ elif method == 'vtk':
 
     # do a quick check to make sure x and y are same length
     if len(x) != len(y):
-        raise DataError, "x and y vectors must be same length"
+        raise ValueError, "x and y vectors must be same length"
 
     # set up the x and y data arrays to be able to accept the data (code
     # here adapted from the C++ of a vtk-users mailing list reply by Sander
@@ -212,7 +216,5 @@ elif method == 'vtk':
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
-
-
   </pre>
 
