@@ -194,5 +194,48 @@ class BmpImage(Image):
 
         return
 
+class TiffImage(Image):
+    """
+    Subclass of Image class to explicitly handle tiff images
+    """
+    def __init__(self, scene):
+        """
+        Initialises the TiffImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        if _debug: print "\t%s: Called TiffImage.__init__()" % rendererName
+        self.renderer = scene.renderer
+        
+        return
+
+    def load(self, file):
+        """
+        Loads tiff image data from file.
+
+        NOT supported by this renderer module
+
+        @param file: The filename from which to load tiff image data
+        @type file: string
+        """
+        if _debug: print "\t%s: Called TiffImage.load()" % rendererName
+
+        # need to check that the file exists and is readable etc here
+        # *before* we add to the evalString, better to get the feedback
+        # now rather than at the end of the script
+
+        # this ability not handled by this renderer module
+        unsupportedError(rendererName)
+        
+        return
+
+    def render(self):
+        """
+        Does TiffImage object specific (pre)rendering stuff
+        """
+        if _debug: print "\t%s: Called TiffImage.render()" % rendererName
+
+        return
 
 # vim: expandtab shiftwidth=4:
