@@ -121,11 +121,11 @@ The surface was generated with the equation
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module 
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -159,11 +159,11 @@ with the equation <code>z = x*exp(-x^2 - y^2)</code>.
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -198,11 +198,11 @@ of the axes.  The surface was generated with the equation
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -235,11 +235,11 @@ Here we have randomly generated x-y data plotted as a scatter plot.
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module 
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -274,11 +274,11 @@ generated randomly, and the z value is calculated via
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -312,11 +312,11 @@ only using 1D arrays as input.
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
@@ -350,11 +350,11 @@ only using 2D arrays as input.
 <tr>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 3.8)
+	(gnuplot version 3.8)
     </th>
     <th>
 	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
-	(version 4.0)
+	(gnuplot version 4.0)
     </th>
 </tr>
 <tr>
