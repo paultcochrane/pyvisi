@@ -25,7 +25,7 @@ Will hopefully help me write a decent interface.
 """
 
 method = 'pyvisi'
-format = 'bmp'
+format = 'tiff'
 
 if method == 'pyvisi':
     ## this is the pyvisi code
@@ -60,6 +60,12 @@ if method == 'pyvisi':
         bmpImage.load(file="Flinders_eval.bmp")
         bmpImage.render()
 
+    elif format == 'tiff':
+        # add tiff image to the scene, and then load the file
+        tiffImage = TiffImage(scene)
+        tiffImage.load(file="Flinders_eval.tiff")
+        tiffImage.render()
+
     else:
         raise ValueError, "Unknown format: %s" % format
 
@@ -90,6 +96,11 @@ elif method == 'vtk':
         _bmpReader = vtk.vtkBMPReader()
         _bmpReader.SetFileName("Flinders_eval.bmp")
         _imgActor.SetInput(_bmpReader.GetOutput())
+
+    elif format == 'tiff':
+        _tiffReader = vtk.vtkTIFFReader()
+        _tiffReader.SetFileName("Flinders_eval.tiff")
+        _imgActor.SetInput(_tiffReader.GetOutput())
 
     else:
         raise ValueError, "Unknown format: %s" % format
