@@ -180,6 +180,8 @@ class LinePlot(Plot):
         self.ylabel = None
         self.zlabel = None
 
+        self.linestyle = None   # 'lines'
+
         return
 
     def setData(self,*dataList):
@@ -197,7 +199,7 @@ class LinePlot(Plot):
 
         # for the moment, make sure that there aren't more than two arrays
         if len(dataList) != 2:
-            raise ValueError, "Must have two arrays as input (at present)"
+            raise ValueError, "Must have two 1D arrays as input (at present)"
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -218,8 +220,37 @@ class LinePlot(Plot):
         # (the last one doesn't have a trailing comma)
         for i in range(len(dataList)-1):
             evalString += "_x%d, " % i
-        evalString += "_x%d)" % (len(dataList)-1,)
+        evalString += "_x%d" % (len(dataList)-1,)
+
+        # if there are any linestyle settings etc, add them here
+        if self.linestyle is not None:
+            evalString += ", with=\'%s\'" % self.linestyle
+
+        # finish off the evalString
+        evalString += ")"
+
+        # and add it to the evalstack
         self.renderer.addToEvalStack(evalString)
+
+        # if a title is set, put it here
+        if self.title is not None:
+            evalString = "_gnuplot.title(\'%s\')" % self.title
+            self.renderer.addToEvalStack(evalString)
+
+        # if an xlabel is set, add it
+        if self.xlabel is not None:
+            evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a ylabel is set, add it
+        if self.ylabel is not None:
+            evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
+            self.renderer.addToEvalStack(evalString)
+
+        # if a zlabel is set, add it
+        if self.zlabel is not None:
+            evalString = "_gnuplot.zlabel(\'%s\')" % self.zlabel
+            self.renderer.addToEvalStack(evalString)
 
         return True
 
