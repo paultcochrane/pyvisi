@@ -49,6 +49,8 @@ class Image(Item):
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
+
+        self.renderer = scene.renderer
         
     def load(self, fname):
         """
@@ -75,6 +77,7 @@ class JpegImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called JpegImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "jpeg"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -119,6 +122,7 @@ class PngImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PngImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "png"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -163,6 +167,7 @@ class BmpImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called BmpImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "bmp"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -207,6 +212,7 @@ class TiffImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called TiffImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "tiff"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -251,6 +257,7 @@ class PnmImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PnmImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "pnm"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -297,6 +304,7 @@ class PsImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PsImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "ps"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
@@ -343,6 +351,7 @@ class PdfImage(Image):
         Image.__init__(self, scene)
         debugMsg("Called PdfImage.__init__()")
         self.renderer = scene.renderer
+        self.format = "pdf"
 
         if scene is None:
             raise ValueError, "You must specify a scene object"
