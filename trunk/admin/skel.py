@@ -128,7 +128,7 @@ sys.path.append(here)
 from pyvisi import *   # this should import all of the pyvisi stuff needed
 
 \"\"\"
-@brief Class and functions for testing the %s class
+Class and functions for testing the %s class
 \"\"\"
 
 class Test%s(unittest.TestCase):
