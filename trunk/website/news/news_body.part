@@ -4,6 +4,31 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">More plotting types added for gnuplot
+	  renderer module</div>
+      <div class="itemDate">24-Feb-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  I've now been able to add many more kinds of plotting object to
+	  the gnuplot renderer module.  Now one can plot 2D contour maps of
+	  3D data (see item from yesterday), one can plot 3D surfaces,
+	  3D surfaces with a 2D projection of the surface contours onto the
+	  base of the axes, and 2D and 3D scatter data (good to use when the
+	  input data isn't on a grid).  Extra examples have been added,
+	  namely: 
+	  <ul>
+	      <li><code>surfacePlotExample.py</code></li>
+	      <li><code>surfaceAndContourPlotExample.py</code></li>
+	      <li><code>scatterPlotExample.py</code></li>
+	      <li><code>scatterPlot3DExample.py</code></li>
+	  </ul>
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">Contour plotting works in gnuplot</div>
       <div class="itemDate">23-Feb-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
