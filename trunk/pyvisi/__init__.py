@@ -18,10 +18,12 @@
 
 ## @file __init__.py
 
-__author__ = 'Paul Cochrane'
-
 from common import _debug, pyvisiVersion, pyvisiRevision
 print "This is PyVisi version %s-%s" % (pyvisiVersion, pyvisiRevision)
+
+__author__ = 'Paul Cochrane'
+__version__ = pyvisiVersion
+__revision__ = pyvisiRevision
 
 from plot import *
 from camera import *
