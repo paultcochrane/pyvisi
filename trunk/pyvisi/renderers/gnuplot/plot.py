@@ -431,11 +431,6 @@ class LinePlot(Plot):
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
             self.renderer.addToEvalStack(evalString)
 
-        # if a zlabel is set, add it
-        if self.zlabel is not None:
-            evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
-            self.renderer.addToEvalStack(evalString)
-
         # set up the evalString to use for plotting
         evalString = "_gnuplot.plot("
         for i in range(self.renderer.numDataObjects-1):
