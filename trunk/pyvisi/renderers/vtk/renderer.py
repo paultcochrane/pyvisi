@@ -23,7 +23,7 @@ This is the file for the Renderer class
 """
 
 # generic imports
-from common import _debug, renName
+from common import _debug, rendererName
 from pyvisi.renderer import BaseRenderer
 
 class Renderer(BaseRenderer):
@@ -31,15 +31,11 @@ class Renderer(BaseRenderer):
     A generic object holding a renderer of a Scene().
     """
 
-    def __init__(self,rendererName):
+    def __init__(self):
         """
         Initialisation of Renderer() class
-    
-        @param rendererName The name of the renderer backend to use
         """
-        if _debug: print "\t%s: Called Renderer.__init__()" % renName
-        self.rendererName = rendererName
-        if _debug: print "\t%s: Renderer name is %s" % (renName, rendererName)
+        if _debug: print "\t%s: Called Renderer.__init__()" % rendererName
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -49,29 +45,16 @@ class Renderer(BaseRenderer):
         self._evalStack = ""
 
         # initialise the renderer module
-        self._initRendererModule(self.rendererName)
 
-    def _initRendererModule(self,rendererName):
-        """
-        Initialise the renderer module
-
-        @param rendererName The name of the renderer to initialise
-        """
-        if _debug: print "\t%s: Called Renderer._initRendererModule()"% renName
-        # do a check to see if the renderer used is one of the known renderers
-        if rendererName == "vtk":
-            self.addToEvalStack("# Renderer._initRendererModule\n")
-            self.addToEvalStack("import vtk\n")
-            self.addToEvalStack("_renderer = vtk.vtkRenderer()\n")
-            # this next line should only be done if we have an active display
-            self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()\n")
-            self.addToEvalStack("_renderWindow.AddRenderer(_renderer)\n")
-            evalString = "_renderWindow.SetSize(%d,%d)\n" % \
-                    (self.renderWindowWidth,self.renderWindowHeight)
-            self.addToEvalStack(evalString)
-        else:
-            print "Unknown renderer"
-            return None
+        self.addToEvalStack("# Renderer._initRendererModule\n")
+        self.addToEvalStack("import vtk\n")
+        self.addToEvalStack("_renderer = vtk.vtkRenderer()\n")
+        # this next line should only be done if we have an active display
+        self.addToEvalStack("_renderWindow = vtk.vtkRenderWindow()\n")
+        self.addToEvalStack("_renderWindow.AddRenderer(_renderer)\n")
+        evalString = "_renderWindow.SetSize(%d,%d)\n" % \
+                (self.renderWindowWidth,self.renderWindowHeight)
+        self.addToEvalStack(evalString)
 
         return
 
@@ -118,7 +101,7 @@ class Renderer(BaseRenderer):
         @param renderer The renderer whose evalStack to add to
         @param evalString The string of commands to be added to the evalStack
         """
-        if _debug: print "\t%s: Called Renderer.addToEvalStack()" % renName
+        if _debug: print "\t%s: Called Renderer.addToEvalStack()" % rendererName
         self._evalStack += evalString
         return
 
@@ -126,7 +109,7 @@ class Renderer(BaseRenderer):
         """
         Reset/flush the evaluation stack
         """
-        if _debug: print "\t%s: Called Renderer.resetEvalStack()" % renName
+        if _debug: print "\t%s: Called Renderer.resetEvalStack()" % rendererName
         self._evalStack = ""
         return
 
