@@ -2,4 +2,16 @@
   <h1>Documentation</h1>
   
   <hr class="top">
+
+  <h2>API</h2>
+
+  <p>
+  The <a href="docs/api_epydoc/index.html">API for pyvisi</a> is automatically 
+  generated using <a href="http://epydoc.sourceforge.net">epydoc</a>.
+  </p>
+
+  <p>
+  The command used was:<br>
+  epydoc --html -o doc/api_epydoc -n pyvisi pyvisi
+  </p>
   
