@@ -5,13 +5,15 @@
 from distutils.core import setup
 
 a=setup(name="pyvisi",
-      version="0.1a",
+      version="0.1-pre-alpha-1",
       description="The Python Visualisation Interface",
       author="Paul Cochrane",
       author_email="cochrane@esscc.uq.edu.au",
       url="http://pyvisi.sourceforge.net",
-      packages=['pyvisi','pyvisi.lib'],
-      scripts=['bin/pyvisi'],
+      packages=['pyvisi',
+      'pyvisi.renderers',
+      'pyvisi.renderers.gnuplot',
+      'pyvisi.renderers.vtk'],
 )
 
 
