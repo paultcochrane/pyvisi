@@ -167,3 +167,4 @@ class Camera(Item):
         return self.azimuth
 
 # vim: expandtab shiftwidth=4:
+\n
