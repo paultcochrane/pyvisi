@@ -37,7 +37,7 @@ class Image(Item):
     """
     Image class.  Generic class to handle image data.
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the Image class object
         
@@ -47,10 +47,8 @@ class Image(Item):
         Item.__init__(self)
         debugMsg("Called Image.__init__()")
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
-
-        self.renderer = scene.renderer
+        if scene is not None:
+            self.renderer = scene.renderer
         
     def load(self, fname):
         """
@@ -67,16 +65,19 @@ class JpegImage(Image):
     """
     Subclass of Image class to explicitly handle jpeg images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the JpegImage class object
 
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called JpegImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "jpeg"
 
     def load(self, fname):
@@ -109,16 +110,19 @@ class PngImage(Image):
     """
     Subclass of Image class to explicitly handle png images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the PngImage class object
 
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called PngImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "png"
 
     def load(self, fname):
@@ -151,16 +155,19 @@ class BmpImage(Image):
     """
     Subclass of Image class to explicitly handle bmp images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the BmpImage class object
 
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called BmpImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "bmp"
 
     def load(self, fname):
@@ -193,16 +200,19 @@ class TiffImage(Image):
     """
     Subclass of Image class to explicitly handle tiff images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the TiffImage class object
 
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called TiffImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "tiff"
 
     def load(self, fname):
@@ -235,16 +245,19 @@ class PnmImage(Image):
     """
     Subclass of Image class to explicitly handle pnm images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the PnmImage class object
 
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called PnmImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "pnm"
 
     def load(self, fname):
@@ -273,11 +286,56 @@ class PnmImage(Image):
 
         return
 
+class PbmImage(Image):
+    """
+    Subclass of Image class to explicitly handle pbm images
+    """
+    def __init__(self, scene=None):
+        """
+        Initialises the PbmImage class object
+
+        @param scene: The Scene object to add to
+        @type scene: Scene object
+        """
+        Image.__init__(self)
+        debugMsg("Called PbmImage.__init__()")
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
+        self.format = "pbm"
+
+    def load(self, fname):
+        """
+        Loads pnm image data from file.
+
+        NOT supported by this renderer module
+
+        @param fname: The filename from which to load pbm image data
+        @type fname: string
+        """
+        debugMsg("Called PnmImage.load()")
+
+        fileCheck(fname)
+
+        # this ability not handled by this renderer module
+        unsupportedError()
+        
+        return
+
+    def render(self):
+        """
+        Does PbmImage object specific (pre)rendering stuff
+        """
+        debugMsg("Called PbmImage.render()")
+
+        return
+
 class PsImage(Image):
     """
     Subclass of Image class to explicitly handle ps images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the PsImage class object
 
@@ -286,9 +344,12 @@ class PsImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called PsImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "ps"
 
     def load(self, fname):
@@ -321,7 +382,7 @@ class PdfImage(Image):
     """
     Subclass of Image class to explicitly handle pdf images
     """
-    def __init__(self, scene):
+    def __init__(self, scene=None):
         """
         Initialises the PdfImage class object
 
@@ -330,9 +391,12 @@ class PdfImage(Image):
         @param scene: The Scene object to add to
         @type scene: Scene object
         """
-        Image.__init__(self, scene)
+        Image.__init__(self)
         debugMsg("Called PdfImage.__init__()")
-        self.renderer = scene.renderer
+
+        if scene is not None:
+            self.renderer = scene.renderer
+
         self.format = "pdf"
 
     def load(self, fname):
