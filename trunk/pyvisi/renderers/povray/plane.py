@@ -23,33 +23,36 @@ The classes associated with Planes
 """
 
 # generic imports
-from common import _debug, rendererName
+from pyvisi.renderers.povray.common \
+        import debugMsg
 
 # module specific imports
-from item import Item
+from pyvisi.renderers.povray.item import Item
+
+__revision__ = 'pre-alpha-1'
 
 class Plane(Item):
     """
     Generic class for Plane objects
     """
 
-    def __init__(self,scene):
+    def __init__(self, scene):
         """
         Initialisation of the Plane object
         """
-        if _debug: print "\t%s: Called Plane.__init__()" % rendererName
+        Item.__init__()
+        debugMsg("Called Plane.__init__()")
 
         self.renderer = scene.renderer
-        return
 
-    def mapImageToPlane(self,image):
+    def mapImageToPlane(self, image):
         """
         Maps an Image object onto a Plane object
         """
-        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % rendererName
+        debugMsg("Called Plane.mapImageToPlane()")
 
-        # need to work out the name of the internal image object name
-        imgObjectName = image.readerName
+        if image is None:
+            raise ValueError, "You must specify an image object"
 
         return
 
@@ -57,7 +60,7 @@ class Plane(Item):
         """
         Perform Plane object specific (pre)rendering tasks
         """
-        if _debug: print "\t%s: Called Plane.mapImageToPlane()" % rendererName
+        debugMsg("Called Plane.mapImageToPlane()")
 
         return
     
