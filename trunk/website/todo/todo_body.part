@@ -69,16 +69,6 @@
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">high</td>
 </tr>
-<tr class="high">
-  <td class="description">Add proper write() methods so that can actually output scenes to file</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Add a single curve, single data example, and implement.  Single data meaning that the x data is just the indices of the y data given.</td>
-  <td class="dateAdded">2005-01-24</td>
-  <td class="priority">high</td>
-</tr>
 <tr class="medium">
   <td class="description">Write up student project description</td>
   <td class="dateAdded">2004-11-19</td>
@@ -208,10 +198,22 @@
   <td class="comment">added warnings if base method is called and not overridden</td>
 </tr>
 <tr class="done">
+  <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">mostly done</td>
+</tr>
+<tr class="done">
   <td class="description">Add a Development link to the web site and start putting stuff like renderers used, how to add a new renderer, what to inherit, structure renderer module should have and other coding guidelines</td>
   <td class="dateAdded">2005-01-11</td>
   <td class="dateCompleted">2005-01-11</td>
   <td class="comment">started, will be expanded over time</td>
+</tr>
+<tr class="done">
+  <td class="description">Add proper write() methods so that can actually output scenes to file</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">done, implemented as save() at present</td>
 </tr>
 <tr class="done">
   <td class="description">Move project to sourceforge</td>
@@ -250,9 +252,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">Make a devel branch of pyvisi (once is ready to do a pre-pre-pre alpha release)</td>
-  <td class="dateAdded">2005-01-11</td>
+  <td class="description">Add a single curve, single data example, and implement.  Single data meaning that the x data is just the indices of the y data given.</td>
+  <td class="dateAdded">2005-01-24</td>
   <td class="dateCompleted">2005-01-24</td>
-  <td class="comment">mostly done</td>
+  <td class="comment">completed</td>
 </tr>
 </table>
