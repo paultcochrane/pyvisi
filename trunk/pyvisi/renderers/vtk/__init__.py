@@ -18,15 +18,27 @@
 
 ## @file __init__.py
 
-__author__ = 'Paul Cochrane'
+"""
+Initialisation of vtk renderer module
+"""
 
-from plot import *
-from camera import *
-from image import *
-from text import *
-from axes import *
-from renderer import *
-from scene import *
-from plane import *
+from pyvisi.renderers.vtk.common \
+        import _rendererName, _rendererVersion, _rendererRevision
+print "This is the \"%s\" renderer module version %s-%s" % \
+    (_rendererName, _rendererVersion, _rendererRevision)
+
+__author__ = 'Paul Cochrane'
+__version__ = _rendererVersion
+__revision__ = _rendererRevision
+
+from pyvisi.renderers.vtk.item import *
+from pyvisi.renderers.vtk.plot import *
+from pyvisi.renderers.vtk.renderer import *
+from pyvisi.renderers.vtk.scene import *
+from pyvisi.renderers.vtk.camera import *
+from pyvisi.renderers.vtk.image import *
+from pyvisi.renderers.vtk.text import *
+from pyvisi.renderers.vtk.axes import *
+from pyvisi.renderers.vtk.plane import *
 
 # vim: expandtab shiftwidth=4:
