@@ -46,7 +46,7 @@ class Plot(Item):
 
         return
 
-    def setData(self,data):
+    def setData(self,*dataList):
         """
         Set data to Plot
 
@@ -67,7 +67,7 @@ class Plot(Item):
         @param title: the string holding the title to the plot
         @type title: string
         """
-        if _debug print "\tBASE: Called Plot.setTitle()"
+        if _debug: print "\tBASE: Called Plot.setTitle()"
 
         self.title = title
 
@@ -126,9 +126,9 @@ class Plot(Item):
         # string-wise implementation
         if axis == 'x' or axis == 'X':
             self.xlabel = label
-        elif axis = 'y' or axis == 'Y':
+        elif axis == 'y' or axis == 'Y':
             self.ylabel = label
-        elif axis = 'z' or axis == 'Z':
+        elif axis == 'z' or axis == 'Z':
             self.zlabel = label
         else:
             raise ValueError, "axis must be x or y or z"
@@ -222,44 +222,44 @@ class LinePlot(Plot):
 
     def setLineStyle(self,linestyle):
         """
-         Sets the linestyle of the LinePlot
+        Sets the linestyle of the LinePlot
 
-         Linestyles may be either a word in the Gnuplot style, or a symbol 
-         shortcut in the Matlab style.  Some of the options do not have a
-         Matlab equivalent but do have a Gnuplot equivalent, or vice versa.
+        Linestyles may be either a word in the Gnuplot style, or a symbol 
+        shortcut in the Matlab style.  Some of the options do not have a
+        Matlab equivalent but do have a Gnuplot equivalent, or vice versa.
 
-         What this method does, is take the linestyles possible as defined by
-         PyVisi, and then does some conversion as best it can to get the
-         relevant output from (in this case) gnuplot.  
+        What this method does, is take the linestyles possible as defined by
+        PyVisi, and then does some conversion as best it can to get the
+        relevant output from (in this case) gnuplot.  
 
-         Possible linestyles are:
-             1. lines ('-')
-             2. points ('o')
-             3. linespoints ('-o')
-             4. dots ('.')
-             5. dotted (':')
-             6. dashes ('--')
-             7. dotdashes ('-.')
+        Possible linestyles are:
+            1. lines ('-')
+            2. points ('o')
+            3. linespoints ('-o')
+            4. dots ('.')
+            5. dotted (':')
+            6. dashes ('--')
+            7. dotdashes ('-.')
 
-         @param linestyle: the style to use for the lines
-         @type linestyle: string
-         """
-         if _debug: print "\tBASE: Called LinePlot.setLineStyle()"
+        @param linestyle: the style to use for the lines
+        @type linestyle: string
+        """
+        if _debug: print "\tBASE: Called LinePlot.setLineStyle()"
 
-         # print a warning if get to here
-         overrideWarning("LinePlot.setLineStyle")
+        # print a warning if get to here
+        overrideWarning("LinePlot.setLineStyle")
 
-         return
+        return
 
-     def getLineStyle(self):
-         """
-         Gets the current linestyle of the LinePlot
+    def getLineStyle(self):
+        """
+        Gets the current linestyle of the LinePlot
 
-         @return: the linestyle as a string
-         """
-         if _debug: print "\tBASE: Called LinePlot.getLineStyle()"
+        @return: the linestyle as a string
+        """
+        if _debug: print "\tBASE: Called LinePlot.getLineStyle()"
 
-         return self.linestyle
+        return self.linestyle
 
 # vim: expandtab shiftwidth=4:
 
