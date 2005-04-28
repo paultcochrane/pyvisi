@@ -197,10 +197,13 @@ class LinePlot(Plot):
         self.linestyle = None   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
+        # is the LinePlot data offset (vertically) from each other?
+        self.offset = False
+
         # now add the object to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Sets the data to the given plot object.
 
@@ -210,6 +213,12 @@ class LinePlot(Plot):
         debugMsg("Called setData() in LinePlot()")
         
         self.renderer.addToEvalStack("# LinePlot.setData()")
+
+        # grab the options if any
+        if options.has_key('offset'):
+            self.offset = options['offset']
+        else:
+            self.offset = False
 
         # do some sanity checking on the data
         for i in range(len(dataList)):
@@ -223,10 +232,10 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # give it to the renderer
             self.renderer.addToEvalStack(evalString)
             # don't need the first element of the dataList, so get rid of it
@@ -240,22 +249,22 @@ class LinePlot(Plot):
                 raise ValueError, errorString
                         
             ## generate the evalString for the x data
-            evalString = "_x = ["
+            evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
-            evalString += "%s]" % xData[-1]
+            evalString += "%s])" % xData[-1]
             # send it to the renderer
             self.renderer.addToEvalStack(evalString)
 
         # at present, plplot interface can only handle one set of y data
-        if len(dataList) != 1:
-            raise ValueError, \
-               "Sorry, plplot interface can't yet handle more than one dataset"
+        #if len(dataList) != 1:
+            #raise ValueError, \
+               #"Sorry, plplot interface can't yet handle more than one dataset"
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = [" % i
+            evalString = "_y%d = array([" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
@@ -263,7 +272,56 @@ class LinePlot(Plot):
             
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
-            evalString += "%s]" % data[-1]
+            evalString += "%s])" % data[-1]
+            self.renderer.addToEvalStack(evalString)
+
+        # if offset is true, then shift the data up accordingly
+        if self.offset:
+            # concatenate the data
+            evalString = "_yAll = concatenate(["
+            for i in range(len(dataList)-1):
+                evalString += "_y%d," % i
+            evalString += "_y%d])" % int(len(dataList)-1)
+            self.renderer.addToEvalStack(evalString)
+
+            # find its min and max
+            self.renderer.addToEvalStack("_yMin = min(_yAll)")
+            self.renderer.addToEvalStack("_yMax = max(_yAll)")
+
+            # keep the data apart a bit with a constant
+            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+
+            # shift the data up
+            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+
+            for i in range(len(dataList)):
+                evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
+                self.renderer.addToEvalStack(evalString)
+
+        # determine the min and max of the x and y data
+        evalString = "_xMin = min(_x)\n"
+        evalString += "_xMax = max(_x)"
+        self.renderer.addToEvalStack(evalString)
+
+        if self.offset:
+            ### don't need to recalculate _yMin and _yMax
+            # but do need to take into account the shift
+            evalString = "_yMax = _yMax + %d*_shift" % len(dataList)
+            self.renderer.addToEvalStack(evalString)
+            pass
+        else:
+            ### but if not offset, do have to
+
+            # concatenate the data
+            evalString = "_yAll = concatenate(["
+            for i in range(len(dataList)-1):
+                evalString += "_y%d," % i
+            evalString += "_y%d])" % int(len(dataList)-1)
+            self.renderer.addToEvalStack(evalString)
+
+            # calculate the min and max
+            evalString = "_yMin = min(_yAll)\n"
+            evalString += "_yMax = max(_yAll)"
             self.renderer.addToEvalStack(evalString)
 
         # return the number of data objects to plot
@@ -279,17 +337,25 @@ class LinePlot(Plot):
 
         self.renderer.addToEvalStack("# LinePlot.render()")
 
-        self.renderer.addToEvalStack("plplot.plinit()")
         # at present, plplot interface can only handle one set of y data
-        if self.renderer.numDataObjects != 1:
-            raise ValueError, \
-               "Sorry, plplot interface can't yet handle more than one dataset"
+        #if self.renderer.numDataObjects != 1:
+            #raise ValueError, \
+               #"Sorry, plplot interface can't yet handle more than one dataset"
 
-        evalString = \
-                "plplot.plenv(min(_x),max(_x),min(_y0),max(_y0), 0, 1)"
+        # initialise plplot 
+        self.renderer.addToEvalStack("plplot.plinit()")
+
+        # set up the viewport for plotting
+        evalString = "plplot.plenv(_xMin,_xMax,_yMin,_yMax, 0, 1)"
         self.renderer.addToEvalStack(evalString)
 
+        # set up the evalString to use for plotting
+        for i in range(self.renderer.numDataObjects):
+            evalString = "plplot.plline(_x, _y%d)" % i
+            self.renderer.addToEvalStack(evalString)
+
         # if a title is not set, set it to a null string
+        # (this will help keep plplot happy)
         if self.title is None:
             self.title = ""
 
@@ -304,10 +370,6 @@ class LinePlot(Plot):
         # put the labels (if any) on the graph.
         evalString = "plplot.pllab(\"%s\", \"%s\", \"%s\")" % \
                 (self.xlabel, self.ylabel, self.title)
-        self.renderer.addToEvalStack(evalString)
-
-        # set up the evalString to use for plotting
-        evalString = "plplot.plline(_x, _y0)"
         self.renderer.addToEvalStack(evalString)
 
         # finish stuff off
