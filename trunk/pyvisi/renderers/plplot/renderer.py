@@ -23,7 +23,7 @@ Brief introduction to what the file contains/does
 """
 
 from pyvisi.renderers.plplot.common import debugMsg
-
+from pyvisi.renderers.gnuplot.common import _rendererName
 from pyvisi.renderer import Renderer as BaseRenderer
 
 __revision__ = '$Revision$'
@@ -45,6 +45,8 @@ class Renderer(BaseRenderer):
         self.renderWindowWidth = 640
         self.renderWindowHeight = 480
 
+        self.name = _rendererName
+
         # initialise the evalstack
         self._evalStack = ""
 
@@ -54,5 +56,8 @@ class Renderer(BaseRenderer):
         # initialise the renderer module
         self.addToInitStack("# Renderer.__init__()")
         self.addToInitStack("import plplot")
+
+        # we now need the Numeric package so can handle arrays better
+        self.addToInitStack("from Numeric import *")
 
 # vim: expandtab shiftwidth=4:
