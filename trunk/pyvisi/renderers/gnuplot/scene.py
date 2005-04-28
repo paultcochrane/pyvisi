@@ -156,36 +156,44 @@ class Scene(BaseScene):
         @type fname: string
 
         @param format: Graphics format of output file
-        @type format: Image object
+        @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
 
+        # if the format is passed in as a string or object, react
+        # appropriately
+        import types
+        if type(format) is types.StringType:
+            fmt = format.lower()
+        else:
+            fmt = format.format
+
         # set the output format
-        if format.format == "ps":
+        if fmt == "ps":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal postscript color')")
-        elif format.format == "png":
-            evalString = "_gnuplot('set terminal png size %d, %d')" % \
+        elif fmt == "png":
+            evalString = "_gnuplot('set terminal png size %d,%d')" % \
                     (self.xSize, self.ySize)
             self.renderer.addToEvalStack(evalString)
-        elif format.format == "pbm":
+        elif fmt == "pbm":
             self.renderer.addToEvalStack(\
                     "_gnuplot('set terminal pbm color')")
             # set the size of the output
             # have to scale properly to do this
             xScale = float(self.xSize)/640.0
             yScale = float(self.ySize)/480.0
-            evalString = "_gnuplot('set size %f, %f')" % \
+            evalString = "_gnuplot('set size %f,%f')" % \
                     (xScale, yScale)
             self.renderer.addToEvalStack(evalString)
-        elif format.format == "jpeg":
-            evalString = "_gnuplot('set terminal jpeg size %d, %d')" % \
+        elif fmt == "jpeg" or fmt == "jpg":
+            evalString = "_gnuplot('set terminal jpeg size %d,%d')" % \
                     (self.xSize, self.ySize)
             self.renderer.addToEvalStack(evalString)
         else:
             raise ValueError, "Unknown graphics format.  I got: %s" % \
-                    format.format
+                    fmt
 
         # set the output filename
         evalString = "_gnuplot('set output \"%s\"')" % fname

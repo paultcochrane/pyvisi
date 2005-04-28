@@ -162,22 +162,30 @@ class Scene(BaseScene):
         debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
 
+        # if the format is passed in as a string or object, react
+        # appropriately
+        import types
+        if type(format) is types.StringType:
+            fmt = format.lower()
+        else:
+            fmt = format.format
+
         # set the output format
-        if format.format == "ps":
+        if fmt == "ps":
             self.renderer.addToEvalStack(\
                     "plplot.plsdev(\"psc\")")
-        elif format.format == "png":
+        elif fmt == "png":
             self.renderer.addToEvalStack(\
                     "plplot.plsdev(\"png\")")
-        elif format.format == "pbm":
+        elif fmt == "pbm":
             self.renderer.addToEvalStack(\
                     "plplot.plsdev(\"pbm\")")
-        elif format.format == "jpeg":
+        elif fmt == "jpeg" or fmt == "jpg":
             self.renderer.addToEvalStack(\
                     "plplot.plsdev(\"jpeg\")")
         else:
             raise ValueError, "Unknown graphics format.  I got: %s" % \
-                    format.format
+                    fmt
 
         # set the output filename
         evalString = "plplot.plsfnam(\"%s\")" % fname
@@ -188,6 +196,7 @@ class Scene(BaseScene):
 
         return
 
+    # alias the save() method as write() for those who like this
     write = save
 
     def setBackgroundColor(self, *color):
