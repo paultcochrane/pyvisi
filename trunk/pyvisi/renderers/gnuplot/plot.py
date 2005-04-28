@@ -142,6 +142,69 @@ class Plot(Item):
 
         return
 
+    def setXAxisRange(self, xMin, xMax):
+        """
+        Set the range of the x axis
+
+        @param xMin: the minimum value of the x-axis
+        @type xMin: float
+
+        @param xMax: the maximum value of the x-axis
+        @type xMax: float
+        """
+        debugMsg("Called LinePlot.setXAxisRange()")
+
+        # check that the max is (strictly) bigger than the min
+        if (xMax <= xMin):
+            raise ValueError, "xMax should be strictly greater than xMin"
+
+        evalString = "_gnuplot('set xrange [%f:%f]')" % (xMin, xMax)
+        self.renderer.addToEvalStack(evalString)
+
+        return
+
+    def setYAxisRange(self, yMin, yMax):
+        """
+        Set the range of the y axis
+
+        @param yMin: the minimum value of the y-axis
+        @type yMin: float
+
+        @param yMax: the maximum value of the y-axis
+        @type yMax: float
+        """
+        debugMsg("Called LinePlot.setYAxisRange()")
+
+        # check that the max is (strictly) bigger than the min
+        if (yMax <= yMin):
+            raise ValueError, "yMax should be strictly greater than yMin"
+
+        evalString = "_gnuplot('set yrange [%f:%f]')" % (yMin, yMax)
+        self.renderer.addToEvalStack(evalString)
+
+        return
+
+    def setZAxisRange(self, zMin, zMax):
+        """
+        Set the range of the z axis
+
+        @param zMin: the minimum value of the z-axis
+        @type zMin: float
+
+        @param zMax: the maximum value of the z-axis
+        @type zMax: float
+        """
+        debugMsg("Called LinePlot.setZAxisRange()")
+
+        # check that the max is (strictly) bigger than the min
+        if (zMax <= zMin):
+            raise ValueError, "zMax should be strictly greater than zMin"
+
+        evalString = "_gnuplot('set zrange [%f:%f])" % (zMin, zMax)
+        self.renderer.addToEvalStack(evalString)
+
+        return
+
 class ArrowPlot(Plot):
     """
     Arrow field plot
