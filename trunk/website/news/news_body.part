@@ -4,6 +4,28 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Ball plots now available</div>
+      <div class="itemDate">19-Apr-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  It is now possible to create plots of spheres in space, i.e.
+	  BallPlots.  This at present is only possible with a vtk xml data
+	  file.
+	  </p>
+	  <p>
+	  An example code has been added to <code>examples/</code> directory on
+	  the cvs and may be in the next distribution of the package.  It is 
+	  called:
+	  <ul>
+	      <li><code>ballPlotExample.py</code></li>
+	  </ul>
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">Movies from sequences of images</div>
       <div class="itemDate">07-Mar-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
