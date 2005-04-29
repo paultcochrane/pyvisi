@@ -192,8 +192,7 @@ class Scene(BaseScene):
                     (self.xSize, self.ySize)
             self.renderer.addToEvalStack(evalString)
         else:
-            raise ValueError, "Unknown graphics format.  I got: %s" % \
-                    fmt
+            raise ValueError, "Unknown graphics format.  I got: %s" % fmt
 
         # set the output filename
         evalString = "_gnuplot('set output \"%s\"')" % fname
