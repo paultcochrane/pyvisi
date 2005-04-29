@@ -65,11 +65,6 @@
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
   <td class="description">Need a log output file for user- and developer- debugging information.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="priority">medium</td>
@@ -107,11 +102,6 @@
 <tr class="low">
   <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
   <td class="dateAdded">2004-11-19</td>
-  <td class="priority">low</td>
-</tr>
-<tr class="low">
-  <td class="description">Get BallPlots working in vtk</td>
-  <td class="dateAdded">2005-01-21</td>
   <td class="priority">low</td>
 </tr>
 <tr class="low">
@@ -284,6 +274,12 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
+  <td class="description">Add offsets settings for LinePlots so Dion can do seismic stuff</td>
+  <td class="dateAdded">2005-03-08</td>
+  <td class="dateCompleted">2005-03-22</td>
+  <td class="comment">done in vtk and gnuplot</td>
+</tr>
+<tr class="done">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-03-07</td>
@@ -302,6 +298,12 @@
   <td class="comment">done in gnuplot</td>
 </tr>
 <tr class="done">
+  <td class="description">Get BallPlots working in vtk</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-04-19</td>
+  <td class="comment">basic implementation done</td>
+</tr>
+<tr class="done">
   <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
   <td class="dateAdded">2005-01-21</td>
   <td class="dateCompleted">2005-01-25</td>
@@ -314,9 +316,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">Add offsets settings for LinePlots so Dion can do seismic stuff</td>
-  <td class="dateAdded">2005-03-08</td>
-  <td class="dateCompleted">2005-03-22</td>
-  <td class="comment">done in vtk and gnuplot</td>
+  <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-04-19</td>
+  <td class="comment">not implemented that way any more</td>
 </tr>
 </table>
