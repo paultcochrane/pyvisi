@@ -25,8 +25,8 @@ include examples/meshPlotExample.py
 include examples/offsetLinePlotExample.py
 include examples/offsetPlotExample.py
 include examples/seismicOffsetPlotExample.py
-include examples/seismicOffsetPlotExample2.py
-include examples/seismicOffsetPlotExample3.py
+#include examples/seismicOffsetPlotExample2.py
+#include examples/seismicOffsetPlotExample3.py
 include examples/scatterPlotExample.py
 include examples/scatterPlot3DExample.py
 include examples/simplePlotMovieExample.py
@@ -39,7 +39,7 @@ include examples/surfacePlotExample.py
 
 # these are the data files supporting the examples
 include examples/waves.dat
-include examples/waves1d.dat
+#include examples/waves1d.dat
 
 # the pdf version of the documentation
 include doc/manual/pyvisi_doc.pdf
