@@ -150,7 +150,7 @@ class Scene(BaseScene):
             return None
 
         # flush the evaluation stack
-        debugMsg("Flusing evaluation stack")
+        debugMsg("Flushing evaluation stack")
         renderer.resetEvalStack()
 
         return
@@ -171,10 +171,18 @@ class Scene(BaseScene):
         @type fname: string
 
         @param format: Graphics format of output file
-        @type format: Image object
+        @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
         self.renderer.addToEvalStack("# Scene.save()")
+
+        # if the format is passed in as a string or object, react
+        # appropriately
+        import types
+        if type(format) is types.StringType:
+            fmt = format.lower()
+        else:
+            fmt = format.format
 
         # need to pass the render window through a filter to an image object
         self.renderer.addToEvalStack(
@@ -182,26 +190,26 @@ class Scene(BaseScene):
         self.renderer.addToEvalStack("_win2imgFilter.SetInput(_renderWindow)")
 
         # set the output format
-        if format.format == "ps":
+        if fmt == "ps":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPostScriptWriter()")
-        elif format.format == "png":
+        elif fmt == "png":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPNGWriter()")
-        elif format.format == "jpeg":
+        elif fmt == "jpeg" or fmt == "jpg":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkJPEGWriter()")
-        elif format.format == "tiff":
+        elif fmt == "tiff" or fmt == "tif":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkTIFFWriter()")
-        elif format.format == "bmp":
+        elif fmt == "bmp":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkBMPWriter()")
-        elif format.format == "pnm":
+        elif fmt == "pnm":
             self.renderer.addToEvalStack(
                     "_outWriter = vtk.vtkPNMWriter()")
         else:
-            raise ValueError, "Unknown graphics format."
+            raise ValueError, "Unknown graphics format.  I got %s" % fmt
 
         # set stuff up to write
         self.renderer.addToEvalStack(
