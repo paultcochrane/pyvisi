@@ -5,7 +5,7 @@
 from distutils.core import setup
 
 a=setup(name="pyvisi",
-      version="0.1-pre-alpha-3",
+      version="0.1-pre-alpha-4",
       description="The Python Visualisation Interface",
       author="Paul Cochrane",
       author_email="cochrane@esscc.uq.edu.au",
