@@ -7,6 +7,7 @@
 Files = (
     "arrowPlotExample.py",
     "arrowPlotExample2.py",
+    "ballPlotExample.py",
     "contourPlotExample.py",
     "contourPlotMovieExample.py",
     "meshPlotExample.py",
