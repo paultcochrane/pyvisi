@@ -20,9 +20,9 @@ if method == 'pyvisi':
     from pyvisi import *          # base level visualisation stuff
     #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.gnuplot import *   # gnuplot
     #from pyvisi.renderers.vtk import *       # vtk
-    #from pyvisi.renderers.plplot import *       # plplot
+    from pyvisi.renderers.plplot import *       # plplot
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -59,17 +59,29 @@ if method == 'pyvisi':
                         # the future
     scene.save(fname="simplePlotExample.ps", format=PsImage())
     
-    ## pbm
-    plot.setData(x, y)  # have to do this now because we've already save()d
-                        # the scene.  This requirement will be removed in
-                        # the future
-    scene.save(fname="simplePlotExample.pbm", format=PbmImage())
+    if scene.renderer.name == 'GNUPLOT':
+        ## pbm (gnuplot supports pbm not pnm)
+        plot.setData(x, y)  # have to do this now because we've already save()d
+                            # the scene.  This requirement will be removed in
+                            # the future
+        scene.save(fname="simplePlotExample.pbm", format=PbmImage())
+    
+    if scene.renderer.name == 'VTK':
+        ## pnm (vtk supports pnm)
+        plot.setData(x, y)  # have to do this now because we've already save()d
+                            # the scene.  This requirement will be removed in
+                            # the future
+        scene.save(fname="simplePlotExample.pnm", format=PnmImage())
 
     ## jpeg
     plot.setData(x, y)  # have to do this now because we've already save()d
                         # the scene.  This requirement will be removed in
                         # the future
     scene.save(fname="simplePlotExample.jpeg", format=JpegImage())
+
+    # check alternative way of specifying image format
+    plot.setData(x,y)
+    scene.save(fname="simplePlotExample.jpg", format="jpg")
 
 elif method == 'gnuplot':
     #### original gnuplot code
@@ -143,17 +155,26 @@ elif method == 'vtk':
     _plot.SetXValuesToValue()
 
     # set which parts of the data object are to be used for which axis
-    _plot.SetDataObjectXComponent(0,0)
-    _plot.SetDataObjectYComponent(0,1)
+    _plot.SetDataObjectXComponent(0, 0)
+    _plot.SetDataObjectYComponent(0, 1)
 
-    # add the actor
-    _ren.AddActor2D(_plot)
-    
+    # give the plot some nicer colours
+    _plot.SetPlotColor(0, 1.0, 0.0, 0.0)
+
     # set up the renderer and the render window
     _ren = vtk.vtkRenderer()
     _renWin = vtk.vtkRenderWindow()
     _renWin.AddRenderer(_ren)
+    _renWin.SetSize(640, 480)
 
+    # make the colours a bit nicer of the whole plot
+    _plot.GetXAxisActor2D().GetProperty().SetColor(0,0,0)
+    _plot.GetYAxisActor2D().GetProperty().SetColor(0,0,0)
+    _ren.SetBackground(1,1,1)
+
+    # add the actor
+    _ren.AddActor2D(_plot)
+    
     # render the scene
     _iren = vtk.vtkRenderWindowInteractor()
     _iren.SetRenderWindow(_renWin)
