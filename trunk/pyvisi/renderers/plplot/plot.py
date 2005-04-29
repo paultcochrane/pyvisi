@@ -256,11 +256,6 @@ class LinePlot(Plot):
             # send it to the renderer
             self.renderer.addToEvalStack(evalString)
 
-        # at present, plplot interface can only handle one set of y data
-        #if len(dataList) != 1:
-            #raise ValueError, \
-               #"Sorry, plplot interface can't yet handle more than one dataset"
-
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
@@ -336,11 +331,6 @@ class LinePlot(Plot):
         debugMsg("Called LinePlot.render()")
 
         self.renderer.addToEvalStack("# LinePlot.render()")
-
-        # at present, plplot interface can only handle one set of y data
-        #if self.renderer.numDataObjects != 1:
-            #raise ValueError, \
-               #"Sorry, plplot interface can't yet handle more than one dataset"
 
         # initialise plplot 
         self.renderer.addToEvalStack("plplot.plinit()")
