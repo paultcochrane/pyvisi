@@ -4,6 +4,7 @@
 Files = 
     arrowPlotExample.html
     arrowPlotExample2.html
+    ballPlotExample.html
     contourPlotExample.html
     contourPlotMovieExample.html
     meshPlotExample.html
@@ -26,6 +27,7 @@ examplesDir = ../../examples/
 PyFiles =
     $(examplesDir)arrowPlotExample.py
     $(examplesDir)arrowPlotExample2.py
+    $(examplesDir)ballPlotExample.py
     $(examplesDir)contourPlotExample.py
     $(examplesDir)contourPlotMovieExample.py
     $(examplesDir)multiCurvePlotExample.py
