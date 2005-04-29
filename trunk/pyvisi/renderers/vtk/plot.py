@@ -181,6 +181,212 @@ class ArrowPlot(Plot):
         
         return
 
+class BallPlot(Plot):
+    """
+    Ball plot
+    """
+    def __init__(self, scene):
+        debugMsg("Called BallPlot.__init__()")
+        Plot.__init__(self, scene)
+
+        self.renderer = scene.renderer
+
+        self.renderer.addToEvalStack("# BallPlot.__init__()")
+
+        # add the plot to the scene
+        scene.add(self)
+
+    def setData(self, points=None, 
+            fname=None, format=None,
+            radii=None, colors=None):
+        """
+        Set data to the plot
+        @param points: the array to use for the points of the sphere
+        locations in space
+        @type points: array
+
+        @param fname: the file of the input vtk file
+        @type fname: string
+
+        @param format: the format of the input vtk file ('vtk' or 'vtk-xml')
+        @type format: string
+
+        @param radii: the name of the scalar array in the vtk unstructured
+        grid to use as the radii of the balls
+        @type radii: string
+
+        @param colors: the name of the scalar array in the vtk unstructured
+        grid to use as the colour tags of the balls
+        @type colors: string
+        """
+        debugMsg("Called setData() in BallPlot()")
+        self.renderer.addToEvalStack("# BallPlot.setData()")
+
+        # check that we have enough info to start with
+        if points is None and fname is None:
+            errorString = "You must supply either appropriate arrays of\n\
+                    data or the name of a vtk file for input"
+            raise ValueError, errorString
+
+        # need to also check if they're both specified
+        if points is not None and fname is not None:
+            raise ValueError, \
+                    "Sorry, you can't specify both a data list and a filename"
+
+        # can't handle points arrays just yet
+        if points is not None:
+            raise ValueError, \
+                    "Sorry, can't handle points arrays yet"
+
+        # now check the bits required if the fname option is set
+        if fname is not None:
+            if format is None:
+                raise ValueError, "You must specify a vtk file format"
+            elif radii is None:
+                raise ValueError, \
+                "You must specify the name of the scalars to use as the radius"
+            elif colors is None:
+                raise ValueError, \
+                "You must specify the name of the scalars to use for the colors"
+
+        # now check that the format is logical
+        if format != "vtk" and format != "vtk-xml":
+            errorString = \
+            "Unknown format: must be either 'vtk' or 'vtk-xml'\n"
+            errorString += "I got: %s" % format
+            raise ValueError, errorString
+
+        # for now just hope that if the stuff is specified, that it agrees
+        # with what's in the vtk unstructured grid
+
+        # at present can't handle (haven't implemented) old style vtk files,
+        # so for now just chuck an error if that's the format sent in
+        if format == "vtk":
+            raise ValueError, \
+                    "Sorry, can't handle old-style vtk files at present"
+
+        # create the reader of the file
+        evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+        evalString += "_reader.SetFileName(\"%s\")\n" % fname
+        evalString += "_reader.Update()"
+        self.renderer.addToEvalStack(evalString)
+
+        # read the output to an unstructured grid
+        self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
+
+        # note that these next few steps are only necessary in vtk 4.2, 4.4
+        # grab the data to use for the radii of the balls
+        evalString = "_radii = _grid.GetPointData().GetScalars(\"%s\")" % \
+                radii
+        self.renderer.addToEvalStack(evalString)
+
+        # grab the data to use for colouring the balls
+        evalString = "_colors = _grid.GetPointData().GetScalars(\"%s\")" % \
+                colors
+        self.renderer.addToEvalStack(evalString)
+
+        # now set up an array of two components to get the data through the
+        # glyph object to the mapper (this is so that colouring and scalaing
+        # work properly)
+        evalString = "_data = vtk.vtkFloatArray()\n"
+        evalString += "_data.SetNumberOfComponents(2)\n"
+        evalString += "_data.SetNumberOfTuples(_radii.GetNumberOfTuples())\n"
+        evalString += "_data.CopyComponent(0, _radii, 0)\n"
+        evalString += "_data.CopyComponent(1, _colors, 0)\n"
+        evalString += "_data.SetName(\"data\")"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the data array to the grid
+        self.renderer.addToEvalStack("_grid.GetPointData().AddArray(_data)")
+
+        # make the data the active scalars
+        self.renderer.addToEvalStack(\
+                "_grid.GetPointData().SetActiveScalars(\"data\")")
+        
+        return
+
+    def render(self):
+        """
+        Does BallPlot specific rendering tasks
+        """
+        debugMsg("Called render() in BallPlot")
+        self.renderer.addToEvalStack("# BallPlot.render()")
+
+        # to make sphere glyphs need a sphere source
+        evalString = "_sphere = vtk.vtkSphereSource()\n"
+        evalString += "_sphere.SetRadius(1.0)\n"
+        evalString += "_sphere.SetThetaResolution(5)\n"
+        evalString += "_sphere.SetPhiResolution(5)"
+        self.renderer.addToEvalStack(evalString)
+
+        # the spheres are 3D glyphs so set that up
+        evalString = "_glyph = vtk.vtkGlyph3D()\n"
+        evalString += "_glyph.ScalingOn()\n"
+        evalString += "_glyph.SetScaleModeToScaleByScalar()\n"
+        evalString += "_glyph.SetColorModeToColorByScalar()\n"
+        evalString += "_glyph.SetScaleFactor(1.0)\n"
+        evalString += "_glyph.SetInput(_grid)\n"
+        evalString += "_glyph.SetSource(_sphere.GetOutput())\n"
+        evalString += "_glyph.ClampingOff()"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up a stripper (this will speed up rendering)
+        evalString = "_stripper = vtk.vtkStripper()\n"
+        evalString += "_stripper.SetInput(_glyph.GetOutput())"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the mapper
+        evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
+        evalString += "_mapper.SetInput(_stripper.GetOutput())\n"
+        evalString += "_mapper.ScalarVisibilityOn()\n"
+        # note: this is for vtk 4.2, 4.4 (4.5 and above have a better
+        # technique to colour the scalars, but that version isn't yet
+        # standard, or in fact released)
+        evalString += "_mapper.ColorByArrayComponent(\"data\", 1)\n"
+        # do this next step dynamically!!!!!!!
+        # should be done in setData()
+        evalString += "_mapper.SetScalarRange(0, 3)"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the actor
+        evalString = "_actor = vtk.vtkActor()\n"
+        evalString += "_actor.SetMapper(_mapper)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the actor to the scene
+        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+
+        # set the title if set
+        if self.title is not None:
+            # text properties
+            evalString = "_font_size = 14\n"  # this will need to be an option!!
+            evalString += "_textProp = vtk.vtkTextProperty()\n"
+            evalString += "_textProp.SetFontSize(_font_size)\n"
+            evalString += "_textProp.SetFontFamilyToArial()\n"
+            evalString += "_textProp.BoldOff()\n"
+            evalString += "_textProp.ItalicOff()\n"
+            evalString += "_textProp.ShadowOff()\n"
+        
+            # add a title
+            evalString += "_titleMapper = vtk.vtkTextMapper()\n"
+            evalString += "_titleMapper.SetInput(\"%s\")\n" % self.title
+            
+            evalString += "_titleProp = _titleMapper.GetTextProperty()\n"
+            evalString += "_titleProp.ShallowCopy(_textProp)\n"
+            evalString += "_titleProp.SetJustificationToCentered()\n"
+            evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            
+            # set up the text actor
+            evalString += "_titleActor = vtk.vtkTextActor()\n"
+            evalString += "_titleActor.SetMapper(_titleMapper)\n"
+            evalString += "_titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)\n"
+
+            evalString += "_renderer.AddActor(_titleActor)"
+            self.renderer.addToEvalStack(evalString)
+
+        return
+        
 class ContourPlot(Plot):
     """
     Contour plot
@@ -411,6 +617,34 @@ class LinePlot(Plot):
         # note: am ignoring zlabels as vtk xyPlot doesn't support that
         # dimension for line plots (I'll have to do something a lot more
         # funky if I want that kind of functionality)
+
+        # should this be here or elsewhere?
+        evalString = "_plot.GetXAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
+        evalString += "_plot.GetYAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
+        evalString += "_renderer.SetBackground(1.0, 1.0, 1.0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the lookup table for the appropriate range of colours
+        evalString = "_lut = vtk.vtkLookupTable()\n"
+        evalString += "_lut.Build()\n"
+        evalString += "_colours = []\n"
+        for i in range(len(dataList)):
+            evalString += "_colours.append(_lut.GetColor(%f))\n" \
+                    % (float(i)/float(len(dataList)-1),)
+        self.renderer.addToEvalStack(evalString)
+    
+        # change the colour of the separate lines
+        for i in range(len(dataList)):
+            evalString = "_plot.SetPlotColor(%d, _colours[%d][0], " % (i, i)
+            evalString += "_colours[%d][1], _colours[%d][2])" % (i, i)
+            self.renderer.addToEvalStack(evalString)
+
+        # make sure the plot is a decent size
+        # the size of the actor should be 80% of the render window
+        evalString = "_plot.SetPosition(0.1, 0.1)\n" # (0.1 = (1.0 - 0.8)/2)
+        evalString += "_plot.SetWidth(0.8)\n"
+        evalString += "_plot.SetHeight(0.8)"
+        self.renderer.addToEvalStack(evalString)
 
         return
 
