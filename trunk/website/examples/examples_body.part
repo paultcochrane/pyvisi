@@ -372,3 +372,109 @@ only using 2D arrays as input.
 </tr>
 </table>
 
+<hr />
+
+<h2>offsetPlotExample</h2>
+
+<p>
+This shows offset plot, or record section as is useful in seismology.
+</p>
+
+<a href="examples/offsetPlotExample.html">offsetPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+    </th>
+    <th>
+	<a href="http://www.vtk.org">vtk</a> renderer module
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/offsetPlotExampleGnuplot.png"><img 
+	    src="examples/offsetPlotExampleGnuplotSmall.png" 
+	    alt="offsetPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/offsetPlotExampleVtk.png"><img 
+	    src="examples/offsetPlotExampleVtkSmall.png" 
+	    alt="offsetPlotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>seismicOffsetPlotExample</h2>
+
+<p>
+Another offset plot example with data imported from file.
+</p>
+
+<a href="examples/seismicOffsetPlotExample.html">seismicOffsetPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.gnuplot.info">Gnuplot</a> renderer module
+    </th>
+    <th>
+	<a href="http://www.vtk.org">vtk</a> renderer module
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/seismicOffsetPlotExampleGnuplot.png"><img 
+	    src="examples/seismicOffsetPlotExampleGnuplotSmall.png" 
+	    alt="seismicOffsetPlotExampleGnuplot.png"/></a></td>
+    <td><a href="examples/seismicOffsetPlotExampleVtk.png"><img 
+	    src="examples/seismicOffsetPlotExampleVtkSmall.png" 
+	    alt="seismicOffsetPlotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
+<hr />
+
+<h2>ballPlotExample</h2>
+
+<p>
+Plot spheres in space, loading data from a vtk xml file
+</p>
+
+<a href="examples/ballPlotExample.html">ballPlotExample.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.povray.org">Povray</a> renderer module
+	(unavailable at this time)
+    </th>
+    <th>
+	<a href="http://www.vtk.org">vtk</a> renderer module
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/ballPlotExamplePovray.png"><img 
+	    src="examples/ballPlotExamplePovraySmall.png" 
+	    alt="ballPlotExamplePovray.png"/></a></td>
+    <td><a href="examples/ballPlotExampleVtk.png"><img 
+	    src="examples/ballPlotExampleVtkSmall.png" 
+	    alt="ballPlotExampleVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
