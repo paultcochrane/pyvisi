@@ -24,6 +24,7 @@ This is the file for the vtk Renderer class
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
+from pyvisi.renderers.vtk.common import _rendererName
 from pyvisi.renderer import Renderer as BaseRenderer
 
 __revision__ = '$Revision$'
@@ -43,6 +44,9 @@ class Renderer(BaseRenderer):
         # initialise some attributes
         self.renderWindowWidth = 640
         self.renderWindowHeight = 480
+
+        # what is the name of my renderer?
+        self.name = _rendererName
 
         # initialise the evalstack
         self._evalStack = ""
