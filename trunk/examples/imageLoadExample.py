@@ -31,9 +31,6 @@ if method == 'pyvisi':
     ## this is the pyvisi code
     import sys
     
-    # this means that one can run the script from the examples directory
-    sys.path.append('../')
-    
     # import the python visualisation interface
     from pyvisi import *
     # this is now where the renderer is specified
