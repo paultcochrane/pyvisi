@@ -157,7 +157,7 @@ class Scene(object):
         @type fname: string
 
         @param format: The format in which to save the scene
-        @type format: Image object
+        @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
 
