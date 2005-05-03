@@ -628,9 +628,13 @@ class LinePlot(Plot):
         evalString = "_lut = vtk.vtkLookupTable()\n"
         evalString += "_lut.Build()\n"
         evalString += "_colours = []\n"
-        for i in range(len(dataList)):
-            evalString += "_colours.append(_lut.GetColor(%f))\n" \
-                    % (float(i)/float(len(dataList)-1),)
+        # need to handle the case when only have one element in dataList
+        if len(dataList) == 1:
+            evalString += "_colours.append(_lut.GetColor(0))\n"
+        else:
+            for i in range(len(dataList)):
+                evalString += "_colours.append(_lut.GetColor(%f))\n" \
+                        % (float(i)/float(len(dataList)-1),)
         self.renderer.addToEvalStack(evalString)
     
         # change the colour of the separate lines
