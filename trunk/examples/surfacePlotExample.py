@@ -2,8 +2,6 @@
 
 """
 Example of plotting surfaces with pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
 # what plotting method are we using?
@@ -33,7 +31,8 @@ if method == 'pyvisi':
     # import the general pyvisi stuff
     from pyvisi import *
     # import the gnuplot overrides of the interface
-    from pyvisi.renderers.gnuplot import *
+    #from pyvisi.renderers.gnuplot import *
+    from pyvisi.renderers.plplot import *
 
     # define a scene object
     # a Scene is a container for all of the kinds of things you want to put
@@ -66,37 +65,73 @@ if method == 'pyvisi':
     plot.setData(x,y,z)  # have to do this now because we've already
                          # render()ed the scene.  This requirement will be
                          # removed in the future
-    scene.save(fname="surfacePlotExample.png", format=PngImage())
-    plot.setData(x,y,z)  # have to do this now because we've already save()d
-                         # the scene.  This requirement will be removed in
-                         # the future
-    scene.save(fname="surfacePlotExample.ps", format=PsImage())
-
-elif method == 'gnuplot':
-    #### original gnuplot code
-    
-    import Gnuplot
-
-    # set the plot up
-    _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example surface plot')
-    _gnuplot.xlabel('x')
-    _gnuplot.ylabel('y')
-    _gnuplot('set zlabel \'z\'')
-
-    # this is a surface plot, so...
-    _gnuplot('set surface')
-    _gnuplot('set data style lines')
-
-    # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=1)
-
-    _gnuplot.splot(_data)
-
-    raw_input('Press enter to continue...')
+    scene.save(fname="surfacePlot.png", format=PngImage())
 
 elif method == 'vtk':
     print "vtk surface plotting not yet implemented"
+
+elif method == 'plplot':
+    import plplot
+
+    # determine the min and max of x, y, and z in world coordinates
+    xMin = min(x)
+    xMax = max(x)
+    
+    yMin = min(y)
+    yMax = max(y)
+
+    zMin = min(z.flat)
+    zMax = max(z.flat)
+
+    # min and max of x and y variables in normalised coordinates
+    # (these are values recommended by plplot in an example)
+    xMin2D = -2.5
+    xMax2D = 2.5
+
+    yMin2D = -2.5
+    yMax2D = 4.0
+
+    # sides of box in normalised coordinates
+    # (these are values recommended by plplot in an example)
+    basex = 2.0
+    basey = 4.0
+    height = 3.0
+
+    # angle to view box
+    alt = 45.0
+    az = 30.0
+
+    side = 1
+    opt = 3  # plots a net of lines
+
+    plplot.plsdev("xwin")
+    plplot.plinit()
+    plplot.plenv(xMin2D, xMax2D, yMin2D, yMax2D, 0, -2)
+    plplot.plw3d(basex, basey, height, 
+            xMin, xMax, yMin, yMax, zMin, zMax, 
+            alt, az)
+    plplot.plmtex("t", 1.0, 0.5, 0.5, "Example surface plot")
+    plplot.plbox3("bnstu", "x axis", 0.0, 0, 
+            "bnstu", "y axis", 0.0, 0, 
+            "bcdmnstuv", "z axis", 0.0, 0)
+    plplot.plsurf3d(x, y, z, 0, ())
+    plplot.plend()
+    
+    # to save as well, have to set everything up again, and replot
+    # save as png
+    plplot.plsdev("png")
+    plplot.plsfnam("surfacePlot.png")
+    plplot.plinit()
+    plplot.plenv(xMin2D, xMax2D, yMin2D, yMax2D, 0, -2)
+    plplot.plw3d(basex, basey, height, 
+            xMin, xMax, yMin, yMax, zMin, zMax, 
+            alt, az)
+    plplot.plmtex("t", 1.0, 0.5, 0.5, "Example surface plot")
+    plplot.plbox3("bnstu", "x axis", 0.0, 0, 
+            "bnstu", "y axis", 0.0, 0, 
+            "bcdmnstuv", "z axis", 0.0, 0)
+    plplot.plsurf3d(x, y, z, 0, ())
+    plplot.plend()
 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
