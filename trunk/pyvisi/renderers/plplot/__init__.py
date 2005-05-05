@@ -40,7 +40,7 @@ from pyvisi.renderers.plplot.image import Image, \
         JpegImage, PbmImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
 from pyvisi.renderers.plplot.plane import Plane
 from pyvisi.renderers.plplot.plot import Plot, \
-        ArrowPlot, ContourPlot, LinePlot
+        ArrowPlot, ContourPlot, LinePlot, SurfacePlot
 from pyvisi.renderers.plplot.text import Text
 
 # vim: expandtab shiftwidth=4:
