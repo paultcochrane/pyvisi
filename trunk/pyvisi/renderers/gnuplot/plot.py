@@ -370,6 +370,10 @@ class ContourPlot(Plot):
         self.title = None
         self.xlabel = None
         self.ylabel = None
+        self.zlabel = None  # may need, or may not
+
+        self.linestyle = None  # pyvisi-defined linestyle
+        self._linestyle = None # renderer-specific linestyle
 
         # now add the plot to the scene
         scene.add(self)
