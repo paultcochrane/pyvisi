@@ -205,7 +205,7 @@ class BallPlot(Plot):
         locations in space
         @type points: array
 
-        @param fname: the file of the input vtk file
+        @param fname: the name of the input vtk file
         @type fname: string
 
         @param format: the format of the input vtk file ('vtk' or 'vtk-xml')
@@ -406,17 +406,309 @@ class ContourPlot(Plot):
         # add the plot to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    #def setData(self, fname=None, format=None, scalars=None, 
+            #*dataList, **options):
+    def setData(self, *dataList, **options):
         """
         Set data to the plot
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
+
+        @param fname: the name of the input vtk file
+        @type fname: string
+
+        @param format: the format of the input vtk file ('vtk' or 'vtk-xml')
+        @type format: string
+
+        @param scalars: the scalar data in the vtk file to use
+        @param scalars: string
         """
         debugMsg("Called setData() in ContourPlot()")
+        self.renderer.addToEvalStack("# ContourPlot.setData()")
 
-        if dataList is None:
-            raise ValueError, "You must specify a data list"
+        # get the options, if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+        ## scalars
+        if options.has_key('scalars'):
+            scalars = options['scalars']
+        else:
+            scalars = None
+
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
+        self.scalars = scalars
+
+        # do some sanity checking on the input args
+        if len(dataList) == 0 and fname is None:
+            raise ValueError, \
+                    "You must specify a data list or an input filename"
+
+        if len(dataList) != 0 and fname is not None:
+            raise ValueError, \
+                    "You cannot specify a data list as well as an input file"
+
+        if fname is not None and scalars is None:
+            print fname
+            raise ValueError, "You must specify which scalars to use"
+
+        if fname is not None and format is None:
+            print fname
+            raise ValueError, "You must specify an input file format"
+
+        # if have just a data list, check the objects passed in to see if
+        # they are escript data objects or not
+        escriptData = False
+        otherData = False
+        self.escriptData = False
+        self.otherData = False
+        for object in dataList:
+            try:
+                object.convertToNumArray()
+                # ok, we've got escript data, set the flag
+                escriptData = True
+                self.escriptData = True
+            except AttributeError:
+                otherData = True
+                self.otherData = True
+
+        # if we have both escript data and other data, barf as can't handle
+        # that yet
+        if escriptData and otherData:
+            raise TypeError, \
+                    "Sorry, can't handle both escript and other data yet"
+        
+        elif escriptData and not otherData:
+            # do we have access to escript??
+            try:
+                # escript objects should be able to be converted to numarrays
+                # so use this as our test if escript is available
+                dataList[0].convertToNumArray()
+                debugMsg("Using escript")
+            except AttributeError:
+                raise ImportError, "Unable to use escript"
+
+        else:
+            # well, just try and handle the data normally
+            pass
+
+        # now generate the code for the case when we have escript data
+        # just passed into setData()
+        if escriptData:
+            # now need to check if have Finley or Bruce mesh
+            # note that Bruce isn't actually implemented yet
+            # do I need to worry about this in vtk???  I'll be just using
+            # an unstructured grid anyway...
+            
+            ##!!!!  need to check for rank of data so know if it is 
+            ##!!!!  scalar or not, if other than scalar have to do
+            ##!!!!  something other than am doing here
+
+            # get the relevant bits of data
+            if len(dataList) == 1:
+                # only one data variable, will need to get the domain from it
+                ### the capital letter denotes this is an escript object
+                Z = dataList[0]
+                X = Z.getDomain().getX()
+            elif len(dataList) == 2:
+                # first variable should be the domain, the second the data
+                X = dataList[0]
+                Z = dataList[1]
+            else:
+                errorString = \
+                        "Expecting 1 or 2 elements in data list.  I got: %d" \
+                        % len(dataList)
+                raise ValueError, errorString
+
+            # convert the data to numarray
+            xData = X[0].convertToNumArray()
+            yData = X[1].convertToNumArray()
+            zData = Z.convertToNumArray()
+
+            # pass the data through to the pyvisi renderer
+            ### the x data
+            evalString = "_x = array(["
+            for i in range(len(xData)-1):
+                evalString += "%s, " % xData[i]
+            evalString += "%s])" % xData[-1]
+            self.renderer.addToEvalStack(evalString)
+
+            ### the y data
+            evalString = "_y = array(["
+            for i in range(len(yData)-1):
+                evalString += "%s, " % yData[i]
+            evalString += "%s])" % yData[-1]
+            self.renderer.addToEvalStack(evalString)
+
+            ### the z data
+            evalString = "_z = array(["
+            for i in range(len(zData)-1):
+                evalString += "%s, " % zData[i]
+            evalString += "%s])" % zData[-1]
+            self.renderer.addToEvalStack(evalString)
+
+            # calculate the max and min of the z data
+            evalString = "_zMin = min(_z)\n"
+            evalString += "_zMax = max(_z)"
+            self.renderer.addToEvalStack(evalString)
+
+            # create the points
+            evalString = "_points = vtk.vtkPoints()\n"
+            evalString += "_points.SetNumberOfPoints(len(_x))\n"
+            evalString += "for i in range(len(_x)):\n"
+            evalString += "    _points.InsertPoint(i, _x[i], _y[i], 0)"
+            self.renderer.addToEvalStack(evalString)
+
+            # create the data
+            evalString = "_data = vtk.vtkFloatArray()\n"
+            evalString += "_data.SetNumberOfComponents(1)\n"
+            evalString += "_data.SetNumberOfValues(len(_z))\n"
+            evalString += "for i in range(len(_z)):\n"
+            evalString += "    _data.InsertValue(i, _z[i])"
+            self.renderer.addToEvalStack(evalString)
+
+            # set up the grid (it's polydata since we're doing a Delaunay2D)
+            evalString = "_grid = vtk.vtkPolyData()\n"
+            evalString += "_grid.SetPoints(_points)\n"
+            evalString += "_grid.GetPointData().SetScalars(_data)"
+            self.renderer.addToEvalStack(evalString)
+
+        elif otherData:
+            # in this case, we can only accept data lists of length 1 or 3
+            # a length of 2 creates an abiguity
+            if len(dataList) == 1:
+                # need to autogenerate the x and y data
+                zData = dataList[0]
+                # check that the zData has the right shape
+                if len(zData.shape) != 2:
+                    raise ValueError, \
+                            "z data array is not of correct shape: %s" % \
+                            zData.shape
+                # autogen the x and y data
+                zShape = zData.shape
+                xData = range(1, zShape[0]+1)
+                yData = range(1, zShape[1]+1)
+                # check was created correctly just in case
+                if len(xData) != zShape[0]:
+                    raise ValueError,\
+                        "Autogenerated xData not equal to first dim of zData"
+                if len(yData) != zShape[1]:
+                    raise ValueError, \
+                        "Autogenerated yData not equal to second dim of zData"
+
+            elif len(dataList) == 2:
+                raise ValueError, \
+                    "The data list can't be of length 2 for non-escript data"
+            elif len(dataList) == 3:
+                # now just pass the x, y and z data through to the renderer
+                xData = dataList[0]
+                yData = dataList[1]
+                zData = dataList[2]
+            else:
+                raise ValueError, \
+                    "Expecting a data list length of 1 or 3.  I got: %d" \
+                    % len(dataList)
+
+            # check the shapes of the data
+            if len(xData.shape) != 1:
+                raise ValueError, "x data array is not of correct shape: %s"%\
+                        xData.shape
+
+            if len(yData.shape) != 1:
+                raise ValueError, "y data array is not of correct shape: %s"%\
+                        yData.shape
+
+            if len(zData.shape) != 2:
+                raise ValueError, "z data array is not of correct shape: %s"%\
+                        zData.shape
+
+            # stringify the data to then pass to the renderer
+            ### x data
+            evalString = "_x = array(["
+            for i in range(len(xData)-1):
+                evalString += "%s, " % xData[i]
+            evalString += "%s])" % xData[-1]
+            self.renderer.addToEvalStack(evalString)
+
+            ### y data
+            evalString = "_y = array(["
+            for i in range(len(yData)-1):
+                evalString += "%s, " % yData[i]
+            evalString += "%s])" % yData[-1]
+            self.renderer.addToEvalStack(evalString)
+
+            ### z data
+            evalString = "_z = array(["
+            for i in range(len(xData)):
+                evalString += "["
+                for j in range(len(yData)-1):
+                    evalString += "%s, " % zData[i, j]
+                evalString += "%s],\n" % zData[i, -1]
+            evalString += "])"
+            self.renderer.addToEvalStack(evalString)
+
+            # calculate the min and max
+            evalString = "_zMax = max(_z.flat)\n"
+            evalString += "_zMin = min(_z.flat)"
+            self.renderer.addToEvalStack(evalString)
+
+            # create the points
+            evalString = "_points = vtk.vtkPoints()\n"
+            evalString += "_points.SetNumberOfPoints(len(_x)*len(_y))\n"
+            evalString += "_count = 0\n"
+            evalString += "for i in range(len(_x)):\n"
+            evalString += "  for j in range(len(_y)):\n"
+            evalString += "    _points.InsertPoint(_count, _x[i], _y[j], 0)\n"
+            evalString += "    _count += 1"
+            self.renderer.addToEvalStack(evalString)
+
+            # create the data
+            evalString = "_data = vtk.vtkFloatArray()\n"
+            evalString += "_data.SetNumberOfComponents(1)\n"
+            evalString += "_data.SetNumberOfValues(len(_x)*len(_y))\n"
+            evalString += "_count = 0\n"
+            evalString += "for i in range(len(_x)):\n"
+            evalString += "  for j in range(len(_y)):\n"
+            evalString += "    _data.InsertValue(_count, _z[i][j])\n"
+            evalString += "    _count += 1"
+            self.renderer.addToEvalStack(evalString)
+
+            # set up the grid (it's polydata since we're doing a Delaunay2D)
+            evalString = "_grid = vtk.vtkPolyData()\n"
+            evalString += "_grid.SetPoints(_points)\n"
+            evalString += "_grid.GetPointData().SetScalars(_data)"
+            self.renderer.addToEvalStack(evalString)
+
+        # run the stuff for when we're reading from file
+        if fname is not None:
+            # create the reader of the file
+            evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+            evalString += "_reader.SetFileName(\"%s\")\n" % fname
+            evalString += "_reader.Update()"
+            self.renderer.addToEvalStack(evalString)
+    
+            # read the output input an unstructured grid
+            evalString = "_grid = _reader.GetOutput()\n"
+            evalString += \
+                    "_grid.GetPointData().SetActiveScalars(\"%s\")" % scalars
+            self.renderer.addToEvalStack(evalString)
+    
+            # grab the range of scalars for appropriate scaling of the colourmap
+            evalString = \
+                "_scalarRange = _grid.GetPointData().GetScalars().GetRange()\n"
+            evalString += "_scalarMin = _scalarRange[0]\n"
+            evalString += "_scalarMax = _scalarRange[1]\n"
+            self.renderer.addToEvalStack(evalString)
 
         return
 
@@ -429,19 +721,61 @@ class ContourPlot(Plot):
         self.renderer.addToEvalStack("# ContourPlot.render()")
 
         # set the title if set
-        if self.title is not None:
-            evalString = "_plot.SetTitle(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+        #if self.title is not None:
+            #evalString = "_plot.SetTitle(\'%s\')" % self.title
+            #self.renderer.addToEvalStack(evalString)
 
         # if an xlabel is set, add it
-        if self.xlabel is not None:
-            evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+        #if self.xlabel is not None:
+            #evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
+            #self.renderer.addToEvalStack(evalString)
 
         # if an ylabel is set, add it
-        if self.ylabel is not None:
-            evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+        #if self.ylabel is not None:
+            #evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
+            #self.renderer.addToEvalStack(evalString)
+
+        # set up the lookup table and reverse the order of the colours
+        evalString = "_lut = vtk.vtkLookupTable()\n"
+        evalString += "_lut.Build()\n"
+        evalString += "_refLut = vtk.vtkLookupTable()\n"
+        evalString += "_refLut.Build()\n"
+        evalString += "for i in range(256):\n"
+        evalString += \
+                "    _lut.SetTableValue(i, _refLut.GetTableValue(255-i))"
+        self.renderer.addToEvalStack(evalString)
+
+        if self.escriptData or self.otherData:
+            # triangulate the data
+            evalString = "_delaunay = vtk.vtkDelaunay2D()\n"
+            evalString += "_delaunay.SetInput(_grid)\n"
+            evalString += "_delaunay.SetTolerance(0.001)"
             self.renderer.addToEvalStack(evalString)
+
+            # set up the mapper
+            evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
+            evalString += "_mapper.SetInput(_delaunay.GetOutput())\n"
+            evalString += "_mapper.SetLookupTable(_lut)\n"
+            # note that zMin and zMax are evaluated in setData()
+            evalString += "_mapper.SetScalarRange(_zMin, _zMax)"
+            self.renderer.addToEvalStack(evalString)
+
+        elif self.fname is not None:
+            # set up the mapper
+            evalString = "_mapper = vtk.vtkDataSetMapper()\n"
+            evalString += "_mapper.SetInput(_grid)\n"
+            evalString += "_mapper.ScalarVisibilityOn()\n"
+            evalString += "_mapper.SetLookupTable(_lut)\n"
+            evalString += "_mapper.SetScalarRange(_scalarMin, _scalarMax)"
+            self.renderer.addToEvalStack(evalString)
+
+        # set up the actor
+        evalString = "_actor = vtk.vtkActor()\n"
+        evalString += "_actor.SetMapper(_mapper)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the actor to the scene
+        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
 
         return
 
