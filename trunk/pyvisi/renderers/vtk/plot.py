@@ -720,21 +720,6 @@ class ContourPlot(Plot):
 
         self.renderer.addToEvalStack("# ContourPlot.render()")
 
-        # set the title if set
-        #if self.title is not None:
-            #evalString = "_plot.SetTitle(\'%s\')" % self.title
-            #self.renderer.addToEvalStack(evalString)
-
-        # if an xlabel is set, add it
-        #if self.xlabel is not None:
-            #evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
-            #self.renderer.addToEvalStack(evalString)
-
-        # if an ylabel is set, add it
-        #if self.ylabel is not None:
-            #evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
-            #self.renderer.addToEvalStack(evalString)
-
         # set up the lookup table and reverse the order of the colours
         evalString = "_lut = vtk.vtkLookupTable()\n"
         evalString += "_lut.Build()\n"
@@ -776,6 +761,88 @@ class ContourPlot(Plot):
 
         # add the actor to the scene
         self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+
+        # if the title or one of the labels is set, then set up the text
+        # properties (I think this should come from the pyvisi Text() object
+        # at some stage, but we'll hard code it here...)
+        # I'll also need separate properties for axes, titles, labels etc...
+        # but keep them all the same just to get this going
+        if self.title is not None or\
+                self.xlabel is not None or\
+                self.ylabel is not None:
+            evalString = "_font_size = 20\n"
+            evalString += "_textProp = vtk.vtkTextProperty()\n"
+            evalString += "_textProp.SetFontSize(_font_size)\n"
+            evalString += "_textProp.SetFontFamilyToArial()\n"
+            evalString += "_textProp.BoldOff()\n"
+            evalString += "_textProp.ItalicOff()\n"
+            evalString += "_textProp.ShadowOff()\n"
+            self.renderer.addToEvalStack(evalString)
+
+        # set the title if set
+        if self.title is not None:
+            evalString = "_title = vtk.vtkTextMapper()\n"
+            evalString += "_title.SetInput(\"%s\")\n" % self.title
+            # make the title text use the text properties
+            evalString += "_titleProp = _title.GetTextProperty()\n"
+            evalString += "_titleProp.ShallowCopy(_textProp)\n"
+            evalString += "_titleProp.SetJustificationToCentered()\n"
+            evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            # make the actor for the title
+            evalString += "_titleActor = vtk.vtkTextActor()\n"
+            evalString += "_titleActor.SetMapper(_title)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5,0.95)\n"# this should be user-settable
+            # add the actor to the scene
+            evalString += "_renderer.AddActor(_titleActor)"
+            self.renderer.addToEvalStack(evalString)
+
+        # add the axes
+        evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
+        evalString += "_axes.SetInput(_grid)\n"
+        evalString += "_axes.SetCamera(_renderer.GetActiveCamera())\n"
+        evalString += "_axes.SetLabelFormat(\"%6.4g\")\n"
+        evalString += "_axes.SetFlyModeToOuterEdges()\n"
+        evalString += "_axes.SetFontFactor(0.8)\n"
+        evalString += "_axes.SetAxisTitleTextProperty(_textProp)\n"
+        evalString += "_axes.SetAxisLabelTextProperty(_textProp)\n"
+        # this next line sets the Z axis visibility off!!  Is a bug in vtk
+        # 4.2, dunno how am going to handle this if it is fixed in later
+        # versions of vtk
+        evalString += "_axes.YAxisVisibilityOff()\n"
+        evalString += "_axes.SetNumberOfLabels(5)\n"
+
+        # if we have an xlabel set it
+        if self.xlabel is not None:
+            evalString += "_axes.SetXLabel(\"%s\")\n" % self.xlabel
+        else:
+            evalString += "_axes.SetXLabel(\"\")\n"
+
+        # if we have a ylabel set it
+        if self.ylabel is not None:
+            evalString += "_axes.SetYLabel(\"%s\")\n" % self.ylabel
+        else:
+            evalString += "_axes.SetXLabel(\"\")\n"
+
+        # add the axes to the scene
+        evalString += "_renderer.AddProp(_axes)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add a scalar bar (need to make this an option somewhere!!)
+        # I also need to add the ability for the user to set the values of
+        # the various parameters set below, and some kind of logical
+        # defaults similar to or the same as what I have below.
+        evalString = "_scalarBar = vtk.vtkScalarBarActor()\n"
+        evalString += "_scalarBar.SetLookupTable(_lut)\n"
+        evalString += "_scalarBar.SetWidth(0.1)\n"
+        evalString += "_scalarBar.SetHeight(0.7)\n"
+        evalString += "_scalarBar.SetPosition(0.9, 0.2)\n"
+        
+        # add the scalar bar to the scene
+        evalString += "_renderer.AddActor(_scalarBar)\n"
+        self.renderer.addToEvalStack(evalString)
 
         return
 
