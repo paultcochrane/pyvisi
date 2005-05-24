@@ -281,18 +281,47 @@ class BallPlot(Plot):
         self.renderer.addToEvalStack(evalString)
 
         # grab the data to use for colouring the balls
-        evalString = "_colors = _grid.GetPointData().GetScalars(\"%s\")" % \
+        evalString = "_colours = _grid.GetPointData().GetScalars(\"%s\")" % \
                 colors
+        self.renderer.addToEvalStack(evalString)
+
+        # now work out the number of tags, and their values
+        evalString = "_numPoints = _colours.GetNumberOfTuples()\n"
+        evalString += "_valueDict = {}\n"
+        evalString += "for i in range(_numPoints):\n"
+        evalString += "    _colourValue = _colours.GetValue(i)\n"
+        evalString += "    _valueDict[_colourValue] = 1\n"
+
+        evalString += "_numColours = len(_valueDict.keys())\n"
+
+        evalString += "_colourValues = _valueDict.keys()\n"
+        evalString += "_colourValues.sort()"
+        self.renderer.addToEvalStack(evalString)
+
+        # now count the number of colours, and make an evenly spaced array of
+        # points between zero and one, then use these as the scalars to
+        # colour by
+        evalString = "_scaledColours = vtk.vtkFloatArray()\n"
+        evalString += "_scaledColours.SetNumberOfTuples(_numPoints)\n"
+        evalString += "_scaledColours.SetNumberOfComponents(1)\n"
+        evalString += "_scaledColours.SetName(\"scaledColours\")\n"
+        evalString += "for i in range(_numPoints):\n"
+        evalString += "    _colourValue = _colours.GetValue(i)\n"
+        evalString += "    for j in range(_numColours):\n"
+        evalString += "        if _colourValues[j] == _colourValue:\n"
+        evalString += "            _scaledColours.InsertTuple1(i,"
+        evalString += "float(j)/float(_numColours-1))"
         self.renderer.addToEvalStack(evalString)
 
         # now set up an array of two components to get the data through the
         # glyph object to the mapper (this is so that colouring and scalaing
         # work properly)
         evalString = "_data = vtk.vtkFloatArray()\n"
-        evalString += "_data.SetNumberOfComponents(2)\n"
+        evalString += "_data.SetNumberOfComponents(3)\n"
         evalString += "_data.SetNumberOfTuples(_radii.GetNumberOfTuples())\n"
         evalString += "_data.CopyComponent(0, _radii, 0)\n"
-        evalString += "_data.CopyComponent(1, _colors, 0)\n"
+        evalString += "_data.CopyComponent(1, _colours, 0)\n"
+        evalString += "_data.CopyComponent(2, _scaledColours, 0)\n"
         evalString += "_data.SetName(\"data\")"
         self.renderer.addToEvalStack(evalString)
 
@@ -342,10 +371,9 @@ class BallPlot(Plot):
         # note: this is for vtk 4.2, 4.4 (4.5 and above have a better
         # technique to colour the scalars, but that version isn't yet
         # standard, or in fact released)
-        evalString += "_mapper.ColorByArrayComponent(\"data\", 1)\n"
-        # do this next step dynamically!!!!!!!
+        evalString += "_mapper.ColorByArrayComponent(\"data\", 2)\n"
         # should be done in setData()
-        evalString += "_mapper.SetScalarRange(0, 3)"
+        evalString += "_mapper.SetScalarRange(0, 1)"
         self.renderer.addToEvalStack(evalString)
 
         # set up the actor
