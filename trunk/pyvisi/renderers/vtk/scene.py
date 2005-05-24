@@ -112,10 +112,20 @@ class Scene(BaseScene):
 
         # if saving to file, try not to render to the screen
         if save:
-            renderer.addToEvalStack("_renderWindow.OffScreenRenderingOn()")
-            renderer.addToEvalStack("_renderWindow.Render()")
+            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
+            evalString += "_factGraphics.SetUseMesaClasses(1)\n"
+            evalString += "_factImage = vtk.vtkImagingFactory()\n"
+            evalString += "_factImage.SetUseMesaClasses(1)\n"
+            evalString += "_renderWindow.OffScreenRenderingOn()\n"
+            evalString += "_renderWindow.Render()"
+            renderer.addToEvalStack(evalString)
         else:
-            renderer.addToEvalStack("_renderWindow.Render()")
+            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
+            evalString += "_factGraphics.SetUseMesaClasses(0)\n"
+            evalString += "_factImage = vtk.vtkImagingFactory()\n"
+            evalString += "_factImage.SetUseMesaClasses(0)\n"
+            evalString += "_renderWindow.Render()"
+            renderer.addToEvalStack(evalString)
 
         if interactive:
             renderer.addToEvalStack("_iRenderer.Start()")
