@@ -63,41 +63,15 @@ if method == 'pyvisi':
                                # render()ed the scene.  This requirement
                                # will be removed in the future
     scene.save(fname="arrowPlotExample.png", format=PngImage())
-    plot.setData(x, y, dx, dy) # have to do this now because we've already
-                               # save()d the scene.  This requirement will
-                               # be removed in the future
-    scene.save(fname="arrowPlotExample.ps", format=PsImage())
-
-elif method == 'gnuplot':
-    #### original gnuplot code
-    
-    import Gnuplot
-
-    # set the plot up
-    _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example 2D arrow/quiver/vector field plot')
-    _gnuplot.xlabel('x')
-    _gnuplot.ylabel('y')
-
-    # set up the data
-    _data = Gnuplot.Data(x, y, dx, dy, with='vector')
-
-    # plot it
-    _gnuplot.plot(_data)
-
-    # set up to save to file
-    _gnuplot('set terminal png')
-    _gnuplot('set output \"arrowPlotExample.png\"')
-
-    # save it
-    _gnuplot.plot(_data)
-
-    raw_input('Press enter to continue...\n')
 
 elif method == 'vtk':
     #### original vtk code
 
     print "Sorry, the vtk interface hasn't been written yet."
+elif method == 'plplot':
+    #### original plplot code
+
+    print "Sorry, the plplot interface hasn't been written yet."
 else:
     print "Eeek!  What plotting method am I supposed to use???"
 
