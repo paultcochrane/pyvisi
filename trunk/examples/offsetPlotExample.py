@@ -27,8 +27,8 @@ fp.close()
 from pyvisi import *          # base level visualisation stuff
 #from pyvisi.utils import *   # pyvisi specific utils
 # import the objects to render the scene using the specific renderer
-from pyvisi.renderers.gnuplot import *   # gnuplot
-#from pyvisi.renderers.vtk import *       # vtk
+#from pyvisi.renderers.gnuplot import *   # gnuplot
+from pyvisi.renderers.vtk import *       # vtk
 
 # define the scene object
 # a Scene is a container for all of the kinds of things you want to put 
@@ -57,13 +57,6 @@ plot.setData(t, data)
                              # render()ed the scene.  This requirement
                              # will be removed in the future.
 scene.save(fname="offsetPlotExample.png", format=PngImage())
-
-# save as postscript
-plot.setData(t, data)
-                             # have to do this now because we've already
-                             # save()d the scene.  This requirement will
-                             # be removed in the future.
-scene.save(fname="offsetPlotExample.ps", format=PsImage())
 
 # vim: expandtab shiftwidth=4:
 
