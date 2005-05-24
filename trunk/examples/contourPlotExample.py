@@ -65,34 +65,6 @@ if method == 'pyvisi':
                          # render()ed the scene.  This requirement will be
                          # removed in the future
     scene.save(fname="contourPlotExample.png", format=PngImage())
-    plot.setData(x,y,z)  # have to do this now because we've already save()d
-                         # the scene.  This requirement will be removed in
-                         # the future
-    scene.save(fname="contourPlotExample.ps", format=PsImage())
-
-elif method == 'gnuplot':
-    #### original gnuplot code
-    
-    import Gnuplot
-
-    # set the plot up
-    _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example contour plot')
-    _gnuplot.xlabel('x')
-    _gnuplot.ylabel('y')
-    #_gnuplot.zlabel('z')
-
-    # this is a contour plot, so...
-    _gnuplot('set contour base')
-    _gnuplot('set view 0, 0, 1, 1')
-    _gnuplot('set nosurface')
-
-    # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=1)
-
-    _gnuplot.splot(_data)
-
-    raw_input('Press enter to continue...')
 
 elif method == 'vtk':
     #### original vtk code
@@ -160,6 +132,8 @@ elif method == 'vtk':
 
     #raw_input('Press enter to continue...')
 
+elif method == 'plplot':
+    pass
 else:
     print "Eeek!  What plotting method am I supposed to use???"
 
