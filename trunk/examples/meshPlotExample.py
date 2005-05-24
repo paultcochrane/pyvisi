@@ -64,34 +64,7 @@ if method == 'pyvisi':
     plot.setData(x,y,z)  # have to do this now because we've already
                          # render()ed the scene.  This requirement will be
                          # removed in the future
-    scene.save(fname="meshPlotExample.png", format=PngImage())
-    plot.setData(x,y,z)  # have to do this now because we've already save()d
-                         # the scene.  This requirement will be removed in
-                         # the future
-    scene.save(fname="meshPlotExample.ps", format=PsImage())
-
-elif method == 'gnuplot':
-    #### original gnuplot code
-    
-    import Gnuplot
-
-    # set the plot up
-    _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example mesh plot')
-    _gnuplot.xlabel('x')
-    _gnuplot.ylabel('y')
-    _gnuplot('set zlabel \'z\'')
-
-    # this is a mesh plot, so...
-    _gnuplot('set surface')
-    _gnuplot('set data style lines')
-
-    # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=1)
-
-    _gnuplot.splot(_data)
-
-    raw_input('Press enter to continue...')
+    scene.save(fname="meshPlot.png", format=PngImage())
 
 elif method == 'vtk':
     print "vtk mesh plotting not yet implemented"
