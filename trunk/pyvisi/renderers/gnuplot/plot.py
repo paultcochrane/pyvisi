@@ -152,7 +152,7 @@ class Plot(Item):
         @param xMax: the maximum value of the x-axis
         @type xMax: float
         """
-        debugMsg("Called LinePlot.setXAxisRange()")
+        debugMsg("Called Plot.setXAxisRange()")
 
         # check that the max is (strictly) bigger than the min
         if (xMax <= xMin):
@@ -173,7 +173,7 @@ class Plot(Item):
         @param yMax: the maximum value of the y-axis
         @type yMax: float
         """
-        debugMsg("Called LinePlot.setYAxisRange()")
+        debugMsg("Called Plot.setYAxisRange()")
 
         # check that the max is (strictly) bigger than the min
         if (yMax <= yMin):
@@ -194,7 +194,7 @@ class Plot(Item):
         @param zMax: the maximum value of the z-axis
         @type zMax: float
         """
-        debugMsg("Called LinePlot.setZAxisRange()")
+        debugMsg("Called Plot.setZAxisRange()")
 
         # check that the max is (strictly) bigger than the min
         if (zMax <= zMin):
@@ -499,7 +499,7 @@ class LinePlot(Plot):
         self.ylabel = None
         self.zlabel = None
 
-        self.linestyle = None   # pyvisi-defined linestyle
+        self.linestyle = 'lines'   # pyvisi-defined linestyle
         self._linestyle = None  # renderer-specific linestyle
 
         # is the LinePlot data offset (vertically) from each other?
