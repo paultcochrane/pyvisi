@@ -54,7 +54,7 @@ _gnuplot.plot(_data)
 
 # set up to save to file
 _gnuplot('set terminal png')
-_gnuplot('set output \"arrowPlotExample2.png\"')
+_gnuplot('set output \"arrowPlot2D.png\"')
 
 # save it
 _gnuplot.plot(_data)
