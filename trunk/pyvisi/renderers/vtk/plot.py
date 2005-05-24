@@ -259,20 +259,22 @@ class BallPlot(Plot):
         # for now just hope that if the stuff is specified, that it agrees
         # with what's in the vtk unstructured grid
 
-        # at present can't handle (haven't implemented) old style vtk files,
-        # so for now just chuck an error if that's the format sent in
-        if format == "vtk":
-            raise ValueError, \
-                    "Sorry, can't handle old-style vtk files at present"
+        if format == "vtk-xml":
+            # create the reader of the file
+            evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+            evalString += "_reader.SetFileName(\"%s\")\n" % fname
+            evalString += "_reader.Update()"
+            self.renderer.addToEvalStack(evalString)
+        elif format == "vtk":
+            # create the reader of the file
+            evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+            evalString += "_reader.SetFileName(\"%s\")\n" % fname
+            evalString += "_reader.Update()"
+            self.renderer.addToEvalStack(evalString)
 
-        # create the reader of the file
-        evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
-        evalString += "_reader.SetFileName(\"%s\")\n" % fname
-        evalString += "_reader.Update()"
-        self.renderer.addToEvalStack(evalString)
-
-        # read the output to an unstructured grid
-        self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
+        if format == "vtk" or format == "vtk-xml":
+            # read the output to an unstructured grid
+            self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
 
         # note that these next few steps are only necessary in vtk 4.2, 4.4
         # grab the data to use for the radii of the balls
