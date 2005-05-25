@@ -41,14 +41,14 @@ import vtk
 import os
 
     # we're loading a file; make sure it exists first
-if os.path.exists("cp_test_0.xml"):
+if os.path.exists("../../cp_test_0.xml"):
     pass
 else:
     raise IOError, "File not found"
 
 # create the reader of the file
 _reader = vtk.vtkXMLUnstructuredGridReader()
-_reader.SetFileName("cp_test_0.xml")
+_reader.SetFileName("../../cp_test_0.xml")
 _reader.Update()
 
 # read the output into an unstructured grid
@@ -181,7 +181,7 @@ _win2imgFilter.SetInput(_renWin)
 # save the image to file
 _outWriter = vtk.vtkPNGWriter()
 _outWriter.SetInput(_win2imgFilter.GetOutput())
-_outWriter.SetFileName("ballPlotExample.png")
+_outWriter.SetFileName("ballPlot.png")
 _outWriter.Write()
 
 # vim: expandtab shiftwidth=4:
