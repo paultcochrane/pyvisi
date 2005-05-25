@@ -24,6 +24,7 @@ Class and functions associated with a pyvisi Plot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
+from Numeric import *
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
@@ -198,12 +199,12 @@ class BallPlot(Plot):
 
     def setData(self, points=None, 
             fname=None, format=None,
-            radii=None, colors=None):
+            radii=None, colors=None, tags=None):
         """
         Set data to the plot
         @param points: the array to use for the points of the sphere
         locations in space
-        @type points: array
+        @type points: float array
 
         @param fname: the name of the input vtk file
         @type fname: string
@@ -213,11 +214,15 @@ class BallPlot(Plot):
 
         @param radii: the name of the scalar array in the vtk unstructured
         grid to use as the radii of the balls
-        @type radii: string
+        @type radii: float array
 
         @param colors: the name of the scalar array in the vtk unstructured
         grid to use as the colour tags of the balls
         @type colors: string
+
+        @param tags: the name of the scalar array in the vtk unstructured
+        grid to use as the colour of the tags of the balls
+        @type tags: integer array
         """
         debugMsg("Called setData() in BallPlot()")
         self.renderer.addToEvalStack("# BallPlot.setData()")
@@ -234,9 +239,9 @@ class BallPlot(Plot):
                     "Sorry, you can't specify both a data list and a filename"
 
         # can't handle points arrays just yet
-        if points is not None:
-            raise ValueError, \
-                    "Sorry, can't handle points arrays yet"
+        #if points is not None:
+            #raise ValueError, \
+                    #"Sorry, can't handle points arrays yet"
 
         # now check the bits required if the fname option is set
         if fname is not None:
@@ -250,90 +255,236 @@ class BallPlot(Plot):
                 "You must specify the name of the scalars to use for the colors"
 
         # now check that the format is logical
-        if format != "vtk" and format != "vtk-xml":
+        if format is not None and format != "vtk" and format != "vtk-xml":
             errorString = \
-            "Unknown format: must be either 'vtk' or 'vtk-xml'\n"
+                "Unknown format: must be either 'vtk' or 'vtk-xml'\n"
             errorString += "I got: %s" % format
             raise ValueError, errorString
 
         # for now just hope that if the stuff is specified, that it agrees
         # with what's in the vtk unstructured grid
 
-        if format == "vtk-xml":
-            # create the reader of the file
-            evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
-            evalString += "_reader.SetFileName(\"%s\")\n" % fname
-            evalString += "_reader.Update()"
-            self.renderer.addToEvalStack(evalString)
-        elif format == "vtk":
-            # create the reader of the file
-            evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
-            evalString += "_reader.SetFileName(\"%s\")\n" % fname
-            evalString += "_reader.Update()"
-            self.renderer.addToEvalStack(evalString)
+        if format is not None and (format == "vtk-xml" or format == "vtk"):
+            if format == "vtk-xml":
+                debugMsg("Using vtk-xml file as input")
+                # create the reader of the file
+                evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+                evalString += "_reader.SetFileName(\"%s\")\n" % fname
+                evalString += "_reader.Update()"
+                self.renderer.addToEvalStack(evalString)
+            elif format == "vtk":
+                debugMsg("Using old-style vtk file as input")
+                # create the reader of the file
+                evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+                evalString += "_reader.SetFileName(\"%s\")\n" % fname
+                evalString += "_reader.Update()"
+                self.renderer.addToEvalStack(evalString)
 
-        if format == "vtk" or format == "vtk-xml":
             # read the output to an unstructured grid
             self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
 
-        # note that these next few steps are only necessary in vtk 4.2, 4.4
-        # grab the data to use for the radii of the balls
-        evalString = "_radii = _grid.GetPointData().GetScalars(\"%s\")" % \
-                radii
-        self.renderer.addToEvalStack(evalString)
+            # note that these next few steps are only necessary in vtk 4.2,
+            # 4.4 grab the data to use for the radii of the balls
+            evalString = \
+                    "_radii = _grid.GetPointData().GetScalars(\"%s\")" % \
+                    radii
+            self.renderer.addToEvalStack(evalString)
+    
+            # grab the data to use for colouring the balls
+            evalString = \
+                    "_colours = _grid.GetPointData().GetScalars(\"%s\")" % \
+                    colors
+            self.renderer.addToEvalStack(evalString)
+    
+            # now work out the number of tags, and their values
+            evalString = "_numPoints = _colours.GetNumberOfTuples()\n"
+            evalString += "_valueDict = {}\n"
+            evalString += "for i in range(_numPoints):\n"
+            evalString += "    _colourValue = _colours.GetValue(i)\n"
+            evalString += "    _valueDict[_colourValue] = 1\n"
+    
+            evalString += "_numColours = len(_valueDict.keys())\n"
+    
+            evalString += "_colourValues = _valueDict.keys()\n"
+            evalString += "_colourValues.sort()"
+            self.renderer.addToEvalStack(evalString)
+    
+            # now count the number of colours, and make an evenly spaced
+            # array of points between zero and one, then use these as the
+            # scalars to colour by
+            evalString = "_scaledColours = vtk.vtkFloatArray()\n"
+            evalString += "_scaledColours.SetNumberOfTuples(_numPoints)\n"
+            evalString += "_scaledColours.SetNumberOfComponents(1)\n"
+            evalString += "_scaledColours.SetName(\"scaledColours\")\n"
+            evalString += "for i in range(_numPoints):\n"
+            evalString += "    _colourValue = _colours.GetValue(i)\n"
+            evalString += "    for j in range(_numColours):\n"
+            evalString += "        if _colourValues[j] == _colourValue:\n"
+            evalString += "            _scaledColours.InsertTuple1(i,"
+            evalString += "float(j)/float(_numColours-1))"
+            self.renderer.addToEvalStack(evalString)
+    
+            # now set up an array of two components to get the data through
+            # the glyph object to the mapper (this is so that colouring and
+            # scalaing work properly)
+            evalString = "_data = vtk.vtkFloatArray()\n"
+            evalString += "_data.SetNumberOfComponents(3)\n"
+            evalString += \
+                    "_data.SetNumberOfTuples(_radii.GetNumberOfTuples())\n"
+            evalString += "_data.CopyComponent(0, _radii, 0)\n"
+            evalString += "_data.CopyComponent(1, _colours, 0)\n"
+            evalString += "_data.CopyComponent(2, _scaledColours, 0)\n"
+            evalString += "_data.SetName(\"data\")"
+            self.renderer.addToEvalStack(evalString)
+    
+            # add the data array to the grid
+            evalString = "_grid.GetPointData().AddArray(_data)\n"
+    
+            # make the data the active scalars
+            evalString += "_grid.GetPointData().SetActiveScalars(\"data\")"
+            self.renderer.addToEvalStack(evalString)
 
-        # grab the data to use for colouring the balls
-        evalString = "_colours = _grid.GetPointData().GetScalars(\"%s\")" % \
-                colors
-        self.renderer.addToEvalStack(evalString)
+        elif format is None and points is not None:
+            debugMsg("Using user-defined point data in BallPlot.setData()")
+            ### if we get to here, then we have to construct the points,
+            ### the radii and the colours all from scratch, add them to the
+            ### grid and get everthing in the same form that we have for the
+            ### case where we load a vtk data file
 
-        # now work out the number of tags, and their values
-        evalString = "_numPoints = _colours.GetNumberOfTuples()\n"
-        evalString += "_valueDict = {}\n"
-        evalString += "for i in range(_numPoints):\n"
-        evalString += "    _colourValue = _colours.GetValue(i)\n"
-        evalString += "    _valueDict[_colourValue] = 1\n"
+            numPoints = len(points)
+            numRadii = len(radii)
+            # do some sanity checking on the data
+            if numRadii != numPoints:
+                raise ValueError, \
+                    "The number of points does not equal the number of radii"
 
-        evalString += "_numColours = len(_valueDict.keys())\n"
+            ### construct the grid from the point data
+            # make the points
+            evalString = "_points = vtk.vtkPoints()\n"
+            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
+            for i in range(numPoints):
+                point = points[i]
+                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" %\
+                        (i, point[0], point[1], point[2])
+            self.renderer.addToEvalStack(evalString)
 
-        evalString += "_colourValues = _valueDict.keys()\n"
-        evalString += "_colourValues.sort()"
-        self.renderer.addToEvalStack(evalString)
+            # make the radii
+            evalString = "_radii = vtk.vtkFloatArray()\n"
+            evalString += "_radii.SetNumberOfComponents(1)\n"
+            evalString += "_radii.SetNumberOfValues(%d)\n" % numPoints
+            for i in range(numPoints):
+                evalString += "_radii.InsertValue(%d, %f)\n" % (i, radii[i])
+            self.renderer.addToEvalStack(evalString)
 
-        # now count the number of colours, and make an evenly spaced array of
-        # points between zero and one, then use these as the scalars to
-        # colour by
-        evalString = "_scaledColours = vtk.vtkFloatArray()\n"
-        evalString += "_scaledColours.SetNumberOfTuples(_numPoints)\n"
-        evalString += "_scaledColours.SetNumberOfComponents(1)\n"
-        evalString += "_scaledColours.SetName(\"scaledColours\")\n"
-        evalString += "for i in range(_numPoints):\n"
-        evalString += "    _colourValue = _colours.GetValue(i)\n"
-        evalString += "    for j in range(_numColours):\n"
-        evalString += "        if _colourValues[j] == _colourValue:\n"
-        evalString += "            _scaledColours.InsertTuple1(i,"
-        evalString += "float(j)/float(_numColours-1))"
-        self.renderer.addToEvalStack(evalString)
+            # make the colours
+            if colors is None:
+                # ok then, since we have no info, make them related to the
+                # radii
+                pass
 
-        # now set up an array of two components to get the data through the
-        # glyph object to the mapper (this is so that colouring and scalaing
-        # work properly)
-        evalString = "_data = vtk.vtkFloatArray()\n"
-        evalString += "_data.SetNumberOfComponents(3)\n"
-        evalString += "_data.SetNumberOfTuples(_radii.GetNumberOfTuples())\n"
-        evalString += "_data.CopyComponent(0, _radii, 0)\n"
-        evalString += "_data.CopyComponent(1, _colours, 0)\n"
-        evalString += "_data.CopyComponent(2, _scaledColours, 0)\n"
-        evalString += "_data.SetName(\"data\")"
-        self.renderer.addToEvalStack(evalString)
+            # what if we have a tags argument as well, and use that for the
+            # colours if the colours array doesn't exists (which would be
+            # more complicated for the user to set up, but can have the
+            # functionality if someone wants to use it)
 
-        # add the data array to the grid
-        self.renderer.addToEvalStack("_grid.GetPointData().AddArray(_data)")
+            if tags is None:
+                debugMsg("Autogenerating tags in BallPlot.setData()")
+                # relate the tags to the radii
+                # need to find the number of different radii
+                radiiDict = {}
+                for i in range(numPoints):
+                    radiiDict[str(radii[i])] = 1
+                numRadii = len(radiiDict.keys())
+                radiiKeys = radiiDict.keys()
+                # now just make a list of evenly spaced tags up to numRadii
+                tagValues = range(numRadii)
+                numTags = numRadii
 
-        # make the data the active scalars
-        self.renderer.addToEvalStack(\
-                "_grid.GetPointData().SetActiveScalars(\"data\")")
-        
+                tags = zeros(numPoints, typecode=Int)
+                for i in range(numPoints):
+                    for j in range(numTags):
+                        if radiiKeys[j] == str(radii[i]):
+                            tags[i] = tagValues[j]
+
+            elif tags is not None:
+                msg = "Using tag data for colour information in "
+                msg += "BallPlot.setData()"
+                debugMsg(msg)
+
+                # check that the number of tags is correct
+                if len(tags) != numPoints:
+                    errorString = "The number of tags needs to be the"
+                    errorString += "same as the number of points"
+                    raise ValueError, errorString
+
+                # need to find out the number of different tags
+                valueDict = {}
+                for i in range(numPoints):
+                    valueDict[tag[i]] = 1
+                numTags = len(valueDict.keys())
+                tagValues = valueDict.keys()
+                tagValues.sort()
+
+            # give the tag data to vtk
+            evalString = "_tags = vtk.vtkFloatArray()\n"
+            evalString += "_tags.SetNumberOfValues(%d)\n" % numPoints
+            evalString += "_tags.SetNumberOfComponents(1)\n"
+            evalString += "_tags.SetName(\"tags\")\n"
+            for i in range(numPoints):
+                evalString += "_tags.InsertValue(%d, %d)\n" % \
+                        (i, tags[i])
+            self.renderer.addToEvalStack(evalString)
+
+            # now scale the tags
+            scaledTags = zeros(numPoints, typecode=Float)
+            if numTags == 1:
+                pass
+            else:
+                for i in range(numPoints):
+                    for j in range(numTags):
+                        if tagValues[j] == tags[i]:
+                            scaledTags[i] = float(j)/float(numTags-1)
+
+            # now give vtk the scaled tag data
+            evalString = "_scaledTags = vtk.vtkFloatArray()\n"
+            evalString += "_scaledTags.SetNumberOfValues(%d)\n" % numPoints
+            evalString += "_scaledTags.SetNumberOfComponents(1)\n"
+            evalString += "_scaledTags.SetName(\"scaledTags\")\n"
+            for i in range(numPoints):
+                evalString += "_scaledTags.InsertValue(%d, %f)\n" % \
+                        (i, scaledTags[i])
+            self.renderer.addToEvalStack(evalString)
+
+            # now construct the data array
+            ### this is a vtk 4.2, 4.4 specific thing.  vtk 4.5 and above
+            ### have a better way to do it, but this is here for backwards 
+            ### compatibility
+            evalString = "_data = vtk.vtkFloatArray()\n"
+            evalString += "_data.SetNumberOfComponents(3)\n"
+            evalString += \
+                    "_data.SetNumberOfTuples(_radii.GetNumberOfTuples())\n"
+            evalString += "_data.CopyComponent(0, _radii, 0)\n"
+            evalString += "_data.CopyComponent(1, _tags, 0)\n"
+            evalString += "_data.CopyComponent(2, _scaledTags, 0)\n"
+            evalString += "_data.SetName(\"data\")\n"
+            self.renderer.addToEvalStack(evalString)
+
+            # now construct the grid
+            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
+            evalString += "_grid.SetPoints(_points)\n"
+
+            # add the data array to the grid
+            evalString += "_grid.GetPointData().AddArray(_data)\n"
+
+            # make the data the active scalars
+            evalString += "_grid.GetPointData().SetActiveScalars(\"data\")\n"
+
+            self.renderer.addToEvalStack(evalString)
+        else:
+            # barf
+            raise ValueError, \
+                    "Cannot construct BallPlot with the given input.  Exiting."
+
         return
 
     def render(self):
