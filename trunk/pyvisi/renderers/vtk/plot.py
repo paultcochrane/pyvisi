@@ -420,7 +420,7 @@ class BallPlot(Plot):
                 # need to find out the number of different tags
                 valueDict = {}
                 for i in range(numPoints):
-                    valueDict[tag[i]] = 1
+                    valueDict[tags[i]] = 1
                 numTags = len(valueDict.keys())
                 tagValues = valueDict.keys()
                 tagValues.sort()
