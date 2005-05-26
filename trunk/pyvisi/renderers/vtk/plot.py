@@ -238,11 +238,6 @@ class BallPlot(Plot):
             raise ValueError, \
                     "Sorry, you can't specify both a data list and a filename"
 
-        # can't handle points arrays just yet
-        #if points is not None:
-            #raise ValueError, \
-                    #"Sorry, can't handle points arrays yet"
-
         # now check the bits required if the fname option is set
         if fname is not None:
             if format is None:
