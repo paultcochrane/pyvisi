@@ -110,6 +110,7 @@ class Renderer(object):
         """
         Gets the evaluation stack as it currently stands
         """
+        debugMsg("Called Renderer.getEvalStack()")
         return self._evalStack
 
     def addToEvalStack(self, evalString):
@@ -122,6 +123,13 @@ class Renderer(object):
         debugMsg("Called Renderer.addToEvalStack()")
         self._evalStack += evalString + '\n'
         return
+
+    def getInitStack(self):
+        """
+        Gets the initialisation stack as it currently stands
+        """
+        debugMsg("called Renderer.getInitStack()")
+        return self._initStack
 
     def addToInitStack(self, evalString):
         """
@@ -140,6 +148,14 @@ class Renderer(object):
         """
         debugMsg("Called Renderer.resetEvalStack()")
         self._evalStack = ""
+        return
+
+    def resetInitStack(self):
+        """
+        Reset/flush the initialisation stack
+        """
+        debugMsg("Called Renderer.resetInitStack()")
+        self._initStack = ""
         return
 
 # vim: expandtab shiftwidth=4:
