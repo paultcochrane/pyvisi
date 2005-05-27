@@ -29,6 +29,8 @@ from pyvisi.scene import Scene as BaseScene
 # module specific imports
 from pyvisi.renderers.povray.renderer import Renderer
 
+import os
+
 __revision__ = '$Revision$'
 
 class Scene(BaseScene):
@@ -43,9 +45,14 @@ class Scene(BaseScene):
         The init function
         """
         debugMsg("Called Scene.__init__()")
-        BaseScene.__init__()
+        BaseScene.__init__(self)
 
         self.renderer = Renderer()
+
+        self.xSize = 640
+        self.ySize = 480
+
+        self.objectList = []
 
     def add(self, obj):
         """
@@ -58,6 +65,8 @@ class Scene(BaseScene):
 
         if obj is None:
             raise ValueError, "You must specify an object to add"
+
+        self.objectList.append(obj)
 
         return
 
@@ -75,7 +84,7 @@ class Scene(BaseScene):
 
         return
 
-    def render(self, pause=False, interactive=False):
+    def render(self, pause=False, interactive=False, save=False):
         """
         Render (or re-render) the scene
         
@@ -86,15 +95,66 @@ class Scene(BaseScene):
 
         @param interactive: Whether or not to have interactive use of the output
         @type interactive: boolean
+
+        @param save: Whether or not to save the output when render
+        @type save: boolean
         """
         debugMsg("Called Scene.render()")
         renderer = self.renderer
 
-        if pause is None:
-            pause = False
+        # this is the string from which to make the ini file
+        renderer.addToInitStack("; PyVisi Povray renderer module ini file")
 
-        if interactive is None:
-            interactive = False
+        if pause:
+            renderer.addToInitStack("Pause_When_Done=on")
+        else:
+            renderer.addToInitStack("Pause_When_Done=off")
+
+        if interactive:
+            print "Interactive mode not available with POVRAY renderer module"
+
+        # add the standard headers
+        evalString = "#include \"shapes.inc\"\n"
+        evalString += "#include \"colors.inc\"\n"
+
+        # add a camera  (this should be its own object, and I should just
+        # call some method of its own to get the info needed)
+        evalString += "camera {\n"
+        evalString += "  location <0, 0, -200>\n"
+        evalString += "  direction <0, 0, 2>\n"
+        evalString += "  up <0, 1, 0>\n"
+        evalString += "  right <4/3, 0, 0>\n"
+        evalString += "  look_at <0, 0, 0>\n"
+        evalString += "}\n"
+
+        # add the light source
+        evalString += "light_source {\n"
+        evalString += "  <0, 0, -500>\n"
+        evalString += "  colour White\n"
+        evalString += "}\n"
+
+        renderer.addToEvalStack(evalString)
+
+        # write the resolution settings
+        iniString = "Width=%d\n" % self.xSize
+        iniString += "Height=%d\n" % self.ySize
+
+        # might as well have antialiasing going
+        iniString += "Antialias=on"
+
+        renderer.addToInitStack(iniString)
+
+        # get all objects in the scene to render themselves
+        for obj in self.objectList:
+            obj.render()
+
+        # if saving to file don't render to the screen
+        if save:
+            renderer.addToInitStack("Output_To_File=on")
+            renderer.addToInitStack("Display=off")
+        else:
+            renderer.addToInitStack("Output_To_File=off")
+            renderer.addToInitStack("Display=on")
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
@@ -103,12 +163,32 @@ class Scene(BaseScene):
         debugMsg(renderer.getEvalStack())
         debugMsg(60*"#")
 
+        if save:
+            import re
+            r = re.compile(r'\.\w+')
+            self.fname = r.sub('', self.fname)
+            povFname = "%s.pov" % self.fname
+            iniFname = "%s.ini" % self.fname
+        else:
+            import time
+            timeString = str(time.clock())
+            povFname = "povPlot%s.pov" % timeString
+            iniFname = "povPlot%s.ini" % timeString
+
+        renderer.addToInitStack("Input_File_Name=%s" % povFname)
+
+        ### generate the pov file
+        pov = open(povFname, "w")
+        pov.write(renderer.getEvalStack())
+        pov.close()
+
+        ### generate the ini file
+        ini = open(iniFname, "w")
+        ini.write(renderer.getInitStack())
+        ini.close()
+
         # now compile the string object into code, and execute it
-        try:
-            compileObj = compile(renderer.getEvalStack(), \
-                    'compileErrs.txt', 'exec')
-            exec compileObj
-        except LookupError:
+        if os.system("povray %s" % iniFname) != 0:
             print "evalStack execution failed"
             print "evalStack = \'%s\'" % renderer.getEvalStack()
             return None
@@ -117,27 +197,66 @@ class Scene(BaseScene):
         debugMsg("Flusing evaluation stack")
         renderer.resetEvalStack()
 
+        # flush the init stack
+        debugMsg("Flushing init stack")
+        renderer.resetInitStack()
+
+        # clean up a bit
+        os.unlink(povFname)
+        os.unlink(iniFname)
+
         return
 
     def save(self, fname, format):
         """
         Save the scene to a file
 
+        Possible formats are:
+            - PNG
+            - TGA (uncompressed targa)
+            - CTGA (compressed targa)
+            - PPM
+            - SYS (e.g. BMP on Windows, PICT on MacOS)
+
         @param fname: the name of the file to save to
         @type fname: string
 
         @param format: the image format of the output file
-        @type format: string
+        @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
+        self.renderer.addToEvalStack("// Scene.save()")
 
-        if fname is None:
-            raise ValueError, "You must specify a filename"
+        # if the format is passed in as a string or object, react
+        # appropriately
+        import types
+        if type(format) is types.StringType:
+            fmt = format.lower()
+        else:
+            fmt = format.format
 
-        if format is None:
-            raise ValueError, "You must specify an output format"
+        if fmt == "png":
+            self.renderer.addToInitStack("Output_File_Type=N")
+        elif fmt == "tga":
+            self.renderer.addToInitStack("Output_File_Type=T")
+        elif fmt == "ppm":
+            self.renderer.addToInitStack("Output_File_Type=P")
+        elif fmt == "ctga":
+            self.renderer.addToInitStack("Output_File_Type=C")
+        elif fmt == "sys":
+            self.renderer.addToInitStack("Output_File_Type=S")
+        else:
+            raise ValueError, "Unknown graphics format.  I got %s" % fmt
+
+        self.fname = fname
+
+        # rerender the scene to get the output
+        self.render(save=True)
 
         return
+
+    # set up an alias for the save method
+    write = save
 
     def setBackgroundColor(self, *color):
         """
