@@ -38,7 +38,7 @@ class Renderer(BaseRenderer):
         Initialisation of Renderer() class
         """
         debugMsg("Called Renderer.__init__()")
-        BaseRenderer.__init__()
+        BaseRenderer.__init__(self)
 
         # initialise some attributes
         self.renderWindowWidth = 640
@@ -47,66 +47,12 @@ class Renderer(BaseRenderer):
         # initialise the evalstack
         self._evalStack = ""
 
+        # initialise the initstack
+        ### note that in povray, this is the ini file for the pov scene
+        self._initStack = ""
+
         # initialise the renderer module
 
-        self.addToEvalStack("# Renderer.__init__\n")
-        self.addToEvalStack("import gnuplot\n")
-
-    def setRenderWindowWidth(self, width):
-        """
-        Sets the render window width
-        
-        @param width: The width of the render window
-        @type width: float
-        """
-        self.renderWindowWidth = width
-        return
-
-    def setRenderWindowHeight(self, height):
-        """
-        Sets the render window height
-
-        @param height: The height of the render window
-        @type height: float
-        """
-        self.renderWindowHeight = height
-        return
-
-    def getRenderWindowWidth(self):
-        """
-        Gets the render window width
-        """
-        return self.renderWindowWidth
-
-    def getRenderWindowHeight(self):
-        """
-        Gets the render window height
-        """
-        return self.renderWindowHeight
-
-    def getEvalStack(self):
-        """
-        Gets the evaluation stack as it currently stands
-        """
-        return self._evalStack
-
-    def addToEvalStack(self, evalString):
-        """
-        Method to add commands to the evaluation stack
-        
-        @param evalString: The string of commands to be added to the evalStack
-        @type evalString: string
-        """
-        debugMsg("Called Renderer.addToEvalStack()")
-        self._evalStack += evalString
-        return
-
-    def resetEvalStack(self):
-        """
-        Reset/flush the evaluation stack
-        """
-        debugMsg("Called Renderer.resetEvalStack()")
-        self._evalStack = ""
-        return
+        self.addToEvalStack("// Renderer.__init__\n")
 
 # vim: expandtab shiftwidth=4:
