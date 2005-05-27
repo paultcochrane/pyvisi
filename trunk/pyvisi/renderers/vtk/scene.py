@@ -93,6 +93,9 @@ class Scene(BaseScene):
 
         @param interactive: Whether or not to have interactive use of the output
         @type interactive: boolean
+
+        @param save: Whether or not to save the output when render
+        @type save: boolean
         """
         debugMsg("Called Scene.render()")
         renderer = self.renderer
