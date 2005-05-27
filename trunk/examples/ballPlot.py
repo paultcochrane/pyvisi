@@ -44,7 +44,8 @@ if method == 'pyvisi':
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
     # import the objects to render the scene using the specific renderer
-    from pyvisi.renderers.vtk import *       # vtk
+    #from pyvisi.renderers.vtk import *       # vtk
+    from pyvisi.renderers.povray import *       # povray
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -61,21 +62,21 @@ if method == 'pyvisi':
     # assign some data to the plot
     # one way of doing it
     # (tags indirectly determine colour of the spheres in the plot)
-    plot.setData(points=posArray, radii=radiiArray, tags=tagsArray)
+    #plot.setData(points=posArray, radii=radiiArray, tags=tagsArray)
 
     # render the scene
-    scene.render(pause=True, interactive=True)
+    #scene.render(pause=True, interactive=True)
 
     # without specifying a tags array input
-    plot.setData(points=posArray, radii=radiiArray)
+    #plot.setData(points=posArray, radii=radiiArray)
     # render the scene
-    scene.render(pause=True, interactive=True)
+    #scene.render(pause=True, interactive=True)
 
     # another way loading an old style-vtk file
     plot.setData(fname="cp_test_0.vtk", 
             format="vtk", 
             radii="radius", 
-            colors="particleTag")
+            tags="particleTag")
 
     # render the scene to screen
     scene.render(pause=True, interactive=True)
@@ -84,7 +85,7 @@ if method == 'pyvisi':
     plot.setData(fname="cp_test_0.xml", 
             format="vtk-xml", 
             radii="radius", 
-            colors="particleTag")
+            tags="particleTag")
 
     # render the scene to screen
     scene.render(pause=True, interactive=True)
@@ -94,7 +95,7 @@ if method == 'pyvisi':
     plot.setData(fname="cp_test_0.xml", 
             format="vtk-xml", 
             radii="radius", 
-            colors="particleTag")
+            tags="particleTag")
     scene.save(fname="ballPlotExample.png", format="png")
 
 elif method == 'povray':
