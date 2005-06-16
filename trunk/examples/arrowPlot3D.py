@@ -5,7 +5,7 @@ Example of plotting a 3D vector field with pyvisi
 """
 
 # what plotting method are we using?
-method = 'vtk'
+method = 'povray'
 
 # set up some data to plot
 from Numeric import *
@@ -230,7 +230,142 @@ elif method == 'vtk':
 elif method == 'povray':
     #### original povray code
 
-    print "Sorry, the povray interface hasn't been written yet."
+    import vtk
+    import os, sys, re, math
+    from Numeric import *
+    
+    # read in the file
+    reader = vtk.vtkXMLUnstructuredGridReader()
+    reader.SetFileName("vel-0500.vtk")
+    reader.Update()
+    
+    # get the grid
+    grid = reader.GetOutput()
+    
+    # grab the model centre and bounds
+    centre = grid.GetCenter()
+    bounds = grid.GetBounds()
+    
+    # try and extract the vector norm
+    norm = vtk.vtkVectorNorm()
+    norm.SetInput(grid)
+    
+    maxNorm = grid.GetPointData().GetVectors().GetMaxNorm()
+    
+    ### extract the relevant grid data
+    
+    # the points
+    points = grid.GetPoints()
+    numPoints = points.GetNumberOfPoints()
+    x = zeros(numPoints, typecode=Float)
+    y = zeros(numPoints, typecode=Float)
+    z = zeros(numPoints, typecode=Float)
+    for i in range(numPoints):
+        x[i], y[i], z[i] = points.GetPoint(i)
+    
+    # the data at the points
+    data = grid.GetPointData().GetVectors()
+    vx = zeros(numPoints, typecode=Float)
+    vy = zeros(numPoints, typecode=Float)
+    vz = zeros(numPoints, typecode=Float)
+    vNorm = zeros(numPoints, typecode=Float)
+    for i in range(numPoints):
+        vx[i], vy[i], vz[i] = data.GetTuple3(i)
+        vNorm[i] = math.sqrt(vx[i]*vx[i] + vy[i]*vy[i] + vz[i]*vz[i])
+    
+    # make a lookup table for the colour map and invert it (colours look
+    # better when it's inverted)
+    lut = vtk.vtkLookupTable()
+    refLut = vtk.vtkLookupTable()
+    lut.Build()
+    refLut.Build()
+    for j in range(256):
+        lut.SetTableValue(j, refLut.GetTableValue(255-j))
+    
+    # get the colours
+    r = zeros(numPoints, typecode=Float)
+    g = zeros(numPoints, typecode=Float)
+    b = zeros(numPoints, typecode=Float)
+    for i in range(numPoints):
+        r[i], g[i], b[i] = lut.GetColor(vNorm[i]/maxNorm)
+    
+    ### generate the pov file
+    
+    pov = open("arrowPlot3D.pov", "w")
+    
+    pov.write("#include \"colors.inc\"\n")
+    pov.write("#include \"shapes.inc\"\n")
+    pov.write("#include \"textures.inc\"\n")
+    
+    pov.write("camera {\n")
+    pov.write("  location <%f, %f, -2.5>\n" % (centre[0], centre[1]))
+    pov.write("  look_at <%f, %f, -%f>\n" % (centre[0], centre[1], centre[2]))
+    pov.write("}\n")
+    
+    pov.write("light_source {\n")
+    pov.write("  <0, 0, -3>\n")
+    pov.write("  colour White\n")
+    pov.write("}\n")
+    
+    pov.write("#declare Arrow = union {\n")
+    pov.write("  cone {\n")
+    pov.write("    <0, 0, 0>, 0.3\n")
+    pov.write("    <1, 0, 0>, 0.0\n")
+    pov.write("  }\n")
+        
+    pov.write("  cylinder {\n")
+    pov.write("    <-1, 0, 0>\n")
+    pov.write("    <0, 0, 0>,\n")
+    pov.write("    0.15\n")
+    pov.write("  }\n")
+    pov.write("}\n")
+    
+    for i in range(numPoints):
+        pov.write("object {\n")
+        scale = 0.05*vNorm[i]/maxNorm
+        if scale < 1e-8:
+            scale = 1e-7
+        pov.write("  Arrow scale %g " % scale)
+        pov.write("rotate <%f, %f, %f> " % (vx[i], vy[i], vz[i]))
+        pov.write("translate <%f, %f, -%f> " % (x[i], y[i], z[i]))
+        pov.write("pigment { colour <%f, %f, %f> }\n" % (r[i], g[i], b[i]))
+        pov.write("}\n")
+    
+    pov.close()
+    
+    ### generate the ini file
+    
+    # open the ini file to write to
+    ini = open("arrowPlot3D.ini", "w")
+    
+    # the output resolution
+    ini.write("Width=640\n")
+    ini.write("Height=480\n")
+    
+    # anti-aliasing settings
+    ini.write("Antialias=on\n")
+    
+    # generate png files
+    ini.write("Output_File_Type=N\n")
+    
+    # the name of the input pov file
+    ini.write("Input_File_Name=arrowPlot3D.pov\n")
+    
+    # pause when done
+    ini.write("Pause_When_Done=on\n")
+    
+    # close the file
+    ini.close()
+    
+    # run povray on the file
+    result = os.system("povray arrowPlot3D.ini")
+    if result != 0:
+        raise SystemError, "Povray execution failed"
+    else:
+        # clean up a bit
+        os.unlink("arrowPlot3D.pov")
+        os.unlink("arrowPlot3D.ini")
+ 
 else:
     print "Eeek!  What plotting method am I supposed to use???"
 
