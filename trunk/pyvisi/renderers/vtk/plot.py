@@ -331,18 +331,18 @@ class ArrowPlot(Plot):
         # add the actor
         self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
 
+        # text properties
+        evalString = "_font_size = 14\n"  # this will need to be an option!!
+        evalString += "_textProp = vtk.vtkTextProperty()\n"
+        evalString += "_textProp.SetFontSize(_font_size)\n"
+        evalString += "_textProp.SetFontFamilyToArial()\n"
+        evalString += "_textProp.BoldOff()\n"
+        evalString += "_textProp.ItalicOff()\n"
+        evalString += "_textProp.ShadowOff()\n"
+        evalString += "_textProp.SetColor(0,0,0)\n"
+
         # set the title if set
         if self.title is not None:
-            # text properties
-            evalString = "_font_size = 18\n"  # this will need to be an option!!
-            evalString += "_textProp = vtk.vtkTextProperty()\n"
-            evalString += "_textProp.SetFontSize(_font_size)\n"
-            evalString += "_textProp.SetFontFamilyToArial()\n"
-            evalString += "_textProp.BoldOff()\n"
-            evalString += "_textProp.ItalicOff()\n"
-            evalString += "_textProp.ShadowOff()\n"
-            #evalString += "_textProp.SetColor(0,0,0)\n"
-        
             # add a title
             evalString += "_titleMapper = vtk.vtkTextMapper()\n"
             evalString += "_titleMapper.SetInput(\"%s\")\n" % self.title
@@ -351,6 +351,7 @@ class ArrowPlot(Plot):
             evalString += "_titleProp.ShallowCopy(_textProp)\n"
             evalString += "_titleProp.SetJustificationToCentered()\n"
             evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            evalString += "_titleProp.SetFontSize(18)\n"
             
             # set up the text actor
             evalString += "_titleActor = vtk.vtkTextActor()\n"
@@ -378,7 +379,20 @@ class ArrowPlot(Plot):
             evalString += "_axes.SetYLabel(\"%s\")\n" % self.ylabel
 
         evalString += "_axes.SetZLabel(\"\")\n"
-        evalString += "_axes.YAxisVisibilityOff()"  # but this is the z axis!!
+        evalString += "_axes.YAxisVisibilityOff()\n"  # but this is the z axis!!
+        
+        # set up the axes properties
+        evalString += "_axesProp = _axes.GetProperty()\n"
+        evalString += "_axesProp.SetColor(0,0,0)\n"
+
+        # set up the axes title properties
+        evalString += "_axesTitleProp = _axes.GetAxisTitleTextProperty()\n"
+        evalString += "_axesTitleProp.ShallowCopy(_textProp)\n"
+        
+        # set up the axes label properties
+        evalString += "_axesLabelProp = _axes.GetAxisLabelTextProperty()\n"
+        evalString += "_axesLabelProp.ShallowCopy(_textProp)\n"
+        evalString += "_axesLabelProp.SetFontSize(8)\n"
         self.renderer.addToEvalStack(evalString)
 
         # add the axes to the renderer
@@ -387,6 +401,296 @@ class ArrowPlot(Plot):
         # reset the camera, will make things look nicer
         ### is this the right place to put this???
         self.renderer.addToEvalStack("_renderer.ResetCamera()")
+        
+        ### this should be somewhere else too...
+        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
+
+        return
+
+class ArrowPlot3D(Plot):
+    """
+    Arrow field plot in three dimensions
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of the ArrowPlot3D class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
+        """
+        debugMsg("Called ArrowPlot3D.__init__()")
+        Plot.__init__(self, scene)
+
+        self.renderer = scene.renderer
+
+        self.renderer.addToEvalStack("# ArrowPlot3D.__init__()")
+
+        # add the plot to the scene
+        scene.add(self)
+
+    #def setData(self, fname=None, format=None, *dataList):
+    def setData(self, *dataList):
+        """
+        Set data to the plot
+
+        @param fname: Filename of the input vtk file
+        @type fname: string
+
+        @param format: Format of the input vtk file ('vtk' or 'vtk-xml')
+        @type format: string
+
+        @param dataList: List of data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ArrowPlot3D()")
+
+        # do some sanity checking on the data
+        if len(dataList) != 6:
+            raise ValueError, \
+                    "Must have six vectors as input: x, y, z, dx, dy, dz, found: %d" % len(dataList)
+
+        for i in range(len(dataList)):
+            if len(dataList[i].shape) != len(dataList[0].shape):
+                raise ValueError, "All arrays must be of the same shape"
+
+        for i in range(len(dataList)):
+            if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
+                errorString = \
+                        "Can only handle 1D or 2D arrays: dim=%d" % \
+                        len(dataList[i].shape)
+                raise ValueError, errorString
+
+        for i in range(len(dataList)):
+            if len(dataList[0]) != len(dataList[i]):
+                raise ValueError, "Input vectors must all be the same length"
+
+        # if we have 2D arrays as input, we need to flatten them to plot the
+        # data properly
+        if len(dataList[0].shape) == 1:
+            xData = dataList[0]
+            yData = dataList[1]
+            zData = dataList[2]
+            dxData = dataList[3]
+            dyData = dataList[4]
+            dzData = dataList[5]
+        elif len(dataList[0].shape) == 2:
+            xData = dataList[0].flat
+            yData = dataList[1].flat
+            zData = dataList[2].flat
+            dxData = dataList[3].flat
+            dyData = dataList[4].flat
+            dzData = dataList[5].flat
+        else:
+            raise ValueError, "Input vectors can only be 1D or 2D"
+
+        # this is a really dodgy way to get the data into the renderer
+        # I really have to find a better, more elegant way to do this
+        
+        # this is a bad, cut-and-paste way to code it, but it will get going
+        # at least...
+        # x data
+        ## generate the evalString for the x data
+        evalString = "_x = array(["
+        for j in range(len(xData)-1):
+            evalString += "%s, " % xData[j]
+        evalString += "%s])" % xData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # y data
+        ## generate the evalString for the y data
+        evalString = "_y = array(["
+        for j in range(len(yData)-1):
+            evalString += "%s, " % yData[j]
+        evalString += "%s])" % yData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # z data
+        ## generate the evalString for the z data
+        evalString = "_z = array(["
+        for j in range(len(zData)-1):
+            evalString += "%s, " % zData[j]
+        evalString += "%s])" % zData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # dx data
+        ## generate the evalString for the dx data
+        evalString = "_dx = array(["
+        for j in range(len(dxData)-1):
+            evalString += "%s, " % dxData[j]
+        evalString += "%s])" % dxData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # dy data
+        ## generate the evalString for the dy data
+        evalString = "_dy = array(["
+        for j in range(len(dyData)-1):
+            evalString += "%s, " % dyData[j]
+        evalString += "%s])" % dyData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # dz data
+        ## generate the evalString for the dy data
+        evalString = "_dz = array(["
+        for j in range(len(dzData)-1):
+            evalString += "%s, " % dzData[j]
+        evalString += "%s])" % dzData[-1]
+        # give it to the renderer
+        self.renderer.addToEvalStack(evalString)
+
+        # keep the number of points for future reference
+        numPoints = len(xData)
+
+        # construct the points data
+        evalString = "_points = vtk.vtkPoints()\n"
+        evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
+        for j in range(numPoints):
+            evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
+                    (j, xData[j], yData[j], zData[j])
+        self.renderer.addToEvalStack(evalString)
+
+        # construct the vectors
+        evalString = "_vectors = vtk.vtkFloatArray()\n"
+        evalString += "_vectors.SetNumberOfComponents(3)\n"
+        evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
+        evalString += "_vectors.SetName(\"vectors\")\n"
+        for j in range(numPoints):
+            evalString += "_vectors.InsertTuple3(%d, %f, %f, %f)\n" % \
+                    (j, dxData[j], dyData[j], dzData[j])
+        self.renderer.addToEvalStack(evalString)
+
+        # construct the grid
+        evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
+        evalString += "_grid.SetPoints(_points)\n"
+        evalString += "_grid.GetPointData().AddArray(_vectors)\n"
+        evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
+        self.renderer.addToEvalStack(evalString)
+
+    def render(self):
+        """
+        Does ArrowPlot3D specific rendering tasks
+        """
+        debugMsg("Called render() in ArrowPlot3D")
+        self.renderer.addToEvalStack("# ArrowPlot3D.render()")
+
+        # make the arrow source
+        self.renderer.addToEvalStack("_arrow = vtk.vtkArrowSource()")
+
+        # make the glyph
+        evalString = "_glyph = vtk.vtkGlyph3D()\n"
+        evalString += "_glyph.ScalingOn()\n"
+        evalString += "_glyph.SetScaleModeToScaleByVector()\n"
+        evalString += "_glyph.SetColorModeToColorByVector()\n"
+        evalString += "_glyph.SetScaleFactor(0.5)\n"
+        evalString += "_glyph.SetSource(_arrow.GetOutput())\n"
+        evalString += "_glyph.SetInput(_grid)\n"
+        evalString += "_glyph.ClampingOff()"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up a stripper for faster rendering
+        evalString = "_stripper = vtk.vtkStripper()\n"
+        evalString += "_stripper.SetInput(_glyph.GetOutput())"
+        self.renderer.addToEvalStack(evalString)
+
+        # get the maximum norm of the data
+        evalString = "_maxNorm = _grid.GetPointData().GetVectors().GetMaxNorm()"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the mapper
+        evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
+        evalString += "_mapper.SetInput(_stripper.GetOutput())\n"
+        evalString += "_mapper.SetScalarRange(0, _maxNorm)"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the actor
+        evalString = "_actor = vtk.vtkActor()\n"
+        evalString += "_actor.SetMapper(_mapper)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the actor
+        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+
+        # text properties
+        evalString = "_font_size = 14\n"  # this will need to be an option!!
+        evalString += "_textProp = vtk.vtkTextProperty()\n"
+        evalString += "_textProp.SetFontSize(_font_size)\n"
+        evalString += "_textProp.SetFontFamilyToArial()\n"
+        evalString += "_textProp.BoldOff()\n"
+        evalString += "_textProp.ItalicOff()\n"
+        evalString += "_textProp.ShadowOff()\n"
+        evalString += "_textProp.SetColor(0,0,0)\n"
+
+        # set the title if set
+        if self.title is not None:
+            # add a title
+            evalString += "_titleMapper = vtk.vtkTextMapper()\n"
+            evalString += "_titleMapper.SetInput(\"%s\")\n" % self.title
+            
+            evalString += "_titleProp = _titleMapper.GetTextProperty()\n"
+            evalString += "_titleProp.ShallowCopy(_textProp)\n"
+            evalString += "_titleProp.SetJustificationToCentered()\n"
+            evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            evalString += "_titleProp.SetFontSize(18)\n"
+            
+            # set up the text actor
+            evalString += "_titleActor = vtk.vtkTextActor()\n"
+            evalString += "_titleActor.SetMapper(_titleMapper)\n"
+            evalString += "_titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)\n"
+
+            evalString += "_renderer.AddActor(_titleActor)"
+            self.renderer.addToEvalStack(evalString)
+
+        # set up some axes
+        evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
+        evalString += "_axes.SetCamera(_renderer.GetActiveCamera())\n"
+        evalString += "_axes.SetFlyModeToOuterEdges()\n"
+        evalString += "_axes.SetBounds(min(_x)-_maxNorm, max(_x)+_maxNorm, "
+        evalString += "min(_y)-_maxNorm, max(_y)+_maxNorm, "
+        evalString += "min(_z)-_maxNorm, max(_z)+_maxNorm)\n"
+
+        if self.xlabel is None:
+            evalString += "_axes.SetXLabel(\"\")\n"
+        else:
+            evalString += "_axes.SetXLabel(\"%s\")\n" % self.xlabel
+
+        if self.ylabel is None:
+            evalString += "_axes.SetYLabel(\"\")\n"
+        else:
+            evalString += "_axes.SetYLabel(\"%s\")\n" % self.ylabel
+
+        if self.zlabel is None:
+            evalString += "_axes.SetZLabel(\"\")\n"
+        else:
+            evalString += "_axes.SetZLabel(\"%s\")\n" % self.zlabel
+
+        # set up the axes properties
+        evalString += "_axesProp = _axes.GetProperty()\n"
+        evalString += "_axesProp.SetColor(0,0,0)\n"
+
+        # set up the axes title properties
+        evalString += "_axesTitleProp = _axes.GetAxisTitleTextProperty()\n"
+        evalString += "_axesTitleProp.ShallowCopy(_textProp)\n"
+        
+        # set up the axes label properties
+        evalString += "_axesLabelProp = _axes.GetAxisLabelTextProperty()\n"
+        evalString += "_axesLabelProp.ShallowCopy(_textProp)\n"
+        evalString += "_axesLabelProp.SetFontSize(8)\n"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the axes to the renderer
+        self.renderer.addToEvalStack("_renderer.AddActor(_axes)")
+
+        # reset the camera, will make things look nicer
+        ### is this the right place to put this???
+        self.renderer.addToEvalStack("_renderer.ResetCamera()")
+        
+        ### this should be somewhere else too...
+        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
 
         return
 
