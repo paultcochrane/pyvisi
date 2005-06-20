@@ -5,7 +5,7 @@ Example of plotting a vector field with pyvisi
 """
 
 # what plotting method are we using?
-method = 'vtk'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -34,9 +34,9 @@ if method == 'pyvisi':
 
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
-    #from pyvisi.utils import *   # pyvisi specific utils
     # import the objects to render the scene using the specific renderer
-    from pyvisi.renderers.gnuplot import *   # gnuplot
+    #from pyvisi.renderers.gnuplot import *   # gnuplot
+    from pyvisi.renderers.vtk import *   # vtk
     
     # define the scene object
     # a Scene is a container for all of the kinds of things you want to put 
@@ -44,7 +44,7 @@ if method == 'pyvisi':
     # contour plots, spheres etc.
     scene = Scene()
     
-    # create a LinePlot object
+    # create an ArrowPlot object
     plot = ArrowPlot(scene)
     
     # add some helpful info to the plot
