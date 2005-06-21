@@ -5,7 +5,7 @@ Example of plotting a 3D vector field with pyvisi
 """
 
 # what plotting method are we using?
-method = 'povray'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -42,8 +42,8 @@ if method == 'pyvisi':
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
     # import the objects to render the scene using the specific renderer
-    from pyvisi.renderers.gnuplot import *   # gnuplot
-    #from pyvisi.renderers.vtk import *       # vtk
+    #from pyvisi.renderers.gnuplot import *   # gnuplot
+    from pyvisi.renderers.vtk import *       # vtk
     #from pyvisi.renderers.povray import *    # povray
     
     # define the scene object
@@ -59,7 +59,7 @@ if method == 'pyvisi':
     plot.title = 'Example 3D arrow/quiver/vector field plot'
     plot.xlabel = 'x'
     plot.ylabel = 'y'
-    plot.ylabel = 'z'
+    plot.zlabel = 'z'
 
     # assign some data to the plot
     plot.setData(x, y, z, dx, dy, dz)
@@ -72,6 +72,16 @@ if method == 'pyvisi':
                                # render()ed the scene.  This requirement
                                # will be removed in the future
     scene.save(fname="arrowPlot3D.png", format=PngImage())
+
+    # plot data defined in a vtk file
+    plot.setData(fname='vel-0500.vtk', format='vtk-xml')
+
+    scene.render(pause=True, interactive=True)
+
+    # save this plot too
+    plot.setData(fname='vel-0500.vtk', format='vtk-xml')
+
+    scene.save(fname="arrowPlot3Dvtk.png", format="png")
 
 elif method == 'vtk':
     #### original vtk code
@@ -109,7 +119,7 @@ elif method == 'vtk':
     glyph.SetSource(arrow.GetOutput())
     glyph.ClampingOff()
 
-    # set up a stripper to speed up rendening
+    # set up a stripper to speed up rendering
     stripper = vtk.vtkStripper()
     stripper.SetInput(glyph.GetOutput())
     
