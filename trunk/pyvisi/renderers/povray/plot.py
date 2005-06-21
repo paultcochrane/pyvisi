@@ -88,6 +88,7 @@ class ArrowPlot(Plot):
         @type dataList: tuple
         """
         debugMsg("Called setData() in ArrowPlot()")
+        self.renderer.addToEvalStack("// ArrowPlot.setData()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
@@ -100,6 +101,55 @@ class ArrowPlot(Plot):
         """
         debugMsg("Called render() in ArrowPlot")
         self.renderer.addToEvalStack("// ArrowPlot.render()")
+
+        return
+
+class ArrowPlot3D(Plot):
+    """
+    Arrow field plot in three dimensions
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of the ArrowPlot3D class
+
+        @param scene: the scene with which to associate the arrow plot
+        @type scene: Scene object
+        """
+        debugMsg("Called ArrowPlot3D.__init__()")
+        Plot.__init__()
+
+        self.renderer = scene.renderer
+        self.renderer.addToEvalStack("// ArrowPlot3D.__init__()")
+
+        # the data to pass between setData() and render()
+        self.x = None
+        self.y = None
+        self.z = None
+
+        # add the plot to the scene
+        scene.add(self)
+
+    def setData(self, *dataList):
+        """
+        Set data to the plot
+
+        @param dataList: list/tuple of data objects to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in ArrowPlot3D()")
+        self.renderer.addToEvalStack("// ArrowPlot3D.setData()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+        
+        return
+
+    def render(self):
+        """
+        Does ArrowPlot3D specific rendering tasks
+        """
+        debugMsg("Called render() in ArrowPlot3D")
+        self.renderer.addToEvalStack("// ArrowPlot3D.render()")
 
         return
 
