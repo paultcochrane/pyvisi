@@ -25,6 +25,7 @@ Class and functions associated with a pyvisi Plot objects
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
 from Numeric import *
+import os
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
@@ -429,7 +430,7 @@ class ArrowPlot3D(Plot):
         scene.add(self)
 
     #def setData(self, fname=None, format=None, *dataList):
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Set data to the plot
 
@@ -441,134 +442,197 @@ class ArrowPlot3D(Plot):
 
         @param dataList: List of data to set to the plot
         @type dataList: tuple
+
+        @param options: Dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in ArrowPlot3D()")
 
-        # do some sanity checking on the data
-        if len(dataList) != 6:
-            raise ValueError, \
-                    "Must have six vectors as input: x, y, z, dx, dy, dz, found: %d" % len(dataList)
-
-        for i in range(len(dataList)):
-            if len(dataList[i].shape) != len(dataList[0].shape):
-                raise ValueError, "All arrays must be of the same shape"
-
-        for i in range(len(dataList)):
-            if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
-                errorString = \
-                        "Can only handle 1D or 2D arrays: dim=%d" % \
-                        len(dataList[i].shape)
-                raise ValueError, errorString
-
-        for i in range(len(dataList)):
-            if len(dataList[0]) != len(dataList[i]):
-                raise ValueError, "Input vectors must all be the same length"
-
-        # if we have 2D arrays as input, we need to flatten them to plot the
-        # data properly
-        if len(dataList[0].shape) == 1:
-            xData = dataList[0]
-            yData = dataList[1]
-            zData = dataList[2]
-            dxData = dataList[3]
-            dyData = dataList[4]
-            dzData = dataList[5]
-        elif len(dataList[0].shape) == 2:
-            xData = dataList[0].flat
-            yData = dataList[1].flat
-            zData = dataList[2].flat
-            dxData = dataList[3].flat
-            dyData = dataList[4].flat
-            dzData = dataList[5].flat
+        # process the options, if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
         else:
-            raise ValueError, "Input vectors can only be 1D or 2D"
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
 
-        # this is a really dodgy way to get the data into the renderer
-        # I really have to find a better, more elegant way to do this
-        
-        # this is a bad, cut-and-paste way to code it, but it will get going
-        # at least...
-        # x data
-        ## generate the evalString for the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
 
-        # y data
-        ## generate the evalString for the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        # do some sanity checking on the inputs
+        if fname is None and format is not None:
+            raise ValueError, "Format specified, but no input filename"
+        elif fname is not None and format is None:
+            raise ValueError, "Filename specified, but no format"
+        elif (fname is not None or format is not None) and len(dataList) != 0:
+            print len(dataList)
+            raise ValueError, \
+                "Cannot specify a data list and an input file simultaneously"
 
-        # z data
-        ## generate the evalString for the z data
-        evalString = "_z = array(["
-        for j in range(len(zData)-1):
-            evalString += "%s, " % zData[j]
-        evalString += "%s])" % zData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        # ok, if we have a data list and no args, use the data list
+        if len(dataList) != 0 and fname is None and format is None:
+            # do some sanity checking on the data
+            if len(dataList) != 6:
+                raise ValueError, \
+                        "Must have six vectors as input: x, y, z, dx, dy, dz, found: %d" % len(dataList)
+    
+            for i in range(len(dataList)):
+                if len(dataList[i].shape) != len(dataList[0].shape):
+                    raise ValueError, "All arrays must be of the same shape"
+    
+            for i in range(len(dataList)):
+                if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
+                    errorString = \
+                            "Can only handle 1D or 2D arrays: dim=%d" % \
+                            len(dataList[i].shape)
+                    raise ValueError, errorString
+    
+            for i in range(len(dataList)):
+                if len(dataList[0]) != len(dataList[i]):
+                    raise ValueError, \
+                            "Input vectors must all be the same length"
+    
+            # if we have 2D arrays as input, we need to flatten them to plot the
+            # data properly
+            if len(dataList[0].shape) == 1:
+                xData = dataList[0]
+                yData = dataList[1]
+                zData = dataList[2]
+                dxData = dataList[3]
+                dyData = dataList[4]
+                dzData = dataList[5]
+            elif len(dataList[0].shape) == 2:
+                xData = dataList[0].flat
+                yData = dataList[1].flat
+                zData = dataList[2].flat
+                dxData = dataList[3].flat
+                dyData = dataList[4].flat
+                dzData = dataList[5].flat
+            else:
+                raise ValueError, "Input vectors can only be 1D or 2D"
+    
+            # this is a really dodgy way to get the data into the renderer
+            # I really have to find a better, more elegant way to do this
+            
+            # this is a bad, cut-and-paste way to code it, but it will get going
+            # at least...
+            # x data
+            ## generate the evalString for the x data
+            evalString = "_x = array(["
+            for j in range(len(xData)-1):
+                evalString += "%s, " % xData[j]
+            evalString += "%s])" % xData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # y data
+            ## generate the evalString for the y data
+            evalString = "_y = array(["
+            for j in range(len(yData)-1):
+                evalString += "%s, " % yData[j]
+            evalString += "%s])" % yData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # z data
+            ## generate the evalString for the z data
+            evalString = "_z = array(["
+            for j in range(len(zData)-1):
+                evalString += "%s, " % zData[j]
+            evalString += "%s])" % zData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # dx data
+            ## generate the evalString for the dx data
+            evalString = "_dx = array(["
+            for j in range(len(dxData)-1):
+                evalString += "%s, " % dxData[j]
+            evalString += "%s])" % dxData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # dy data
+            ## generate the evalString for the dy data
+            evalString = "_dy = array(["
+            for j in range(len(dyData)-1):
+                evalString += "%s, " % dyData[j]
+            evalString += "%s])" % dyData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # dz data
+            ## generate the evalString for the dy data
+            evalString = "_dz = array(["
+            for j in range(len(dzData)-1):
+                evalString += "%s, " % dzData[j]
+            evalString += "%s])" % dzData[-1]
+            # give it to the renderer
+            self.renderer.addToEvalStack(evalString)
+    
+            # keep the number of points for future reference
+            numPoints = len(xData)
+    
+            # construct the points data
+            evalString = "_points = vtk.vtkPoints()\n"
+            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
+            for j in range(numPoints):
+                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
+                        (j, xData[j], yData[j], zData[j])
+            self.renderer.addToEvalStack(evalString)
+    
+            # construct the vectors
+            evalString = "_vectors = vtk.vtkFloatArray()\n"
+            evalString += "_vectors.SetNumberOfComponents(3)\n"
+            evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
+            evalString += "_vectors.SetName(\"vectors\")\n"
+            for j in range(numPoints):
+                evalString += "_vectors.InsertTuple3(%d, %f, %f, %f)\n" % \
+                        (j, dxData[j], dyData[j], dzData[j])
+            self.renderer.addToEvalStack(evalString)
+    
+            # construct the grid
+            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
+            evalString += "_grid.SetPoints(_points)\n"
+            evalString += "_grid.GetPointData().AddArray(_vectors)\n"
+            evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
+            self.renderer.addToEvalStack(evalString)
 
-        # dx data
-        ## generate the evalString for the dx data
-        evalString = "_dx = array(["
-        for j in range(len(dxData)-1):
-            evalString += "%s, " % dxData[j]
-        evalString += "%s])" % dxData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        elif len(dataList) == 0 and fname is not None and format is not None:
+            # well, lets process the vtk file then
 
-        # dy data
-        ## generate the evalString for the dy data
-        evalString = "_dy = array(["
-        for j in range(len(dyData)-1):
-            evalString += "%s, " % dyData[j]
-        evalString += "%s])" % dyData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+            # had best make sure it exists
+            if not os.path.exists(fname):
+                raise SystemError, "File: %s doesn't exist" % fname
+            
+            if format == 'vtk':
+                # read old-style vtk files
+                evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+            elif format == 'vtk-xml':
+                # read vtk xml files
+                evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
 
-        # dz data
-        ## generate the evalString for the dy data
-        evalString = "_dz = array(["
-        for j in range(len(dzData)-1):
-            evalString += "%s, " % dzData[j]
-        evalString += "%s])" % dzData[-1]
-        # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+            evalString += "_reader.SetFileName(\"%s\")\n" % fname
+            evalString += "_reader.Update()"
+            self.renderer.addToEvalStack(evalString)
 
-        # keep the number of points for future reference
-        numPoints = len(xData)
+            # grab the grid
+            evalString = "_grid = _reader.GetOutput()"
+            self.renderer.addToEvalStack(evalString)
 
-        # construct the points data
-        evalString = "_points = vtk.vtkPoints()\n"
-        evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-        for j in range(numPoints):
-            evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
-                    (j, xData[j], yData[j], zData[j])
-        self.renderer.addToEvalStack(evalString)
+            # get the norm of the vectors
+            evalString = "_norm = vtk.vtkVectorNorm()\n"
+            evalString += "_norm.SetInput(_grid)"
+            self.renderer.addToEvalStack(evalString)
 
-        # construct the vectors
-        evalString = "_vectors = vtk.vtkFloatArray()\n"
-        evalString += "_vectors.SetNumberOfComponents(3)\n"
-        evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
-        evalString += "_vectors.SetName(\"vectors\")\n"
-        for j in range(numPoints):
-            evalString += "_vectors.InsertTuple3(%d, %f, %f, %f)\n" % \
-                    (j, dxData[j], dyData[j], dzData[j])
-        self.renderer.addToEvalStack(evalString)
-
-        # construct the grid
-        evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-        evalString += "_grid.SetPoints(_points)\n"
-        evalString += "_grid.GetPointData().AddArray(_vectors)\n"
-        evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-        self.renderer.addToEvalStack(evalString)
+        else:
+            # barf
+            raise ValueError, "Shouldn't have got to here."
 
     def render(self):
         """
@@ -580,14 +644,22 @@ class ArrowPlot3D(Plot):
         # make the arrow source
         self.renderer.addToEvalStack("_arrow = vtk.vtkArrowSource()")
 
+        # get the maximum norm of the data
+        evalString = "_maxNorm = _grid.GetPointData().GetVectors().GetMaxNorm()"
+        self.renderer.addToEvalStack(evalString)
+
         # make the glyph
         evalString = "_glyph = vtk.vtkGlyph3D()\n"
         evalString += "_glyph.ScalingOn()\n"
         evalString += "_glyph.SetScaleModeToScaleByVector()\n"
         evalString += "_glyph.SetColorModeToColorByVector()\n"
-        evalString += "_glyph.SetScaleFactor(0.5)\n"
+        evalString += "_glyph.SetScaleFactor(0.1/_maxNorm)\n"
+        # if we have a vtk grid from file, use the norm output of that
+        if self.fname is not None and self.format is not None:
+            evalString += "_glyph.SetInput(_norm.GetOutput())\n"
+        else:
+            evalString += "_glyph.SetInput(_grid)\n"
         evalString += "_glyph.SetSource(_arrow.GetOutput())\n"
-        evalString += "_glyph.SetInput(_grid)\n"
         evalString += "_glyph.ClampingOff()"
         self.renderer.addToEvalStack(evalString)
 
@@ -596,8 +668,14 @@ class ArrowPlot3D(Plot):
         evalString += "_stripper.SetInput(_glyph.GetOutput())"
         self.renderer.addToEvalStack(evalString)
 
-        # get the maximum norm of the data
-        evalString = "_maxNorm = _grid.GetPointData().GetVectors().GetMaxNorm()"
+        # invert the lookup table, so the colours are nicer
+        evalString = "_lut = vtk.vtkLookupTable()\n"
+        evalString += "_lut.Build()\n"
+        evalString += "_refLut = vtk.vtkLookupTable()\n"
+        evalString += "_refLut.Build()\n"
+        evalString += "for i in range(256):\n"
+        evalString += \
+                "    _lut.SetTableValue(i, _refLut.GetTableValue(255-i))"
         self.renderer.addToEvalStack(evalString)
 
         # set up the mapper
@@ -649,9 +727,12 @@ class ArrowPlot3D(Plot):
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
         evalString += "_axes.SetCamera(_renderer.GetActiveCamera())\n"
         evalString += "_axes.SetFlyModeToOuterEdges()\n"
-        evalString += "_axes.SetBounds(min(_x)-_maxNorm, max(_x)+_maxNorm, "
-        evalString += "min(_y)-_maxNorm, max(_y)+_maxNorm, "
-        evalString += "min(_z)-_maxNorm, max(_z)+_maxNorm)\n"
+        if self.fname is not None and self.format is not None:
+            evalString += "_axes.SetInput(_grid)\n"
+        else:
+            evalString += "_axes.SetBounds(min(_x)-_maxNorm, max(_x)+_maxNorm, "
+            evalString += "min(_y)-_maxNorm, max(_y)+_maxNorm, "
+            evalString += "min(_z)-_maxNorm, max(_z)+_maxNorm)\n"
 
         if self.xlabel is None:
             evalString += "_axes.SetXLabel(\"\")\n"
