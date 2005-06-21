@@ -94,6 +94,15 @@ class ArrowPlot(Plot):
         
         return
 
+    def render(self):
+        """
+        Does ArrowPlot specific rendering tasks
+        """
+        debugMsg("Called render() in ArrowPlot")
+        self.renderer.addToEvalStack("// ArrowPlot.render()")
+
+        return
+
 class BallPlot(Plot):
     """
     Ball plot
