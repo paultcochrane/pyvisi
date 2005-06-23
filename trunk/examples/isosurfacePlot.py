@@ -5,7 +5,7 @@ Example of plotting a set of isosurfaces with pyvisi
 """
 
 # what plotting method are we using?
-method = 'vtk'
+method = 'pyvisi'
 
 # set up some data to plot
 from Numeric import *
@@ -26,8 +26,8 @@ if method == 'pyvisi':
     # contour plots, spheres etc.
     scene = Scene()
     
-    # create a IsosurfacePlot3D object
-    plot = IsosurfacePlot3D(scene)
+    # create a IsosurfacePlot object
+    plot = IsosurfacePlot(scene)
     
     # add some helpful info to the plot
     plot.title = 'Example isosurface plot'
