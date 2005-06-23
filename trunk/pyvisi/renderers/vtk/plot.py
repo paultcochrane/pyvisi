@@ -447,6 +447,7 @@ class ArrowPlot3D(Plot):
         @type options: dict
         """
         debugMsg("Called setData() in ArrowPlot3D()")
+        self.renderer.addToEvalStack("# ArrowPlot3D.setData()")
 
         # process the options, if any
         ## fname
@@ -470,7 +471,6 @@ class ArrowPlot3D(Plot):
         elif fname is not None and format is None:
             raise ValueError, "Filename specified, but no format"
         elif (fname is not None or format is not None) and len(dataList) != 0:
-            print len(dataList)
             raise ValueError, \
                 "Cannot specify a data list and an input file simultaneously"
 
@@ -608,7 +608,7 @@ class ArrowPlot3D(Plot):
 
             # had best make sure it exists
             if not os.path.exists(fname):
-                raise SystemError, "File: %s doesn't exist" % fname
+                raise SystemError, "File: %s not found" % fname
             
             if format == 'vtk':
                 # read old-style vtk files
@@ -616,6 +616,9 @@ class ArrowPlot3D(Plot):
             elif format == 'vtk-xml':
                 # read vtk xml files
                 evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+            else:
+                # barf
+                raise ValueError, "Unknown format.  I got %s" % format
 
             evalString += "_reader.SetFileName(\"%s\")\n" % fname
             evalString += "_reader.Update()"
@@ -1612,6 +1615,275 @@ class ContourPlot(Plot):
         # add the scalar bar to the scene
         evalString += "_renderer.AddActor(_scalarBar)\n"
         self.renderer.addToEvalStack(evalString)
+
+        return
+
+class IsosurfacePlot(Plot):
+    """
+    Isosurface plot
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of the IsosurfacePlot class
+        
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
+        """
+        debugMsg("Called IsosurfacePlot.__init__()")
+        Plot.__init__(self, scene)
+
+        self.renderer = scene.renderer
+        self.renderer.addToInitStack("# IsosurfacePlot.__init__()")
+
+        # labels and stuff
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
+        # how many contours?
+        self.numContours = 5
+
+        # contour range
+        self.contMin = None
+        self.contMax = None
+
+        # add the plot to the scene
+        scene.add(self)
+
+    def setData(self, *dataList, **options):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        @type dataList: tuple
+
+        @param options: Dictionary of keyword options to the method
+        @type options: dict
+        """
+        debugMsg("Called setData() in IsosurfacePlot()")
+
+        self.renderer.addToEvalStack("# IsosurfacePlot.setData()")
+
+        # process the options, if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+
+        # do a quick sanity check on the inputs
+        if fname is None or format is None:
+            raise ValueError, "You must supply an input file and its format"
+
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
+
+        # check to see if the file exists
+        if not os.path.exists(fname):
+            raise SystemError, "File %s not found" % fname
+
+        if format == 'vtk':
+            # read old-style vtk files
+            evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+        elif format == 'vtk-xml':
+            # read vtk xml files
+            evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+        else:
+            # barf
+            raise ValueError, "Unknown format.  I got %s" % format
+
+        evalString += "_reader.SetFileName(\"%s\")\n" % fname
+        evalString += "_reader.Update()"
+        self.renderer.addToEvalStack(evalString)
+
+        # need to do a delaunay 3D here to get decent looking isosurfaces
+        evalString = "_del3D = vtk.vtkDelaunay3D()\n"
+        evalString += "_del3D.SetInput(_reader.GetOutput())\n"
+        evalString += "_del3D.SetOffset(2.5)\n"
+        evalString += "_del3D.SetTolerance(0.001)\n"
+        evalString += "_del3D.SetAlpha(0.0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # get the model centre and bounds
+        evalString = "_centre = _reader.GetOutput().GetCenter()\n"
+        evalString += "_bounds = _reader.GetOutput().GetBounds()"
+        self.renderer.addToEvalStack(evalString)
+
+    def render(self):
+        """
+        Does IsosurfacePlot object specific (pre)rendering stuff
+        """
+        debugMsg("Called IsosurfacePlot.render()")
+
+        self.renderer.addToEvalStack("# IsosurfacePlot.render()")
+
+        # set up a contour filter
+        evalString = "_cont = vtk.vtkContourGrid()\n"
+        evalString += "_cont.SetInput(_del3D.GetOutput())\n"
+
+        # if contMin and contMax are or aren't set then handle the different
+        # situations
+        if self.contMin is not None and self.contMax is not None:
+            evalString += "_cont.GenerateValues(%d, %f, %f)\n" %\
+                    (self.numContours, self.contMin, self.contMax)
+        elif self.contMin is not None and self.contMax is None:
+            evalString += "(_contMin, _contMax) = _reader.GetOutput()."
+            evalString += "GetPointData().GetScalars().GetRange()\n"
+            evalString += "_cont.GenerateValues(%d, %f, _contMax)\n" %\
+                    (self.numContours, self.contMin)
+        elif self.contMin is None and self.contMax is not None:
+            evalString += "(_contMin, _contMax) = _reader.GetOutput()."
+            evalString += "GetPointData().GetScalars().GetRange()\n"
+            evalString += "_cont.GenerateValues(%d, _contMin, %f)\n" %\
+                    (self.numContours, self.contMax)
+        elif self.contMin is None and self.contMax is None:
+            evalString += "(_contMin, _contMax) = _reader.GetOutput()."
+            evalString += "GetPointData().GetScalars().GetRange()\n"
+            evalString += "_cont.GenerateValues(%d, _contMin, _contMax)\n" %\
+                    (self.numContours)
+        else:
+            # barf, really shouldn't have got here
+            raise ValueError, \
+                    "Major problems in IsosurfacePlot: contMin and contMax"
+
+        evalString += "_cont.GenerateValues(5, 0.25, 0.75)\n"
+        evalString += "_cont.ComputeScalarsOn()"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the mapper
+        evalString = "_mapper = vtk.vtkDataSetMapper()\n"
+        evalString += "_mapper.SetInput(_cont.GetOutput())\n"
+        evalString += "_mapper.ScalarVisibilityOn()"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the actor
+        evalString = "_actor = vtk.vtkActor()\n"
+        evalString += "_actor.SetMapper(_mapper)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add to the renderer
+        evalString = "_renderer.AddActor(_actor)"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the text properties for nice text
+        evalString = "_font_size = 18\n"
+        evalString += "_textProp = vtk.vtkTextProperty()\n"
+        evalString += "_textProp.SetFontSize(_font_size)\n"
+        evalString += "_textProp.SetFontFamilyToArial()\n"
+        evalString += "_textProp.BoldOff()\n"
+        evalString += "_textProp.ItalicOff()\n"
+        evalString += "_textProp.ShadowOff()\n"
+        evalString += "_textProp.SetColor(0.0, 0.0, 0.0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # if a title is set, put it in here
+        if self.title is not None:
+            # make a title
+            evalString = "_title = vtk.vtkTextMapper()\n"
+            evalString += "_title.SetInput(\"%s\")\n" % self.title
+
+            # make the title text use the text properties
+            evalString += "_titleProp = _title.GetTextProperty()\n"
+            evalString += "_titleProp.ShallowCopy(_textProp)\n"
+            evalString += "_titleProp.SetJustificationToCentered()\n"
+            evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+
+            # make the actor for the title
+            evalString += "_titleActor = vtk.vtkTextActor()\n"
+            evalString += "_titleActor.SetMapper(_title)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5, 0.95)"
+            self.renderer.addToEvalStack(evalString)
+
+            # add to the renderer
+            evalString = "_renderer.AddActor(_titleActor)"
+            self.renderer.addToEvalStack(evalString)
+
+        # put an outline around the data
+        evalString = "_outline = vtk.vtkOutlineSource()\n"
+        evalString += "_outline.SetBounds(_bounds)\n"
+
+        # make its mapper
+        evalString += "_outlineMapper = vtk.vtkPolyDataMapper()\n"
+        evalString += "_outlineMapper.SetInput(_outline.GetOutput())\n"
+
+        # make its actor
+        evalString += "_outlineActor = vtk.vtkActor()\n"
+        evalString += "_outlineActor.SetMapper(_outlineMapper)\n"
+        evalString += "_outlineActor.GetProperty().SetColor(0,0,0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add to the renderer
+        evalString = "_renderer.AddActor(_outlineActor)"
+        self.renderer.addToEvalStack(evalString)
+
+        # make a lookup table for the colour map and invert it (colours look
+        # better when it's inverted)
+        evalString = "_lut = vtk.vtkLookupTable()\n"
+        evalString += "_refLut = vtk.vtkLookupTable()\n"
+        evalString += "_lut.Build()\n"
+        evalString += "_refLut.Build()\n"
+        evalString += "for _j in range(256):\n"
+        evalString += "    _lut.SetTableValue(_j, "
+        evalString += "_refLut.GetTableValue(255-_j))"
+        self.renderer.addToEvalStack(evalString)
+
+        # add some axes
+        evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
+        evalString += "_axes.SetInput(_reader.GetOutput())\n"
+        evalString += "_axes.SetCamera(_renderer.GetActiveCamera())\n"
+        evalString += "_axes.SetLabelFormat(\"%6.4g\")\n"
+        evalString += "_axes.SetFlyModeToOuterEdges()\n"
+        evalString += "_axes.SetFontFactor(0.8)\n"
+        evalString += "_axes.SetAxisTitleTextProperty(_textProp)\n"
+        evalString += "_axes.SetAxisLabelTextProperty(_textProp)\n"
+        ### xlabel
+        if self.xlabel is not None:
+            evalString += "_axes.SetXLabel(\"%s\")\n" % self.xlabel
+        else:
+            evalString += "_axes.SetXLabel(\"\")\n"
+        ### ylabel
+        if self.ylabel is not None:
+            evalString += "_axes.SetYLabel(\"%s\")\n" % self.ylabel
+        else:
+            evalString += "_axes.SetYLabel(\"\")\n"
+        ### zlabel
+        if self.zlabel is not None:
+            evalString += "_axes.SetZLabel(\"%s\")\n" % self.zlabel
+        else:
+            evalString += "_axes.SetZLabel(\"\")\n"
+        evalString += "_axes.SetNumberOfLabels(5)\n"
+        evalString += "_axes.GetProperty().SetColor(0,0,0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add to the renderer
+        evalString = "_renderer.AddActor(_axes)"
+        self.renderer.addToEvalStack(evalString)
+
+        # play around with lighting
+        evalString = "_light1 = vtk.vtkLight()\n"
+        evalString += "_light1.SetFocalPoint(_centre)\n"
+        evalString += "_light1.SetPosition(_centre[0]-_bounds[1], "
+        evalString += "_centre[1]-_bounds[3], _centre[2]+_bounds[5])\n"
+        evalString += "_renderer.AddLight(_light1)\n"
+        evalString += "_light2 = vtk.vtkLight()\n"
+        evalString += "_light2.SetFocalPoint(_centre)\n"
+        evalString += "_light2.SetPosition(_centre[0]+_bounds[1], "
+        evalString += "_centre[1]+_bounds[3], _centre[2]-_bounds[5])\n"
+        evalString += "_renderer.AddLight(_light2)"
+        self.renderer.addToEvalStack(evalString)
+
+        # this shouldn't be here!!!!
+        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
 
         return
 
