@@ -35,7 +35,8 @@ from pyvisi.renderers.vtk.item import Item
 from pyvisi.renderers.vtk.renderer import Renderer
 from pyvisi.renderers.vtk.scene import Scene
 from pyvisi.renderers.vtk.plot import Plot, \
-        ArrowPlot, BallPlot, ContourPlot, LinePlot, OffsetPlot
+        ArrowPlot, ArrowPlot3D, BallPlot, ContourPlot, IsosurfacePlot,\
+        LinePlot, OffsetPlot
 from pyvisi.renderers.vtk.camera import Camera
 from pyvisi.renderers.vtk.image import Image, \
         JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
