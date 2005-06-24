@@ -4,6 +4,38 @@
   <hr class="top" />
 
   <div class="item">
+      <div class="itemTitle">Arrow plots possible in 3D</div>
+      <div class="itemDate">22-Jun-2005</div>
+      <div class="itemAuthor">Paul Cochrane</div>
+
+      <div class="itemText">
+	  <p>
+	  After some work on some other stuff I've finally managed to add
+	  more functionality to pyvisi!  This time one can do ArrowPlots in
+	  three dimensions using vtk.  The povray renderer module can also
+	  be used to generate ArrowPlots, but work is still needed to get it
+	  going nicely.  It is also possible to use the vtk as well as the
+	  gnuplot renderer modules to do 2D ArrowPlots.  The new class is
+	  called ArrowPlot3D, but may be changed to just ArrowPlot in
+	  future, and one can let pyvisi work out which one you want to use.
+	  </p>
+	  <p>
+	  There have been many other changes made as well, with a little
+	  internal reorganisation of examples and a few other things, but
+	  this is the main change of interest at present.
+	  </p>
+	  <p>
+	  An example code has been added to the <code>examples/</code>
+	  directory on the cvs and will be in the next distribution of the
+	  package.  It is called:
+	  <ul>
+	      <li><code>arrowPlot3D.py</code></li>
+	  </ul>
+	  </p>
+      </div>
+  </div>
+
+  <div class="item">
       <div class="itemTitle">Ball plots now available</div>
       <div class="itemDate">19-Apr-2005</div>
       <div class="itemAuthor">Paul Cochrane</div>
