@@ -841,7 +841,7 @@ class BallPlot(Plot):
             elif radii is None:
                 raise ValueError, \
                 "You must specify the name of the scalars to use as the radius"
-            elif colors is None:
+            elif colors is None and tags is None:
                 raise ValueError, \
                 "You must specify the name of the scalars to use for the colors"
 
@@ -882,7 +882,12 @@ class BallPlot(Plot):
             self.renderer.addToEvalStack(evalString)
     
             # grab the data to use for colouring the balls
-            evalString = \
+            if colors is None:
+                evalString = \
+                    "_colours = _grid.GetPointData().GetScalars(\"%s\")" %\
+                    tags
+            else:
+                evalString = \
                     "_colours = _grid.GetPointData().GetScalars(\"%s\")" % \
                     colors
             self.renderer.addToEvalStack(evalString)
