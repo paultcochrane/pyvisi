@@ -478,3 +478,39 @@ Plot spheres in space, loading data from a vtk xml file
 </tr>
 </table>
 
+<hr />
+
+<h2>arrowPlot3D</h2>
+
+<p>
+Plot three dimensional arrows in space, loading data from a vtk xml file
+</p>
+
+<a href="examples/arrowPlot3D.html">arrowPlot3D.py</a>
+
+<h3>Example pyvisi output</h3>
+
+<table>
+<tr>
+    <th>
+	<a href="http://www.povray.org">Povray</a> renderer module
+	(unavailable at this time)
+    </th>
+    <th>
+	<a href="http://www.vtk.org">vtk</a> renderer module
+    </th>
+</tr>
+<tr>
+    <td><a href="examples/arrowPlot3DPovray.png"><img 
+	    src="examples/arrowPlot3DPovraySmall.png" 
+	    alt="arrowPlot3DPovray.png"/></a></td>
+    <td><a href="examples/arrowPlot3DVtk.png"><img 
+	    src="examples/arrowPlot3DVtkSmall.png" 
+	    alt="arrowPlot3dVtk.png"/></a></td>
+</tr>
+<tr>
+<td>Click on image for larger version</td>
+<td>Click on image for larger version</td>
+</tr>
+</table>
+
