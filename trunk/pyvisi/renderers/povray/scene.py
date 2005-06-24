@@ -29,7 +29,7 @@ from pyvisi.scene import Scene as BaseScene
 # module specific imports
 from pyvisi.renderers.povray.renderer import Renderer
 
-import os
+import os, math
 
 __revision__ = '$Revision$'
 
@@ -51,6 +51,10 @@ class Scene(BaseScene):
 
         self.xSize = 640
         self.ySize = 480
+
+        # these variables are used to determin the location of the camera
+        self.centre = None
+        self.bounds = None
 
         self.objectList = []
 
@@ -119,12 +123,36 @@ class Scene(BaseScene):
 
         # add a camera  (this should be its own object, and I should just
         # call some method of its own to get the info needed)
+
+        # given the centre and bounds variables, determine the location and
+        # look_at variables
+
+        # do some checking first
+        if self.centre is None or self.bounds is None:
+            raise ValueError, "Model centre or bounds not defined."
+
+        # calculate the y height
+        yHeight = self.bounds[3] - self.bounds[2]
+        xWidth = self.bounds[1] - self.bounds[0]
+        if yHeight > xWidth:
+            dist = yHeight
+        else:
+            dist = xWidth
+        zDepth = self.bounds[5] - self.bounds[4]
+        angle = 67.380*math.pi/180.0  # povray default
+        opp = dist*1.5/2.0
+        adj = opp/math.tan(angle/2.0)
+        loc = adj + zDepth/2.0 + self.centre[2]
+
+        # now write the camera to file
         evalString += "camera {\n"
-        evalString += "  location <0, 0, -200>\n"
-        evalString += "  direction <0, 0, 2>\n"
+        evalString += "  location <%f, %f, -%f>\n" % \
+                (self.centre[0], self.centre[1], loc)
+        evalString += "  direction <0, 0, 1>\n"
         evalString += "  up <0, 1, 0>\n"
         evalString += "  right <4/3, 0, 0>\n"
-        evalString += "  look_at <0, 0, 0>\n"
+        evalString += "  look_at <%f, %f, -%f>\n" % \
+                (self.centre[0], self.centre[1], self.centre[2])
         evalString += "}\n"
 
         # add the light source
