@@ -96,7 +96,7 @@ if method == 'pyvisi':
             format="vtk-xml", 
             radii="radius", 
             tags="particleTag")
-    scene.save(fname="ballPlotExample.png", format="png")
+    scene.save(fname="ballPlot.png", format="png")
 
 elif method == 'povray':
     ### povray code
@@ -189,7 +189,7 @@ elif method == 'povray':
     ### generate the pov file
 
     # open the pov file to write to
-    pov = open("ballPlotExample.pov", "w")
+    pov = open("ballPlot.pov", "w")
 
     # the include files to add
     pov.write("#include \"shapes.inc\"\n")
@@ -244,7 +244,7 @@ elif method == 'povray':
     ### generate the ini file
 
     # open the ini file to write to
-    ini = open("ballPlotExample.ini", "w")
+    ini = open("ballPlot.ini", "w")
 
     # the output resolution
     ini.write("Width=640\n")
@@ -257,7 +257,7 @@ elif method == 'povray':
     ini.write("Output_File_Type=N\n")
 
     # the name of the input pov file
-    ini.write("Input_File_Name=ballPlotExample.pov\n")
+    ini.write("Input_File_Name=ballPlot.pov\n")
 
     # pause when done
     ini.write("Pause_When_Done=on\n")
@@ -266,7 +266,7 @@ elif method == 'povray':
     ini.close()
 
     # run povray on the file
-    os.system("povray ballPlotExample.ini")
+    os.system("povray ballPlot.ini")
     
 
 else:
