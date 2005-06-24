@@ -22,7 +22,7 @@
 Variables common to all classes and functions
 """
 
-_debug = 0
+from pyvisi.common import _debug
 _rendererName = "VTK"
 _rendererVersion = '0.1'
 _rendererRevision = 'pre-alpha-3'
