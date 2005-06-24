@@ -11,6 +11,7 @@ Files = (
     "ballPlot.py",
     "contourPlot.py",
     "contourPlotMovie.py",
+    "isosurfacePlot.py",
     "meshPlot.py",
     "multiCurvePlot.py",
     "offsetLinePlot.py",
@@ -30,8 +31,18 @@ Files = (
 print "Running all examples"
 
 import os
+err = open("runall.errs", "w")
 for file in Files:
+    print ""
+    print 70*"#"
     print "Running %s" % file
-    os.system("python %s" % file)
+    print 70*"#"
+    print ""
+    result = os.system("python %s" % file)
+    if result != 0:
+        print "Error running example script: %s" % file
+        err.write("Error running example script: %s\n" % file)
+
+err.close()
 
 # vim: expandtab shiftwidth=4:
