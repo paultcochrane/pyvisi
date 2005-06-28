@@ -8,14 +8,14 @@
   currently available pyvisi plotting objects.
   </p>
 
-<h2>simplePlotExample</h2>
+<h2>simplePlot</h2>
 
 <p>
 This is a very simple example showing how one would produce a line plot
 using pyvisi.  It shows a graph of <code>y = x^2</code>.
 </p>
 
-<a href="examples/simplePlotExample.html">simplePlotExample.py</a>
+<a href="examples/simpleLinePlot.html">simpleLinePlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -25,12 +25,12 @@ using pyvisi.  It shows a graph of <code>y = x^2</code>.
 <th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
 </tr>
 <tr>
-<td><a href="examples/simplePlotExampleGnuplot.png"><img 
-src="examples/simplePlotExampleGnuplotSmall.png" 
-alt="simplePlotExampleGnuplot.png"/></a></td>
-<td><a href="examples/simplePlotExampleVtk.png"><img 
-src="examples/simplePlotExampleVtkSmall.png" 
-alt="simplePlotExampleVtk.png"/></a></td>
+<td><a href="examples/simpleLinePlotGnuplot.png"><img 
+src="examples/simpleLinePlotGnuplotSmall.png" 
+alt="simpleLinePlotGnuplot.png"/></a></td>
+<td><a href="examples/simpleLinePlotVtk.png"><img 
+src="examples/simpleLinePlotVtkSmall.png" 
+alt="simpleLinePlotVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -40,7 +40,7 @@ alt="simplePlotExampleVtk.png"/></a></td>
 
 <hr />
 
-<h2>singleArrayPlotExample</h2>
+<h2>singleArrayPlot</h2>
 
 <p>
 This example shows a graph of <code>y = sin(x)</code>.  However, what is
@@ -48,7 +48,7 @@ special about it is that one only specifies the y-coordinate, and pyvisi
 uses the indicies of the y array as the x-coordinate points.
 </p>
 
-<a href="examples/singleArrayPlotExample.html">singleArrayPlotExample.py</a>
+<a href="examples/singleArrayLinePlot.html">singleArrayLinePlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -58,12 +58,12 @@ uses the indicies of the y array as the x-coordinate points.
 <th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
 </tr>
 <tr>
-<td><a href="examples/singleArrayPlotExampleGnuplot.png"><img 
-src="examples/singleArrayPlotExampleGnuplotSmall.png" 
-alt="singleArrayPlotExampleGnuplot.png"/></a></td>
-<td><a href="examples/singleArrayPlotExampleVtk.png"><img 
-src="examples/singleArrayPlotExampleVtkSmall.png" 
-alt="singleArrayPlotExampleVtk.png"/></a></td>
+<td><a href="examples/singleArrayLinePlotGnuplot.png"><img 
+src="examples/singleArrayLinePlotGnuplotSmall.png" 
+alt="singleArrayLinePlotGnuplot.png"/></a></td>
+<td><a href="examples/singleArrayLinePlotVtk.png"><img 
+src="examples/singleArrayLinePlotVtkSmall.png" 
+alt="singleArrayLinePlotVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -73,7 +73,7 @@ alt="singleArrayPlotExampleVtk.png"/></a></td>
 
 <hr />
 
-<h2>multiCurvePlotExample</h2>
+<h2>multiCurvePlot</h2>
 
 <p>
 Here we have an example of how to plot multiple curves with the same
@@ -81,7 +81,7 @@ x-coordinate variable.  This example shows <code>y = sin(x)</code>,
 <code>y = cos(x)</code> and <code>y = cos(x)^2</code>.
 </p>
 
-<a href="examples/multiCurvePlotExample.html">multiCurvePlotExample.py</a>
+<a href="examples/multiCurvePlot.html">multiCurvePlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -91,12 +91,12 @@ x-coordinate variable.  This example shows <code>y = sin(x)</code>,
 <th><a href="http://www.vtk.org">Vtk</a> renderer module</th>
 </tr>
 <tr>
-    <td><a href="examples/multiCurvePlotExampleGnuplot.png"><img 
-	    src="examples/multiCurvePlotExampleGnuplotSmall.png" 
-	    alt="multiCurvePlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/multiCurvePlotExampleVtk.png"><img 
-	    src="examples/multiCurvePlotExampleVtkSmall.png" 
-	    alt="multiCurvePlotExampleVtk.png"/></a></td>
+    <td><a href="examples/multiCurvePlotGnuplot.png"><img 
+	    src="examples/multiCurvePlotGnuplotSmall.png" 
+	    alt="multiCurvePlotGnuplot.png"/></a></td>
+    <td><a href="examples/multiCurvePlotVtk.png"><img 
+	    src="examples/multiCurvePlotVtkSmall.png" 
+	    alt="multiCurvePlotVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -106,7 +106,7 @@ x-coordinate variable.  This example shows <code>y = sin(x)</code>,
 
 <hr />
 
-<h2>contourPlotExample</h2>
+<h2>contourPlot</h2>
 
 <p>
 This shows a two-dimensional contour map of a three-dimensional surface.
@@ -114,7 +114,7 @@ The surface was generated with the equation
 <code>z = x*exp(-x^2 - y^2)</code>.
 </p>
 
-<a href="examples/contourPlotExample.html">contourPlotExample.py</a>
+<a href="examples/contourPlot.html">contourPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -130,12 +130,12 @@ The surface was generated with the equation
     </th>
 </tr>
 <tr>
-    <td><a href="examples/contourPlotExampleGnuplot.png"><img 
-	    src="examples/contourPlotExampleGnuplotSmall.png" 
-	    alt="contourPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/contourPlotExampleGnuplot4.png"><img 
-	    src="examples/contourPlotExampleGnuplot4Small.png" 
-	    alt="contourPlotExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/contourPlotGnuplot.png"><img 
+	    src="examples/contourPlotGnuplotSmall.png" 
+	    alt="contourPlotGnuplot.png"/></a></td>
+    <td><a href="examples/contourPlotGnuplot4.png"><img 
+	    src="examples/contourPlotGnuplot4Small.png" 
+	    alt="contourPlotGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -145,14 +145,14 @@ The surface was generated with the equation
 
 <hr />
 
-<h2>surfacePlotExample</h2>
+<h2>surfacePlot</h2>
 
 <p>
 This shows a three-dimensional surface.  The surface was generated
 with the equation <code>z = x*exp(-x^2 - y^2)</code>.
 </p>
 
-<a href="examples/surfacePlotExample.html">surfacePlotExample.py</a>
+<a href="examples/surfacePlot.html">surfacePlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -168,12 +168,12 @@ with the equation <code>z = x*exp(-x^2 - y^2)</code>.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/surfacePlotExampleGnuplot.png"><img 
-	    src="examples/surfacePlotExampleGnuplotSmall.png" 
-	    alt="surfacePlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/surfacePlotExampleGnuplot4.png"><img 
-	    src="examples/surfacePlotExampleGnuplot4Small.png" 
-	    alt="surfacePlotExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/surfacePlotGnuplot.png"><img 
+	    src="examples/surfacePlotGnuplotSmall.png" 
+	    alt="surfacePlotGnuplot.png"/></a></td>
+    <td><a href="examples/surfacePlotGnuplot4.png"><img 
+	    src="examples/surfacePlotGnuplot4Small.png" 
+	    alt="surfacePlotGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -183,7 +183,7 @@ with the equation <code>z = x*exp(-x^2 - y^2)</code>.
 
 <hr />
 
-<h2>surfaceAndContourPlotExample</h2>
+<h2>surfaceAndContourPlot</h2>
 
 <p>
 This shows a three-dimensional surface, with its contour shown on the base
@@ -191,7 +191,7 @@ of the axes.  The surface was generated with the equation
 <code>z = x*exp(-x^2 - y^2)</code>.
 </p>
 
-<a href="examples/surfaceAndContourPlotExample.html">surfaceAndContourPlotExample.py</a>
+<a href="examples/surfaceAndContourPlot.html">surfaceAndContourPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -207,12 +207,12 @@ of the axes.  The surface was generated with the equation
     </th>
 </tr>
 <tr>
-    <td><a href="examples/surfaceAndContourPlotExampleGnuplot.png"><img 
-	    src="examples/surfaceAndContourPlotExampleGnuplotSmall.png" 
-	    alt="surfaceAndContourPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/surfaceAndContourPlotExampleGnuplot4.png"><img 
-	    src="examples/surfaceAndContourPlotExampleGnuplot4Small.png" 
-	    alt="surfaceAndContourPlotExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/surfaceAndContourPlotGnuplot.png"><img 
+	    src="examples/surfaceAndContourPlotGnuplotSmall.png" 
+	    alt="surfaceAndContourPlotGnuplot.png"/></a></td>
+    <td><a href="examples/surfaceAndContourPlotGnuplot4.png"><img 
+	    src="examples/surfaceAndContourPlotGnuplot4Small.png" 
+	    alt="surfaceAndContourPlotGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -222,13 +222,13 @@ of the axes.  The surface was generated with the equation
 
 <hr />
 
-<h2>scatterPlotExample</h2>
+<h2>scatterPlot</h2>
 
 <p>
 Here we have randomly generated x-y data plotted as a scatter plot.
 </p>
 
-<a href="examples/scatterPlotExample.html">scatterPlotExample.py</a>
+<a href="examples/scatterPlot.html">scatterPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -244,12 +244,12 @@ Here we have randomly generated x-y data plotted as a scatter plot.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/scatterPlotExampleGnuplot.png"><img 
-	    src="examples/scatterPlotExampleGnuplotSmall.png" 
-	    alt="scatterPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/scatterPlotExampleGnuplot4.png"><img 
-	    src="examples/scatterPlotExampleGnuplot4Small.png" 
-	    alt="scatterPlotExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/scatterPlotGnuplot.png"><img 
+	    src="examples/scatterPlotGnuplotSmall.png" 
+	    alt="scatterPlotGnuplot.png"/></a></td>
+    <td><a href="examples/scatterPlotGnuplot4.png"><img 
+	    src="examples/scatterPlotGnuplot4Small.png" 
+	    alt="scatterPlotGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -259,7 +259,7 @@ Here we have randomly generated x-y data plotted as a scatter plot.
 
 <hr />
 
-<h2>scatterPlot3DExample</h2>
+<h2>scatterPlot3D</h2>
 
 <p>
 Here we have a three-dimensional scatter plot.  The x and y data are
@@ -267,7 +267,7 @@ generated randomly, and the z value is calculated via
 <code>z = exp(-x^2 - y^2)</code>.
 </p>
 
-<a href="examples/scatterPlot3DExample.html">scatterPlot3DExample.py</a>
+<a href="examples/scatterPlot3D.html">scatterPlot3D.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -283,12 +283,12 @@ generated randomly, and the z value is calculated via
     </th>
 </tr>
 <tr>
-    <td><a href="examples/scatterPlot3DExampleGnuplot.png"><img 
-	    src="examples/scatterPlot3DExampleGnuplotSmall.png" 
-	    alt="scatterPlot3DExampleGnuplot.png"/></a></td>
-    <td><a href="examples/scatterPlot3DExampleGnuplot4.png"><img 
-	    src="examples/scatterPlot3DExampleGnuplot4Small.png" 
-	    alt="scatterPlot3DExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/scatterPlot3DGnuplot.png"><img 
+	    src="examples/scatterPlot3DGnuplotSmall.png" 
+	    alt="scatterPlot3DGnuplot.png"/></a></td>
+    <td><a href="examples/scatterPlot3DGnuplot4.png"><img 
+	    src="examples/scatterPlot3DGnuplot4Small.png" 
+	    alt="scatterPlot3DGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -298,14 +298,14 @@ generated randomly, and the z value is calculated via
 
 <hr />
 
-<h2>arrowPlotExample</h2>
+<h2>arrowPlot</h2>
 
 <p>
 This example shows a vector plot of randomly generated vectors.  Here we are
 only using 1D arrays as input.
 </p>
 
-<a href="examples/arrowPlotExample.html">arrowPlotExample.py</a>
+<a href="examples/arrowPlot.html">arrowPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -321,12 +321,12 @@ only using 1D arrays as input.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/arrowPlotExampleGnuplot.png"><img 
-	    src="examples/arrowPlotExampleGnuplotSmall.png" 
-	    alt="arrowPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/arrowPlotExampleGnuplot4.png"><img 
-	    src="examples/arrowPlotExampleGnuplot4Small.png" 
-	    alt="arrowPlotExampleGnuplot4.png"/></a></td>
+    <td><a href="examples/arrowPlotGnuplot.png"><img 
+	    src="examples/arrowPlotGnuplotSmall.png" 
+	    alt="arrowPlotGnuplot.png"/></a></td>
+    <td><a href="examples/arrowPlotGnuplot4.png"><img 
+	    src="examples/arrowPlotGnuplot4Small.png" 
+	    alt="arrowPlotGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -336,14 +336,14 @@ only using 1D arrays as input.
 
 <hr />
 
-<h2>arrowPlotExample2</h2>
+<h2>arrowPlot2D</h2>
 
 <p>
 This example shows a vector plot of randomly generated vectors.  Here we are
 only using 2D arrays as input.
 </p>
 
-<a href="examples/arrowPlotExample2.html">arrowPlotExample2.py</a>
+<a href="examples/arrowPlot2D.html">arrowPlot2D.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -359,12 +359,12 @@ only using 2D arrays as input.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/arrowPlotExample2Gnuplot.png"><img 
-	    src="examples/arrowPlotExample2GnuplotSmall.png" 
-	    alt="arrowPlotExample2Gnuplot.png"/></a></td>
-    <td><a href="examples/arrowPlotExample2Gnuplot4.png"><img 
-	    src="examples/arrowPlotExample2Gnuplot4Small.png" 
-	    alt="arrowPlotExample2Gnuplot4.png"/></a></td>
+    <td><a href="examples/arrowPlot2DGnuplot.png"><img 
+	    src="examples/arrowPlot2DGnuplotSmall.png" 
+	    alt="arrowPlot2DGnuplot.png"/></a></td>
+    <td><a href="examples/arrowPlot2DGnuplot4.png"><img 
+	    src="examples/arrowPlot2DGnuplot4Small.png" 
+	    alt="arrowPlot2DGnuplot4.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -374,13 +374,13 @@ only using 2D arrays as input.
 
 <hr />
 
-<h2>offsetPlotExample</h2>
+<h2>offsetPlot</h2>
 
 <p>
 This shows offset plot, or record section as is useful in seismology.
 </p>
 
-<a href="examples/offsetPlotExample.html">offsetPlotExample.py</a>
+<a href="examples/offsetPlot.html">offsetPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -394,12 +394,12 @@ This shows offset plot, or record section as is useful in seismology.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/offsetPlotExampleGnuplot.png"><img 
-	    src="examples/offsetPlotExampleGnuplotSmall.png" 
-	    alt="offsetPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/offsetPlotExampleVtk.png"><img 
-	    src="examples/offsetPlotExampleVtkSmall.png" 
-	    alt="offsetPlotExampleVtk.png"/></a></td>
+    <td><a href="examples/offsetPlotGnuplot.png"><img 
+	    src="examples/offsetPlotGnuplotSmall.png" 
+	    alt="offsetPlotGnuplot.png"/></a></td>
+    <td><a href="examples/offsetPlotVtk.png"><img 
+	    src="examples/offsetPlotVtkSmall.png" 
+	    alt="offsetPlotVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -409,13 +409,13 @@ This shows offset plot, or record section as is useful in seismology.
 
 <hr />
 
-<h2>seismicOffsetPlotExample</h2>
+<h2>seismicOffsetPlot1</h2>
 
 <p>
 Another offset plot example with data imported from file.
 </p>
 
-<a href="examples/seismicOffsetPlotExample.html">seismicOffsetPlotExample.py</a>
+<a href="examples/seismicOffsetPlot1.html">seismicOffsetPlot1.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -429,12 +429,12 @@ Another offset plot example with data imported from file.
     </th>
 </tr>
 <tr>
-    <td><a href="examples/seismicOffsetPlotExampleGnuplot.png"><img 
-	    src="examples/seismicOffsetPlotExampleGnuplotSmall.png" 
-	    alt="seismicOffsetPlotExampleGnuplot.png"/></a></td>
-    <td><a href="examples/seismicOffsetPlotExampleVtk.png"><img 
-	    src="examples/seismicOffsetPlotExampleVtkSmall.png" 
-	    alt="seismicOffsetPlotExampleVtk.png"/></a></td>
+    <td><a href="examples/seismicOffsetPlot1Gnuplot.png"><img 
+	    src="examples/seismicOffsetPlot1GnuplotSmall.png" 
+	    alt="seismicOffsetPlot1Gnuplot.png"/></a></td>
+    <td><a href="examples/seismicOffsetPlot1Vtk.png"><img 
+	    src="examples/seismicOffsetPlot1VtkSmall.png" 
+	    alt="seismicOffsetPlot1Vtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -444,13 +444,13 @@ Another offset plot example with data imported from file.
 
 <hr />
 
-<h2>ballPlotExample</h2>
+<h2>ballPlot</h2>
 
 <p>
 Plot spheres in space, loading data from a vtk xml file
 </p>
 
-<a href="examples/ballPlotExample.html">ballPlotExample.py</a>
+<a href="examples/ballPlot.html">ballPlot.py</a>
 
 <h3>Example pyvisi output</h3>
 
@@ -465,12 +465,12 @@ Plot spheres in space, loading data from a vtk xml file
     </th>
 </tr>
 <tr>
-    <td><a href="examples/ballPlotExamplePovray.png"><img 
-	    src="examples/ballPlotExamplePovraySmall.png" 
-	    alt="ballPlotExamplePovray.png"/></a></td>
-    <td><a href="examples/ballPlotExampleVtk.png"><img 
-	    src="examples/ballPlotExampleVtkSmall.png" 
-	    alt="ballPlotExampleVtk.png"/></a></td>
+    <td><a href="examples/ballPlotPovray.png"><img 
+	    src="examples/ballPlotPovraySmall.png" 
+	    alt="ballPlotPovray.png"/></a></td>
+    <td><a href="examples/ballPlotVtk.png"><img 
+	    src="examples/ballPlotVtkSmall.png" 
+	    alt="ballPlotVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
@@ -506,7 +506,7 @@ Plot three dimensional arrows in space, loading data from a vtk xml file
 	    alt="arrowPlot3DPovray.png"/></a></td>
     <td><a href="examples/arrowPlot3DVtk.png"><img 
 	    src="examples/arrowPlot3DVtkSmall.png" 
-	    alt="arrowPlot3dVtk.png"/></a></td>
+	    alt="arrowPlot3DVtk.png"/></a></td>
 </tr>
 <tr>
 <td>Click on image for larger version</td>
