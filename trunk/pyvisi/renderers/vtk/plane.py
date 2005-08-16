@@ -44,7 +44,18 @@ class Plane(Item):
 
         self.renderer = scene.renderer
 
+    def setOrigin(self):
+        """
+        Set the origin of a plane
+        """
+
+    def setNormal(self):
+        """
+        Set the normal to the plane surface
+        """
+
     def mapImageToPlane(self, image):
+        # this really needs to go somewhere else!!!
         """
         Maps an Image object onto a Plane object
         """
@@ -77,5 +88,36 @@ class Plane(Item):
         self.renderer.addToEvalStack("_renderer.AddActor(_planeActor)\n")
 
         return
-    
+
+
+class CutPlane(Plane):
+    """
+    Class for planes used to cut through datasets
+    """
+
+    def __init__(self, scene):
+        """
+        Intialisation of the CutPlane object
+        """
+        debugMsg("Called CutPlane.__init__()")
+        Plane.__init__(self)
+
+        self.renderer = scene.renderer
+
+
+class ClipPlane(Plane):
+    """
+    Class for planes used to clip datasets
+    """
+
+    def __init__(self, scene):
+        """
+        Intialisation of the ClipPlane object
+        """
+        debugMsg("Called ClipPlane.__init__()")
+        Plane.__init__(self)
+
+        self.renderer = scene.renderer
+
+
 # vim: expandtab shiftwidth=4:
