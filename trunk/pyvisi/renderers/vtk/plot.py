@@ -704,11 +704,12 @@ class ArrowPlot3D(Plot):
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
         evalString += "_textProp.SetColor(0,0,0)\n"
+        self.renderer.addToEvalStack(evalString)
 
         # set the title if set
         if self.title is not None:
             # add a title
-            evalString += "_titleMapper = vtk.vtkTextMapper()\n"
+            evalString = "_titleMapper = vtk.vtkTextMapper()\n"
             evalString += "_titleMapper.SetInput(\"%s\")\n" % self.title
             
             evalString += "_titleProp = _titleMapper.GetTextProperty()\n"
@@ -1539,22 +1540,19 @@ class ContourPlot(Plot):
         # add the actor to the scene
         self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
 
-        # if the title or one of the labels is set, then set up the text
+        # set up the text
         # properties (I think this should come from the pyvisi Text() object
         # at some stage, but we'll hard code it here...)
         # I'll also need separate properties for axes, titles, labels etc...
         # but keep them all the same just to get this going
-        if self.title is not None or\
-                self.xlabel is not None or\
-                self.ylabel is not None:
-            evalString = "_font_size = 20\n"
-            evalString += "_textProp = vtk.vtkTextProperty()\n"
-            evalString += "_textProp.SetFontSize(_font_size)\n"
-            evalString += "_textProp.SetFontFamilyToArial()\n"
-            evalString += "_textProp.BoldOff()\n"
-            evalString += "_textProp.ItalicOff()\n"
-            evalString += "_textProp.ShadowOff()\n"
-            self.renderer.addToEvalStack(evalString)
+        evalString = "_font_size = 20\n"
+        evalString += "_textProp = vtk.vtkTextProperty()\n"
+        evalString += "_textProp.SetFontSize(_font_size)\n"
+        evalString += "_textProp.SetFontFamilyToArial()\n"
+        evalString += "_textProp.BoldOff()\n"
+        evalString += "_textProp.ItalicOff()\n"
+        evalString += "_textProp.ShadowOff()\n"
+        self.renderer.addToEvalStack(evalString)
 
         # set the title if set
         if self.title is not None:
