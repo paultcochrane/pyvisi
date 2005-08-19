@@ -103,6 +103,35 @@ class Scene(BaseScene):
         # I don't yet know where to put this, but just to get stuff going...
         renderer.addToEvalStack("# Scene.render()")
 
+        # if saving to file, try not to render to the screen
+        # this needs to be done BEFORE setting up the renderer
+        if save:
+            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
+            evalString += "_factGraphics.SetUseMesaClasses(1)\n"
+            evalString += "_factImage = vtk.vtkImagingFactory()\n"
+            evalString += "_factImage.SetUseMesaClasses(1)\n"
+            renderer.addToInitStack(evalString)
+        else:
+            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
+            evalString += "_factGraphics.SetUseMesaClasses(0)\n"
+            evalString += "_factImage = vtk.vtkImagingFactory()\n"
+            evalString += "_factImage.SetUseMesaClasses(0)\n"
+            renderer.addToInitStack(evalString)
+
+        # set up the renderer and render window
+        renderer.addToInitStack("_renderer = vtk.vtkRenderer()")
+        # this next line should only be done if we have an active display
+        renderer.addToInitStack("_renderWindow = vtk.vtkRenderWindow()")
+        renderer.addToInitStack("_renderWindow.AddRenderer(_renderer)")
+        evalString = "_renderWindow.SetSize(%d,%d)" % \
+                (renderer.renderWindowWidth,renderer.renderWindowHeight)
+        renderer.addToInitStack(evalString)
+
+        if save:
+            evalString = "_renderWindow.OffScreenRenderingOn()\n"
+            renderer.addToEvalStack(evalString)
+
+        # if we have an interactive display, put some of the relevant code in
         if interactive:
             renderer.addToEvalStack(\
                     "_iRenderer = vtk.vtkRenderWindowInteractor()")
@@ -113,23 +142,10 @@ class Scene(BaseScene):
         for obj in self.objectList:
             obj.render()
 
-        # if saving to file, try not to render to the screen
-        if save:
-            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
-            evalString += "_factGraphics.SetUseMesaClasses(1)\n"
-            evalString += "_factImage = vtk.vtkImagingFactory()\n"
-            evalString += "_factImage.SetUseMesaClasses(1)\n"
-            evalString += "_renderWindow.OffScreenRenderingOn()\n"
-            evalString += "_renderWindow.Render()"
-            renderer.addToEvalStack(evalString)
-        else:
-            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
-            evalString += "_factGraphics.SetUseMesaClasses(0)\n"
-            evalString += "_factImage = vtk.vtkImagingFactory()\n"
-            evalString += "_factImage.SetUseMesaClasses(0)\n"
-            evalString += "_renderWindow.Render()"
-            renderer.addToEvalStack(evalString)
+        # render the scene total
+        renderer.addToEvalStack("_renderWindow.Render()")
 
+        # if interactive, start up the render window interactor
         if interactive:
             renderer.addToEvalStack("_iRenderer.Start()")
 
