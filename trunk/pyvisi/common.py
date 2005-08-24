@@ -22,9 +22,9 @@
 Variables common to all classes and functions
 """
 
-_debug = 0
+_debug = 1
 _pyvisiVersion = '0.1'
-_pyvisiRevision = 'pre-alpha-3'
+_pyvisiRevision = 'pre-alpha-4'
 
 __revision__ = _pyvisiRevision
 
