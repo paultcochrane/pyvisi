@@ -57,6 +57,7 @@ class Renderer(object):
         @param width: The width of the render window
         @type width: float
         """
+        debugMsg("Called Renderer.setRenderWindowWidth()")
         self.renderWindowWidth = width
         return
 
@@ -67,6 +68,7 @@ class Renderer(object):
         @param height: The height of the render window
         @type height: float
         """
+        debugMsg("Called Renderer.setRenderWindowHeight()")
         self.renderWindowHeight = height
         return
 
@@ -74,12 +76,14 @@ class Renderer(object):
         """
         Gets the render window width
         """
+        debugMsg("Called Renderer.getRenderWindowWidth()")
         return self.renderWindowWidth
 
     def getRenderWindowHeight(self):
         """
         Gets the render window height
         """
+        debugMsg("Called Renderer.getRenderWindowHeight()")
         return self.renderWindowHeight
 
     def setRenderWindowDimensions(self, width, height):
@@ -92,7 +96,7 @@ class Renderer(object):
         @param height: the height of the render window
         @type height: float
         """
-
+        debugMsg("Called Renderer.setRenderWindowDimensions()")
         self.renderWindowWidth = width
         self.renderWindowHeight = height
 
@@ -104,6 +108,7 @@ class Renderer(object):
 
         @return: tuple of window width and window height, respectively
         """
+        debugMsg("Called Renderer.getRenderWindowDimensions()")
         return (self.renderWindowWidth, self.renderWindowHeight)
 
     def getEvalStack(self):
