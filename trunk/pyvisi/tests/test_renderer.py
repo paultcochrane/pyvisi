@@ -97,6 +97,61 @@ class TestRenderer(unittest.TestCase):
         self.ren.setRenderWindowDimensions(width, height)
         self.assertEqual(self.ren.getRenderWindowDimensions(), (width,height))
 
+    def testGetEvalStack(self):
+        """
+        Test getting the evaluation stack
+        """
+        # it should be the null string on initialisation
+        self.assertEqual("", self.ren.getEvalStack())
+
+    def testAddToEvalStack(self):
+        """
+        Test adding a string to the evaluation stack
+        """
+        inString = "my string"
+        outString = inString + '\n'
+        self.ren.addToEvalStack(inString)
+        self.assertEqual(self.ren.getEvalStack(), outString)
+
+    def testGetInitStack(self):
+        """
+        Test getting the initialisation stack
+        """
+        # should be the null string initially
+        self.assertEqual("", self.ren.getInitStack())
+
+    def testAddToInitStack(self):
+        """
+        Test adding a string to the initialisation stack
+        """
+        inString = "my string"
+        outString = inString + '\n'
+        self.ren.addToInitStack(inString)
+        self.assertEqual(self.ren.getInitStack(), outString)
+
+    def testResetEvalStack(self):
+        """
+        Test resetting the evaluation stack
+        """
+        # set the stack to something
+        inString = "my string"
+        self.ren.addToEvalStack(inString)
+        # reset the stack
+        self.ren.resetEvalStack()
+        # now check that it's the null string again
+        self.assertEqual("", self.ren.getEvalStack())
+
+    def testResetInitStack(self):
+        """
+        Test resetting the initialisation stack
+        """
+        # set the stack to something
+        inString = "my string"
+        self.ren.addToInitStack(inString)
+        # reset the stack
+        self.ren.resetInitStack()
+        # now check that it's the null string again
+        self.assertEqual("", self.ren.getInitStack())
 
 if __name__ == '__main__':
     unittest.main()
