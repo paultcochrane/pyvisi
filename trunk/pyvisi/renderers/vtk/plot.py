@@ -1621,6 +1621,32 @@ class ContourPlot(Plot):
 
         return
 
+class EllipsoidPlot(Plot):
+    """
+    Ellipsoid plot
+    """
+    def __init(self, scene):
+        """
+        Initialisation of the EllipsoidPlot class
+
+        @param scene: The Scene to render the plot in
+        @type scene: Scene object
+        """
+        debugMsg("Called EllipsoidPlot.__init__()")
+        Plot.__init__(self, scene)
+
+        self.renderer = scene.renderer
+        self.renderer.addToInitStack("# EllipsoidPlot.__init__()")
+
+        # labels and stuff
+        self.title = None
+        self.xlabel = None
+        self.ylabel = None
+        self.zlabel = None
+
+        # add the plot to the scene
+        scene.add(self)
+
 class IsosurfacePlot(Plot):
     """
     Isosurface plot
