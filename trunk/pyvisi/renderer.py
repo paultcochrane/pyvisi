@@ -55,9 +55,13 @@ class Renderer(object):
         Sets the render window width
         
         @param width: The width of the render window
-        @type width: float
+        @type width: int
         """
         debugMsg("Called Renderer.setRenderWindowWidth()")
+        # check that the argument makes sense
+        if __debug__:
+            assert isinstance(width, int), "Incorrect data type; expected int"
+
         self.renderWindowWidth = width
         return
 
@@ -66,9 +70,13 @@ class Renderer(object):
         Sets the render window height
 
         @param height: The height of the render window
-        @type height: float
+        @type height: int
         """
         debugMsg("Called Renderer.setRenderWindowHeight()")
+        # check that the argument makes sense
+        if __debug__:
+            assert isinstance(height, int), "Incorrect data type; expected int"
+
         self.renderWindowHeight = height
         return
 
@@ -91,12 +99,17 @@ class Renderer(object):
         Sets the render window dimensions
 
         @param width: the width of the render window
-        @type width: float
+        @type width: int
 
         @param height: the height of the render window
-        @type height: float
+        @type height: int
         """
         debugMsg("Called Renderer.setRenderWindowDimensions()")
+        # check that the argument makes sense
+        if __debug__:
+            assert isinstance(width, int), "Incorrect data type; expected int"
+            assert isinstance(height, int), "Incorrect data type; expected int"
+
         self.renderWindowWidth = width
         self.renderWindowHeight = height
 
@@ -126,6 +139,10 @@ class Renderer(object):
         @type evalString: string
         """
         debugMsg("Called Renderer.addToEvalStack()")
+        # check that the argument is ok
+        if __debug__:
+            assert isinstance(evalString, str)
+
         self._evalStack += evalString + '\n'
         return
 
@@ -144,6 +161,10 @@ class Renderer(object):
         @type evalString: string
         """
         debugMsg("Called Renderer.addToInitStack()")
+        # check that the argument is ok
+        if __debug__:
+            assert isinstance(evalString, str)
+
         self._initStack += evalString + '\n'
         return
 
