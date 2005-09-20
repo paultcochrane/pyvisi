@@ -31,36 +31,72 @@ Class and functions for testing the Renderer class
 
 class TestRenderer(unittest.TestCase):
     """
-    The main test class
+    Test the renderer object at the base pyvisi level
     """
 
-    def testRendererExactlyTwoArgs(self):
-        """
-        Tests that the Renderer object is instantiated only with two arguments
-        """
-        # test just the one argument
-        self.assertRaises(TypeError, \
-                pyvisi.Renderer.__init__, 'one')
-        # test three arguments
-        self.assertRaises(TypeError, \
-                pyvisi.Renderer.__init__, 'one', 'two', 'three')
+    def setUp(self):
+        self.ren = pyvisi.Renderer()
 
-    def testRendererNameType(self):
+    def testInit(self):
         """
-        Tests the type of the renderer name; should be alphanumeric
+        Tests initialisation of the Renderer object
         """
-        ren = pyvisi.Renderer('vtk')
-        renName = ren.rendererName
-        self.assert_(renName.isalnum(),\
-                msg='Renderer() argument is not alphanumeric')
-
-    def testRendererReturn(self):
-        """
-        Tests that a Renderer() object is returned
-        """
-        ren = pyvisi.Renderer('vtk')
-        classStr = ren.__class__.__name__
+        classStr = self.ren.__class__.__name__
         self.assertEqual('Renderer', classStr)
+
+    def testRenderWindowDefaultDims(self):
+        """
+        Check render window default width and height
+        """
+        self.assertEqual(640, self.ren.renderWindowWidth)  # width
+        self.assertEqual(480, self.ren.renderWindowHeight) # height
+
+    def testGetRenderWindowWidth(self):
+        """
+        Check getting the render window width
+        """
+        width = self.ren.getRenderWindowWidth()
+        self.assertEqual(self.ren.renderWindowWidth, width)
+
+    def testSetRenderWindowWidth(self):
+        """
+        Test setting the render window width
+        """
+        width = 720
+        self.ren.setRenderWindowWidth(width)
+        self.assertEqual(self.ren.getRenderWindowWidth(), width)
+
+    def testGetRenderWindowHeight(self):
+        """
+        Check getting the render window height
+        """
+        height = self.ren.getRenderWindowHeight()
+        self.assertEqual(self.ren.renderWindowHeight, height)
+
+    def testSetRenderWindowHeight(self):
+        """
+        Test setting the render window height
+        """
+        height = 593
+        self.ren.setRenderWindowHeight(height)
+        self.assertEqual(self.ren.getRenderWindowHeight(), height)
+
+    def testGetRenderWindowDimensions(self):
+        """
+        Test getting the render window width and height
+        """
+        (width, height) = self.ren.getRenderWindowDimensions()
+        self.assertEqual((640,480), (width, height))
+
+    def testSetRenderWindowDimensions(self):
+        """
+        Test setting the render window width and height
+        """
+        width = 123
+        height = 456
+        self.ren.setRenderWindowDimensions(width, height)
+        self.assertEqual(self.ren.getRenderWindowDimensions(), (width,height))
+
 
 if __name__ == '__main__':
     unittest.main()
