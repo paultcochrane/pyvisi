@@ -44,6 +44,37 @@ class TestRenderer(unittest.TestCase):
         classStr = self.ren.__class__.__name__
         self.assertEqual('Renderer', classStr)
 
+    def testExactlyOneArgument(self):
+        """
+        Check that method only accepts one argument
+        """
+        # check setRenderWindowHeight
+        self.assertRaises(TypeError, self.ren.setRenderWindowHeight)
+        self.assertRaises(TypeError, self.ren.setRenderWindowHeight, 10, 20)
+
+        # check setRenderWindowWidth
+        self.assertRaises(TypeError, self.ren.setRenderWindowWidth)
+        self.assertRaises(TypeError, self.ren.setRenderWindowWidth, 10, 20)
+
+        # check addToEvalStack
+        self.assertRaises(TypeError, self.ren.addToEvalStack)
+        self.assertRaises(TypeError, self.ren.addToEvalStack, "moo", "baa")
+
+        # check addToInitStack
+        self.assertRaises(TypeError, self.ren.addToInitStack)
+        self.assertRaises(TypeError, self.ren.addToInitStack, "moo", "baa")
+
+    def testExactlyTwoArguments(self):
+        """
+        Check that method only accepts two arguments
+        """
+        self.assertRaises(TypeError, \
+                self.ren.setRenderWindowDimensions)
+        self.assertRaises(TypeError, \
+                self.ren.setRenderWindowDimensions, 12)
+        self.assertRaises(TypeError, \
+                self.ren.setRenderWindowDimensions, 12, 14, 16)
+
     def testRenderWindowDefaultDims(self):
         """
         Check render window default width and height
@@ -96,6 +127,24 @@ class TestRenderer(unittest.TestCase):
         height = 456
         self.ren.setRenderWindowDimensions(width, height)
         self.assertEqual(self.ren.getRenderWindowDimensions(), (width,height))
+
+    def testIntegerArgsToSet(self):
+        """
+        Test setting of integer arguments
+        """
+        self.assertRaises(AssertionError, \
+                self.ren.setRenderWindowWidth, "moo")
+        self.assertRaises(AssertionError, \
+                self.ren.setRenderWindowHeight, "moo")
+        self.assertRaises(AssertionError, \
+                self.ren.setRenderWindowDimensions, "moo", "baa")
+
+    def testStringArgsToSet(self):
+        """
+        Test setting of string arguments
+        """
+        self.assertRaises(AssertionError, self.ren.addToEvalStack, 10)
+        self.assertRaises(AssertionError, self.ren.addToInitStack, 10)
 
     def testGetEvalStack(self):
         """
