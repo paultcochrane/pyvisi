@@ -1137,13 +1137,14 @@ class BallPlot(Plot):
         # set the title if set
         if self.title is not None:
             # text properties
-            evalString = "_font_size = 14\n"  # this will need to be an option!!
+            evalString = "_font_size = 20\n"  # this will need to be an option!!
             evalString += "_textProp = vtk.vtkTextProperty()\n"
             evalString += "_textProp.SetFontSize(_font_size)\n"
             evalString += "_textProp.SetFontFamilyToArial()\n"
             evalString += "_textProp.BoldOff()\n"
             evalString += "_textProp.ItalicOff()\n"
             evalString += "_textProp.ShadowOff()\n"
+            evalString += "_textProp.SetColor(0,0,0)\n"
         
             # add a title
             evalString += "_titleMapper = vtk.vtkTextMapper()\n"
@@ -1153,6 +1154,7 @@ class BallPlot(Plot):
             evalString += "_titleProp.ShallowCopy(_textProp)\n"
             evalString += "_titleProp.SetJustificationToCentered()\n"
             evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            evalString += "_titleProp.BoldOn()\n"
             
             # set up the text actor
             evalString += "_titleActor = vtk.vtkTextActor()\n"
