@@ -141,7 +141,8 @@ class Renderer(object):
         debugMsg("Called Renderer.addToEvalStack()")
         # check that the argument is ok
         if __debug__:
-            assert isinstance(evalString, str)
+            assert isinstance(evalString, str), \
+                    "Incorrect data type; expected string"
 
         self._evalStack += evalString + '\n'
         return
