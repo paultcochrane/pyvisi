@@ -16,7 +16,6 @@ if method == 'pyvisi':
     # example code for how a user would write a script in pyvisi
     from pyvisi import *          # base level visualisation stuff
     # import the objects to render the scene using the specific renderer
-    #from pyvisi.renderers.gnuplot import *   # gnuplot
     from pyvisi.renderers.vtk import *       # vtk
     #from pyvisi.renderers.povray import *    # povray
     
