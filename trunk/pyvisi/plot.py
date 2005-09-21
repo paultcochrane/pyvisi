@@ -258,6 +258,43 @@ class ContourPlot(Plot):
 
         return
 
+class EllipsoidPlot(Plot):
+    """
+    Ellipsoid plot
+
+    This is the abstract base class of all EllipsoidPlot objects.  Renderer
+    modules must inherit and override the methods defined here.
+    """
+    def __init__(self, scene):
+        """
+        Initialisation of EllipsoidPlot class
+
+        @param scene: the scene with which to associate the EllipsoidPlot
+        @type scene: Scene object
+        """
+        Plot.__init__(self, scene)
+        debugMsg("Called EllipsoidPlot.__init__()")
+
+        if scene is None:
+            raise ValueError, "You must specify a scene object"
+
+    def setData(self, *dataList):
+        """
+        Set data to EllipsoidPlot
+
+        @param dataList: the data to set to the plot
+        @type dataList: tuple
+        """
+        debugMsg("Called setData() in EllipsoidPlot()")
+
+        if dataList is None:
+            raise ValueError, "You must specify a data list"
+
+        # print a warning message if get to here
+        overrideWarning("EllipsoidPlot.setData")
+
+        return
+
 class IsosurfacePlot(Plot):
     """
     Isosurface plot
