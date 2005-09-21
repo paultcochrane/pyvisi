@@ -45,6 +45,9 @@ def overrideWarning(methodName):
     print "           below, to get this problem fixed."
     print "\nMethod: %s()\n" % methodName
 
+    # barf
+    raise NotImplementedError, "Method not implemented by renderer"
+
     return
 
 def unsupportedError(rendererName):
