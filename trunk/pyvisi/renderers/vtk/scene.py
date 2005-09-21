@@ -112,11 +112,12 @@ class Scene(BaseScene):
             evalString += "_factImage.SetUseMesaClasses(1)\n"
             renderer.addToInitStack(evalString)
         else:
-            evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
-            evalString += "_factGraphics.SetUseMesaClasses(0)\n"
-            evalString += "_factImage = vtk.vtkImagingFactory()\n"
-            evalString += "_factImage.SetUseMesaClasses(0)\n"
-            renderer.addToInitStack(evalString)
+            #evalString = "_factGraphics = vtk.vtkGraphicsFactory()\n"
+            #evalString += "_factGraphics.SetUseMesaClasses(0)\n"
+            #evalString += "_factImage = vtk.vtkImagingFactory()\n"
+            #evalString += "_factImage.SetUseMesaClasses(0)\n"
+            #renderer.addToInitStack(evalString)
+            pass
 
         # set up the renderer and render window
         renderer.addToInitStack("_renderer = vtk.vtkRenderer()")
@@ -126,10 +127,26 @@ class Scene(BaseScene):
         evalString = "_renderWindow.SetSize(%d,%d)" % \
                 (renderer.renderWindowWidth,renderer.renderWindowHeight)
         renderer.addToInitStack(evalString)
+        renderer.addToInitStack("_renderer.SetBackground(1,1,1)")
 
         if save:
             evalString = "_renderWindow.OffScreenRenderingOn()\n"
             renderer.addToEvalStack(evalString)
+
+        # set up the lookup table properly
+        # we reverse the sense of the normal vtk lookup table as then red
+        # refers to high values and blue to low values which seems more
+        # natural and is more standard
+        # NOTE: we will probably need to make this an object at some stage
+        # so that we can set the ramp of the reference lookup table
+        evalString = "_lut = vtk.vtkLookupTable()\n"
+        evalString += "_refLut = vtk.vtkLookupTable()\n"
+        evalString += "_lut.Build()\n"
+        evalString += "_refLut.Build()\n"
+        evalString += "for _i in range(256):\n"
+        evalString += "    _lut.SetTableValue(_i, "
+        evalString += "_refLut.GetTableValue(255-_i))"
+        renderer.addToEvalStack(evalString)
 
         # if we have an interactive display, put some of the relevant code in
         if interactive:
