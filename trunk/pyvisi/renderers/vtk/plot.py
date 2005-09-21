@@ -1547,13 +1547,12 @@ class ContourPlot(Plot):
         # at some stage, but we'll hard code it here...)
         # I'll also need separate properties for axes, titles, labels etc...
         # but keep them all the same just to get this going
-        evalString = "_font_size = 20\n"
-        evalString += "_textProp = vtk.vtkTextProperty()\n"
-        evalString += "_textProp.SetFontSize(_font_size)\n"
+        evalString = "_textProp = vtk.vtkTextProperty()\n"
         evalString += "_textProp.SetFontFamilyToArial()\n"
         evalString += "_textProp.BoldOff()\n"
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
+        evalString += "_textProp.SetColor(0,0,0)\n"
         self.renderer.addToEvalStack(evalString)
 
         # set the title if set
@@ -1565,6 +1564,8 @@ class ContourPlot(Plot):
             evalString += "_titleProp.ShallowCopy(_textProp)\n"
             evalString += "_titleProp.SetJustificationToCentered()\n"
             evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            evalString += "_titleProp.SetFontSize(20)\n"
+            evalString += "_titleProp.BoldOn()\n"
             # make the actor for the title
             evalString += "_titleActor = vtk.vtkTextActor()\n"
             evalString += "_titleActor.SetMapper(_title)\n"
@@ -1585,6 +1586,7 @@ class ContourPlot(Plot):
         evalString += "_axes.SetFontFactor(0.8)\n"
         evalString += "_axes.SetAxisTitleTextProperty(_textProp)\n"
         evalString += "_axes.SetAxisLabelTextProperty(_textProp)\n"
+        evalString += "_axes.GetProperty().SetColor(0,0,0)\n"
         # this next line sets the Z axis visibility off!!  Is a bug in vtk
         # 4.2, dunno how am going to handle this if it is fixed in later
         # versions of vtk
@@ -1616,7 +1618,12 @@ class ContourPlot(Plot):
         evalString += "_scalarBar.SetWidth(0.1)\n"
         evalString += "_scalarBar.SetHeight(0.7)\n"
         evalString += "_scalarBar.SetPosition(0.9, 0.2)\n"
-        
+
+        # set up the label text properties 
+        evalString += "_scalarBarTextProp = _scalarBar.GetLabelTextProperty()\n"
+        evalString += "_scalarBarTextProp.ShallowCopy(_textProp)\n"
+        evalString += "_scalarBarTextProp.SetFontSize(10)\n"
+    
         # add the scalar bar to the scene
         evalString += "_renderer.AddActor(_scalarBar)\n"
         self.renderer.addToEvalStack(evalString)
