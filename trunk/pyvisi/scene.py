@@ -169,8 +169,8 @@ class Scene(object):
 
         # now check the type of arguments sent in
         if __debug__:
-            assert isinstance(fname, str)
-            assert isinstance(format, str)
+            assert isinstance(fname, str),  "Incorrect data type; expected str"
+            assert isinstance(format, str), "Incorrect data type; expected str"
 
         # do a check to see if the file exists
         fileCheck(fname)
@@ -249,8 +249,8 @@ class Scene(object):
 
         # make sure that the arguments are the right kind of thing
         if __debug__:
-            assert isinstance(xSize, int)
-            assert isinstance(ySize, int)
+            assert isinstance(xSize, int), "Incorrect data type; expected int"
+            assert isinstance(ySize, int), "Incorrect data type; expected int"
 
         self.xSize = xSize
         self.ySize = ySize
@@ -278,7 +278,7 @@ class Scene(object):
         debugMsg("Called Scene.rendererCommand()")
         # check that we get a string as input
         if __debug__:
-            assert isinstance(command, str)
+            assert isinstance(command, str), "Incorrect data type; expected str"
 
         evalString = "%s" % command
         self.renderer.addToEvalStack(evalString)
