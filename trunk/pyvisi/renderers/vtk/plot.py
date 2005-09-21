@@ -1625,7 +1625,7 @@ class EllipsoidPlot(Plot):
     """
     Ellipsoid plot
     """
-    def __init(self, scene):
+    def __init__(self, scene):
         """
         Initialisation of the EllipsoidPlot class
 
@@ -1646,6 +1646,188 @@ class EllipsoidPlot(Plot):
 
         # add the plot to the scene
         scene.add(self)
+
+    def setData(self, *dataList, **options):
+        """
+        Set data to the plot
+
+        @param dataList: List of data to set to the plot
+        @type dataList: tuple
+
+        @param options: Dictionary of keyword options to the method
+        @type options: dict
+        """
+        debugMsg("Called setData() in EllipsoidPlot()")
+
+        self.renderer.addToEvalStack("# EllipsoidPlot.setData()")
+
+        # process the options, if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+
+        # do a quick sanity check on the inputs
+        if fname is None or format is None:
+            raise ValueError, "You must supply an input file and its format"
+
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
+
+        # check to see if the file exists
+        if not os.path.exists(fname):
+            raise SystemError, "File %s not found" % fname
+
+        if format == 'vtk':
+            # read old-style vtk files
+            evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+        elif format == 'vtk-xml':
+            # read vtk xml files
+            evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+        else:
+            # barf
+            raise ValueError, "Unknown format.  I got %s" % format
+
+        evalString += "_reader.SetFileName(\"%s\")\n" % fname
+        evalString += "_reader.Update()"
+
+        self.renderer.addToEvalStack(evalString)
+
+        # grab the grid of the data
+        self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
+
+        # convert the cell data to point data
+        evalString = "_c2p = vtk.vtkCellDataToPointData()\n"
+        evalString += "_c2p.SetInput(_grid)"
+        self.renderer.addToEvalStack(evalString)
+
+        # now extract the tensor components
+        evalString = "_extract = vtk.vtkExtractTensorComponents()\n"
+        evalString += "_extract.SetInput(_c2p.GetOutput())\n"
+        evalString += "_extract.SetScalarModeToEffectiveStress()\n"
+        evalString += "_extract.ExtractScalarsOn()\n"
+        evalString += "_extract.PassTensorsToOutputOn()\n"
+        evalString += "_extract.ScalarIsEffectiveStress()\n"
+
+        evalString += "_extractGrid = _extract.GetOutput()\n"
+        evalString += "_extractGrid.Update()\n"
+        evalString += "_extractScalarRange = "
+        evalString += "_extractGrid.GetPointData().GetScalars().GetRange()\n"
+        self.renderer.addToEvalStack(evalString)
+
+        return
+
+    def render(self):
+        """
+        Does EllipsoidPlot object specific (pre)rendering stuff
+        """
+        debugMsg("Called EllipsoidPlot.render()")
+
+        self.renderer.addToEvalStack("# EllipsoidPlot.render()")
+
+        # make a sphere source for the glyphs
+        evalString = "_sphere = vtk.vtkSphereSource()\n"
+        evalString += "_sphere.SetThetaResolution(6)\n"
+        evalString += "_sphere.SetPhiResolution(6)\n"
+        evalString += "_sphere.SetRadius(0.5)"
+        self.renderer.addToEvalStack(evalString)
+
+        # make tensor glyphs
+        evalString = "_glyph = vtk.vtkTensorGlyph()\n"
+        evalString += "_glyph.SetSource(_sphere.GetOutput())\n"
+        evalString += "_glyph.SetInput(_extractGrid)\n"
+        evalString += "_glyph.SetColorModeToScalars()\n"
+        evalString += "_glyph.ScalingOn()\n"
+        evalString += "_glyph.SetMaxScaleFactor(5.0)\n"
+        evalString += "_glyph.SetScaleFactor(1.0)\n"
+        evalString += "_glyph.ClampScalingOn()"
+        self.renderer.addToEvalStack(evalString)
+
+        # make a stripper for faster rendering
+        evalString = "_stripper = vtk.vtkStripper()\n"
+        evalString += "_stripper.SetInput(_glyph.GetOutput())"
+        self.renderer.addToEvalStack(evalString)
+
+        # make the normals of the data
+        evalString = "_normals = vtk.vtkPolyDataNormals()\n"
+        evalString += "_normals.SetInput(_stripper.GetOutput())"
+        self.renderer.addToEvalStack(evalString)
+
+        # make the mapper for the data
+        evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
+        evalString += "_mapper.SetInput(_normals.GetOutput())\n"
+        evalString += "_mapper.SetLookupTable(_lut)\n"
+        evalString += "_mapper.SetScalarRange(_extractScalarRange)"
+        self.renderer.addToEvalStack(evalString)
+
+        # make the actor
+        evalString = "_actor = vtk.vtkActor()\n"
+        evalString += "_actor.SetMapper(_mapper)"
+        self.renderer.addToEvalStack(evalString)
+
+        # add the actor
+        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+
+        # set up the text properties for nice text
+        evalString = "_textProp = vtk.vtkTextProperty()\n"
+        evalString += "_textProp.SetFontFamilyToArial()\n"
+        evalString += "_textProp.BoldOff()\n"
+        evalString += "_textProp.ItalicOff()\n"
+        evalString += "_textProp.ShadowOff()\n"
+        evalString += "_textProp.SetColor(0.0, 0.0, 0.0)"
+        self.renderer.addToEvalStack(evalString)
+
+        # if a title is set, put it in here
+        if self.title is not None:
+            # make a title
+            evalString = "_title = vtk.vtkTextMapper()\n"
+            evalString += "_title.SetInput(\"%s\")\n" % self.title
+
+            # make the title text use the text properties
+            evalString += "_titleProp = _title.GetTextProperty()\n"
+            evalString += "_titleProp.ShallowCopy(_textProp)\n"
+            evalString += "_titleProp.SetJustificationToCentered()\n"
+            evalString += "_titleProp.SetVerticalJustificationToTop()\n"
+            evalString += "_titleProp.SetFontSize(20)\n"
+            evalString += "_titleProp.BoldOn()\n"
+
+            # make the actor for the title
+            evalString += "_titleActor = vtk.vtkTextActor()\n"
+            evalString += "_titleActor.SetMapper(_title)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5, 0.95)"
+            self.renderer.addToEvalStack(evalString)
+
+            # add to the renderer
+            evalString = "_renderer.AddActor(_titleActor)"
+            self.renderer.addToEvalStack(evalString)
+
+        # add a scalar bar
+        evalString = "_scalarBar = vtk.vtkScalarBarActor()\n"
+        evalString += "_scalarBar.SetLookupTable(_lut)\n"
+        evalString += "_scalarBar.SetWidth(0.1)\n"
+        evalString += "_scalarBar.SetHeight(0.8)\n"
+        evalString += "_scalarBar.SetPosition(0.9, 0.15)"
+        self.renderer.addToEvalStack(evalString)
+
+        # set up the label text properties 
+        evalString = "_scalarBarTextProp = _scalarBar.GetLabelTextProperty()\n"
+        evalString += "_scalarBarTextProp.ShallowCopy(_textProp)\n"
+        evalString += "_scalarBarTextProp.SetFontSize(10)\n"
+
+        evalString += "_renderer.AddActor(_scalarBar)"
+        self.renderer.addToEvalStack(evalString)
+
+        return
 
 class IsosurfacePlot(Plot):
     """
