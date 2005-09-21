@@ -141,10 +141,10 @@ class Scene(object):
 
         # this is just to stop lint from complaining that pause and
         # interactive aren't used
-        if pause is None:
+        if pause is not True or pause is not False:
             raise ValueError, "\'pause\' must be either True or False"
 
-        if interactive is None:
+        if interactive is not True or pause is not False:
             raise ValueError, "\'interactive\' must be either True or False"
 
         return
@@ -161,11 +161,19 @@ class Scene(object):
         """
         debugMsg("Called Scene.save()")
 
+        if fname is None or fname == "":
+            raise ValueError, "You must specify an output filename"
+
+        if format is None or format == "":
+            raise ValueError, "You must specify an image format"
+
+        # now check the type of arguments sent in
+        if __debug__:
+            assert isinstance(fname, str)
+            assert isinstance(format, str)
+
         # do a check to see if the file exists
         fileCheck(fname)
-
-        if format is None:
-            raise ValueError, "You must specify an image format"
 
         # print a warning message if get to here
         overrideWarning("Scene.save")
@@ -232,12 +240,17 @@ class Scene(object):
         This size is effectively the renderer window size.
 
         @param xSize: the size to set the x dimension
-        @type xSize: float
+        @type xSize: int
 
         @param ySize: the size to set the y dimension
-        @type ySize: float
+        @type ySize: int
         """
         debugMsg("Called Scene.setSize()")
+
+        # make sure that the arguments are the right kind of thing
+        if __debug__:
+            assert isinstance(xSize, int)
+            assert isinstance(ySize, int)
 
         self.xSize = xSize
         self.ySize = ySize
@@ -263,7 +276,11 @@ class Scene(object):
         @type command: string
         """
         debugMsg("Called Scene.rendererCommand()")
-        evalString = "%s\n" % command
+        # check that we get a string as input
+        if __debug__:
+            assert isinstance(command, str)
+
+        evalString = "%s" % command
         self.renderer.addToEvalStack(evalString)
         return
 
