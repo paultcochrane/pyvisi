@@ -24,7 +24,7 @@ Class and functions associated with a pyvisi Plot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-from Numeric import *
+import Numeric
 import os
 
 # module specific imports
@@ -357,8 +357,10 @@ class ArrowPlot(Plot):
             # set up the text actor
             evalString += "_titleActor = vtk.vtkTextActor()\n"
             evalString += "_titleActor.SetMapper(_titleMapper)\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
             self.renderer.addToEvalStack(evalString)
@@ -367,7 +369,8 @@ class ArrowPlot(Plot):
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
         evalString += "_axes.SetCamera(_renderer.GetActiveCamera())\n"
         evalString += "_axes.SetFlyModeToOuterEdges()\n"
-        evalString += "_axes.SetBounds(min(_x), max(_x)+_maxNorm, min(_y), max(_y)+_maxNorm, 0, 0)\n"
+        evalString += "_axes.SetBounds(min(_x), max(_x)+_maxNorm, "
+        evalString += "min(_y), max(_y)+_maxNorm, 0, 0)\n"
 
         if self.xlabel is None:
             evalString += "_axes.SetXLabel(\"\")\n"
@@ -426,6 +429,10 @@ class ArrowPlot3D(Plot):
 
         self.renderer.addToEvalStack("# ArrowPlot3D.__init__()")
 
+        # default values for fname and format
+        self.fname = None
+        self.format = None
+
         # add the plot to the scene
         scene.add(self)
 
@@ -478,8 +485,10 @@ class ArrowPlot3D(Plot):
         if len(dataList) != 0 and fname is None and format is None:
             # do some sanity checking on the data
             if len(dataList) != 6:
-                raise ValueError, \
-                        "Must have six vectors as input: x, y, z, dx, dy, dz, found: %d" % len(dataList)
+                errorStr = "Must have six vectors as input: x, y, z, "
+                errorStr += "dx, dy, dz, found: %d" % len(dataList)
+                raise ValueError, errorStr
+                        
     
             for i in range(len(dataList)):
                 if len(dataList[i].shape) != len(dataList[0].shape):
@@ -721,8 +730,10 @@ class ArrowPlot3D(Plot):
             # set up the text actor
             evalString += "_titleActor = vtk.vtkTextActor()\n"
             evalString += "_titleActor.SetMapper(_titleMapper)\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
             self.renderer.addToEvalStack(evalString)
@@ -961,7 +972,7 @@ class BallPlot(Plot):
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
             for i in range(numPoints):
                 point = points[i]
-                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" %\
+                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
                         (i, point[0], point[1], point[2])
             self.renderer.addToEvalStack(evalString)
 
@@ -997,7 +1008,7 @@ class BallPlot(Plot):
                 tagValues = range(numRadii)
                 numTags = numRadii
 
-                tags = zeros(numPoints, typecode=Int)
+                tags = Numeric.zeros(numPoints, typecode=Numeric.Int)
                 for i in range(numPoints):
                     for j in range(numTags):
                         if radiiKeys[j] == str(radii[i]):
@@ -1033,7 +1044,7 @@ class BallPlot(Plot):
             self.renderer.addToEvalStack(evalString)
 
             # now scale the tags
-            scaledTags = zeros(numPoints, typecode=Float)
+            scaledTags = Numeric.zeros(numPoints, typecode=Numeric.Float)
             if numTags == 1:
                 pass
             else:
@@ -1159,8 +1170,10 @@ class BallPlot(Plot):
             # set up the text actor
             evalString += "_titleActor = vtk.vtkTextActor()\n"
             evalString += "_titleActor.SetMapper(_titleMapper)\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()\n"
-            evalString += "_titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
+            evalString += "_titleActor.GetPositionCoordinate()."
+            evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
             self.renderer.addToEvalStack(evalString)
@@ -1182,6 +1195,13 @@ class ContourPlot(Plot):
         Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
+
+        # default values for shared info
+        self.fname = None
+        self.format = None
+        self.scalars = None
+        self.escriptData = False
+        self.otherData = False
 
         # add the plot to the scene
         scene.add(self)
@@ -1252,9 +1272,9 @@ class ContourPlot(Plot):
         otherData = False
         self.escriptData = False
         self.otherData = False
-        for object in dataList:
+        for obj in dataList:
             try:
-                object.convertToNumArray()
+                obj.convertToNumArray()
                 # ok, we've got escript data, set the flag
                 escriptData = True
                 self.escriptData = True
@@ -1298,12 +1318,12 @@ class ContourPlot(Plot):
             if len(dataList) == 1:
                 # only one data variable, will need to get the domain from it
                 ### the capital letter denotes this is an escript object
-                Z = dataList[0]
-                X = Z.getDomain().getX()
+                escriptZ = dataList[0]
+                escriptX = escriptZ.getDomain().getX()
             elif len(dataList) == 2:
                 # first variable should be the domain, the second the data
-                X = dataList[0]
-                Z = dataList[1]
+                escriptX = dataList[0]
+                escriptZ = dataList[1]
             else:
                 errorString = \
                         "Expecting 1 or 2 elements in data list.  I got: %d" \
@@ -1311,9 +1331,9 @@ class ContourPlot(Plot):
                 raise ValueError, errorString
 
             # convert the data to numarray
-            xData = X[0].convertToNumArray()
-            yData = X[1].convertToNumArray()
-            zData = Z.convertToNumArray()
+            xData = escriptX[0].convertToNumArray()
+            yData = escriptX[1].convertToNumArray()
+            zData = escriptZ.convertToNumArray()
 
             # pass the data through to the pyvisi renderer
             ### the x data
@@ -1380,7 +1400,7 @@ class ContourPlot(Plot):
                 yData = range(1, zShape[1]+1)
                 # check was created correctly just in case
                 if len(xData) != zShape[0]:
-                    raise ValueError,\
+                    raise ValueError, \
                         "Autogenerated xData not equal to first dim of zData"
                 if len(yData) != zShape[1]:
                     raise ValueError, \
@@ -1401,15 +1421,15 @@ class ContourPlot(Plot):
 
             # check the shapes of the data
             if len(xData.shape) != 1:
-                raise ValueError, "x data array is not of correct shape: %s"%\
+                raise ValueError, "x data array is not of correct shape: %s"% \
                         xData.shape
 
             if len(yData.shape) != 1:
-                raise ValueError, "y data array is not of correct shape: %s"%\
+                raise ValueError, "y data array is not of correct shape: %s"% \
                         yData.shape
 
             if len(zData.shape) != 2:
-                raise ValueError, "z data array is not of correct shape: %s"%\
+                raise ValueError, "z data array is not of correct shape: %s"% \
                         zData.shape
 
             # stringify the data to then pass to the renderer
@@ -1652,6 +1672,10 @@ class EllipsoidPlot(Plot):
         self.xlabel = None
         self.ylabel = None
         self.zlabel = None
+        
+        # default values for fname anf format
+        self.fname = None
+        self.format = None
 
         # add the plot to the scene
         scene.add(self)
@@ -1868,6 +1892,10 @@ class IsosurfacePlot(Plot):
         self.contMin = None
         self.contMax = None
 
+        # default values for fname and format
+        self.fname = None
+        self.format = None
+
         # add the plot to the scene
         scene.add(self)
 
@@ -1951,22 +1979,22 @@ class IsosurfacePlot(Plot):
         # if contMin and contMax are or aren't set then handle the different
         # situations
         if self.contMin is not None and self.contMax is not None:
-            evalString += "_cont.GenerateValues(%d, %f, %f)\n" %\
+            evalString += "_cont.GenerateValues(%d, %f, %f)\n" % \
                     (self.numContours, self.contMin, self.contMax)
         elif self.contMin is not None and self.contMax is None:
             evalString += "(_contMin, _contMax) = _reader.GetOutput()."
             evalString += "GetPointData().GetScalars().GetRange()\n"
-            evalString += "_cont.GenerateValues(%d, %f, _contMax)\n" %\
+            evalString += "_cont.GenerateValues(%d, %f, _contMax)\n" % \
                     (self.numContours, self.contMin)
         elif self.contMin is None and self.contMax is not None:
             evalString += "(_contMin, _contMax) = _reader.GetOutput()."
             evalString += "GetPointData().GetScalars().GetRange()\n"
-            evalString += "_cont.GenerateValues(%d, _contMin, %f)\n" %\
+            evalString += "_cont.GenerateValues(%d, _contMin, %f)\n" % \
                     (self.numContours, self.contMax)
         elif self.contMin is None and self.contMax is None:
             evalString += "(_contMin, _contMax) = _reader.GetOutput()."
             evalString += "GetPointData().GetScalars().GetRange()\n"
-            evalString += "_cont.GenerateValues(%d, _contMin, _contMax)\n" %\
+            evalString += "_cont.GenerateValues(%d, _contMin, _contMax)\n" % \
                     (self.numContours)
         else:
             # barf, really shouldn't have got here
