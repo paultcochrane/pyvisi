@@ -44,15 +44,31 @@ class Plane(Item):
 
         self.renderer = scene.renderer
 
-    def setOrigin(self):
+    def setOrigin(self, x, y, z):
         """
-        Set the origin of a plane
+        Set the origin of the plane
         """
+        self.origin = (x, y, z)
+        return
 
-    def setNormal(self):
+    def getOrigin(self):
         """
-        Set the normal to the plane surface
+        Get the current origin of the plane
         """
+        return self.origin
+
+    def setNormal(self, vx, vy, vz):
+        """
+        Set the normal vector to the plane
+        """
+        self.normal = (vx, vy, vz)
+        return
+
+    def getNormal(self):
+        """
+        Get the current normal vector to the plane
+        """
+        return self.normal
 
     def mapImageToPlane(self, image):
         # this really needs to go somewhere else!!!
@@ -92,17 +108,19 @@ class Plane(Item):
 
 class CutPlane(Plane):
     """
-    Class for planes used to cut through datasets
+    Cut plane class: used to cut data sets with a plane
+
+    Cut plane objects define a plane to cut a data set or plot by and return
+    the data along the intersection between the data set or plot with the
+    defined plane.
     """
 
-    def __init__(self, scene):
+    def __init__(self):
         """
         Intialisation of the CutPlane object
         """
         debugMsg("Called CutPlane.__init__()")
         Plane.__init__(self)
-
-        self.renderer = scene.renderer
 
 
 class ClipPlane(Plane):
@@ -110,14 +128,27 @@ class ClipPlane(Plane):
     Class for planes used to clip datasets
     """
 
-    def __init__(self, scene):
+    def __init__(self):
         """
         Intialisation of the ClipPlane object
         """
         debugMsg("Called ClipPlane.__init__()")
         Plane.__init__(self)
 
-        self.renderer = scene.renderer
+        # set the default inside out flag value
+        self.insideOut = False
 
+    def setInsideOut(self, insideOut):
+        """
+        Set the inside out flag
+        """
+        self.insideOut = insideOut
+        return
+
+    def getInsideOut(self):
+        """
+        Get the current value of the inside out flag
+        """
+        return self.insideOut
 
 # vim: expandtab shiftwidth=4:
