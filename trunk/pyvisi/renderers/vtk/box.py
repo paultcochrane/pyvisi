@@ -47,26 +47,125 @@ class Box(Item):
         # keep a reference to the renderer so we can send stuff to it
         self.renderer = scene.renderer
 
+        # set the default bounds
+        self.xmin = -0.5
+        self.xmax = 0.5
+        self.ymin = -0.5
+        self.ymax = 0.5
+        self.zmin = -0.5
+        self.zmax = 0.5
+
         # set the default origin
-        self.origin = (0.0, 0.0, 0.0)
+        self.origin = ((self.xmin + self.xmax)/2.0, 
+                (self.ymin + self.ymax)/2.0, 
+                (self.zmin + self.zmax)/2.0)
 
         # set the default dimensions
-        self.width = 1.0
-        self.height = 1.0
-        self.depth = 1.0
+        self.width = self.xmax - self.xmin
+        self.height = self.ymax - self.ymin
+        self.depth = self.zmax - self.zmin
 
-    def setOrigin(self, x, y, z):
+        # set the default blf and trb points
+        self.blf = (self.xmin, self.ymin, self.zmin)
+        self.trb = (self.xmax, self.ymax, self.zmax)
+
+    def setBounds(self, xmin, xmax, ymin, ymax, zmin, zmax):
         """
-        Set the origin of the plane
+        Set the bounds of the box
         """
-        self.origin = (x, y, z)
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+        self.zmin = zmin
+        self.zmax = zmax
+        return
+
+    def getBounds(self):
+        """
+        Get the current bounds of the box
+        """
+        return (self.xmin, self.xmax, \
+                self.ymin, self.ymax, \
+                self.zmin, self.zmax)
+
+    def setOrigin(self, xo, yo, zo):
+        """
+        Set the origin of the box
+        """
+        self.origin = (xo, yo, zo)
         return
 
     def getOrigin(self):
         """
-        Get the current origin of the plane
+        Get the current origin of the box
         """
         return self.origin
+
+    def setWidth(self, width):
+        """
+        Set the width of the box
+        """
+        self.width = width
+        return
+
+    def getWidth(self):
+        """
+        Get the current box width
+        """
+        return self.width
+
+    def setHeight(self, height):
+        """
+        Set the box height
+        """
+        self.height = height
+        return
+
+    def getHeight(self):
+        """
+        Get the current box height
+        """
+        return self.height
+
+    def setDepth(self, depth):
+        """
+        Set the box depth
+        """
+        self.depth = depth
+        return
+
+    def getDepth(self):
+        """
+        Get the current box depth
+        """
+        return self.depth
+
+    def setBLF(self, bottom, left, front):
+        """
+        Set the position of the bottom, left, front corner
+        """
+        self.blf = (bottom, left, front)
+        return
+
+    def getBLF(self):
+        """
+        Get the current position of the bottom, left, front corner
+        """
+        return self.blf
+
+    def setTRB(self, top, right, back):
+        """
+        Set the position of the top, right, back corner
+        """
+        self.trb = (top, right, back)
+        return
+
+    def getTRB(self):
+        """
+        Get the current position of the top, right, back corner
+        """
+        return self.trb
 
     def render(self):
         """
