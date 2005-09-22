@@ -40,7 +40,33 @@ class Box(Item):
         debugMsg("Called Box.__init__()")
         Item.__init__(self)
 
+        # define a box in many ways, either by its centre and width, height
+        # and depth, or by its bounds, xmin, xmax, ymin, ymax, zmin, zmax,
+        # or by its bottom left front and top right back points.
+
+        # keep a reference to the renderer so we can send stuff to it
         self.renderer = scene.renderer
+
+        # set the default origin
+        self.origin = (0.0, 0.0, 0.0)
+
+        # set the default dimensions
+        self.width = 1.0
+        self.height = 1.0
+        self.depth = 1.0
+
+    def setOrigin(self, x, y, z):
+        """
+        Set the origin of the plane
+        """
+        self.origin = (x, y, z)
+        return
+
+    def getOrigin(self):
+        """
+        Get the current origin of the plane
+        """
+        return self.origin
 
     def render(self):
         """
@@ -49,34 +75,35 @@ class Box(Item):
         debugMsg("Called Box.render()")
 
 
-class CutBox(Box):
-    """
-    Class for boxes used to cut through datasets
-    """
-
-    def __init__(self, scene):
-        """
-        Intialisation of the CutBox object
-        """
-        debugMsg("Called CutBox.__init__()")
-        Plane.__init__(self)
-
-        self.renderer = scene.renderer
-
-
 class ClipBox(Box):
     """
-    Class for boxes used to clip datasets
+    Clip box class: used to clip data sets with a box
+
+    A box in this sense means three planes at right angles to one another
     """
 
-    def __init__(self, scene):
+    def __init__(self):
         """
         Intialisation of the ClipBox object
         """
         debugMsg("Called ClipBox.__init__()")
-        Plane.__init__(self)
+        Box.__init__(self)
 
-        self.renderer = scene.renderer
+        # set the default inside out flag value
+        self.insideOut = False
+
+    def setInsideOut(self, insideOut):
+        """
+        Set the inside out flag
+        """
+        self.insideOut = insideOut
+        return
+
+    def getInsideOut(self):
+        """
+        Get the current value of the inside out flag
+        """
+        return self.insideOut
 
 
 # vim: expandtab shiftwidth=4:
