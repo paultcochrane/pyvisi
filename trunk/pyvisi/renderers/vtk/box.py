@@ -31,6 +31,11 @@ __revision__ = '$Revision$'
 class Box(Item):
     """
     Generic class for Box objects
+
+    To define a box one specify one of three groups of things:
+      - The bounds of the box: xmin, xmax, ymin, ymax, zmin, zmax
+      - The dimensions and origin: width, height, depth and origin
+      - The bottom left front and top right back corners: blf, trb
     """
 
     def __init__(self, scene):
@@ -55,7 +60,7 @@ class Box(Item):
         self.zmin = -0.5
         self.zmax = 0.5
 
-        # set the default origin
+        # set the default origin (the centre of the box)
         self.origin = ((self.xmin + self.xmax)/2.0, 
                 (self.ymin + self.ymax)/2.0, 
                 (self.zmin + self.zmax)/2.0)
@@ -93,7 +98,35 @@ class Box(Item):
         """
         Set the origin of the box
         """
-        self.origin = (xo, yo, zo)
+        # get the current origin
+        (xi, yi, zi) = self.getOrigin()
+
+        # get the current bounds
+        (xmin, xmax, ymin, ymax, zmin, zmax) = self.getBounds()
+
+        # get the difference between the two origins
+        (xd, yd, zd) = (xo-xi, yo-yi, zo-zi)
+
+        # move the bounds accordingly
+        self.setBounds(xmin+xd, xmax+xd, ymin+yd, ymax+yd, zmin+zd, zmax+zd)
+
+        # the calculated origin should be the same as the one desired to be
+        # set by the user
+        (xmin, xmax, ymin, ymax, zmin, zmax) = self.getBounds()
+        self.origin = ((xmin + xmax)/2.0,
+                (ymin + ymax)/2.0,
+                (zmin + zmax)/2.0)
+        
+        # do a check to see if calculated origin is close enough to that
+        # desired by the user (to within the tolerance)
+        if __debug__:
+            tolerance = 1e-8
+            (xi, yi, zi) = self.getOrigin()
+            originDiff = (xo-xi, yo-yi, zo-zi)
+            for i in range(3):
+                assert abs(originDiff[i]) < tolerance, \
+                        "Origin not set to within tolerance"
+
         return
 
     def getOrigin(self):
@@ -106,7 +139,32 @@ class Box(Item):
         """
         Set the width of the box
         """
-        self.width = width
+        # get the current width
+        oldWidth = self.getWidth()
+
+        # get the current bounds
+        (xmin, xmax, ymin, ymax, zmin, zmax) = self.getBounds()
+
+        # add half the difference between the new width and the old width
+        # to the xmin and xmax variables
+        halfDiff = (width - oldWidth)/2.0
+
+        xminNew = xmin - halfDiff
+        xmaxNew = xmax + halfDiff
+
+        # reset the bounds
+        self.setBounds(xminNew, xmaxNew, ymin, ymax, zmin, zmax)
+
+        # set the width
+        self.width = xmaxNew - xminNew
+
+        # do a check to make sure the calculated width is what was asked for
+        if __debug__:
+            tolerance = 1e-8
+            newWidth = self.getWidth()
+            assert abs(newWidth - width) < tolerance, \
+                    "Width not set to within tolerance"
+
         return
 
     def getWidth(self):
