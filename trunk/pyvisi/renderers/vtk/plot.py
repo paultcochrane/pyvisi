@@ -55,6 +55,9 @@ class Plot(Item):
         self.ylabel = None
         self.zlabel = None
 
+        # list of objects registered with this plot object
+        self.objectList = []
+
     def setData(self, *dataList):
         """
         Set data to the plot
@@ -142,6 +145,18 @@ class Plot(Item):
             self.zlabel = label
         else:
             raise ValueError, "axis must be x or y or z"
+
+        return
+
+    def _register(self, object):
+        """
+        Register the given object with the plot object
+
+        This is useful for keeping track of the objects being used to clip
+        the current plot object, and for inserting the appropriate code.
+        """
+        debugMsg("Called Plot._register()")
+        self.objectList.append(object)
 
         return
 
@@ -1122,12 +1137,21 @@ class BallPlot(Plot):
 
         # set up a stripper (this will speed up rendering)
         evalString = "_stripper = vtk.vtkStripper()\n"
-        evalString += "_stripper.SetInput(_glyph.GetOutput())"
+        evalString += "_stripper.SetInput(_glyph.GetOutput())\n"
+
+        # denote the stripper as being before the mapper by default, and let
+        # subsequent objects redefine this if necessary
+        evalString += "_preMapper = _stripper"
         self.renderer.addToEvalStack(evalString)
+
+        # if any clip objects etc are registered, then get them to render
+        # themselves here
+        for obj in self.objectList:
+            obj.render()
 
         # set up the mapper
         evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
-        evalString += "_mapper.SetInput(_stripper.GetOutput())\n"
+        evalString += "_mapper.SetInput(_preMapper.GetOutput())\n"
         evalString += "_mapper.ScalarVisibilityOn()\n"
         # note: this is for vtk 4.2, 4.4 (4.5 and above have a better
         # technique to colour the scalars, but that version isn't yet
