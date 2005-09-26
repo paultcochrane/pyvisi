@@ -38,7 +38,7 @@ class Box(Item):
       - The bottom left front and top right back corners: blf, trb
     """
 
-    def __init__(self, scene):
+    def __init__(self):
         """
         Initialisation of the Box object
         """
@@ -48,9 +48,6 @@ class Box(Item):
         # define a box in many ways, either by its centre and width, height
         # and depth, or by its bounds, xmin, xmax, ymin, ymax, zmin, zmax,
         # or by its bottom left front and top right back points.
-
-        # keep a reference to the renderer so we can send stuff to it
-        self.renderer = scene.renderer
 
         # set the default bounds
         self.xmin = -0.5
@@ -319,21 +316,29 @@ class ClipBox(Box):
     A box in this sense means three planes at right angles to one another
     """
 
-    def __init__(self):
+    def __init__(self, plot):
         """
         Intialisation of the ClipBox object
         """
         debugMsg("Called ClipBox.__init__()")
+        plot.renderer.addToEvalStack("# ClipBox.__init__()")
         Box.__init__(self)
+
+        # register the clip object with the plot
+        plot._register(self)
 
         # set the default inside out flag value
         self.insideOut = False
+
+        # keep a reference to the plot object for the other methods
+        self.plot = plot
 
     def setInsideOut(self, insideOut):
         """
         Set the inside out flag
         """
         debugMsg("Called ClipBox.setInsideOut()")
+        self.plot.renderer.addToEvalStack("# ClipBox.setInsideOut()")
         self.insideOut = insideOut
         return
 
@@ -342,6 +347,7 @@ class ClipBox(Box):
         Get the current value of the inside out flag
         """
         debugMsg("Called ClipBox.getInsideOut()")
+        self.plot.renderer.addToEvalStack("# ClipBox.getInsideOut()")
         return self.insideOut
 
     def render(self):
@@ -349,8 +355,23 @@ class ClipBox(Box):
         Perform ClipBox object specific (pre)rendering tasks
         """
         debugMsg("Called ClipBox.render()")
+        self.plot.renderer.addToEvalStack("# ClipBox.render()")
+        evalString = "_planes = vtk.vtkPlanes()\n"
+        evalString += "_planes.SetBounds(%f, %f, %f, %f, %f, %f)\n" % \
+                self.getBounds()
+        evalString += "_clipper = vtk.vtkClipPolyData()\n"
+        evalString += "_clipper.SetClipFunction(_planes)\n"
+        evalString += "_clipper.SetInput(_stripper.GetOutput())"
+        self.plot.renderer.addToEvalStack(evalString)
+
+        if self.insideOut:
+            self.plot.renderer.addToEvalStack("_clipper.InsideOutOn()")
+        else:
+            self.plot.renderer.addToEvalStack("_clipper.InsideOutOff()")
+
+        # the clipper is now the thing before the mapper
+        self.plot.renderer.addToEvalStack("_preMapper = _clipper")
+
         return
-
-
 
 # vim: expandtab shiftwidth=4:
