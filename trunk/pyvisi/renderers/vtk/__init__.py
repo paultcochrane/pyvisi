@@ -43,5 +43,6 @@ from pyvisi.renderers.vtk.image import Image, \
 from pyvisi.renderers.vtk.text import Text
 from pyvisi.renderers.vtk.axes import Axes
 from pyvisi.renderers.vtk.plane import Plane
+from pyvisi.renderers.vtk.box import Box, ClipBox
 
 # vim: expandtab shiftwidth=4:
