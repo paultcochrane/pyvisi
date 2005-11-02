@@ -64,7 +64,7 @@ class Scene(BaseScene):
         if obj is None:
             raise ValueError, "You must specify an object to add"
 
-        self.renderer.addToEvalStack("# Scene.add()")
+        self.renderer.runString("# Scene.add()")
         self.objectList.append(obj)
 
         return
@@ -105,7 +105,7 @@ class Scene(BaseScene):
             print "Setting interactive to false"
             interactive = False
 
-        renderer.addToEvalStack("# Scene.render()")
+        renderer.runString("# Scene.render()")
 
         # get object added to the scene to render itself
         for obj in self.objectList:
@@ -113,7 +113,7 @@ class Scene(BaseScene):
         
         # add some code to pause after rendering if asked to
         if pause:
-            renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
+            renderer.runString("raw_input(\"Press enter to continue\")")
 
         # prepend the init stack to the eval stack
         self.renderer._evalStack = self.renderer._initStack + \
@@ -159,7 +159,7 @@ class Scene(BaseScene):
         @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
-        self.renderer.addToEvalStack("# Scene.save()")
+        self.renderer.runString("# Scene.save()")
 
         # if the format is passed in as a string or object, react
         # appropriately
@@ -171,14 +171,14 @@ class Scene(BaseScene):
 
         # set the output format
         if fmt == "ps":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "_gnuplot('set terminal postscript color')")
         elif fmt == "png":
             evalString = "_gnuplot('set terminal png size %d,%d')" % \
                     (self.xSize, self.ySize)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         elif fmt == "pbm":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "_gnuplot('set terminal pbm color')")
             # set the size of the output
             # have to scale properly to do this
@@ -186,17 +186,17 @@ class Scene(BaseScene):
             yScale = float(self.ySize)/480.0
             evalString = "_gnuplot('set size %f,%f')" % \
                     (xScale, yScale)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         elif fmt == "jpeg" or fmt == "jpg":
             evalString = "_gnuplot('set terminal jpeg size %d,%d')" % \
                     (self.xSize, self.ySize)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         else:
             raise ValueError, "Unknown graphics format.  I got: %s" % fmt
 
         # set the output filename
         evalString = "_gnuplot('set output \"%s\"')" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # now render the whole shebang (again)
         self.render()

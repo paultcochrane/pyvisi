@@ -53,6 +53,6 @@ class Renderer(BaseRenderer):
 
         # initialise the renderer module
 
-        self.addToEvalStack("// Renderer.__init__\n")
+        self.runString("// Renderer.__init__\n")
 
 # vim: expandtab shiftwidth=4:

@@ -78,8 +78,8 @@ class JpegImage(Image):
 
         if scene is not None:
             self.renderer = scene.renderer
-            self.renderer.addToEvalStack("# JpegImage.__init__()")
-            self.renderer.addToEvalStack("_jpegReader = vtk.vtkJPEGReader()")
+            self.renderer.runString("# JpegImage.__init__()")
+            self.renderer.runString("_jpegReader = vtk.vtkJPEGReader()")
             self.readerName = "_jpegReader"
             # add the image to the scene
             scene.add(self)
@@ -99,9 +99,9 @@ class JpegImage(Image):
         # *before* we add to the evalString, better to get the feedback
         # now rather than at the end of the script
         
-        self.renderer.addToEvalStack("# JpegImage.load()")
+        self.renderer.runString("# JpegImage.load()")
         evalString = "_jpegReader.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
     def render(self):
@@ -110,11 +110,11 @@ class JpegImage(Image):
         """
         debugMsg("Called JpegImage.render()")
 
-        self.renderer.addToEvalStack("# JpegImage.render()")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString("# JpegImage.render()")
+        self.renderer.runString("_imgActor = vtk.vtkImageActor()")
+        self.renderer.runString(\
                 "_imgActor.SetInput(_jpegReader.GetOutput())")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.runString("_renderer.AddActor(_imgActor)")
         return
 
 class PngImage(Image):
@@ -133,8 +133,8 @@ class PngImage(Image):
 
         if scene is not None:
             self.renderer = scene.renderer
-            self.renderer.addToEvalStack("# PngImage.__init__()")
-            self.renderer.addToEvalStack("_pngReader = vtk.vtkPNGReader()")
+            self.renderer.runString("# PngImage.__init__()")
+            self.renderer.runString("_pngReader = vtk.vtkPNGReader()")
             self.readerName = "_pngReader"
             # add the image to the scene
             scene.add(self)
@@ -153,9 +153,9 @@ class PngImage(Image):
         # check to see if the file exists
         fileCheck(fname)
         
-        self.renderer.addToEvalStack("# PngImage.load()")
+        self.renderer.runString("# PngImage.load()")
         evalString = "_pngReader.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
     def render(self):
@@ -164,11 +164,11 @@ class PngImage(Image):
         """
         debugMsg("Called PngImage.render()")
 
-        self.renderer.addToEvalStack("# PngImage.render()")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString("# PngImage.render()")
+        self.renderer.runString("_imgActor = vtk.vtkImageActor()")
+        self.renderer.runString(\
                 "_imgActor.SetInput(_pngReader.GetOutput())")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.runString("_renderer.AddActor(_imgActor)")
         return
 
 class BmpImage(Image):
@@ -187,8 +187,8 @@ class BmpImage(Image):
 
         if scene is not None:
             self.renderer = scene.renderer
-            self.renderer.addToEvalStack("# BmpImage.__init__()")
-            self.renderer.addToEvalStack("_bmpReader = vtk.vtkBMPReader()")
+            self.renderer.runString("# BmpImage.__init__()")
+            self.renderer.runString("_bmpReader = vtk.vtkBMPReader()")
             self.readerName = "_bmpReader"
             # add the image to the scene
             scene.add(self)
@@ -207,9 +207,9 @@ class BmpImage(Image):
         # check to see if the file exists
         fileCheck(fname)
         
-        self.renderer.addToEvalStack("# BmpImage.load()")
+        self.renderer.runString("# BmpImage.load()")
         evalString = "_bmpReader.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
     def render(self):
@@ -218,11 +218,11 @@ class BmpImage(Image):
         """
         debugMsg("Called BmpImage.render()")
 
-        self.renderer.addToEvalStack("# BmpImage.render()")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString("# BmpImage.render()")
+        self.renderer.runString("_imgActor = vtk.vtkImageActor()")
+        self.renderer.runString(\
                 "_imgActor.SetInput(_bmpReader.GetOutput())")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.runString("_renderer.AddActor(_imgActor)")
         return
 
 class TiffImage(Image):
@@ -241,8 +241,8 @@ class TiffImage(Image):
 
         if scene is not None:
             self.renderer = scene.renderer
-            self.renderer.addToEvalStack("# TiffImage.__init__()")
-            self.renderer.addToEvalStack("_tiffReader = vtk.vtkTIFFReader()")
+            self.renderer.runString("# TiffImage.__init__()")
+            self.renderer.runString("_tiffReader = vtk.vtkTIFFReader()")
             self.readerName = "_tiffReader"
             # add the image to the scene
             scene.add(self)
@@ -261,9 +261,9 @@ class TiffImage(Image):
         # check to see if the file exists
         fileCheck(fname)
 
-        self.renderer.addToEvalStack("# TiffImage.load()")
+        self.renderer.runString("# TiffImage.load()")
         evalString = "_tiffReader.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
     def render(self):
@@ -272,11 +272,11 @@ class TiffImage(Image):
         """
         debugMsg("Called TiffImage.render()")
 
-        self.renderer.addToEvalStack("# TiffImage.render()")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString("# TiffImage.render()")
+        self.renderer.runString("_imgActor = vtk.vtkImageActor()")
+        self.renderer.runString(\
                 "_imgActor.SetInput(_tiffReader.GetOutput())")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.runString("_renderer.AddActor(_imgActor)")
         return
 
 class PnmImage(Image):
@@ -295,8 +295,8 @@ class PnmImage(Image):
 
         if scene is not None:
             self.renderer = scene.renderer
-            self.renderer.addToEvalStack("# PnmImage.__init__()")
-            self.renderer.addToEvalStack("_pnmReader = vtk.vtkPNMReader()")
+            self.renderer.runString("# PnmImage.__init__()")
+            self.renderer.runString("_pnmReader = vtk.vtkPNMReader()")
             self.readerName = "_pnmReader"
             # add the image to the scene
             scene.add(self)
@@ -315,9 +315,9 @@ class PnmImage(Image):
         # check to see if the file exists
         fileCheck(fname)
 
-        self.renderer.addToEvalStack("# PnmImage.load()")
+        self.renderer.runString("# PnmImage.load()")
         evalString = "_pnmReader.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
     def render(self):
@@ -326,11 +326,11 @@ class PnmImage(Image):
         """
         debugMsg("Called PnmImage.render()")
 
-        self.renderer.addToEvalStack("# PnmImage.render()")
-        self.renderer.addToEvalStack("_imgActor = vtk.vtkImageActor()")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString("# PnmImage.render()")
+        self.renderer.runString("_imgActor = vtk.vtkImageActor()")
+        self.renderer.runString(\
                 "_imgActor.SetInput(_pnmReader.GetOutput())")
-        self.renderer.addToEvalStack("_renderer.AddActor(_imgActor)")
+        self.renderer.runString("_renderer.AddActor(_imgActor)")
         return
 
 class PsImage(Image):

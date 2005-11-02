@@ -61,7 +61,7 @@ class Camera(Item):
         self.renderer = scene.renderer
 
         # some vtk initialisation commands
-        self.renderer.addToEvalStack("# Camera.__init__()\n")
+        self.renderer.runString("# Camera.__init__()\n")
 
         # initialise the position of the Camera
         self.setPosition(self.xPos, self.yPos, self.zPos)
@@ -120,7 +120,7 @@ class Camera(Item):
         self.zFocalPoint = pos[2]
 
         # now set the focal point position
-        self.renderer.addToEvalStack("#Camera.setFocalPoint()\n")
+        self.renderer.runString("#Camera.setFocalPoint()\n")
 
         return
 

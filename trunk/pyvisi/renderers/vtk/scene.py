@@ -101,7 +101,7 @@ class Scene(BaseScene):
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
-        renderer.addToEvalStack("# Scene.render()")
+        renderer.runString("# Scene.render()")
 
         # if saving to file, try not to render to the screen
         # this needs to be done BEFORE setting up the renderer
@@ -131,7 +131,7 @@ class Scene(BaseScene):
 
         if save:
             evalString = "_renderWindow.OffScreenRenderingOn()\n"
-            renderer.addToEvalStack(evalString)
+            renderer.runString(evalString)
 
         # set up the lookup table properly
         # we reverse the sense of the normal vtk lookup table as then red
@@ -146,13 +146,13 @@ class Scene(BaseScene):
         evalString += "for _i in range(256):\n"
         evalString += "    _lut.SetTableValue(_i, "
         evalString += "_refLut.GetTableValue(255-_i))"
-        renderer.addToEvalStack(evalString)
+        renderer.runString(evalString)
 
         # if we have an interactive display, put some of the relevant code in
         if interactive:
-            renderer.addToEvalStack(\
+            renderer.runString(\
                     "_iRenderer = vtk.vtkRenderWindowInteractor()")
-            renderer.addToEvalStack(\
+            renderer.runString(\
                     "_iRenderer.SetRenderWindow(_renderWindow)")
 
         # get all objects in the scene to render themselves
@@ -160,19 +160,19 @@ class Scene(BaseScene):
             obj.render()
 
         # render the scene total
-        renderer.addToEvalStack("_renderWindow.Render()")
+        renderer.runString("_renderWindow.Render()")
 
         # if interactive, start up the render window interactor
         if interactive:
-            renderer.addToEvalStack("_iRenderer.Start()")
+            renderer.runString("_iRenderer.Start()")
 
         # write it
         if save:
-            self.renderer.addToEvalStack("_outWriter.Write()")
+            self.renderer.runString("_outWriter.Write()")
 
         # add some code to pause after rendering if asked to
         if pause:
-            renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
+            renderer.runString("raw_input(\"Press enter to continue\")")
 
         # prepend the init stack to the eval stack
         self.renderer._evalStack = self.renderer._initStack + \
@@ -220,7 +220,7 @@ class Scene(BaseScene):
         @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
-        self.renderer.addToEvalStack("# Scene.save()")
+        self.renderer.runString("# Scene.save()")
 
         # if the format is passed in as a string or object, react
         # appropriately
@@ -231,37 +231,37 @@ class Scene(BaseScene):
             fmt = format.format
 
         # need to pass the render window through a filter to an image object
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_win2imgFilter = vtk.vtkWindowToImageFilter()")
-        self.renderer.addToEvalStack("_win2imgFilter.SetInput(_renderWindow)")
+        self.renderer.runString("_win2imgFilter.SetInput(_renderWindow)")
 
         # set the output format
         if fmt == "ps":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkPostScriptWriter()")
         elif fmt == "png":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkPNGWriter()")
         elif fmt == "jpeg" or fmt == "jpg":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkJPEGWriter()")
         elif fmt == "tiff" or fmt == "tif":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkTIFFWriter()")
         elif fmt == "bmp":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkBMPWriter()")
         elif fmt == "pnm":
-            self.renderer.addToEvalStack(
+            self.renderer.runString(
                     "_outWriter = vtk.vtkPNMWriter()")
         else:
             raise ValueError, "Unknown graphics format.  I got %s" % fmt
 
         # set stuff up to write
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_outWriter.SetInput(_win2imgFilter.GetOutput())")
         evalString = "_outWriter.SetFileName(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         
         # rerender the scene to get the output
         self.render(save=True)
@@ -304,7 +304,7 @@ class Scene(BaseScene):
             # this will do in the meantime
             evalString = "_renderer.SetBackground(%f,%f,%f)" % \
                     (color[0], color[1], color[2])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         else:
             raise ValueError, "Sorry, only RGB color is supported at present"
 

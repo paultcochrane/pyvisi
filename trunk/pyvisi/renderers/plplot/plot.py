@@ -194,7 +194,7 @@ class ContourPlot(Plot):
         """
         debugMsg("Called setData() in ContourPlot()")
 
-        self.renderer.addToEvalStack("# ContourPlot.setData()")
+        self.renderer.runString("# ContourPlot.setData()")
 
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
@@ -227,14 +227,14 @@ class ContourPlot(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -244,7 +244,7 @@ class ContourPlot(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # determine the min and max of x, y and z
         evalString = "_xMin = min(x)\n"
@@ -256,7 +256,7 @@ class ContourPlot(Plot):
 
         ### please complete me!!
 
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -266,31 +266,31 @@ class ContourPlot(Plot):
         """
         debugMsg("Called ContourPlot.render()")
 
-        self.renderer.addToEvalStack("# ContourPlot.render()")
-        self.renderer.addToEvalStack("_gnuplot('set contour base')")
-        self.renderer.addToEvalStack("_gnuplot('set view 0, 0, 1, 1')")
-        self.renderer.addToEvalStack("_gnuplot('set nosurface')") # gnuplot 3.7
+        self.renderer.runString("# ContourPlot.render()")
+        self.renderer.runString("_gnuplot('set contour base')")
+        self.renderer.runString("_gnuplot('set view 0, 0, 1, 1')")
+        self.renderer.runString("_gnuplot('set nosurface')") # gnuplot 3.7
 
          # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        self.renderer.runString("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -337,7 +337,7 @@ class LinePlot(Plot):
         """
         debugMsg("Called setData() in LinePlot()")
         
-        self.renderer.addToEvalStack("# LinePlot.setData()")
+        self.renderer.runString("# LinePlot.setData()")
 
         # grab the options if any
         if options.has_key('offset'):
@@ -362,7 +362,7 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -379,7 +379,7 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -393,7 +393,7 @@ class LinePlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -402,32 +402,32 @@ class LinePlot(Plot):
             for i in range(len(dataList)-1):
                 evalString += "_y%d," % i
             evalString += "_y%d])" % int(len(dataList)-1)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # find its min and max
-            self.renderer.addToEvalStack("_yMin = min(_yAll)")
-            self.renderer.addToEvalStack("_yMax = max(_yAll)")
+            self.renderer.runString("_yMin = min(_yAll)")
+            self.renderer.runString("_yMax = max(_yAll)")
 
             # keep the data apart a bit with a constant
-            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+            self.renderer.runString("_const = 0.1*(_yMax - _yMin)")
 
             # shift the data up
-            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            self.renderer.runString("_shift = _yMax - _yMin + _const")
 
             for i in range(len(dataList)):
                 evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
         # determine the min and max of the x and y data
         evalString = "_xMin = min(_x)\n"
         evalString += "_xMax = max(_x)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         if self.offset:
             ### don't need to recalculate _yMin and _yMax
             # but do need to take into account the shift
             evalString = "_yMax = _yMax + %d*_shift" % len(dataList)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             pass
         else:
             ### but if not offset, do have to
@@ -437,12 +437,12 @@ class LinePlot(Plot):
             for i in range(len(dataList)-1):
                 evalString += "_y%d," % i
             evalString += "_y%d])" % int(len(dataList)-1)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # calculate the min and max
             evalString = "_yMin = min(_yAll)\n"
             evalString += "_yMax = max(_yAll)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # return the number of data objects to plot
         self.renderer.numDataObjects = len(dataList)
@@ -455,19 +455,19 @@ class LinePlot(Plot):
         """
         debugMsg("Called LinePlot.render()")
 
-        self.renderer.addToEvalStack("# LinePlot.render()")
+        self.renderer.runString("# LinePlot.render()")
 
         # initialise plplot 
-        self.renderer.addToEvalStack("plplot.plinit()")
+        self.renderer.runString("plplot.plinit()")
 
         # set up the viewport for plotting
         evalString = "plplot.plenv(_xMin,_xMax,_yMin,_yMax, 0, 1)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         for i in range(self.renderer.numDataObjects):
             evalString = "plplot.plline(_x, _y%d)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a title is not set, set it to a null string
         # (this will help keep plplot happy)
@@ -485,10 +485,10 @@ class LinePlot(Plot):
         # put the labels (if any) on the graph.
         evalString = "plplot.pllab(\"%s\", \"%s\", \"%s\")" % \
                 (self.xlabel, self.ylabel, self.title)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # finish stuff off
-        self.renderer.addToEvalStack("plplot.plend()")
+        self.renderer.runString("plplot.plend()")
 
         return
 
@@ -595,7 +595,7 @@ class SurfacePlot(Plot):
         """
         debugMsg("Called setData() in SurfacePlot()")
 
-        self.renderer.addToEvalStack("# SurfacePlot.setData()")
+        self.renderer.runString("# SurfacePlot.setData()")
 
         # for the moment, make sure that there are three arrays
         if len(dataList) != 3:
@@ -625,14 +625,14 @@ class SurfacePlot(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -642,7 +642,7 @@ class SurfacePlot(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # determine the min and max of x, y and z in world coordinates
         evalString = "_xMin = min(_x)\n"
@@ -651,7 +651,7 @@ class SurfacePlot(Plot):
         evalString += "_yMax = max(_y)\n"
         evalString += "_zMin = min(_z.flat)\n"
         evalString += "_zMax = max(_z.flat)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # min and max of x and y variables in normalised coordinates
         # values are those recommended in plplot documentation for surface
@@ -660,20 +660,20 @@ class SurfacePlot(Plot):
         evalString += "_xMax2D = 2.5\n"
         evalString += "_yMin2D = -2.5\n"
         evalString += "_yMax2D = 4.0"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # sides of the box in normalised coordinates, again, these are those
         # recommended by plplot
         evalString = "_basex = 2.0\n"
         evalString += "_basey = 4.0\n"
         evalString += "_height = 3.0"    # possible name clash???
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # the angle to view the box (this needs to be set up by a Camera()
         # object in the future)
         evalString = "_alt = 45.0\n"
         evalString += "_az = 30.0"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -683,26 +683,26 @@ class SurfacePlot(Plot):
         """
         debugMsg("Called SurfacePlot.render()")
 
-        self.renderer.addToEvalStack("# SurfacePlot.render()")
+        self.renderer.runString("# SurfacePlot.render()")
         # initialise plplot 
-        self.renderer.addToEvalStack("plplot.plinit()")
+        self.renderer.runString("plplot.plinit()")
 
         # set up the viewport for plotting
         evalString = "plplot.plenv(_xMin2D,_xMax2D,_yMin2D,_yMax2D, 0, -2)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the window
         evalString = "plplot.plw3d(_basex, _basey, _height, "
         evalString += "_xMin, _xMax, _yMin, _yMax, _zMin, _zMax, "
         evalString += "_alt, _az)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if a title is not set, set it to a null string
         # (this will help keep plplot happy)
         if self.title is not None:
             evalString = "plplot.plmtex(\"t\", 1.0, 0.5, 0.5, \"%s\")" % \
                     self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is not set, set it to a null string
         if self.xlabel is None:
@@ -720,15 +720,15 @@ class SurfacePlot(Plot):
         evalString = "plplot.plbox3(\"bnstu\", \"%s\", 0.0, 0, " % self.xlabel
         evalString += "\"bnstu\", \"%s\", 0.0, 0, " % self.ylabel
         evalString += "\"bcdmnstuv\", \"%s\", 0.0, 0)" % self.zlabel
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # plot it!
         ### note: I can put other shading options into this call
         evalString = "plplot.plsurf3d(_x, _y, _z, 0, ())"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # finish stuff off
-        self.renderer.addToEvalStack("plplot.plend()")
+        self.renderer.runString("plplot.plend()")
 
         # if contours is true, set the relevant option
         if self.contours:

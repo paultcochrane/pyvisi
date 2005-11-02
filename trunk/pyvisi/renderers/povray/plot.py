@@ -28,7 +28,9 @@ from pyvisi.renderers.povray.common import debugMsg
 # module specific imports
 from pyvisi.renderers.povray.item import Item
 
-from Numeric import *
+import Numeric
+import math
+import os
 
 __revision__ = '$Revision$'
 
@@ -77,8 +79,7 @@ class ArrowPlot(Plot):
         debugMsg("Called ArrowPlot.__init__()")
         Plot.__init__()
 
-        if scene is None:
-            raise ValueError, "You must specify a scene object"
+        self.renderer = scene.renderer
 
     def setData(self, *dataList):
         """
@@ -88,7 +89,7 @@ class ArrowPlot(Plot):
         @type dataList: tuple
         """
         debugMsg("Called setData() in ArrowPlot()")
-        self.renderer.addToEvalStack("// ArrowPlot.setData()")
+        self.renderer.runString("// ArrowPlot.setData()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
@@ -100,7 +101,7 @@ class ArrowPlot(Plot):
         Does ArrowPlot specific rendering tasks
         """
         debugMsg("Called render() in ArrowPlot")
-        self.renderer.addToEvalStack("// ArrowPlot.render()")
+        self.renderer.runString("// ArrowPlot.render()")
 
         return
 
@@ -116,32 +117,236 @@ class ArrowPlot3D(Plot):
         @type scene: Scene object
         """
         debugMsg("Called ArrowPlot3D.__init__()")
-        Plot.__init__()
+        Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
-        self.renderer.addToEvalStack("// ArrowPlot3D.__init__()")
+        self.renderer.runString("// ArrowPlot3D.__init__()")
+
+        self.scene = scene
+
+        # options
+        self.fname = None
+        self.format = None
+
+        self.title = None
 
         # the data to pass between setData() and render()
         self.x = None
         self.y = None
         self.z = None
+        self.dx = None
+        self.dy = None
+        self.dz = None
 
+        self.norm = None
+        self.maxNorm = None
+
+        # share the colours around
+        self.red = None
+        self.green = None
+        self.blue = None
+ 
         # add the plot to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Set data to the plot
 
         @param dataList: list/tuple of data objects to set to the plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options to method
+        @type options: dict
         """
         debugMsg("Called setData() in ArrowPlot3D()")
-        self.renderer.addToEvalStack("// ArrowPlot3D.setData()")
+        self.renderer.runString("// ArrowPlot3D.setData()")
 
-        if dataList is None:
-            raise ValueError, "You must specify a data list"
-        
+        # process the options if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+
+        # I think we want to pass this info around
+        self.fname = fname
+        self.format = format
+
+        # do some sanity checking on the inputs
+        if fname is None and format is not None:
+            raise ValueError, "Format specified, but no input filename"
+        elif fname is not None and format is None:
+            raise ValueError, "Filename specified, but no format"
+        elif (fname is not None or format is not None) and len(dataList) != 0:
+            raise ValueError, \
+                "Cannot specify a data list and an input file simultaneously"
+
+        # of, if we have a data list and no args, use the data list
+        if len(dataList) != 0 and fname is None and format is None:
+            # do some sanity checking on the data
+            if len(dataList) != 6:
+                raise ValueError, \
+                    "Must have six vectors as input: x,y,z,dx,dy,dz, found: %d"\
+                            % len(dataList)
+    
+            for i in range(len(dataList)):
+                if len(dataList[i].shape) != len(dataList[0].shape):
+                    raise ValueError, "All arrays must be of the same shape"
+    
+            for i in range(len(dataList)):
+                if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
+                    errorString = \
+                            "Can only handle 1D or 2D arrays: dim=%d" % \
+                            len(dataList[i].shape)
+                    raise ValueError, errorString
+    
+            for i in range(len(dataList)):
+                if len(dataList[0]) != len(dataList[i]):
+                    raise ValueError, \
+                            "Input vectors must all be the same length"
+    
+            # if we have 2D arrays as input, we need to flatten them to plot the
+            # data properly
+            if len(dataList[0].shape) == 1:
+                x = dataList[0]
+                y = dataList[1]
+                z = dataList[2]
+                dx = dataList[3]
+                dy = dataList[4]
+                dz = dataList[5]
+            elif len(dataList[0].shape) == 2:
+                x = dataList[0].flat
+                y = dataList[1].flat
+                z = dataList[2].flat
+                dx = dataList[3].flat
+                dy = dataList[4].flat
+                dz = dataList[5].flat
+            else:
+                raise ValueError, "Input vectors can only be 1D or 2D"
+
+            # keep the number of points for future use
+            numPoints = len(x)
+    
+            # calculate the norm of the data
+            norm = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            for j in range(numPoints):
+                norm[j] = math.sqrt(dx[j]*dx[j] + dy[j]*dy[j] + dz[j]*dz[j])
+
+            # calculate the maximum norm of the data
+            maxNorm = max(norm)
+
+            # work out the centre of the model
+            xCentre = (max(x) - min(x))/2.0
+            yCentre = (max(y) - min(y))/2.0
+            zCentre = (max(z) - min(z))/2.0
+            centre = Numeric.array([xCentre, yCentre, zCentre])
+
+            # work out the bounds of the model
+            # (this should hopefully help set up the default camera)
+            bounds = Numeric.array([min(x), max(x), min(y), max(y), \
+                    min(z), max(z)])
+ 
+        elif len(dataList) == 0 and fname is not None and format is not None:
+            # well, lets process the vtk file then
+
+            # had best make sure it exists
+            if not os.path.exists(fname):
+                raise SystemError, "File: %s doesn't exist" % fname
+
+            # import vtk
+            import vtk
+
+            if format == 'vtk':
+                # read old-style vtk files
+                reader = vtk.vtkUnstructuredGridReader()
+            elif format == 'vtk-xml':
+                # read vtk xml files
+                reader = vtk.vtkXMLUnstructuredGridReader()
+            else:
+                # barf
+                raise ValueError, "Unknown format.  I got %s" % format
+
+            reader.SetFileName(fname)
+            reader.Update()
+
+            # grab the grid
+            grid = reader.GetOutput()
+
+            # get the centre and bounds
+            centre = grid.GetCenter()
+            bounds = grid.GetBounds()
+
+            # grab the point data
+            points = grid.GetPoints()
+            numPoints = points.GetNumberOfPoints()
+            x = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            y = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            z = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            for i in range(numPoints):
+                x[i], y[i], z[i] = points.GetPoint(i)
+
+            # get the data at the points
+            data = grid.GetPointData().GetVectors()
+            dx = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            dy = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            dz = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            norm = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            for i in range(numPoints):
+                dx[i], dy[i], dz[i] = data.GetTuple3(i)
+                norm[i] = math.sqrt(dx[i]*dx[i] + dy[i]*dy[i] + dz[i]*dz[i])
+
+            # get the maximum norm
+            maxNorm = grid.GetPointData().GetVectors().GetMaxNorm()
+
+            # make a lookup table and invert it
+            lut = vtk.vtkLookupTable()
+            refLut = vtk.vtkLookupTable()
+            lut.Build()
+            refLut.Build()
+            for j in range(256):
+                lut.SetTableValue(j, refLut.GetTableValue(255-j))
+
+            # get the colours
+            red = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            green = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            blue = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            for i in range(numPoints):
+                red[i], green[i], blue[i] = lut.GetColor(norm[i]/maxNorm)
+
+            # share the colours around
+            ### note: will need to work out how to do colourmaps myself 
+            ### one day so that povray can have colours and just have data
+            ### piped into it
+            self.red = red
+            self.green = green
+            self.blue = blue
+ 
+        else:
+            # barf
+            print len(dataList)
+            print fname
+            print format
+            raise ValueError, "Shouldn't have got to here."
+
+        self.scene.centre = centre
+        self.scene.bounds = bounds
+
+        # share the data around
+        self.x = x
+        self.y = y
+        self.z = z
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+        self.norm = norm
+        self.maxNorm = maxNorm
+
         return
 
     def render(self):
@@ -149,9 +354,68 @@ class ArrowPlot3D(Plot):
         Does ArrowPlot3D specific rendering tasks
         """
         debugMsg("Called render() in ArrowPlot3D")
-        self.renderer.addToEvalStack("// ArrowPlot3D.render()")
+        self.renderer.runString("// ArrowPlot3D.render()")
 
-        return
+        # grab the data
+        x = self.x
+        y = self.y
+        z = self.z
+        dx = self.dx
+        dy = self.dy
+        dz = self.dz
+        norm = self.norm
+        maxNorm = self.maxNorm
+
+        # grab the colours
+        red = self.red
+        green = self.green
+        blue = self.blue
+
+        # declare the arrow object
+        evalString = "# declare Arrow = union {\n"
+        evalString += "  cone {\n"
+        evalString += "    <0, 0, 0>, 0.3\n"
+        evalString += "    <1, 0, 0>, 0.0\n"
+        evalString += "  }\n"
+        evalString += "  cylinder {\n"
+        evalString += "    <-1, 0, 0>\n"
+        evalString += "    <0, 0, 0>,\n"
+        evalString += "    0.15\n"
+        evalString += "  }\n"
+        evalString += "}\n"
+
+        self.renderer.runString(evalString)
+
+        evalString = ""
+        for i in range(len(x)):
+            evalString += "object {\n"
+            scale = 0.05*norm[i]/maxNorm
+            if scale < 1e-8:
+                scale = 1e-8
+            if norm[i] < 1e-8:
+                norm[i] = 1e-8
+            evalString += "  Arrow scale %g " % scale
+            # note that these are the WRONG angle transformations!!
+            xAngle = math.acos(dx[i]/norm[i])*180.0/math.pi
+            yAngle = math.acos(dy[i]/norm[i])*180.0/math.pi
+            zAngle = math.acos(dz[i]/norm[i])*180.0/math.pi
+            evalString += "rotate <%f, %f, %f> " % (xAngle, yAngle, zAngle)
+            evalString += "translate <%f, %f, -%f> " % (x[i], y[i], z[i])
+            if self.fname is not None and self.format is not None:
+                evalString += "pigment { colour <%f, %f, %f> }\n" % \
+                        (red[i], green[i], blue[i])
+            else:
+                evalString += "pigment { colour Red }\n"
+            evalString += "}\n"
+
+        self.renderer.runString(evalString)
+
+        # set the title if set
+        if self.title is not None:
+            # not implemented yet
+            pass
+
+        return 
 
 class BallPlot(Plot):
     """
@@ -162,13 +426,17 @@ class BallPlot(Plot):
         Plot.__init__(self, scene)
 
         self.renderer = scene.renderer
-        self.renderer.addToEvalStack("// BallPlot.__init__()")
+        self.renderer.runString("// BallPlot.__init__()")
+
+        self.scene = scene
 
         # the data to pass between setData() and render()
         self.x = None
         self.y = None
         self.z = None
         self.radii = None
+
+        self.title = None
 
         # the colour info to pass between setData() and render()
         self.red = None
@@ -205,7 +473,7 @@ class BallPlot(Plot):
         @type tags: integer array
         """
         debugMsg("Called setData() in BallPlot()")
-        self.renderer.addToEvalStack("// BallPlot.setData()")
+        self.renderer.runString("// BallPlot.setData()")
 
         # check that we have enough info to start with
         if points is None and fname is None:
@@ -259,8 +527,9 @@ class BallPlot(Plot):
             # read the output to an unstructured grid
             grid = reader.GetOutput()
 
-            modelCentre = grid.GetCenter()
-            xMin, xMax, yMin, yMin, zMin, zMax = grid.GetBounds()
+            # get the centre and bounds
+            centre = grid.GetCenter()
+            bounds = grid.GetBounds()
 
             # grab the points where the data sit
             vtkPoints = grid.GetPoints()
@@ -307,9 +576,9 @@ class BallPlot(Plot):
             lut = vtk.vtkLookupTable()
             lut.Build()
 
-            red = zeros(numPoints, typecode=Float)
-            green = zeros(numPoints, typecode=Float)
-            blue = zeros(numPoints, typecode=Float)
+            red = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            green = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            blue = Numeric.zeros(numPoints, typecode=Numeric.Float)
             for i in range(numPoints):
                 red[i], green[i], blue[i] = \
                         lut.GetColor(vtkScaledTags.GetValue(i))
@@ -318,12 +587,12 @@ class BallPlot(Plot):
             # positions) into array objects so that I can play with them as
             # per normal in python
 
-            x = zeros(numPoints, typecode=Float)
-            y = zeros(numPoints, typecode=Float)
-            z = zeros(numPoints, typecode=Float)
-            radii = zeros(numPoints, typecode=Float)
-            scaledTags = zeros(numPoints, typecode=Float)
-            tags = zeros(numPoints, typecode=Float)
+            x = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            y = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            z = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            radii = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            scaledTags = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            tags = Numeric.zeros(numPoints, typecode=Numeric.Float)
             for i in range(numPoints):
                 ### the points
                 x[i], y[i], z[i] = vtkPoints.GetPoint(i)
@@ -350,12 +619,18 @@ class BallPlot(Plot):
                     "The number of points does not equal the number of radii"
 
             ### get the x, y, z data from the points
-            x = zeros(numPoints, typecode=Float)
-            y = zeros(numPoints, typecode=Float)
-            z = zeros(numPoints, typecode=Float)
+            x = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            y = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            z = Numeric.zeros(numPoints, typecode=Numeric.Float)
 
             for i in range(numPoints):
                 x[i], y[i], z[i] = points[i]
+
+            # find the bounds and the centre of the model
+            centre = Numeric.array([(max(x)-min(x))/2.0, \
+                    (max(y)-min(y))/2.0, (max(z)-min(z))/2.0])
+            bounds = Numeric.array([min(x), max(x), min(y), max(y), \
+                    min(z), max(z)])
 
             # make the colours
             if colors is None:
@@ -381,7 +656,7 @@ class BallPlot(Plot):
                 tagValues = range(numRadii)
                 numTags = numRadii
 
-                tags = zeros(numPoints, typecode=Int)
+                tags = Numeric.zeros(numPoints, typecode=Numeric.Int)
                 for i in range(numPoints):
                     for j in range(numTags):
                         if radiiKeys[j] == str(radii[i]):
@@ -407,7 +682,7 @@ class BallPlot(Plot):
                 tagValues.sort()
 
             # now scale the tags
-            scaledTags = zeros(numPoints, typecode=Float)
+            scaledTags = Numeric.zeros(numPoints, typecode=Numeric.Float)
             if numTags == 1:
                 pass
             else:
@@ -431,6 +706,9 @@ class BallPlot(Plot):
         self.green = green
         self.blue = blue
 
+        self.scene.centre = centre
+        self.scene.bounds = bounds
+
         return
 
     def render(self):
@@ -438,7 +716,7 @@ class BallPlot(Plot):
         Does BallPlot specific rendering tasks
         """
         debugMsg("Called render() in BallPlot")
-        self.renderer.addToEvalStack("// BallPlot.render()")
+        self.renderer.runString("// BallPlot.render()")
 
         # grab the data
         x = self.x
@@ -460,7 +738,7 @@ class BallPlot(Plot):
             evalString += "  }\n"
             evalString += "}\n"
 
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set the title if set
         if self.title is not None:

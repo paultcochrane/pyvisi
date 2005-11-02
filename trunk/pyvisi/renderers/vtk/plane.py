@@ -80,14 +80,14 @@ class Plane(Item):
         # need to work out the name of the internal image object name
         imgObjectName = image.readerName
 
-        self.renderer.addToEvalStack("# Plane.mapImageToPlane()")
-        self.renderer.addToEvalStack("_tex = vtk.vtkTexture()")
+        self.renderer.runString("# Plane.mapImageToPlane()")
+        self.renderer.runString("_tex = vtk.vtkTexture()")
         evalString = "_tex.SetInput(%s.GetOutput())" % imgObjectName
-        self.renderer.addToEvalStack(evalString)
-        self.renderer.addToEvalStack("_plane = vtk.vtkPlaneSource()\n")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(evalString)
+        self.renderer.runString("_plane = vtk.vtkPlaneSource()\n")
+        self.renderer.runString(\
                 "_planeMapper = vtk.vtkPolyDataMapper()\n")
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(\
                 "_planeMapper.SetInput(_plane.GetOutput())\n")
         return
 
@@ -97,11 +97,11 @@ class Plane(Item):
         """
         debugMsg("Called Plane.mapImageToPlane()")
 
-        self.renderer.addToEvalStack("# Plane.render()\n")
-        self.renderer.addToEvalStack("_planeActor = vtk.vtkActor()\n")
-        self.renderer.addToEvalStack("_planeActor.SetMapper(_planeMapper)\n")
-        self.renderer.addToEvalStack("_planeActor.SetTexture(_tex)\n")
-        self.renderer.addToEvalStack("_renderer.AddActor(_planeActor)\n")
+        self.renderer.runString("# Plane.render()\n")
+        self.renderer.runString("_planeActor = vtk.vtkActor()\n")
+        self.renderer.runString("_planeActor.SetMapper(_planeMapper)\n")
+        self.renderer.runString("_planeActor.SetTexture(_tex)\n")
+        self.renderer.runString("_renderer.AddActor(_planeActor)\n")
 
         return
 

@@ -38,7 +38,8 @@ class Axes(Plot):
     module implementing them.
     """
     def __init__(self):
-        #Plot.__init__(self)
         debugMsg("Called Axes.__init__()")
+        Plot.__init__(self)
+
 
 # vim: expandtab shiftwidth=4:

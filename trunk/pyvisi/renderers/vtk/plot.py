@@ -184,7 +184,7 @@ class ArrowPlot(Plot):
 
         self.renderer = scene.renderer
 
-        self.renderer.addToEvalStack("# ArrowPlot.__init__()")
+        self.renderer.runString("# ArrowPlot.__init__()")
 
         # add the plot to the scene
         scene.add(self)
@@ -245,7 +245,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # y data
         ## generate the evalString for the y data
@@ -254,7 +254,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # dx data
         ## generate the evalString for the dx data
@@ -263,7 +263,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % dxData[j]
         evalString += "%s])" % dxData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # dy data
         ## generate the evalString for the dy data
@@ -272,7 +272,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % dyData[j]
         evalString += "%s])" % dyData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # keep the number of points for future reference
         numPoints = len(xData)
@@ -283,7 +283,7 @@ class ArrowPlot(Plot):
         for j in range(numPoints):
             evalString += "_points.InsertPoint(%d, %f, %f, 0.0)\n" % \
                     (j, xData[j], yData[j])
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # construct the vectors
         evalString = "_vectors = vtk.vtkFloatArray()\n"
@@ -293,14 +293,14 @@ class ArrowPlot(Plot):
         for j in range(numPoints):
             evalString += "_vectors.InsertTuple3(%d, %f, %f, 0.0)\n" % \
                     (j, dxData[j], dyData[j])
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # construct the grid
         evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
         evalString += "_grid.SetPoints(_points)\n"
         evalString += "_grid.GetPointData().AddArray(_vectors)\n"
         evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
 
     def render(self):
@@ -308,10 +308,10 @@ class ArrowPlot(Plot):
         Does ArrowPlot specific rendering tasks
         """
         debugMsg("Called render() in ArrowPlot")
-        self.renderer.addToEvalStack("# ArrowPlot.render()")
+        self.renderer.runString("# ArrowPlot.render()")
 
         # make the arrow source
-        self.renderer.addToEvalStack("_arrow = vtk.vtkArrowSource()")
+        self.renderer.runString("_arrow = vtk.vtkArrowSource()")
 
         # make the glyph
         evalString = "_glyph = vtk.vtkGlyph2D()\n"
@@ -322,30 +322,30 @@ class ArrowPlot(Plot):
         evalString += "_glyph.SetSource(_arrow.GetOutput())\n"
         evalString += "_glyph.SetInput(_grid)\n"
         evalString += "_glyph.ClampingOff()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up a stripper for faster rendering
         evalString = "_stripper = vtk.vtkStripper()\n"
         evalString += "_stripper.SetInput(_glyph.GetOutput())"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # get the maximum norm of the data
         evalString = "_maxNorm = _grid.GetPointData().GetVectors().GetMaxNorm()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the mapper
         evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
         evalString += "_mapper.SetInput(_stripper.GetOutput())\n"
         evalString += "_mapper.SetScalarRange(0, _maxNorm)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the actor
-        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+        self.renderer.runString("_renderer.AddActor(_actor)")
 
         # text properties
         evalString = "_font_size = 14\n"  # this will need to be an option!!
@@ -378,7 +378,7 @@ class ArrowPlot(Plot):
             evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up some axes
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
@@ -412,17 +412,17 @@ class ArrowPlot(Plot):
         evalString += "_axesLabelProp = _axes.GetAxisLabelTextProperty()\n"
         evalString += "_axesLabelProp.ShallowCopy(_textProp)\n"
         evalString += "_axesLabelProp.SetFontSize(8)\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the axes to the renderer
-        self.renderer.addToEvalStack("_renderer.AddActor(_axes)")
+        self.renderer.runString("_renderer.AddActor(_axes)")
 
         # reset the camera, will make things look nicer
         ### is this the right place to put this???
-        self.renderer.addToEvalStack("_renderer.ResetCamera()")
+        self.renderer.runString("_renderer.ResetCamera()")
         
         ### this should be somewhere else too...
-        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
+        self.renderer.runString("_renderer.SetBackground(1,1,1)")
 
         return
 
@@ -442,7 +442,7 @@ class ArrowPlot3D(Plot):
 
         self.renderer = scene.renderer
 
-        self.renderer.addToEvalStack("# ArrowPlot3D.__init__()")
+        self.renderer.runString("# ArrowPlot3D.__init__()")
 
         # default values for fname and format
         self.fname = None
@@ -469,7 +469,7 @@ class ArrowPlot3D(Plot):
         @type options: dict
         """
         debugMsg("Called setData() in ArrowPlot3D()")
-        self.renderer.addToEvalStack("# ArrowPlot3D.setData()")
+        self.renderer.runString("# ArrowPlot3D.setData()")
 
         # process the options, if any
         ## fname
@@ -552,7 +552,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # y data
             ## generate the evalString for the y data
@@ -561,7 +561,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % yData[j]
             evalString += "%s])" % yData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # z data
             ## generate the evalString for the z data
@@ -570,7 +570,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % zData[j]
             evalString += "%s])" % zData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # dx data
             ## generate the evalString for the dx data
@@ -579,7 +579,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % dxData[j]
             evalString += "%s])" % dxData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # dy data
             ## generate the evalString for the dy data
@@ -588,7 +588,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % dyData[j]
             evalString += "%s])" % dyData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # dz data
             ## generate the evalString for the dy data
@@ -597,7 +597,7 @@ class ArrowPlot3D(Plot):
                 evalString += "%s, " % dzData[j]
             evalString += "%s])" % dzData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # keep the number of points for future reference
             numPoints = len(xData)
@@ -608,7 +608,7 @@ class ArrowPlot3D(Plot):
             for j in range(numPoints):
                 evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
                         (j, xData[j], yData[j], zData[j])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # construct the vectors
             evalString = "_vectors = vtk.vtkFloatArray()\n"
@@ -618,14 +618,14 @@ class ArrowPlot3D(Plot):
             for j in range(numPoints):
                 evalString += "_vectors.InsertTuple3(%d, %f, %f, %f)\n" % \
                         (j, dxData[j], dyData[j], dzData[j])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # construct the grid
             evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
             evalString += "_grid.SetPoints(_points)\n"
             evalString += "_grid.GetPointData().AddArray(_vectors)\n"
             evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         elif len(dataList) == 0 and fname is not None and format is not None:
             # well, lets process the vtk file then
@@ -646,16 +646,16 @@ class ArrowPlot3D(Plot):
 
             evalString += "_reader.SetFileName(\"%s\")\n" % fname
             evalString += "_reader.Update()"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # grab the grid
             evalString = "_grid = _reader.GetOutput()"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # get the norm of the vectors
             evalString = "_norm = vtk.vtkVectorNorm()\n"
             evalString += "_norm.SetInput(_grid)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         else:
             # barf
@@ -666,14 +666,14 @@ class ArrowPlot3D(Plot):
         Does ArrowPlot3D specific rendering tasks
         """
         debugMsg("Called render() in ArrowPlot3D")
-        self.renderer.addToEvalStack("# ArrowPlot3D.render()")
+        self.renderer.runString("# ArrowPlot3D.render()")
 
         # make the arrow source
-        self.renderer.addToEvalStack("_arrow = vtk.vtkArrowSource()")
+        self.renderer.runString("_arrow = vtk.vtkArrowSource()")
 
         # get the maximum norm of the data
         evalString = "_maxNorm = _grid.GetPointData().GetVectors().GetMaxNorm()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make the glyph
         evalString = "_glyph = vtk.vtkGlyph3D()\n"
@@ -688,12 +688,12 @@ class ArrowPlot3D(Plot):
             evalString += "_glyph.SetInput(_grid)\n"
         evalString += "_glyph.SetSource(_arrow.GetOutput())\n"
         evalString += "_glyph.ClampingOff()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up a stripper for faster rendering
         evalString = "_stripper = vtk.vtkStripper()\n"
         evalString += "_stripper.SetInput(_glyph.GetOutput())"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # invert the lookup table, so the colours are nicer
         evalString = "_lut = vtk.vtkLookupTable()\n"
@@ -703,21 +703,21 @@ class ArrowPlot3D(Plot):
         evalString += "for i in range(256):\n"
         evalString += \
                 "    _lut.SetTableValue(i, _refLut.GetTableValue(255-i))"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the mapper
         evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
         evalString += "_mapper.SetInput(_stripper.GetOutput())\n"
         evalString += "_mapper.SetScalarRange(0, _maxNorm)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the actor
-        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+        self.renderer.runString("_renderer.AddActor(_actor)")
 
         # text properties
         evalString = "_font_size = 14\n"  # this will need to be an option!!
@@ -728,7 +728,7 @@ class ArrowPlot3D(Plot):
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
         evalString += "_textProp.SetColor(0,0,0)\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set the title if set
         if self.title is not None:
@@ -751,7 +751,7 @@ class ArrowPlot3D(Plot):
             evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up some axes
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
@@ -791,17 +791,17 @@ class ArrowPlot3D(Plot):
         evalString += "_axesLabelProp = _axes.GetAxisLabelTextProperty()\n"
         evalString += "_axesLabelProp.ShallowCopy(_textProp)\n"
         evalString += "_axesLabelProp.SetFontSize(8)\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the axes to the renderer
-        self.renderer.addToEvalStack("_renderer.AddActor(_axes)")
+        self.renderer.runString("_renderer.AddActor(_axes)")
 
         # reset the camera, will make things look nicer
         ### is this the right place to put this???
-        self.renderer.addToEvalStack("_renderer.ResetCamera()")
+        self.renderer.runString("_renderer.ResetCamera()")
         
         ### this should be somewhere else too...
-        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
+        self.renderer.runString("_renderer.SetBackground(1,1,1)")
 
         return
 
@@ -815,7 +815,7 @@ class BallPlot(Plot):
 
         self.renderer = scene.renderer
 
-        self.renderer.addToEvalStack("# BallPlot.__init__()")
+        self.renderer.runString("# BallPlot.__init__()")
 
         # add the plot to the scene
         scene.add(self)
@@ -848,7 +848,7 @@ class BallPlot(Plot):
         @type tags: integer array
         """
         debugMsg("Called setData() in BallPlot()")
-        self.renderer.addToEvalStack("# BallPlot.setData()")
+        self.renderer.runString("# BallPlot.setData()")
 
         # check that we have enough info to start with
         if points is None and fname is None:
@@ -889,24 +889,24 @@ class BallPlot(Plot):
                 evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
                 evalString += "_reader.SetFileName(\"%s\")\n" % fname
                 evalString += "_reader.Update()"
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
             elif format == "vtk":
                 debugMsg("Using old-style vtk file as input")
                 # create the reader of the file
                 evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
                 evalString += "_reader.SetFileName(\"%s\")\n" % fname
                 evalString += "_reader.Update()"
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
             # read the output to an unstructured grid
-            self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
+            self.renderer.runString("_grid = _reader.GetOutput()")
 
             # note that these next few steps are only necessary in vtk 4.2,
             # 4.4 grab the data to use for the radii of the balls
             evalString = \
                     "_radii = _grid.GetPointData().GetScalars(\"%s\")" % \
                     radii
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # grab the data to use for colouring the balls
             if colors is None:
@@ -917,7 +917,7 @@ class BallPlot(Plot):
                 evalString = \
                     "_colours = _grid.GetPointData().GetScalars(\"%s\")" % \
                     colors
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # now work out the number of tags, and their values
             evalString = "_numPoints = _colours.GetNumberOfTuples()\n"
@@ -930,7 +930,7 @@ class BallPlot(Plot):
     
             evalString += "_colourValues = _valueDict.keys()\n"
             evalString += "_colourValues.sort()"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # now count the number of colours, and make an evenly spaced
             # array of points between zero and one, then use these as the
@@ -945,7 +945,7 @@ class BallPlot(Plot):
             evalString += "        if _colourValues[j] == _colourValue:\n"
             evalString += "            _scaledColours.InsertTuple1(i,"
             evalString += "float(j)/float(_numColours-1))"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # now set up an array of two components to get the data through
             # the glyph object to the mapper (this is so that colouring and
@@ -958,14 +958,14 @@ class BallPlot(Plot):
             evalString += "_data.CopyComponent(1, _colours, 0)\n"
             evalString += "_data.CopyComponent(2, _scaledColours, 0)\n"
             evalString += "_data.SetName(\"data\")"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # add the data array to the grid
             evalString = "_grid.GetPointData().AddArray(_data)\n"
     
             # make the data the active scalars
             evalString += "_grid.GetPointData().SetActiveScalars(\"data\")"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         elif format is None and points is not None:
             debugMsg("Using user-defined point data in BallPlot.setData()")
@@ -989,7 +989,7 @@ class BallPlot(Plot):
                 point = points[i]
                 evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
                         (i, point[0], point[1], point[2])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # make the radii
             evalString = "_radii = vtk.vtkFloatArray()\n"
@@ -997,7 +997,7 @@ class BallPlot(Plot):
             evalString += "_radii.SetNumberOfValues(%d)\n" % numPoints
             for i in range(numPoints):
                 evalString += "_radii.InsertValue(%d, %f)\n" % (i, radii[i])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # make the colours
             if colors is None:
@@ -1056,7 +1056,7 @@ class BallPlot(Plot):
             for i in range(numPoints):
                 evalString += "_tags.InsertValue(%d, %d)\n" % \
                         (i, tags[i])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # now scale the tags
             scaledTags = Numeric.zeros(numPoints, typecode=Numeric.Float)
@@ -1076,7 +1076,7 @@ class BallPlot(Plot):
             for i in range(numPoints):
                 evalString += "_scaledTags.InsertValue(%d, %f)\n" % \
                         (i, scaledTags[i])
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # now construct the data array
             ### this is a vtk 4.2, 4.4 specific thing.  vtk 4.5 and above
@@ -1090,7 +1090,7 @@ class BallPlot(Plot):
             evalString += "_data.CopyComponent(1, _tags, 0)\n"
             evalString += "_data.CopyComponent(2, _scaledTags, 0)\n"
             evalString += "_data.SetName(\"data\")\n"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # now construct the grid
             evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
@@ -1102,7 +1102,7 @@ class BallPlot(Plot):
             # make the data the active scalars
             evalString += "_grid.GetPointData().SetActiveScalars(\"data\")\n"
 
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         else:
             # barf
             raise ValueError, \
@@ -1115,14 +1115,14 @@ class BallPlot(Plot):
         Does BallPlot specific rendering tasks
         """
         debugMsg("Called render() in BallPlot")
-        self.renderer.addToEvalStack("# BallPlot.render()")
+        self.renderer.runString("# BallPlot.render()")
 
         # to make sphere glyphs need a sphere source
         evalString = "_sphere = vtk.vtkSphereSource()\n"
         evalString += "_sphere.SetRadius(1.0)\n"
         evalString += "_sphere.SetThetaResolution(5)\n"
         evalString += "_sphere.SetPhiResolution(5)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # the spheres are 3D glyphs so set that up
         evalString = "_glyph = vtk.vtkGlyph3D()\n"
@@ -1133,7 +1133,7 @@ class BallPlot(Plot):
         evalString += "_glyph.SetInput(_grid)\n"
         evalString += "_glyph.SetSource(_sphere.GetOutput())\n"
         evalString += "_glyph.ClampingOff()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up a stripper (this will speed up rendering)
         evalString = "_stripper = vtk.vtkStripper()\n"
@@ -1142,7 +1142,7 @@ class BallPlot(Plot):
         # denote the stripper as being before the mapper by default, and let
         # subsequent objects redefine this if necessary
         evalString += "_preMapper = _stripper"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if any clip objects etc are registered, then get them to render
         # themselves here
@@ -1159,15 +1159,15 @@ class BallPlot(Plot):
         evalString += "_mapper.ColorByArrayComponent(\"data\", 2)\n"
         # should be done in setData()
         evalString += "_mapper.SetScalarRange(0, 1)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the actor to the scene
-        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+        self.renderer.runString("_renderer.AddActor(_actor)")
 
         # set the title if set
         if self.title is not None:
@@ -1200,7 +1200,7 @@ class BallPlot(Plot):
             evalString += "SetValue(0.5, 0.95)\n"
 
             evalString += "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         return
         
@@ -1249,7 +1249,7 @@ class ContourPlot(Plot):
         @param scalars: string
         """
         debugMsg("Called setData() in ContourPlot()")
-        self.renderer.addToEvalStack("# ContourPlot.setData()")
+        self.renderer.runString("# ContourPlot.setData()")
 
         # get the options, if any
         ## fname
@@ -1365,33 +1365,33 @@ class ContourPlot(Plot):
             for i in range(len(xData)-1):
                 evalString += "%s, " % xData[i]
             evalString += "%s])" % xData[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             ### the y data
             evalString = "_y = array(["
             for i in range(len(yData)-1):
                 evalString += "%s, " % yData[i]
             evalString += "%s])" % yData[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             ### the z data
             evalString = "_z = array(["
             for i in range(len(zData)-1):
                 evalString += "%s, " % zData[i]
             evalString += "%s])" % zData[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # calculate the max and min of the z data
             evalString = "_zMin = min(_z)\n"
             evalString += "_zMax = max(_z)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # create the points
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(len(_x))\n"
             evalString += "for i in range(len(_x)):\n"
             evalString += "    _points.InsertPoint(i, _x[i], _y[i], 0)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # create the data
             evalString = "_data = vtk.vtkFloatArray()\n"
@@ -1399,13 +1399,13 @@ class ContourPlot(Plot):
             evalString += "_data.SetNumberOfValues(len(_z))\n"
             evalString += "for i in range(len(_z)):\n"
             evalString += "    _data.InsertValue(i, _z[i])"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # set up the grid (it's polydata since we're doing a Delaunay2D)
             evalString = "_grid = vtk.vtkPolyData()\n"
             evalString += "_grid.SetPoints(_points)\n"
             evalString += "_grid.GetPointData().SetScalars(_data)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         elif otherData:
             # in this case, we can only accept data lists of length 1 or 3
@@ -1462,14 +1462,14 @@ class ContourPlot(Plot):
             for i in range(len(xData)-1):
                 evalString += "%s, " % xData[i]
             evalString += "%s])" % xData[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             ### y data
             evalString = "_y = array(["
             for i in range(len(yData)-1):
                 evalString += "%s, " % yData[i]
             evalString += "%s])" % yData[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             ### z data
             evalString = "_z = array(["
@@ -1479,12 +1479,12 @@ class ContourPlot(Plot):
                     evalString += "%s, " % zData[i, j]
                 evalString += "%s],\n" % zData[i, -1]
             evalString += "])"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # calculate the min and max
             evalString = "_zMax = max(_z.flat)\n"
             evalString += "_zMin = min(_z.flat)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # create the points
             evalString = "_points = vtk.vtkPoints()\n"
@@ -1494,7 +1494,7 @@ class ContourPlot(Plot):
             evalString += "  for j in range(len(_y)):\n"
             evalString += "    _points.InsertPoint(_count, _x[i], _y[j], 0)\n"
             evalString += "    _count += 1"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # create the data
             evalString = "_data = vtk.vtkFloatArray()\n"
@@ -1505,13 +1505,13 @@ class ContourPlot(Plot):
             evalString += "  for j in range(len(_y)):\n"
             evalString += "    _data.InsertValue(_count, _z[i][j])\n"
             evalString += "    _count += 1"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # set up the grid (it's polydata since we're doing a Delaunay2D)
             evalString = "_grid = vtk.vtkPolyData()\n"
             evalString += "_grid.SetPoints(_points)\n"
             evalString += "_grid.GetPointData().SetScalars(_data)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # run the stuff for when we're reading from file
         if fname is not None:
@@ -1519,20 +1519,20 @@ class ContourPlot(Plot):
             evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
             evalString += "_reader.SetFileName(\"%s\")\n" % fname
             evalString += "_reader.Update()"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # read the output input an unstructured grid
             evalString = "_grid = _reader.GetOutput()\n"
             evalString += \
                     "_grid.GetPointData().SetActiveScalars(\"%s\")" % scalars
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
     
             # grab the range of scalars for appropriate scaling of the colourmap
             evalString = \
                 "_scalarRange = _grid.GetPointData().GetScalars().GetRange()\n"
             evalString += "_scalarMin = _scalarRange[0]\n"
             evalString += "_scalarMax = _scalarRange[1]\n"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         return
 
@@ -1542,7 +1542,7 @@ class ContourPlot(Plot):
         """
         debugMsg("Called ContourPlot.render()")
 
-        self.renderer.addToEvalStack("# ContourPlot.render()")
+        self.renderer.runString("# ContourPlot.render()")
 
         # set up the lookup table and reverse the order of the colours
         evalString = "_lut = vtk.vtkLookupTable()\n"
@@ -1552,14 +1552,14 @@ class ContourPlot(Plot):
         evalString += "for i in range(256):\n"
         evalString += \
                 "    _lut.SetTableValue(i, _refLut.GetTableValue(255-i))"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         if self.escriptData or self.otherData:
             # triangulate the data
             evalString = "_delaunay = vtk.vtkDelaunay2D()\n"
             evalString += "_delaunay.SetInput(_grid)\n"
             evalString += "_delaunay.SetTolerance(0.001)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # set up the mapper
             evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
@@ -1567,7 +1567,7 @@ class ContourPlot(Plot):
             evalString += "_mapper.SetLookupTable(_lut)\n"
             # note that zMin and zMax are evaluated in setData()
             evalString += "_mapper.SetScalarRange(_zMin, _zMax)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         elif self.fname is not None:
             # set up the mapper
@@ -1576,15 +1576,15 @@ class ContourPlot(Plot):
             evalString += "_mapper.ScalarVisibilityOn()\n"
             evalString += "_mapper.SetLookupTable(_lut)\n"
             evalString += "_mapper.SetScalarRange(_scalarMin, _scalarMax)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the actor to the scene
-        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+        self.renderer.runString("_renderer.AddActor(_actor)")
 
         # set up the text
         # properties (I think this should come from the pyvisi Text() object
@@ -1597,7 +1597,7 @@ class ContourPlot(Plot):
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
         evalString += "_textProp.SetColor(0,0,0)\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set the title if set
         if self.title is not None:
@@ -1619,7 +1619,7 @@ class ContourPlot(Plot):
             evalString += "SetValue(0.5,0.95)\n"# this should be user-settable
             # add the actor to the scene
             evalString += "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # add the axes
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
@@ -1651,7 +1651,7 @@ class ContourPlot(Plot):
 
         # add the axes to the scene
         evalString += "_renderer.AddProp(_axes)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add a scalar bar (need to make this an option somewhere!!)
         # I also need to add the ability for the user to set the values of
@@ -1670,7 +1670,7 @@ class ContourPlot(Plot):
     
         # add the scalar bar to the scene
         evalString += "_renderer.AddActor(_scalarBar)\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1716,7 +1716,7 @@ class EllipsoidPlot(Plot):
         """
         debugMsg("Called setData() in EllipsoidPlot()")
 
-        self.renderer.addToEvalStack("# EllipsoidPlot.setData()")
+        self.renderer.runString("# EllipsoidPlot.setData()")
 
         # process the options, if any
         ## fname
@@ -1755,15 +1755,15 @@ class EllipsoidPlot(Plot):
         evalString += "_reader.SetFileName(\"%s\")\n" % fname
         evalString += "_reader.Update()"
 
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # grab the grid of the data
-        self.renderer.addToEvalStack("_grid = _reader.GetOutput()")
+        self.renderer.runString("_grid = _reader.GetOutput()")
 
         # convert the cell data to point data
         evalString = "_c2p = vtk.vtkCellDataToPointData()\n"
         evalString += "_c2p.SetInput(_grid)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # now extract the tensor components
         evalString = "_extract = vtk.vtkExtractTensorComponents()\n"
@@ -1777,7 +1777,7 @@ class EllipsoidPlot(Plot):
         evalString += "_extractGrid.Update()\n"
         evalString += "_extractScalarRange = "
         evalString += "_extractGrid.GetPointData().GetScalars().GetRange()\n"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1787,14 +1787,14 @@ class EllipsoidPlot(Plot):
         """
         debugMsg("Called EllipsoidPlot.render()")
 
-        self.renderer.addToEvalStack("# EllipsoidPlot.render()")
+        self.renderer.runString("# EllipsoidPlot.render()")
 
         # make a sphere source for the glyphs
         evalString = "_sphere = vtk.vtkSphereSource()\n"
         evalString += "_sphere.SetThetaResolution(6)\n"
         evalString += "_sphere.SetPhiResolution(6)\n"
         evalString += "_sphere.SetRadius(0.5)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make tensor glyphs
         evalString = "_glyph = vtk.vtkTensorGlyph()\n"
@@ -1805,32 +1805,32 @@ class EllipsoidPlot(Plot):
         evalString += "_glyph.SetMaxScaleFactor(5.0)\n"
         evalString += "_glyph.SetScaleFactor(1.0)\n"
         evalString += "_glyph.ClampScalingOn()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make a stripper for faster rendering
         evalString = "_stripper = vtk.vtkStripper()\n"
         evalString += "_stripper.SetInput(_glyph.GetOutput())"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make the normals of the data
         evalString = "_normals = vtk.vtkPolyDataNormals()\n"
         evalString += "_normals.SetInput(_stripper.GetOutput())"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make the mapper for the data
         evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
         evalString += "_mapper.SetInput(_normals.GetOutput())\n"
         evalString += "_mapper.SetLookupTable(_lut)\n"
         evalString += "_mapper.SetScalarRange(_extractScalarRange)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add the actor
-        self.renderer.addToEvalStack("_renderer.AddActor(_actor)")
+        self.renderer.runString("_renderer.AddActor(_actor)")
 
         # set up the text properties for nice text
         evalString = "_textProp = vtk.vtkTextProperty()\n"
@@ -1839,7 +1839,7 @@ class EllipsoidPlot(Plot):
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
         evalString += "_textProp.SetColor(0.0, 0.0, 0.0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if a title is set, put it in here
         if self.title is not None:
@@ -1862,11 +1862,11 @@ class EllipsoidPlot(Plot):
             evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
             evalString += "_titleActor.GetPositionCoordinate()."
             evalString += "SetValue(0.5, 0.95)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # add to the renderer
             evalString = "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # add a scalar bar
         evalString = "_scalarBar = vtk.vtkScalarBarActor()\n"
@@ -1874,7 +1874,7 @@ class EllipsoidPlot(Plot):
         evalString += "_scalarBar.SetWidth(0.1)\n"
         evalString += "_scalarBar.SetHeight(0.8)\n"
         evalString += "_scalarBar.SetPosition(0.9, 0.15)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the label text properties 
         evalString = "_scalarBarTextProp = _scalarBar.GetLabelTextProperty()\n"
@@ -1882,7 +1882,7 @@ class EllipsoidPlot(Plot):
         evalString += "_scalarBarTextProp.SetFontSize(10)\n"
 
         evalString += "_renderer.AddActor(_scalarBar)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1935,7 +1935,7 @@ class IsosurfacePlot(Plot):
         """
         debugMsg("Called setData() in IsosurfacePlot()")
 
-        self.renderer.addToEvalStack("# IsosurfacePlot.setData()")
+        self.renderer.runString("# IsosurfacePlot.setData()")
 
         # process the options, if any
         ## fname
@@ -1973,7 +1973,7 @@ class IsosurfacePlot(Plot):
 
         evalString += "_reader.SetFileName(\"%s\")\n" % fname
         evalString += "_reader.Update()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # need to do a delaunay 3D here to get decent looking isosurfaces
         evalString = "_del3D = vtk.vtkDelaunay3D()\n"
@@ -1981,12 +1981,12 @@ class IsosurfacePlot(Plot):
         evalString += "_del3D.SetOffset(2.5)\n"
         evalString += "_del3D.SetTolerance(0.001)\n"
         evalString += "_del3D.SetAlpha(0.0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # get the model centre and bounds
         evalString = "_centre = _reader.GetOutput().GetCenter()\n"
         evalString += "_bounds = _reader.GetOutput().GetBounds()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
     def render(self):
         """
@@ -1994,7 +1994,7 @@ class IsosurfacePlot(Plot):
         """
         debugMsg("Called IsosurfacePlot.render()")
 
-        self.renderer.addToEvalStack("# IsosurfacePlot.render()")
+        self.renderer.runString("# IsosurfacePlot.render()")
 
         # set up a contour filter
         evalString = "_cont = vtk.vtkContourGrid()\n"
@@ -2027,22 +2027,22 @@ class IsosurfacePlot(Plot):
 
         evalString += "_cont.GenerateValues(5, 0.25, 0.75)\n"
         evalString += "_cont.ComputeScalarsOn()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the mapper
         evalString = "_mapper = vtk.vtkDataSetMapper()\n"
         evalString += "_mapper.SetInput(_cont.GetOutput())\n"
         evalString += "_mapper.ScalarVisibilityOn()"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the actor
         evalString = "_actor = vtk.vtkActor()\n"
         evalString += "_actor.SetMapper(_mapper)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add to the renderer
         evalString = "_renderer.AddActor(_actor)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the text properties for nice text
         evalString = "_font_size = 18\n"
@@ -2053,7 +2053,7 @@ class IsosurfacePlot(Plot):
         evalString += "_textProp.ItalicOff()\n"
         evalString += "_textProp.ShadowOff()\n"
         evalString += "_textProp.SetColor(0.0, 0.0, 0.0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if a title is set, put it in here
         if self.title is not None:
@@ -2074,11 +2074,11 @@ class IsosurfacePlot(Plot):
             evalString += "SetCoordinateSystemToNormalizedDisplay()\n"
             evalString += "_titleActor.GetPositionCoordinate()."
             evalString += "SetValue(0.5, 0.95)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # add to the renderer
             evalString = "_renderer.AddActor(_titleActor)"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # put an outline around the data
         evalString = "_outline = vtk.vtkOutlineSource()\n"
@@ -2092,11 +2092,11 @@ class IsosurfacePlot(Plot):
         evalString += "_outlineActor = vtk.vtkActor()\n"
         evalString += "_outlineActor.SetMapper(_outlineMapper)\n"
         evalString += "_outlineActor.GetProperty().SetColor(0,0,0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add to the renderer
         evalString = "_renderer.AddActor(_outlineActor)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # make a lookup table for the colour map and invert it (colours look
         # better when it's inverted)
@@ -2107,7 +2107,7 @@ class IsosurfacePlot(Plot):
         evalString += "for _j in range(256):\n"
         evalString += "    _lut.SetTableValue(_j, "
         evalString += "_refLut.GetTableValue(255-_j))"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add some axes
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
@@ -2135,11 +2135,11 @@ class IsosurfacePlot(Plot):
             evalString += "_axes.SetZLabel(\"\")\n"
         evalString += "_axes.SetNumberOfLabels(5)\n"
         evalString += "_axes.GetProperty().SetColor(0,0,0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # add to the renderer
         evalString = "_renderer.AddActor(_axes)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # play around with lighting
         evalString = "_light1 = vtk.vtkLight()\n"
@@ -2152,10 +2152,10 @@ class IsosurfacePlot(Plot):
         evalString += "_light2.SetPosition(_centre[0]+_bounds[1], "
         evalString += "_centre[1]+_bounds[3], _centre[2]-_bounds[5])\n"
         evalString += "_renderer.AddLight(_light2)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # this shouldn't be here!!!!
-        self.renderer.addToEvalStack("_renderer.SetBackground(1,1,1)")
+        self.renderer.runString("_renderer.SetBackground(1,1,1)")
 
         return
 
@@ -2192,7 +2192,7 @@ class LinePlot(Plot):
         """
         debugMsg("Called setData() in LinePlot()")
 
-        self.renderer.addToEvalStack("# LinePlot.setData()")
+        self.renderer.runString("# LinePlot.setData()")
 
         # if offset is used, process it
         if options.has_key('offset'):
@@ -2214,7 +2214,7 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
             # if only have one array input, then autogenerate xData
@@ -2230,12 +2230,12 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the vtkDataArray object for the x data
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_xData.SetNumberOfTuples(len(_x))")
 
         ## now to handle the y data
@@ -2252,7 +2252,7 @@ class LinePlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if offset is true then shift the data
         if self.offset:
@@ -2261,53 +2261,53 @@ class LinePlot(Plot):
             for i in range(len(dataList)-1):
                 evalString += "_y%d," % i
             evalString += "_y%d])" % int(len(dataList)-1)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # grab the min and max values
-            self.renderer.addToEvalStack("_yMax = max(_yAll)")
-            self.renderer.addToEvalStack("_yMin = min(_yAll)")
+            self.renderer.runString("_yMax = max(_yAll)")
+            self.renderer.runString("_yMin = min(_yAll)")
 
             # keep the data apart a bit
-            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+            self.renderer.runString("_const = 0.1*(_yMax - _yMin)")
 
             # now shift the data
-            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            self.renderer.runString("_shift = _yMax - _yMin + _const")
             for i in range(len(dataList)):
                 evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
         # set up the vtkDataArray objects
         for i in range(len(dataList)):
             evalString = \
             "_y%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
             evalString += "_y%dData.SetNumberOfTuples(len(_y%d))" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         ## x data
         # put the data into the data arrays
-        self.renderer.addToEvalStack("for i in range(len(_x)):")
+        self.renderer.runString("for i in range(len(_x)):")
         # need to be careful here to remember to indent the code properly
         evalString = "    _xData.SetTuple1(i,_x[i])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## y data
         # put the data into the data arrays
-        self.renderer.addToEvalStack("for i in range(len(_x)):")
+        self.renderer.runString("for i in range(len(_x)):")
         # need to be careful here to remember to indent the code properly
         for i in range(len(dataList)):
             evalString = "    _y%dData.SetTuple1(i,_y%d[i])" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         for i in range(len(dataList)):
             # create the field data object
             evalString = "_fieldData%d = vtk.vtkFieldData()" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AllocateArrays(2)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AddArray(_xData)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AddArray(_y%dData)" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         for i in range(len(dataList)):
             # now put the field data into a data object
@@ -2316,17 +2316,17 @@ class LinePlot(Plot):
 
             # the actor should be set up, so add the data object to the actor
             evalString += "_plot.AddDataObjectInput(_dataObject%d)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # tell the actor to use the x values for the x values (rather than
         # the index)
-        self.renderer.addToEvalStack("_plot.SetXValuesToValue()")
+        self.renderer.runString("_plot.SetXValuesToValue()")
 
         # set which parts of the data object are to be used for which axis
-        self.renderer.addToEvalStack("_plot.SetDataObjectXComponent(0,0)")
+        self.renderer.runString("_plot.SetDataObjectXComponent(0,0)")
         for i in range(len(dataList)):
             evalString = "_plot.SetDataObjectYComponent(%d,1)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # note: am ignoring zlabels as vtk xyPlot doesn't support that
         # dimension for line plots (I'll have to do something a lot more
@@ -2336,7 +2336,7 @@ class LinePlot(Plot):
         evalString = "_plot.GetXAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
         evalString += "_plot.GetYAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
         evalString += "_renderer.SetBackground(1.0, 1.0, 1.0)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the lookup table for the appropriate range of colours
         evalString = "_lut = vtk.vtkLookupTable()\n"
@@ -2349,20 +2349,20 @@ class LinePlot(Plot):
             for i in range(len(dataList)):
                 evalString += "_colours.append(_lut.GetColor(%f))\n" \
                         % (float(i)/float(len(dataList)-1),)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
     
         # change the colour of the separate lines
         for i in range(len(dataList)):
             evalString = "_plot.SetPlotColor(%d, _colours[%d][0], " % (i, i)
             evalString += "_colours[%d][1], _colours[%d][2])" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # make sure the plot is a decent size
         # the size of the actor should be 80% of the render window
         evalString = "_plot.SetPosition(0.1, 0.1)\n" # (0.1 = (1.0 - 0.8)/2)
         evalString += "_plot.SetWidth(0.8)\n"
         evalString += "_plot.SetHeight(0.8)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -2372,23 +2372,23 @@ class LinePlot(Plot):
         """
         debugMsg("Called LinePlot.render()")
 
-        self.renderer.addToEvalStack("# LinePlot.render()")
-        self.renderer.addToEvalStack("_renderer.AddActor2D(_plot)")
+        self.renderer.runString("# LinePlot.render()")
+        self.renderer.runString("_renderer.AddActor2D(_plot)")
 
         # set the title if set
         if self.title is not None:
             evalString = "_plot.SetTitle(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         return
 
@@ -2429,7 +2429,7 @@ class OffsetPlot(Plot):
         """
         debugMsg("Called setData() in OffsetPlot()")
 
-        self.renderer.addToEvalStack("# OffsetPlot.setData()")
+        self.renderer.runString("# OffsetPlot.setData()")
 
         # do some sanity checking on the data
         if len(dataList) > 3 or len(dataList) < 1:
@@ -2480,7 +2480,7 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
             tData = dataList[0]
@@ -2490,7 +2490,7 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         elif len(dataList) == 3:
@@ -2500,22 +2500,22 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             ## generate the evalString for the x data
             evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
 
         # set up the vtkDataArray object for the t data
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_tData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
-        self.renderer.addToEvalStack(
+        self.renderer.runString(
                 "_tData.SetNumberOfTuples(len(_t))")
 
         ## now to handle the y data
@@ -2542,80 +2542,80 @@ class OffsetPlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # concatenate the data
         evalString = "_yAll = concatenate(["
         for i in range(dataLen-1):
             evalString += "_y%d," % i
         evalString += "_y%d])" % int(dataLen-1)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # grab the min and max values
-        self.renderer.addToEvalStack("_yMax = max(_yAll)")
-        self.renderer.addToEvalStack("_yMin = min(_yAll)")
+        self.renderer.runString("_yMax = max(_yAll)")
+        self.renderer.runString("_yMin = min(_yAll)")
 
         # keep the data apart a bit
         if self.sep is None:
-            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+            self.renderer.runString("_const = 0.1*(_yMax - _yMin)")
         else:
             evalString = "_const = %f" % self.sep
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # behave differently with the shift if we have xData as to not
         if len(dataList) == 3:
             # this is for when we have xData
-            self.renderer.addToEvalStack("_yMaxAbs = max(abs(_yAll))")
+            self.renderer.runString("_yMaxAbs = max(abs(_yAll))")
             # calculate the minimum delta x
             x1 = xData[:-1]
             x2 = xData[1:]
             minDeltax = min(x2 - x1)
             evalString = "_scale = %f/(2.0*_yMaxAbs)" % minDeltax
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             for i in range(dataLen):
                 evalString = "_y%d = _scale*_y%d + _x[%d]" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
         else:
             # shift the data up
-            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            self.renderer.runString("_shift = _yMax - _yMin + _const")
 
             for i in range(dataLen):
                 evalString = "_y%d = _y%d + %f*_shift" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
         # set up the vtkDataArray objects
         for i in range(dataLen):
             evalString = \
             "_y%dData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)\n" % i
             evalString += "_y%dData.SetNumberOfTuples(len(_y%d))" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         ## t data
         # put the data into the data arrays
-        self.renderer.addToEvalStack("for i in range(len(_t)):")
+        self.renderer.runString("for i in range(len(_t)):")
         # need to be careful here to remember to indent the code properly
         evalString = "    _tData.SetTuple1(i,_t[i])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## y data
         # put the data into the data arrays
-        self.renderer.addToEvalStack("for i in range(len(_t)):")
+        self.renderer.runString("for i in range(len(_t)):")
         # need to be careful here to remember to indent the code properly
         for i in range(dataLen):
             evalString = "    _y%dData.SetTuple1(i,_y%d[i])" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         for i in range(dataLen):
             # create the field data object
             evalString = "_fieldData%d = vtk.vtkFieldData()" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AllocateArrays(2)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AddArray(_tData)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             evalString = "_fieldData%d.AddArray(_y%dData)" % (i, i)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         for i in range(dataLen):
             # now put the field data into a data object
@@ -2624,17 +2624,17 @@ class OffsetPlot(Plot):
 
             # the actor should be set up, so add the data object to the actor
             evalString += "_plot.AddDataObjectInput(_dataObject%d)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # tell the actor to use the x values for the x values (rather than
         # the index)
-        self.renderer.addToEvalStack("_plot.SetXValuesToValue()")
+        self.renderer.runString("_plot.SetXValuesToValue()")
 
         # set which parts of the data object are to be used for which axis
-        self.renderer.addToEvalStack("_plot.SetDataObjectXComponent(0,0)")
+        self.renderer.runString("_plot.SetDataObjectXComponent(0,0)")
         for i in range(dataLen):
             evalString = "_plot.SetDataObjectYComponent(%d,1)" % i
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # note: am ignoring zlabels as vtk xyPlot doesn't support that
         # dimension for line plots (I'll have to do something a lot more
@@ -2648,23 +2648,23 @@ class OffsetPlot(Plot):
         """
         debugMsg("Called OffsetPlot.render()")
 
-        self.renderer.addToEvalStack("# OffsetPlot.render()")
-        self.renderer.addToEvalStack("_renderer.AddActor2D(_plot)")
+        self.renderer.runString("# OffsetPlot.render()")
+        self.renderer.runString("_renderer.AddActor2D(_plot)")
 
         # set the title if set
         if self.title is not None:
             evalString = "_plot.SetTitle(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_plot.SetXTitle(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_plot.SetYTitle(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         return
 

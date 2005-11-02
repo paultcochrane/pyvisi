@@ -80,7 +80,7 @@ class Camera(Item):
         self.zPos = pos[2]
 
         # now to set the position
-        self.renderer.addToEvalStack("# Camera.setPosition()")
+        self.renderer.runString("# Camera.setPosition()")
 
         return
 
@@ -110,7 +110,7 @@ class Camera(Item):
         self.zFocalPoint = pos[2]
 
         # now set the focal point position
-        self.renderer.addToEvalStack("#Camera.setFocalPoint()")
+        self.renderer.runString("#Camera.setFocalPoint()")
 
         return
 

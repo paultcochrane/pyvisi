@@ -321,7 +321,7 @@ class ClipBox(Box):
         Intialisation of the ClipBox object
         """
         debugMsg("Called ClipBox.__init__()")
-        plot.renderer.addToEvalStack("# ClipBox.__init__()")
+        plot.renderer.runString("# ClipBox.__init__()")
         Box.__init__(self)
 
         # register the clip object with the plot
@@ -338,7 +338,7 @@ class ClipBox(Box):
         Set the inside out flag
         """
         debugMsg("Called ClipBox.setInsideOut()")
-        self.plot.renderer.addToEvalStack("# ClipBox.setInsideOut()")
+        self.plot.renderer.runString("# ClipBox.setInsideOut()")
         self.insideOut = insideOut
         return
 
@@ -347,7 +347,7 @@ class ClipBox(Box):
         Get the current value of the inside out flag
         """
         debugMsg("Called ClipBox.getInsideOut()")
-        self.plot.renderer.addToEvalStack("# ClipBox.getInsideOut()")
+        self.plot.renderer.runString("# ClipBox.getInsideOut()")
         return self.insideOut
 
     def render(self):
@@ -355,22 +355,22 @@ class ClipBox(Box):
         Perform ClipBox object specific (pre)rendering tasks
         """
         debugMsg("Called ClipBox.render()")
-        self.plot.renderer.addToEvalStack("# ClipBox.render()")
+        self.plot.renderer.runString("# ClipBox.render()")
         evalString = "_planes = vtk.vtkPlanes()\n"
         evalString += "_planes.SetBounds(%f, %f, %f, %f, %f, %f)\n" % \
                 self.getBounds()
         evalString += "_clipper = vtk.vtkClipPolyData()\n"
         evalString += "_clipper.SetClipFunction(_planes)\n"
         evalString += "_clipper.SetInput(_stripper.GetOutput())"
-        self.plot.renderer.addToEvalStack(evalString)
+        self.plot.renderer.runString(evalString)
 
         if self.insideOut:
-            self.plot.renderer.addToEvalStack("_clipper.InsideOutOn()")
+            self.plot.renderer.runString("_clipper.InsideOutOn()")
         else:
-            self.plot.renderer.addToEvalStack("_clipper.InsideOutOff()")
+            self.plot.renderer.runString("_clipper.InsideOutOff()")
 
         # the clipper is now the thing before the mapper
-        self.plot.renderer.addToEvalStack("_preMapper = _clipper")
+        self.plot.renderer.runString("_preMapper = _clipper")
 
         return
 

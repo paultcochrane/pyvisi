@@ -147,6 +147,22 @@ class Renderer(object):
         self._evalStack += evalString + '\n'
         return
 
+    def runString(self, evalString):
+        """
+        Method to run the given string in the renderer python interpreter
+        
+        @param evalString: The string of commands to be run
+        @type evalString: string
+        """
+        debugMsg("Called Renderer.runString()")
+        # check that the argument is ok
+        if __debug__:
+            assert isinstance(evalString, str), \
+                    "Incorrect data type; expected string"
+
+        self._evalStack += evalString + '\n'
+        return
+
     def getInitStack(self):
         """
         Gets the initialisation stack as it currently stands

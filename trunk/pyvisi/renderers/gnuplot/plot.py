@@ -44,6 +44,8 @@ class Plot(Item):
         debugMsg("Called Plot.__init__()")
         Item.__init__(self)
 
+        self.renderer = scene.renderer
+
         self.title = None
         self.xlabel = None
         self.ylabel = None
@@ -159,7 +161,7 @@ class Plot(Item):
             raise ValueError, "xMax should be strictly greater than xMin"
 
         evalString = "_gnuplot('set xrange [%f:%f]')" % (xMin, xMax)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -180,7 +182,7 @@ class Plot(Item):
             raise ValueError, "yMax should be strictly greater than yMin"
 
         evalString = "_gnuplot('set yrange [%f:%f]')" % (yMin, yMax)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -201,7 +203,7 @@ class Plot(Item):
             raise ValueError, "zMax should be strictly greater than zMin"
 
         evalString = "_gnuplot('set zrange [%f:%f])" % (zMin, zMax)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -237,7 +239,7 @@ class ArrowPlot(Plot):
         """
         debugMsg("Called setData() in ArrowPlot()")
         
-        self.renderer.addToEvalStack("# ArrowPlot.setData()")
+        self.renderer.runString("# ArrowPlot.setData()")
 
         # do some sanity checking on the data
         if len(dataList) != 4:
@@ -286,7 +288,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # y data
         ## generate the evalString for the y data
@@ -295,7 +297,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # dx data
         ## generate the evalString for the dx data
@@ -304,7 +306,7 @@ class ArrowPlot(Plot):
             evalString += "%s, " % dxData[j]
         evalString += "%s])" % dxData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # dy data
         ## generate the evalString for the dy data
@@ -313,12 +315,12 @@ class ArrowPlot(Plot):
             evalString += "%s, " % dyData[j]
         evalString += "%s])" % dyData[-1]
         # give it to the renderer
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # set up the data to plot
         evalString = \
                 "_data = Gnuplot.Data(_x, _y, _dx, _dy, with=\'vectors\')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -328,26 +330,26 @@ class ArrowPlot(Plot):
         """
         debugMsg("Called ArrowPlot.render()")
 
-        self.renderer.addToEvalStack("# ArrowPlot.render()")
+        self.renderer.runString("# ArrowPlot.render()")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.plot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -387,7 +389,7 @@ class ContourPlot(Plot):
         """
         debugMsg("Called ContourPlot.setData()")
 
-        self.renderer.addToEvalStack("# ContourPlot.setData()")
+        self.renderer.runString("# ContourPlot.setData()")
 
         # this is a really dodgy way to get the data into the renderer
         # I really have to find a better, more elegant way to do this
@@ -420,14 +422,14 @@ class ContourPlot(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -437,9 +439,9 @@ class ContourPlot(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
@@ -450,31 +452,31 @@ class ContourPlot(Plot):
         """
         debugMsg("Called ContourPlot.render()")
 
-        self.renderer.addToEvalStack("# ContourPlot.render()")
-        self.renderer.addToEvalStack("_gnuplot('set contour base')")
-        self.renderer.addToEvalStack("_gnuplot('set view 0, 0, 1, 1')")
-        self.renderer.addToEvalStack("_gnuplot('set nosurface')") # gnuplot 3.7
+        self.renderer.runString("# ContourPlot.render()")
+        self.renderer.runString("_gnuplot('set contour base')")
+        self.renderer.runString("_gnuplot('set view 0, 0, 1, 1')")
+        self.renderer.runString("_gnuplot('set nosurface')") # gnuplot 3.7
 
          # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        self.renderer.runString("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -517,7 +519,7 @@ class LinePlot(Plot):
         """
         debugMsg("Called setData() in LinePlot()")
         
-        self.renderer.addToEvalStack("# LinePlot.setData()")
+        self.renderer.runString("# LinePlot.setData()")
 
         # grab the options if any
         if options.has_key('offset'):
@@ -542,7 +544,7 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -559,7 +561,7 @@ class LinePlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -573,7 +575,7 @@ class LinePlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -582,21 +584,21 @@ class LinePlot(Plot):
             for i in range(len(dataList)-1):
                 evalString += "_y%d," % i
             evalString += "_y%d])" % int(len(dataList)-1)
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             # find its min and max
-            self.renderer.addToEvalStack("_yMax = max(_yAll)")
-            self.renderer.addToEvalStack("_yMin = min(_yAll)")
+            self.renderer.runString("_yMax = max(_yAll)")
+            self.renderer.runString("_yMin = min(_yAll)")
 
             # keep the data apart a bit with a constant
-            self.renderer.addToEvalStack("_const = 0.1*(_yMax - _yMin)")
+            self.renderer.runString("_const = 0.1*(_yMax - _yMin)")
 
             # shift the data up
-            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            self.renderer.runString("_shift = _yMax - _yMin + _const")
 
             for i in range(len(dataList)):
                 evalString = "_y%d = _y%d + %d*_shift" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
         # give the data to gnuplot
         for i in range(len(dataList)):
@@ -614,7 +616,7 @@ class LinePlot(Plot):
             evalString += ")"
 
             # and add it to the evalstack
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # return the number of data objects to plot
         self.renderer.numDataObjects = len(dataList)
@@ -627,29 +629,29 @@ class LinePlot(Plot):
         """
         debugMsg("Called LinePlot.render()")
 
-        self.renderer.addToEvalStack("# LinePlot.render()")
+        self.renderer.runString("# LinePlot.render()")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.plot("
         for i in range(self.renderer.numDataObjects-1):
             evalString += "_data%d, " % i
         evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -755,7 +757,7 @@ class MeshPlot(Plot):
         """
         debugMsg("Called setData() in MeshPlot()")
 
-        self.renderer.addToEvalStack("# MeshPlot.setData()")
+        self.renderer.runString("# MeshPlot.setData()")
 
         # for the moment, make sure that there are three arrays
         if len(dataList) != 3:
@@ -785,14 +787,14 @@ class MeshPlot(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -802,9 +804,9 @@ class MeshPlot(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
@@ -815,45 +817,45 @@ class MeshPlot(Plot):
         """
         debugMsg("Called MeshPlot.render()")
 
-        self.renderer.addToEvalStack("# MeshPlot.render()")
-        self.renderer.addToEvalStack("_gnuplot('set surface')")
+        self.renderer.runString("# MeshPlot.render()")
+        self.renderer.runString("_gnuplot('set surface')")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a zlabel is set add it
         if self.zlabel is not None:
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # sets the appropriate linestyle for mesh plots
         evalString = "_gnuplot('set style data lines')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # makes sure that the lines are hidden
         evalString = "_gnuplot('set hidden3d')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if contours is true, set the relevant option
         if self.contours:
             evalString = "_gnuplot('set contour base')"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
          
@@ -894,7 +896,7 @@ class OffsetPlot(Plot):
         """
         debugMsg("Called setData() in OffsetPlot()")
         
-        self.renderer.addToEvalStack("# OffsetPlot.setData()")
+        self.renderer.runString("# OffsetPlot.setData()")
 
         # do some sanity checking on the data
         if len(dataList) > 3 or len(dataList) < 1:
@@ -949,7 +951,7 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
             ## generate the evalString for the t data
@@ -958,7 +960,7 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         elif len(dataList) == 3:
             ## generate the evalString for the t data
             evalString = "_t = array(["
@@ -966,14 +968,14 @@ class OffsetPlot(Plot):
                 evalString += "%s, " % tData[j]
             evalString += "%s])" % tData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             ## generate the evalString for the x data
             evalString = "_x = array(["
             for j in range(len(xData)-1):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
@@ -985,7 +987,7 @@ class OffsetPlot(Plot):
         elif len(yData.shape) == 2:
             dataLen = yData.shape[1]
         else:
-            raise ValueError,\
+            raise ValueError, \
                     "The last setData argument has the incorrect shape"
 
         for i in range(dataLen):
@@ -993,7 +995,7 @@ class OffsetPlot(Plot):
             if len(yData.shape) == 1:
                 data = yData
             else:
-                data = yData[:,i]
+                data = yData[:, i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
@@ -1001,7 +1003,7 @@ class OffsetPlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         ### shift the data up according to the offset rules
         # concatenate the data
@@ -1009,48 +1011,48 @@ class OffsetPlot(Plot):
         for i in range(dataLen-1):
             evalString += "_y%d," % i
         evalString += "_y%d])" % int(dataLen-1)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # find its min and max
-        self.renderer.addToEvalStack("_yMax = max(_yAll)")
-        self.renderer.addToEvalStack("_yMin = min(_yAll)")
+        self.renderer.runString("_yMax = max(_yAll)")
+        self.renderer.runString("_yMin = min(_yAll)")
 
         # keep the data apart a bit with a constant
         if self.sep is None:
-            self.renderer.addToEvalStack("_const = 0.01*(_yMax - _yMin)")
+            self.renderer.runString("_const = 0.01*(_yMax - _yMin)")
         else:
             evalString = "_const = %f" % self.sep
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # behave differently if we have xData as to not
         if len(dataList) == 3:
             # this is for when we have xData
-            self.renderer.addToEvalStack("_yMaxAbs = max(abs(_yAll))")
+            self.renderer.runString("_yMaxAbs = max(abs(_yAll))")
             # calculate the minimum delta x
             x1 = xData[:-1]
             x2 = xData[1:]
             minDeltax = min(x2 - x1)
             evalString = "_scale = %f/(2.0*_yMaxAbs)" % minDeltax
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             
             for i in range(dataLen):
                 evalString = "_y%d = _scale*_y%d + _x[%d]" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
         else:
             # shift the data up
-            self.renderer.addToEvalStack("_shift = _yMax - _yMin + _const")
+            self.renderer.runString("_shift = _yMax - _yMin + _const")
 
             for i in range(dataLen):
                 evalString = "_y%d = _y%d + %f*_shift" % (i, i, i)
-                self.renderer.addToEvalStack(evalString)
+                self.renderer.runString(evalString)
 
         # specify the minimum and maximum value on the graph
         # assumed to be max(_y0) - 2.0*_const and max(_y%d) + 2.0*_const
-        self.renderer.addToEvalStack("_minVal = min(_y0) - 2.0*_const")
+        self.renderer.runString("_minVal = min(_y0) - 2.0*_const")
         evalString = "_maxVal = max(_y%d) + 2.0*_const" % int(dataLen-1)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         evalString = "_gnuplot(\'set yrange [%g:%g]\' % (_minVal, _maxVal))"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # give the data to gnuplot
         for i in range(dataLen):
@@ -1068,7 +1070,7 @@ class OffsetPlot(Plot):
             evalString += ")"
 
             # and add it to the evalstack
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # return the number of data objects to plot
         self.renderer.numDataObjects = dataLen
@@ -1081,29 +1083,29 @@ class OffsetPlot(Plot):
         """
         debugMsg("Called OffsetPlot.render()")
 
-        self.renderer.addToEvalStack("# OffsetPlot.render()")
+        self.renderer.runString("# OffsetPlot.render()")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.plot("
         for i in range(self.renderer.numDataObjects-1):
             evalString += "_data%d, " % i
         evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1207,7 +1209,7 @@ class ScatterPlot(Plot):
         """
         debugMsg("Called setData() in ScatterPlot()")
 
-        self.renderer.addToEvalStack("# ScatterPlot.setData()")
+        self.renderer.runString("# ScatterPlot.setData()")
 
         # do some sanity checking on the data
         for i in range(len(dataList)):
@@ -1223,7 +1225,7 @@ class ScatterPlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # give it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
             # don't need the first element of the dataList so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate the xData
@@ -1240,7 +1242,7 @@ class ScatterPlot(Plot):
                 evalString += "%s, " % xData[j]
             evalString += "%s])" % xData[-1]
             # send it to the renderer
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -1254,7 +1256,7 @@ class ScatterPlot(Plot):
             for j in range(len(data)-1):
                 evalString += "%s, " % data[j]
             evalString += "%s])" % data[-1]
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
             evalString = "_data%d = Gnuplot.Data(_x, " % i
             evalString += "_y%d" % i
@@ -1266,7 +1268,7 @@ class ScatterPlot(Plot):
             evalString += ")"
 
             # and add it to the evalstack
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # return the number of objects to plot
         self.renderer.numDataObjects = len(dataList)
@@ -1279,34 +1281,34 @@ class ScatterPlot(Plot):
         """
         debugMsg("Called ScatterPlot.render()")
 
-        self.renderer.addToEvalStack("# ScatterPlot.render()")
+        self.renderer.runString("# ScatterPlot.render()")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set, add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a zlabel is set, add it
         if self.zlabel is not None:
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.plot("
         for i in range(self.renderer.numDataObjects-1):
             evalString += "_data%d, " % i
         evalString += "_data%d)" % (self.renderer.numDataObjects-1,)
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1349,7 +1351,7 @@ class ScatterPlot3D(Plot):
         """
         debugMsg("Called setData() in ScatterPlot3D()")
 
-        self.renderer.addToEvalStack("# ScatterPlot3D.setData()")
+        self.renderer.runString("# ScatterPlot3D.setData()")
 
         # for the moment, make sure that there are three arrays
         if len(dataList) != 3:
@@ -1379,14 +1381,14 @@ class ScatterPlot3D(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -1396,9 +1398,9 @@ class ScatterPlot3D(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
@@ -1409,35 +1411,35 @@ class ScatterPlot3D(Plot):
         """
         debugMsg("Called ScatterPlot3D.render()")
 
-        self.renderer.addToEvalStack("# ScatterPlot3D.render()")
+        self.renderer.runString("# ScatterPlot3D.render()")
         evalString = "_gnuplot('set style data points')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
-        #self.renderer.addToEvalStack("_gnuplot('set surface')")
+        #self.renderer.runString("_gnuplot('set surface')")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a zlabel is set add it
         if self.zlabel is not None:
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
 
@@ -1481,7 +1483,7 @@ class SurfacePlot(Plot):
         """
         debugMsg("Called setData() in SurfacePlot()")
 
-        self.renderer.addToEvalStack("# SurfacePlot.setData()")
+        self.renderer.runString("# SurfacePlot.setData()")
 
         # for the moment, make sure that there are three arrays
         if len(dataList) != 3:
@@ -1511,14 +1513,14 @@ class SurfacePlot(Plot):
         for j in range(len(xData)-1):
             evalString += "%s, " % xData[j]
         evalString += "%s])" % xData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the y data
         evalString = "_y = array(["
         for j in range(len(yData)-1):
             evalString += "%s, " % yData[j]
         evalString += "%s])" % yData[-1]
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         ## the z data
         evalString = "_z = array(["
@@ -1528,9 +1530,9 @@ class SurfacePlot(Plot):
                 evalString += "%s, " % zData[i, j]
             evalString += "%s],\n" % zData[i, -1]
         evalString += "])"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack(\
+        self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
 
         return
@@ -1541,47 +1543,47 @@ class SurfacePlot(Plot):
         """
         debugMsg("Called SurfacePlot.render()")
 
-        self.renderer.addToEvalStack("# SurfacePlot.render()")
-        self.renderer.addToEvalStack("_gnuplot('set surface')")
+        self.renderer.runString("# SurfacePlot.render()")
+        self.renderer.runString("_gnuplot('set surface')")
 
         # if a title is set, put it here
         if self.title is not None:
             evalString = "_gnuplot.title(\'%s\')" % self.title
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if an xlabel is set, add it
         if self.xlabel is not None:
             evalString = "_gnuplot.xlabel(\'%s\')" % self.xlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a ylabel is set add it
         if self.ylabel is not None:
             evalString = "_gnuplot.ylabel(\'%s\')" % self.ylabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # if a zlabel is set add it
         if self.zlabel is not None:
             evalString = "_gnuplot('set zlabel \\'%s\\'')" % self.zlabel
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
         # dunno if need this - could be just for gnuplot3
         evalString = "_gnuplot('set style data lines')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # makes sure that hidden lines are removed
         evalString = "_gnuplot('set hidden3d')"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # if contours is true, set the relevant option
         if self.contours:
             evalString = "_gnuplot('set contour base')"
-            self.renderer.addToEvalStack(evalString)
+            self.renderer.runString(evalString)
 
-        self.renderer.addToEvalStack("_gnuplot('set pm3d')")
+        self.renderer.runString("_gnuplot('set pm3d')")
 
         # set up the evalString to use for plotting
         evalString = "_gnuplot.splot(_data)"
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         return
             

@@ -161,7 +161,7 @@ class Scene(BaseScene):
         evalString += "  colour White\n"
         evalString += "}\n"
 
-        renderer.addToEvalStack(evalString)
+        renderer.runString(evalString)
 
         # write the resolution settings
         iniString = "Width=%d\n" % self.xSize
@@ -253,7 +253,7 @@ class Scene(BaseScene):
         @type format: Image object or string
         """
         debugMsg("Called Scene.save()")
-        self.renderer.addToEvalStack("// Scene.save()")
+        self.renderer.runString("// Scene.save()")
 
         # if the format is passed in as a string or object, react
         # appropriately

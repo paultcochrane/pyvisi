@@ -116,7 +116,7 @@ class Scene(object):
         renderer = self.renderer
 
         # I don't yet know where to put this, but just to get stuff going...
-        renderer.addToEvalStack("# Scene.render()\n")
+        renderer.runString("# Scene.render()\n")
 
         # optionally print out the evaluation stack to make sure we're doing
         # the right thing
@@ -281,7 +281,7 @@ class Scene(object):
             assert isinstance(command, str), "Incorrect data type; expected str"
 
         evalString = "%s" % command
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
         return
 
 # vim: expandtab shiftwidth=4:

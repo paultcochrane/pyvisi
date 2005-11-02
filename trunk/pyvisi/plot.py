@@ -460,7 +460,7 @@ class ScatterPlot(Plot):
         @param dataList: the data to set to the plot
         @type dataList: tuple
         """
-        debugMsg("Called setData() in ScatterPlot()")
+        debugMsg("Called ScatterPlot.setData()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
@@ -498,7 +498,7 @@ class ScatterPlot3D(Plot):
         @param dataList: the data to set to the plot
         @type dataList: tuple
         """
-        debugMsg("Called setData() in ScatterPlot3D()")
+        debugMsg("Called ScatterPlot3D.setData()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
@@ -512,6 +512,7 @@ class ScatterPlot3D(Plot):
         """
         Perform ScatterPlot3D specific rendering stuff
         """
+        debugMsg("Called ScatterPlot3D.render()")
 
         # print a warning message if get to here
         overrideWarning("ScatterPlot3D.render")
@@ -546,7 +547,7 @@ class SurfacePlot(Plot):
         @param dataList: the data to set to the plot
         @type dataList: tuple
         """
-        debugMsg("Called setData() in SurfacePlot()")
+        debugMsg("Called SufracePlot.setData()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
@@ -560,6 +561,7 @@ class SurfacePlot(Plot):
         """
         Perform SurfacePlot specific rendering stuff
         """
+        debugMsg("Called SurfacePlot.render()")
 
         # print a warning message if get to here
         overrideWarning("SurfacePlot.render")

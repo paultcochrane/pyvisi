@@ -55,7 +55,7 @@ class Renderer(BaseRenderer):
         self._initStack = ""
 
         # initialise the renderer module
-        self.addToEvalStack("# Renderer._initRendererModule")
+        self.runString("# Renderer._initRendererModule")
         self.addToInitStack("import vtk")
         self.addToInitStack("from Numeric import *")
 

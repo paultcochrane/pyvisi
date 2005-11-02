@@ -61,7 +61,7 @@ class Scene(BaseScene):
         if obj is None:
             raise ValueError, "You must specify an object to add"
 
-        self.renderer.addToEvalStack("# Scene.add()")
+        self.renderer.runString("# Scene.add()")
         self.objectList.append(obj)
 
         return
@@ -102,11 +102,11 @@ class Scene(BaseScene):
             print "Setting interactive to false"
             interactive = False
 
-        renderer.addToEvalStack("# Scene.render()")
+        renderer.runString("# Scene.render()")
 
         if not save:
             # so that renderering goes to the window by default
-            renderer.addToEvalStack("plplot.plsdev(\"xwin\")")
+            renderer.runString("plplot.plsdev(\"xwin\")")
 
         # get object added to the scene to render itself
         for obj in self.objectList:
@@ -114,7 +114,7 @@ class Scene(BaseScene):
         
         # add some code to pause after rendering if asked to
         if pause:
-            renderer.addToEvalStack("raw_input(\"Press enter to continue\")")
+            renderer.runString("raw_input(\"Press enter to continue\")")
 
         # prepend the init stack to the eval stack
         self.renderer._evalStack = self.renderer._initStack + \
@@ -160,7 +160,7 @@ class Scene(BaseScene):
         @type format: Image object
         """
         debugMsg("Called Scene.save()")
-        self.renderer.addToEvalStack("# Scene.save()")
+        self.renderer.runString("# Scene.save()")
 
         # if the format is passed in as a string or object, react
         # appropriately
@@ -172,16 +172,16 @@ class Scene(BaseScene):
 
         # set the output format
         if fmt == "ps":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "plplot.plsdev(\"psc\")")
         elif fmt == "png":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "plplot.plsdev(\"png\")")
         elif fmt == "pbm":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "plplot.plsdev(\"pbm\")")
         elif fmt == "jpeg" or fmt == "jpg":
-            self.renderer.addToEvalStack(\
+            self.renderer.runString(\
                     "plplot.plsdev(\"jpeg\")")
         else:
             raise ValueError, "Unknown graphics format.  I got: %s" % \
@@ -189,7 +189,7 @@ class Scene(BaseScene):
 
         # set the output filename
         evalString = "plplot.plsfnam(\"%s\")" % fname
-        self.renderer.addToEvalStack(evalString)
+        self.renderer.runString(evalString)
 
         # now render the whole shebang (again)
         self.render(save=True)

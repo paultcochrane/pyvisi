@@ -48,8 +48,6 @@ def overrideWarning(methodName):
     # barf
     raise NotImplementedError, "Method not implemented by renderer"
 
-    return
-
 def unsupportedError(rendererName):
     """
     Print an error message when a method is called that is defined in pyvisi
