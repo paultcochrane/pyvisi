@@ -125,19 +125,13 @@ class Scene(object):
         debugMsg(renderer.getEvalStack())
         debugMsg(60*"#")
 
-        # now compile the string object into code, and execute it
-        try:
-            compileObj = compile(renderer.getEvalStack(), \
-                    'compileErrs.txt', 'exec')
-            exec compileObj
-        except LookupError:
-            print "evalStack execution failed"
-            print "evalStack = \'%s\'" % renderer.getEvalStack()
-            return None
+	# execute the eval stack
+	evalStack = renderer.getEvalStack()
+	exec evalStack in self.renderer.renderDict
 
         # flush the evaluation stack
-        #debugMsg("Flusing evaluation stack")
-        #renderer.resetEvalStack()
+        debugMsg("Flusing evaluation stack")
+        renderer.resetEvalStack()
 
         # this is just to stop lint from complaining that pause and
         # interactive aren't used

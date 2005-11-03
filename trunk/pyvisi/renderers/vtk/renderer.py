@@ -48,6 +48,9 @@ class Renderer(BaseRenderer):
         # what is the name of my renderer?
         self.name = _rendererName
 
+	# the namespace to run the exec code
+	self.renderDict = {}
+
         # initialise the evalstack
         self._evalStack = ""
 
