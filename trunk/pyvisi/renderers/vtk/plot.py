@@ -233,56 +233,28 @@ class ArrowPlot(Plot):
         else:
             raise ValueError, "Input vectors can only be 1D or 2D"
 
-        # this is a really dodgy way to get the data into the renderer
-        # I really have to find a better, more elegant way to do this
-        
-        # this is a bad, cut-and-paste way to code it, but it will get going
-        # at least...
+	# now pass the data to the render dictionary so that the render code
+	# knows what it's supposed to plot
         # x data
-        ## generate the evalString for the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
-
+        self.renderer.renderDict['_x'] = xData
+    
         # y data
-        ## generate the evalString for the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
-
+        self.renderer.renderDict['_y'] = yData
+    
         # dx data
-        ## generate the evalString for the dx data
-        evalString = "_dx = array(["
-        for j in range(len(dxData)-1):
-            evalString += "%s, " % dxData[j]
-        evalString += "%s])" % dxData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
-
+        self.renderer.renderDict['_dx'] = dxData
+    
         # dy data
-        ## generate the evalString for the dy data
-        evalString = "_dy = array(["
-        for j in range(len(dyData)-1):
-            evalString += "%s, " % dyData[j]
-        evalString += "%s])" % dyData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
-
+        self.renderer.renderDict['_dy'] = dyData
+    
         # keep the number of points for future reference
         numPoints = len(xData)
 
         # construct the points data
         evalString = "_points = vtk.vtkPoints()\n"
         evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-        for j in range(numPoints):
-            evalString += "_points.InsertPoint(%d, %f, %f, 0.0)\n" % \
-                    (j, xData[j], yData[j])
+	evalString += "for _j in range(%d)\n" % numPoints
+	evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
         # construct the vectors
@@ -290,9 +262,8 @@ class ArrowPlot(Plot):
         evalString += "_vectors.SetNumberOfComponents(3)\n"
         evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
         evalString += "_vectors.SetName(\"vectors\")\n"
-        for j in range(numPoints):
-            evalString += "_vectors.InsertTuple3(%d, %f, %f, 0.0)\n" % \
-                    (j, dxData[j], dyData[j])
+	evalString += "for _j in range(%d)\n" % numPoints
+	evalString += "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
         # construct the grid
@@ -540,64 +511,26 @@ class ArrowPlot3D(Plot):
             else:
                 raise ValueError, "Input vectors can only be 1D or 2D"
     
-            # this is a really dodgy way to get the data into the renderer
-            # I really have to find a better, more elegant way to do this
-            
-            # this is a bad, cut-and-paste way to code it, but it will get going
-            # at least...
+	    # now pass the data to the render dictionary so that the render
+	    # code knows what it's supposed to plot
+
             # x data
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_x'] = xData
     
             # y data
-            ## generate the evalString for the y data
-            evalString = "_y = array(["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % yData[j]
-            evalString += "%s])" % yData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_y'] = yData
     
             # z data
-            ## generate the evalString for the z data
-            evalString = "_z = array(["
-            for j in range(len(zData)-1):
-                evalString += "%s, " % zData[j]
-            evalString += "%s])" % zData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_z'] = zData
     
             # dx data
-            ## generate the evalString for the dx data
-            evalString = "_dx = array(["
-            for j in range(len(dxData)-1):
-                evalString += "%s, " % dxData[j]
-            evalString += "%s])" % dxData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_dx'] = dxData
     
             # dy data
-            ## generate the evalString for the dy data
-            evalString = "_dy = array(["
-            for j in range(len(dyData)-1):
-                evalString += "%s, " % dyData[j]
-            evalString += "%s])" % dyData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_dy'] = dyData
     
             # dz data
-            ## generate the evalString for the dy data
-            evalString = "_dz = array(["
-            for j in range(len(dzData)-1):
-                evalString += "%s, " % dzData[j]
-            evalString += "%s])" % dzData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+	    self.renderer.renderDict['_dz'] = dzData
     
             # keep the number of points for future reference
             numPoints = len(xData)
@@ -605,9 +538,9 @@ class ArrowPlot3D(Plot):
             # construct the points data
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-            for j in range(numPoints):
-                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
-                        (j, xData[j], yData[j], zData[j])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += \
+		    "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
             self.renderer.runString(evalString)
     
             # construct the vectors
@@ -615,9 +548,9 @@ class ArrowPlot3D(Plot):
             evalString += "_vectors.SetNumberOfComponents(3)\n"
             evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
             evalString += "_vectors.SetName(\"vectors\")\n"
-            for j in range(numPoints):
-                evalString += "_vectors.InsertTuple3(%d, %f, %f, %f)\n" % \
-                        (j, dxData[j], dyData[j], dzData[j])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += \
+		    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], _dz[_j])\n"
             self.renderer.runString(evalString)
     
             # construct the grid
