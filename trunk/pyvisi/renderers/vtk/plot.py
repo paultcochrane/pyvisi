@@ -855,8 +855,8 @@ class BallPlot(Plot):
             # now work out the number of tags, and their values
             evalString = "_numPoints = _colours.GetNumberOfTuples()\n"
             evalString += "_valueDict = {}\n"
-            evalString += "for i in range(_numPoints):\n"
-            evalString += "    _colourValue = _colours.GetValue(i)\n"
+            evalString += "for _i in range(_numPoints):\n"
+            evalString += "    _colourValue = _colours.GetValue(_i)\n"
             evalString += "    _valueDict[_colourValue] = 1\n"
     
             evalString += "_numColours = len(_valueDict.keys())\n"
@@ -872,12 +872,12 @@ class BallPlot(Plot):
             evalString += "_scaledColours.SetNumberOfTuples(_numPoints)\n"
             evalString += "_scaledColours.SetNumberOfComponents(1)\n"
             evalString += "_scaledColours.SetName(\"scaledColours\")\n"
-            evalString += "for i in range(_numPoints):\n"
-            evalString += "    _colourValue = _colours.GetValue(i)\n"
-            evalString += "    for j in range(_numColours):\n"
-            evalString += "        if _colourValues[j] == _colourValue:\n"
-            evalString += "            _scaledColours.InsertTuple1(i,"
-            evalString += "float(j)/float(_numColours-1))"
+            evalString += "for _i in range(_numPoints):\n"
+            evalString += "    _colourValue = _colours.GetValue(_i)\n"
+            evalString += "    for _j in range(_numColours):\n"
+            evalString += "        if _colourValues[_j] == _colourValue:\n"
+            evalString += "            _scaledColours.InsertTuple1(_i,"
+            evalString += "float(_j)/float(_numColours-1))"
             self.renderer.runString(evalString)
     
             # now set up an array of two components to get the data through
@@ -904,7 +904,7 @@ class BallPlot(Plot):
             debugMsg("Using user-defined point data in BallPlot.setData()")
             ### if we get to here, then we have to construct the points,
             ### the radii and the colours all from scratch, add them to the
-            ### grid and get everthing in the same form that we have for the
+            ### grid and get everything in the same form that we have for the
             ### case where we load a vtk data file
 
             numPoints = len(points)
@@ -915,21 +915,23 @@ class BallPlot(Plot):
                     "The number of points does not equal the number of radii"
 
             ### construct the grid from the point data
+	    self.renderer.renderDict['_pointData'] = points
+	    self.renderer.renderDict['_radiiData'] = radii
             # make the points
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-            for i in range(numPoints):
-                point = points[i]
-                evalString += "_points.InsertPoint(%d, %f, %f, %f)\n" % \
-                        (i, point[0], point[1], point[2])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += "    _point = _pointData[_j]\n"
+	    evalString += \
+                "    _points.InsertPoint(_j,_point[0],_point[1],_point[2])\n"
             self.renderer.runString(evalString)
 
             # make the radii
             evalString = "_radii = vtk.vtkFloatArray()\n"
             evalString += "_radii.SetNumberOfComponents(1)\n"
             evalString += "_radii.SetNumberOfValues(%d)\n" % numPoints
-            for i in range(numPoints):
-                evalString += "_radii.InsertValue(%d, %f)\n" % (i, radii[i])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += "    _radii.InsertValue(_j, _radiiData[_j])\n"
             self.renderer.runString(evalString)
 
             # make the colours
@@ -981,14 +983,15 @@ class BallPlot(Plot):
                 tagValues = valueDict.keys()
                 tagValues.sort()
 
+	    self.renderer.renderDict['_tagData'] = tags
+
             # give the tag data to vtk
             evalString = "_tags = vtk.vtkFloatArray()\n"
             evalString += "_tags.SetNumberOfValues(%d)\n" % numPoints
             evalString += "_tags.SetNumberOfComponents(1)\n"
             evalString += "_tags.SetName(\"tags\")\n"
-            for i in range(numPoints):
-                evalString += "_tags.InsertValue(%d, %d)\n" % \
-                        (i, tags[i])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += "    _tags.InsertValue(_j, _tagData[_j])\n"
             self.renderer.runString(evalString)
 
             # now scale the tags
@@ -1001,14 +1004,16 @@ class BallPlot(Plot):
                         if tagValues[j] == tags[i]:
                             scaledTags[i] = float(j)/float(numTags-1)
 
+	    self.renderer.renderDict['_scaledTagData'] = scaledTags
+
             # now give vtk the scaled tag data
             evalString = "_scaledTags = vtk.vtkFloatArray()\n"
             evalString += "_scaledTags.SetNumberOfValues(%d)\n" % numPoints
             evalString += "_scaledTags.SetNumberOfComponents(1)\n"
             evalString += "_scaledTags.SetName(\"scaledTags\")\n"
-            for i in range(numPoints):
-                evalString += "_scaledTags.InsertValue(%d, %f)\n" % \
-                        (i, scaledTags[i])
+	    evalString += "for _j in range(%d):\n" % numPoints
+	    evalString += \
+		    "    _scaledTags.InsertValue(_j, _scaledTagData[_j])\n"
             self.renderer.runString(evalString)
 
             # now construct the data array
