@@ -220,31 +220,15 @@ class ContourPlot(Plot):
             raise ValueError, "z data array is not of correct shape: %s" % \
                     zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
+        # share around the data
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         # determine the min and max of x, y and z
         evalString = "_xMin = min(x)\n"
@@ -356,13 +340,8 @@ class LinePlot(Plot):
         # if have more than one array to plot, the first one is the x data
         if len(dataList) > 1:
             xData = dataList[0]
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -373,27 +352,19 @@ class LinePlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
                         
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = array([" % i
+            yDataVar = "_y%d" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
             
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict[yDataVar] = data
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -618,31 +589,15 @@ class SurfacePlot(Plot):
             raise ValueError, "z data array is not of the correct shape: %s"\
                     % zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
+        # pass the data around
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         # determine the min and max of x, y and z in world coordinates
         evalString = "_xMin = min(_x)\n"
