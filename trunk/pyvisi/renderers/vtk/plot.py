@@ -233,8 +233,8 @@ class ArrowPlot(Plot):
         else:
             raise ValueError, "Input vectors can only be 1D or 2D"
 
-	# now pass the data to the render dictionary so that the render code
-	# knows what it's supposed to plot
+        # now pass the data to the render dictionary so that the render code
+        # knows what it's supposed to plot
         # x data
         self.renderer.renderDict['_x'] = xData
     
@@ -253,8 +253,8 @@ class ArrowPlot(Plot):
         # construct the points data
         evalString = "_points = vtk.vtkPoints()\n"
         evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-	evalString += "for _j in range(%d)\n" % numPoints
-	evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
+        evalString += "for _j in range(%d)\n" % numPoints
+        evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
         # construct the vectors
@@ -262,8 +262,8 @@ class ArrowPlot(Plot):
         evalString += "_vectors.SetNumberOfComponents(3)\n"
         evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
         evalString += "_vectors.SetName(\"vectors\")\n"
-	evalString += "for _j in range(%d)\n" % numPoints
-	evalString += "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
+        evalString += "for _j in range(%d)\n" % numPoints
+        evalString += "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
         # construct the grid
@@ -511,26 +511,26 @@ class ArrowPlot3D(Plot):
             else:
                 raise ValueError, "Input vectors can only be 1D or 2D"
     
-	    # now pass the data to the render dictionary so that the render
-	    # code knows what it's supposed to plot
+            # now pass the data to the render dictionary so that the render
+            # code knows what it's supposed to plot
 
             # x data
-	    self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = xData
     
             # y data
-	    self.renderer.renderDict['_y'] = yData
+            self.renderer.renderDict['_y'] = yData
     
             # z data
-	    self.renderer.renderDict['_z'] = zData
+            self.renderer.renderDict['_z'] = zData
     
             # dx data
-	    self.renderer.renderDict['_dx'] = dxData
+            self.renderer.renderDict['_dx'] = dxData
     
             # dy data
-	    self.renderer.renderDict['_dy'] = dyData
+            self.renderer.renderDict['_dy'] = dyData
     
             # dz data
-	    self.renderer.renderDict['_dz'] = dzData
+            self.renderer.renderDict['_dz'] = dzData
     
             # keep the number of points for future reference
             numPoints = len(xData)
@@ -538,9 +538,9 @@ class ArrowPlot3D(Plot):
             # construct the points data
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += \
-		    "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += \
+                    "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
             self.renderer.runString(evalString)
     
             # construct the vectors
@@ -548,9 +548,9 @@ class ArrowPlot3D(Plot):
             evalString += "_vectors.SetNumberOfComponents(3)\n"
             evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
             evalString += "_vectors.SetName(\"vectors\")\n"
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += \
-		    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], _dz[_j])\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += \
+                    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], _dz[_j])\n"
             self.renderer.runString(evalString)
     
             # construct the grid
@@ -915,14 +915,14 @@ class BallPlot(Plot):
                     "The number of points does not equal the number of radii"
 
             ### construct the grid from the point data
-	    self.renderer.renderDict['_pointData'] = points
-	    self.renderer.renderDict['_radiiData'] = radii
+            self.renderer.renderDict['_pointData'] = points
+            self.renderer.renderDict['_radiiData'] = radii
             # make the points
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += "    _point = _pointData[_j]\n"
-	    evalString += \
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += "    _point = _pointData[_j]\n"
+            evalString += \
                 "    _points.InsertPoint(_j,_point[0],_point[1],_point[2])\n"
             self.renderer.runString(evalString)
 
@@ -930,8 +930,8 @@ class BallPlot(Plot):
             evalString = "_radii = vtk.vtkFloatArray()\n"
             evalString += "_radii.SetNumberOfComponents(1)\n"
             evalString += "_radii.SetNumberOfValues(%d)\n" % numPoints
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += "    _radii.InsertValue(_j, _radiiData[_j])\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += "    _radii.InsertValue(_j, _radiiData[_j])\n"
             self.renderer.runString(evalString)
 
             # make the colours
@@ -983,15 +983,15 @@ class BallPlot(Plot):
                 tagValues = valueDict.keys()
                 tagValues.sort()
 
-	    self.renderer.renderDict['_tagData'] = tags
+            self.renderer.renderDict['_tagData'] = tags
 
             # give the tag data to vtk
             evalString = "_tags = vtk.vtkFloatArray()\n"
             evalString += "_tags.SetNumberOfValues(%d)\n" % numPoints
             evalString += "_tags.SetNumberOfComponents(1)\n"
             evalString += "_tags.SetName(\"tags\")\n"
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += "    _tags.InsertValue(_j, _tagData[_j])\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += "    _tags.InsertValue(_j, _tagData[_j])\n"
             self.renderer.runString(evalString)
 
             # now scale the tags
@@ -1004,16 +1004,16 @@ class BallPlot(Plot):
                         if tagValues[j] == tags[i]:
                             scaledTags[i] = float(j)/float(numTags-1)
 
-	    self.renderer.renderDict['_scaledTagData'] = scaledTags
+            self.renderer.renderDict['_scaledTagData'] = scaledTags
 
             # now give vtk the scaled tag data
             evalString = "_scaledTags = vtk.vtkFloatArray()\n"
             evalString += "_scaledTags.SetNumberOfValues(%d)\n" % numPoints
             evalString += "_scaledTags.SetNumberOfComponents(1)\n"
             evalString += "_scaledTags.SetName(\"scaledTags\")\n"
-	    evalString += "for _j in range(%d):\n" % numPoints
-	    evalString += \
-		    "    _scaledTags.InsertValue(_j, _scaledTagData[_j])\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += \
+                    "    _scaledTags.InsertValue(_j, _scaledTagData[_j])\n"
             self.renderer.runString(evalString)
 
             # now construct the data array
@@ -1299,25 +1299,13 @@ class ContourPlot(Plot):
 
             # pass the data through to the pyvisi renderer
             ### the x data
-            evalString = "_x = array(["
-            for i in range(len(xData)-1):
-                evalString += "%s, " % xData[i]
-            evalString += "%s])" % xData[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_x'] = xData
 
             ### the y data
-            evalString = "_y = array(["
-            for i in range(len(yData)-1):
-                evalString += "%s, " % yData[i]
-            evalString += "%s])" % yData[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_y'] = yData
 
             ### the z data
-            evalString = "_z = array(["
-            for i in range(len(zData)-1):
-                evalString += "%s, " % zData[i]
-            evalString += "%s])" % zData[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_z'] = zData
 
             # calculate the max and min of the z data
             evalString = "_zMin = min(_z)\n"
@@ -1396,28 +1384,13 @@ class ContourPlot(Plot):
 
             # stringify the data to then pass to the renderer
             ### x data
-            evalString = "_x = array(["
-            for i in range(len(xData)-1):
-                evalString += "%s, " % xData[i]
-            evalString += "%s])" % xData[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_x'] = xData
 
             ### y data
-            evalString = "_y = array(["
-            for i in range(len(yData)-1):
-                evalString += "%s, " % yData[i]
-            evalString += "%s])" % yData[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_y'] = yData
 
             ### z data
-            evalString = "_z = array(["
-            for i in range(len(xData)):
-                evalString += "["
-                for j in range(len(yData)-1):
-                    evalString += "%s, " % zData[i, j]
-                evalString += "%s],\n" % zData[i, -1]
-            evalString += "])"
-            self.renderer.runString(evalString)
+            self.renderer.renderDict['_z'] = zData
 
             # calculate the min and max
             evalString = "_zMax = max(_z.flat)\n"
@@ -2146,13 +2119,8 @@ class LinePlot(Plot):
         # if have more than one array to plot, the first one is the x data
         if len(dataList) > 1:
             xData = dataList[0]
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass the x data around
+            self.renderer.renderDict['_x'] = xData
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
             # if only have one array input, then autogenerate xData
@@ -2162,13 +2130,8 @@ class LinePlot(Plot):
                 errorString = "Autogenerated xData array length not "
                 errorString += "equal to input array length"
                 raise ValueError, errorString
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass the x data around
+            self.renderer.renderDict['_x'] = xData
 
         # set up the vtkDataArray object for the x data
         self.renderer.runString(
@@ -2181,16 +2144,12 @@ class LinePlot(Plot):
         # now to add my dodgy hack until I have a decent way of sharing data
         # objects around properly
         for i in range(len(dataList)):
-            evalString = "_y%d = array([" % i
-            data = dataList[i]
             # check that the data here is a 1-D array
-            if len(data.shape) != 1:
+            if len(dataList[i].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
 
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
+            yDataVar = "_y%d" % i
+            self.renderer.renderDict[yDataVar] = dataList[i]
 
         # if offset is true then shift the data
         if self.offset:
@@ -2412,40 +2371,20 @@ class OffsetPlot(Plot):
                 errorString = "Autogenerated xData array length not "
                 errorString += "equal to input array length"
                 raise ValueError, errorString
-            ## generate the evalString for the x data
-            evalString = "_t = array(["
-            for j in range(len(tData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the t data
+            self.renderer.renderDict['_t'] = tData
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
             tData = dataList[0]
-            ## generate the evalString for the x data
-            evalString = "_t = array(["
-            for j in range(len(tData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the t data
+            self.renderer.renderDict['_t'] = tData
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         elif len(dataList) == 3:
-            ## generate the evalString for the t data
-            evalString = "_t = array(["
-            for j in range(len(tData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the t data
+            self.renderer.renderDict['_t'] = tData
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
@@ -2468,19 +2407,14 @@ class OffsetPlot(Plot):
         # now to add my dodgy hack until I have a decent way of sharing data
         # objects around properly
         for i in range(dataLen):
-            evalString = "_y%d = array([" % i
+            yDataVar = "_y%d" % i
             if len(yData.shape) == 1:
-                data = yData
+                self.renderer.renderDict[yDataVar] = yData
             else:
-                data = yData[:, i]
+                self.renderer.renderDict[yDataVar] = yData[:, i]
             # check that the data here is a 1-D array
-            if len(data.shape) != 1:
+            if len(self.renderer.renderDict[yDataVar].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
-
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
 
         # concatenate the data
         evalString = "_yAll = concatenate(["
@@ -2546,13 +2480,10 @@ class OffsetPlot(Plot):
 
         for i in range(dataLen):
             # create the field data object
-            evalString = "_fieldData%d = vtk.vtkFieldData()" % i
-            self.renderer.runString(evalString)
-            evalString = "_fieldData%d.AllocateArrays(2)" % i
-            self.renderer.runString(evalString)
-            evalString = "_fieldData%d.AddArray(_tData)" % i
-            self.renderer.runString(evalString)
-            evalString = "_fieldData%d.AddArray(_y%dData)" % (i, i)
+            evalString = "_fieldData%d = vtk.vtkFieldData()\n" % i
+            evalString += "_fieldData%d.AllocateArrays(2)\n" % i
+            evalString += "_fieldData%d.AddArray(_tData)\n" % i
+            evalString += "_fieldData%d.AddArray(_y%dData)" % (i, i)
             self.renderer.runString(evalString)
 
         for i in range(dataLen):
