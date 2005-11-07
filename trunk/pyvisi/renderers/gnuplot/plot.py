@@ -276,46 +276,17 @@ class ArrowPlot(Plot):
         else:
             raise ValueError, "Input vectors can only be 1D or 2D"
 
-        # this is a really dodgy way to get the data into the renderer
-        # I really have to find a better, more elegant way to do this
-        
-        # this is a bad, cut-and-paste way to code it, but it will get going
-        # at least...
         # x data
-        ## generate the evalString for the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         # y data
-        ## generate the evalString for the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         # dx data
-        ## generate the evalString for the dx data
-        evalString = "_dx = array(["
-        for j in range(len(dxData)-1):
-            evalString += "%s, " % dxData[j]
-        evalString += "%s])" % dxData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_dx'] = dxData
 
         # dy data
-        ## generate the evalString for the dy data
-        evalString = "_dy = array(["
-        for j in range(len(dyData)-1):
-            evalString += "%s, " % dyData[j]
-        evalString += "%s])" % dyData[-1]
-        # give it to the renderer
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_dy'] = dyData
 
         # set up the data to plot
         evalString = \
@@ -415,31 +386,14 @@ class ContourPlot(Plot):
             raise ValueError, "z data array is not of correct shape: %s" % \
                     zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -538,13 +492,8 @@ class LinePlot(Plot):
         # if have more than one array to plot, the first one is the x data
         if len(dataList) > 1:
             xData = dataList[0]
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -555,27 +504,18 @@ class LinePlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
                         
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = array([" % i
-            data = dataList[i]
             # check that the data here is a 1-D array
-            if len(data.shape) != 1:
+            if len(dataList[i].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
-            
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
+
+            yDataVar = "_y%d" % i
+            self.renderer.renderDict[yDataVar] = dataList[i]
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -780,31 +720,15 @@ class MeshPlot(Plot):
             raise ValueError, "z data array is not of the correct shape: %s"\
                     % zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
+        # pass the data around
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -945,37 +869,17 @@ class OffsetPlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
                         
-            ## generate the evalString for the x data
-            evalString = "_t = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass the t data around
+            self.renderer.renderDict['_t'] = tData
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
-            ## generate the evalString for the t data
-            evalString = "_t = array(["
-            for j in range(len(tData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass the t data around
+            self.renderer.renderDict['_t'] = tData
         elif len(dataList) == 3:
-            ## generate the evalString for the t data
-            evalString = "_t = array(["
-            for j in range(len(tData)-1):
-                evalString += "%s, " % tData[j]
-            evalString += "%s])" % tData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass the t data around
+            self.renderer.renderDict['_t'] = tData
+            ## pass the x data around
+            self.renderer.renderDict['_x'] = xData
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
@@ -990,21 +894,17 @@ class OffsetPlot(Plot):
             raise ValueError, \
                     "The last setData argument has the incorrect shape"
 
+        # share around the y data
         for i in range(dataLen):
-            evalString = "_y%d = array([" % i
+            yDataVar = "_y%d" % i
             if len(yData.shape) == 1:
-                data = yData
+                self.renderer.renderDict[yDataVar] = yData
             else:
-                data = yData[:, i]
+                self.renderer.renderDict[yDataVar] = yData[:, i]
             # check that the data here is a 1-D array
-            if len(data.shape) != 1:
+            if len(self.renderer.renderdict[yDataVar].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
             
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
-
         ### shift the data up according to the offset rules
         # concatenate the data
         evalString = "_yAll = concatenate(["
@@ -1219,13 +1119,8 @@ class ScatterPlot(Plot):
         # if have more than one array to plot the first one is the x data
         if len(dataList) > 1:
             xData = dataList[0]
-            ## generate the evalString for the data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # give it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
             # don't need the first element of the dataList so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate the xData
@@ -1236,27 +1131,19 @@ class ScatterPlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
 
-            ## generate the evalString for the x data
-            evalString = "_x = array(["
-            for j in range(len(xData)-1):
-                evalString += "%s, " % xData[j]
-            evalString += "%s])" % xData[-1]
-            # send it to the renderer
-            self.renderer.runString(evalString)
+            ## pass around the x data
+            self.renderer.renderDict['_x'] = xData
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
         for i in range(len(dataList)):
-            evalString = "_y%d = array([" % i
+            yDataVar = "_y%d" % i
             data = dataList[i]
             # check that the data here is a 1-D array
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
 
-            for j in range(len(data)-1):
-                evalString += "%s, " % data[j]
-            evalString += "%s])" % data[-1]
-            self.renderer.runString(evalString)
+            self.renderer.renderDict[yDataVar] = data
 
             evalString = "_data%d = Gnuplot.Data(_x, " % i
             evalString += "_y%d" % i
@@ -1374,31 +1261,15 @@ class ScatterPlot3D(Plot):
             raise ValueError, "z data array is not of the correct shape: %s"\
                     % zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
+        # share around the data
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -1506,31 +1377,15 @@ class SurfacePlot(Plot):
             raise ValueError, "z data array is not of the correct shape: %s"\
                     % zData.shape
 
-        # range over the data, printing what the expansion of the array is
-        # and regenerate the data within the eval
+        # share around the data
         ## the x data
-        evalString = "_x = array(["
-        for j in range(len(xData)-1):
-            evalString += "%s, " % xData[j]
-        evalString += "%s])" % xData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_x'] = xData
 
         ## the y data
-        evalString = "_y = array(["
-        for j in range(len(yData)-1):
-            evalString += "%s, " % yData[j]
-        evalString += "%s])" % yData[-1]
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_y'] = yData
 
         ## the z data
-        evalString = "_z = array(["
-        for i in range(len(xData)):
-            evalString += "["
-            for j in range(len(yData)-1):
-                evalString += "%s, " % zData[i, j]
-            evalString += "%s],\n" % zData[i, -1]
-        evalString += "])"
-        self.renderer.runString(evalString)
+        self.renderer.renderDict['_z'] = zData
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
