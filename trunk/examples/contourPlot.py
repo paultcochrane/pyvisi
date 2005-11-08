@@ -4,8 +4,12 @@
 Example of contour plotting with pyvisi 
 """
 
-# what plotting method are we using?
-method = 'pyvisi'
+import sys
+numArgs = len(sys.argv)
+if numArgs == 1:
+    ren_mod = "vtk"
+else:
+    ren_mod = sys.argv[1]
 
 # set up some data to plot
 from Numeric import *
@@ -24,83 +28,48 @@ for i in range(len(x)):
     for j in range(len(y)):
 	z[i,j] = x[i]*exp(-x[i]*x[i] - y[j]*y[j])
 
-# plot it with either gnuplot, vtk or pyvisi
-if method == 'pyvisi':
-    #### pyvisi version of code
-
-    # import the general pyvisi stuff
-    from pyvisi import *
-    # import the gnuplot overrides of the interface
-    #from pyvisi.renderers.gnuplot import *
+# import the general pyvisi stuff
+from pyvisi import *
+# import the gnuplot overrides of the interface
+if ren_mod == "gnuplot":
+    from pyvisi.renderers.gnuplot import *
+elif ren_mod == "vtk":
     from pyvisi.renderers.vtk import *
-
-    # define a scene object
-    # a Scene is a container for all of the kinds of things you want to put
-    # into your plot, for instance, images, meshes, arrow/vector/quiver
-    # plots, contour plots, spheres etc.
-    scene = Scene()
-
-    # create a ContourPlot object
-    plot = ContourPlot(scene)
-
-    # add some helpful info to the plot
-    plot.title = 'Example contour plot'
-    plot.xlabel = 'x'
-    plot.ylabel = 'y'
-
-    # assign the data to the plot
-    # this version assumes that we have x, then y, then z and that z is 2D
-    # and that x and y are 1D arrays
-    plot.setData(x,y,z)
-    # alternative syntax
-    #plot.setData(xData=x, yData=y, zData=z)
-    # or (but more confusing depending upon one's naming conventions)
-    #plot.setData(x=x, y=y, z=z)
-
-    # render the scene to screen
-    scene.render(pause=True, interactive=True)
-
-    # save the scene to file
-    plot.setData(x,y,z)  # have to do this now because we've already
-                         # render()ed the scene.  This requirement will be
-                         # removed in the future
-    scene.save(fname="contourPlot.png", format=PngImage())
-
-elif method == 'plplot':
-
-    import plplot
-
-    # determine the min and max of x
-    xMin = min(x)
-    xMax = max(x)
-    
-    yMin = min(y)
-    yMax = max(y)
-    
-    plplot.plsdev("xwin")
-    plplot.plinit()
-    plplot.plenv(xMin, xMax, yMin, yMax, 0, 1)
-    plplot.pllab("x", "y", "Example shaded contour plot")
-    plshades(zz, shedge, fill_width, 1, pltr1, xg1, yg1)
-
-    zmin = min(zz.flat)
-    zmax = max(zz.flat)
-
-    clevel = zmin + (zmax - zmin) * (arrayrange(NS)+0.5)/NS
-    shedge = zmin + (zmax - zmin) * (arrayrange(NS+1))/NS
-
-    plplot.plend()
-    
-    # to save as well, have to set everything up again, and replot
-    # save as png
-    plplot.plsdev("png")
-    plplot.plsfnam("contourPlot.png")
-    plplot.plinit()
-    plplot.plenv(xMin, xMax, yMin, yMax, 0, 1)
-    plplot.pllab("x", "y", "Example shaded contour plot")
-    plplot.plline(x, y1)
-    plplot.plend()
+elif ren_mod == "plplot":
+    from pyvisi.renderers.plplot import *
 else:
-    print "Eeek!  What plotting method am I supposed to use???"
+    raise ValueError, "Unknown renderer module"
+
+# define a scene object
+# a Scene is a container for all of the kinds of things you want to put
+# into your plot, for instance, images, meshes, arrow/vector/quiver
+# plots, contour plots, spheres etc.
+scene = Scene()
+
+# create a ContourPlot object
+plot = ContourPlot(scene)
+
+# add some helpful info to the plot
+plot.title = 'Example contour plot'
+plot.xlabel = 'x'
+plot.ylabel = 'y'
+
+# assign the data to the plot
+# this version assumes that we have x, then y, then z and that z is 2D
+# and that x and y are 1D arrays
+plot.setData(x,y,z)
+# alternative syntax
+#plot.setData(xData=x, yData=y, zData=z)
+# or (but more confusing depending upon one's naming conventions)
+#plot.setData(x=x, y=y, z=z)
+
+# render the scene to screen
+scene.render(pause=True, interactive=True)
+
+# save the scene to file
+plot.setData(x,y,z)  # have to do this now because we've already
+		     # render()ed the scene.  This requirement will be
+		     # removed in the future
+scene.save(fname="contourPlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:
