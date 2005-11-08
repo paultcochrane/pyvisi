@@ -2,12 +2,14 @@
 
 """
 Example of plotting surfaces with contours in pyvisi 
-
-Will hopefully help me write a decent interface.
 """
 
-# what plotting method are we using?
-method = 'pyvisi'
+import sys
+numArgs = len(sys.argv)
+if numArgs == 1:
+    ren_mod = "gnuplot"
+else:
+    ren_mod = sys.argv[1]
 
 # set up some data to plot
 from Numeric import *
@@ -26,79 +28,50 @@ for i in range(len(x)):
     for j in range(len(y)):
 	z[i,j] = x[i]*exp(-x[i]*x[i] - y[j]*y[j])
 
-# plot it with either gnuplot, vtk or pyvisi
-if method == 'pyvisi':
-    #### pyvisi version of code
-
-    # import the general pyvisi stuff
-    from pyvisi import *
-    # import the gnuplot overrides of the interface
+# import the general pyvisi stuff
+from pyvisi import *
+# import the renderer-specific overrides of the interface
+if ren_mod == "gnuplot":
     from pyvisi.renderers.gnuplot import *
-
-    # define a scene object
-    # a Scene is a container for all of the kinds of things you want to put
-    # into your plot, for instance, images, meshes, arrow/vector/quiver
-    # plots, contour plots, spheres etc.
-    scene = Scene()
-
-    # create a SurfacePlot object
-    plot = SurfacePlot(scene)
-
-    # add some helpful info to the plot
-    plot.title = 'Example surface plot with contour on base'
-    plot.xlabel = 'x'
-    plot.ylabel = 'y'
-    plot.zlabel = 'z'
-
-    # add a contour to the base of the axes
-    plot.contours = True
-
-    # assign the data to the plot
-    # this version assumes that we have x, then y, then z and that z is 2D
-    # and that x and y are 1D arrays
-    plot.setData(x,y,z)
-    # alternative syntax
-    #plot.setData(xData=x, yData=y, zData=z)
-    # or (but more confusing depending upon one's naming conventions)
-    #plot.setData(x=x, y=y, z=z)
-
-    # render the scene to screen
-    scene.render(pause=True, interactive=True)
-
-    # save the scene to file
-    plot.setData(x,y,z)  # have to do this now because we've already
-                         # render()ed the scene.  This requirement will be
-                         # removed in the future
-    scene.save(fname="surfaceAndContourPlot.png", format=PngImage())
-
-elif method == 'gnuplot':
-    #### original gnuplot code
-    
-    import Gnuplot
-
-    # set the plot up
-    _gnuplot = Gnuplot.Gnuplot()
-    _gnuplot.title('Example surface plot with contour on base')
-    _gnuplot.xlabel('x')
-    _gnuplot.ylabel('y')
-    _gnuplot('set zlabel \'z\'')
-
-    # this is a surface plot, so...
-    _gnuplot('set surface')
-    _gnuplot('set data style lines')
-    _gnuplot('set contour base')
-
-    # set up the data
-    _data = Gnuplot.GridData(z,x,y, binary=1)
-
-    _gnuplot.splot(_data)
-
-    raw_input('Press enter to continue...')
-
-elif method == 'vtk':
-    print "vtk surface plotting not yet implemented"
-
+elif ren_mod == "vtk":
+    from pyvisi.renderers.vtk import *
 else:
-    print "Eeek!  What plotting method am I supposed to use???"
+    raise ValueError, "Unknown renderer module"
+
+# define a scene object
+# a Scene is a container for all of the kinds of things you want to put
+# into your plot, for instance, images, meshes, arrow/vector/quiver
+# plots, contour plots, spheres etc.
+scene = Scene()
+
+# create a SurfacePlot object
+plot = SurfacePlot(scene)
+
+# add some helpful info to the plot
+plot.title = 'Example surface plot with contour on base'
+plot.xlabel = 'x'
+plot.ylabel = 'y'
+plot.zlabel = 'z'
+
+# add a contour to the base of the axes
+plot.contours = True
+
+# assign the data to the plot
+# this version assumes that we have x, then y, then z and that z is 2D
+# and that x and y are 1D arrays
+plot.setData(x,y,z)
+# alternative syntax
+#plot.setData(xData=x, yData=y, zData=z)
+# or (but more confusing depending upon one's naming conventions)
+#plot.setData(x=x, y=y, z=z)
+
+# render the scene to screen
+scene.render(pause=True, interactive=True)
+
+# save the scene to file
+plot.setData(x,y,z)  # have to do this now because we've already
+		     # render()ed the scene.  This requirement will be
+		     # removed in the future
+scene.save(fname="surfaceAndContourPlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:
