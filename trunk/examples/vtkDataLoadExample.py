@@ -50,9 +50,6 @@ if not vtk:
     plot = MeshPlot(scene)
     plot.setData(data)
 
-    # add the plot to the scene
-    scene.add(plot)
-    
     # render the scene
     scene.render(pause=True,interactive=True)
     
