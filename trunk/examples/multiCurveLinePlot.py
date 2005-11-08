@@ -54,9 +54,6 @@ plot.setData(x, y1, y2, y3)
 scene.render(pause=True,interactive=True)
 
 # save the scene to file
-plot.setData(x, y1, y2, y3)  # have to do this now because we've already
-                             # render()ed the scene.  This requirement
-                             # will be removed in the future.
 scene.save(fname="multiCurveLinePlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

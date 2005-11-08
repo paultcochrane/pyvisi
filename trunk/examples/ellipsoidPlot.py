@@ -43,8 +43,6 @@ plot.setData(fname='stress22.vtk', format='vtk-xml')
 scene.render(pause=True, interactive=True)
 
 # save the plot
-plot.setData(fname='stress22.vtk', format='vtk-xml')
-
 scene.save(fname="ellipsoidPlot.png", format="png")
 
 # vim: expandtab shiftwidth=4:

@@ -61,11 +61,6 @@ plot.setData(t, x, data)
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-# save as png
-plot.setData(t, x, data)
-                             # have to do this now because we've already
-                             # render()ed the scene.  This requirement
-                             # will be removed in the future.
 scene.save(fname="seismicOffsetPlotExample3.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

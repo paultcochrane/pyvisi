@@ -95,11 +95,6 @@ plot.setData(fname="cp_test_0.xml",
 scene.render(pause=True, interactive=True)
 
 # save the scene out to file
-## as png
-plot.setData(fname="cp_test_0.xml", 
-	format="vtk-xml", 
-	radii="radius", 
-	tags="particleTag")
 scene.save(fname="ballPlot.png", format="png")
 
 # vim: expandtab shiftwidth=4:

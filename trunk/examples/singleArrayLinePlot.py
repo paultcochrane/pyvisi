@@ -52,9 +52,6 @@ plot.setData(y)
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-plot.setData(y)  # have to do this now because we've already render()ed
-                 # the scene.  This requirement will be removed in the
-                 # future
 scene.save(fname="singleArrayLinePlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

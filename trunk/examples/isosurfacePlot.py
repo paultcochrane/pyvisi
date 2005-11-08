@@ -45,8 +45,6 @@ plot.setData(fname='temp-0500.vtk', format='vtk-xml')
 scene.render(pause=True, interactive=True)
 
 # save the plot
-plot.setData(fname='temp-0500.vtk', format='vtk-xml')
-
 scene.save(fname="isosurfacePlot.png", format="png")
 
 # vim: expandtab shiftwidth=4:

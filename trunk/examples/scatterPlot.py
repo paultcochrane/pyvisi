@@ -56,9 +56,6 @@ plot.setData(x, y)
 scene.render(pause=True, interactive=True)
 
 # save the scene out to file
-plot.setData(x, y)  # have to do this now because we've already
-		    # render()ed the scene.  This requirement will be
-		    # removed in the future
 scene.save(fname="scatterPlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

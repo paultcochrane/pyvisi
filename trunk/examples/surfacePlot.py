@@ -7,7 +7,7 @@ Example of plotting surfaces with pyvisi
 import sys
 numArgs = len(sys.argv)
 if numArgs == 1:
-    ren_mod = "vtk"
+    ren_mod = "gnuplot"
 else:
     ren_mod = sys.argv[1]
 
@@ -68,9 +68,6 @@ plot.setData(x,y,z)
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-plot.setData(x,y,z)  # have to do this now because we've already
-		     # render()ed the scene.  This requirement will be
-		     # removed in the future
 scene.save(fname="surfacePlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

@@ -59,19 +59,7 @@ plot.setData(x, y1, y2, y3, y4, y5, y6, offset=True)
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-# save as png
-plot.setData(x, y1, y2, y3, y4, y5, y6, offset=True)
-			     # have to do this now because we've already
-			     # render()ed the scene.  This requirement
-			     # will be removed in the future.
 scene.save(fname="offsetLinePlot.png", format=PngImage())
-
-# save as postscript
-plot.setData(x, y1, y2, y3, y4, y5, y6, offset=True)  
-			     # have to do this now because we've already
-			     # save()d the scene.  This requirement will
-			     # be removed in the future.
-scene.save(fname="offsetLinePlot.ps", format=PsImage())
 
 # vim: expandtab shiftwidth=4:
 

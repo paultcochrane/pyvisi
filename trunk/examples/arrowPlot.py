@@ -64,9 +64,6 @@ plot.setData(x, y, dx, dy)
 scene.render(pause=True, interactive=True)
 
 # save the scene out to file
-plot.setData(x, y, dx, dy) # have to do this now because we've already
-                           # render()ed the scene.  This requirement
-                           # will be removed in the future
 scene.save(fname="arrowPlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

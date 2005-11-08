@@ -62,11 +62,6 @@ plot.setData(t, data)
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-# save as png
-plot.setData(t, data)
-                             # have to do this now because we've already
-                             # render()ed the scene.  This requirement
-                             # will be removed in the future.
 scene.save(fname="offsetPlot.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

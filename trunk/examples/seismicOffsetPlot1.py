@@ -65,13 +65,6 @@ plot.setData(t, data[:,0], data[:,1], data[:,2], data[:,3],
 scene.render(pause=True, interactive=True)
 
 # save the scene to file
-# save as png
-plot.setData(t, data[:,0], data[:,1], data[:,2], data[:,3], 
-        data[:,4], data[:,5], data[:,6], data[:,7], data[:,8],
-        data[:,9], data[:,10], data[:,11], data[:,12], offset=True)
-                             # have to do this now because we've already
-                             # render()ed the scene.  This requirement
-                             # will be removed in the future.
 scene.save(fname="seismicOffsetPlot1.png", format=PngImage())
 
 # vim: expandtab shiftwidth=4:

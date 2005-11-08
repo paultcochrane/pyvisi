@@ -73,9 +73,6 @@ plot.setData(x, y, z, dx, dy, dz)
 scene.render(pause=True, interactive=True)
 
 # save the scene out to file
-plot.setData(x, y, z, dx, dy, dz) # have to do this because we've already
-			   # render()ed the scene.  This requirement
-			   # will be removed in the future
 scene.save(fname="arrowPlot3D.png", format=PngImage())
 
 # plot data defined in a vtk file
@@ -84,8 +81,6 @@ plot.setData(fname='vel-0500.vtk', format='vtk-xml')
 scene.render(pause=True, interactive=True)
 
 # save this plot too
-plot.setData(fname='vel-0500.vtk', format='vtk-xml')
-
 scene.save(fname="arrowPlot3Dvtk.png", format="png")
 
 # vim: expandtab shiftwidth=4:
