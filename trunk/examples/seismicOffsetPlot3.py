@@ -6,6 +6,13 @@ This is an example with simulated seismic data, and is a larger dataset
 than seismicOffsetPlotExample.py and makes use of the x data.
 """
 
+import sys
+numArgs = len(sys.argv)
+if numArgs == 1:
+    ren_mod = "vtk"
+else:
+    ren_mod = sys.argv[1]
+
 # set up some data to plot
 from Numeric import *
 
@@ -26,8 +33,12 @@ fp.close()
 # example code for how a user would write a script in pyvisi
 from pyvisi import *          # base level visualisation stuff
 # import the objects to render the scene using the specific renderer
-from pyvisi.renderers.gnuplot import *   # gnuplot
-#from pyvisi.renderers.vtk import *       # vtk
+if ren_mod == "gnuplot":
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+elif ren_mod == "vtk":
+    from pyvisi.renderers.vtk import *       # vtk
+else:
+    raise ValueError, "Unknown renderer module"
 
 # define the scene object
 # a Scene is a container for all of the kinds of things you want to put 

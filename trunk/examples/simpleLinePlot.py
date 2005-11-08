@@ -4,6 +4,13 @@
 Example of plotting lines with pyvisi 
 """
 
+import sys
+numArgs = len(sys.argv)
+if numArgs == 1:
+    ren_mod = "vtk"
+else:
+    ren_mod = sys.argv[1]
+
 # set up some data to plot
 from Numeric import *
 
@@ -13,9 +20,14 @@ y = x**2
 # example code for how a user would write a script in pyvisi
 from pyvisi import *          # base level visualisation stuff
 # import the objects to render the scene using the specific renderer
-#from pyvisi.renderers.gnuplot import *   # gnuplot
-from pyvisi.renderers.vtk import *       # vtk
-#from pyvisi.renderers.plplot import *    # plplot
+if ren_mod == "gnuplot":
+    from pyvisi.renderers.gnuplot import *   # gnuplot
+elif ren_mod == "vtk":
+    from pyvisi.renderers.vtk import *       # vtk
+elif ren_mod == "plplot":
+    from pyvisi.renderers.plplot import *    # plplot
+else:
+    raise ValueError, "Unknown renderer module"
 
 # define the scene object
 # a Scene is a container for all of the kinds of things you want to put 
