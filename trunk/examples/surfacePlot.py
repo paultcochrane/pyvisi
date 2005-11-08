@@ -140,9 +140,14 @@ elif method == 'vtk':
     _delaunay.SetInput(_grid)
     _delaunay.SetTolerance(0.001)
 
+    # warp the surface to generate the surface or "carpet"
+    _warp = vtk.vtkWarpScalar()
+    _warp.SetInput(_delaunay.GetOutput())
+    _warp.SetScaleFactor(1.0)
+
     # set up the mapper
     _mapper = vtk.vtkPolyDataMapper()
-    _mapper.SetInput(_delaunay.GetOutput())
+    _mapper.SetInput(_warp.GetOutput())
     _mapper.SetLookupTable(_lut)
     _mapper.SetScalarRange(_zMin, _zMax)
 
@@ -210,15 +215,28 @@ elif method == 'vtk':
     # to the current position
     _azimuth = -37.5
     _elevation = 30
+    
     # take the position where I am as being 0 azimuth, and 90 elevation
+
+    # position the camera appropriately
+    _xPos = _gridCentre[0] + _radius*sin(math.pi*_azimuth/180.0)
+    _yPos = _gridCentre[1] - _radius*cos(math.pi*_elevation/180.0) \
+            + _radius*cos(math.pi*_azimuth/180.0)
+    _zPos = _gridCentre[2] + _radius - _radius*sin(math.pi*_elevation/180.0)
+
+    _camera.SetPosition(_xPos, _yPos, _zPos) 
+
+    _camera.SetViewUp(0,0,1)
+
+    _ren.SetActiveCamera(_camera)
     
     _ren.ResetCameraClippingRange()
 
     # add some axes
     _axes = vtk.vtkCubeAxesActor2D()
-    _axes.SetInput(_grid)
+    _axes.SetInput(_warp.GetOutput())
     _axes.SetCamera(_ren.GetActiveCamera())
-    _axes.SetLabelFormat("%6.4g")
+    _axes.SetLabelFormat("%6.2g")
     _axes.SetFlyModeToOuterEdges()
     _axes.SetFontFactor(0.8)
     _axes.SetAxisTitleTextProperty(_textProp)
