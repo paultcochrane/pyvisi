@@ -1,7 +1,7 @@
 # $Id$
 
 """
-Example of plotting surfaces with pyvisi 
+Example of plotting surfaces
 """
 
 # set up some data to plot
@@ -49,4 +49,6 @@ _gnuplot('set output \"surfacePlot.png\"')
 _gnuplot.splot(_data)
 
 raw_input('Press enter to continue...')
+
+# vim: expandtab shiftwidth=4:
 
