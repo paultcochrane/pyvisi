@@ -31,7 +31,8 @@ if method == 'pyvisi':
     # import the general pyvisi stuff
     from pyvisi import *
     # import the gnuplot overrides of the interface
-    from pyvisi.renderers.gnuplot import *
+    #from pyvisi.renderers.gnuplot import *
+    from pyvisi.renderers.vtk import *
 
     # define a scene object
     # a Scene is a container for all of the kinds of things you want to put
