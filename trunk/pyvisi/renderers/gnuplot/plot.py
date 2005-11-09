@@ -24,6 +24,7 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 
 # generic imports
 from pyvisi.renderers.gnuplot.common import debugMsg
+import copy
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
@@ -277,16 +278,16 @@ class ArrowPlot(Plot):
             raise ValueError, "Input vectors can only be 1D or 2D"
 
         # x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         # y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         # dx data
-        self.renderer.renderDict['_dx'] = dxData
+        self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
 
         # dy data
-        self.renderer.renderDict['_dy'] = dyData
+        self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
 
         # set up the data to plot
         evalString = \
@@ -387,13 +388,13 @@ class ContourPlot(Plot):
                     zData.shape
 
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -493,7 +494,7 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -505,7 +506,7 @@ class LinePlot(Plot):
                 raise ValueError, errorString
                         
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -515,7 +516,7 @@ class LinePlot(Plot):
                 raise ValueError, "Can only handle 1D arrays at present"
 
             yDataVar = "_y%d" % i
-            self.renderer.renderDict[yDataVar] = dataList[i]
+            self.renderer.renderDict[yDataVar] = copy.deepcopy(dataList[i])
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -722,13 +723,13 @@ class MeshPlot(Plot):
 
         # pass the data around
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -870,16 +871,16 @@ class OffsetPlot(Plot):
                 raise ValueError, errorString
                         
             ## pass the t data around
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
             ## pass the t data around
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
         elif len(dataList) == 3:
             ## pass the t data around
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
             ## pass the x data around
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
@@ -898,9 +899,9 @@ class OffsetPlot(Plot):
         for i in range(dataLen):
             yDataVar = "_y%d" % i
             if len(yData.shape) == 1:
-                self.renderer.renderDict[yDataVar] = yData
+                self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
             else:
-                self.renderer.renderDict[yDataVar] = yData[:, i]
+                self.renderer.renderDict[yDataVar] = copy.deepcopy(yData[:, i])
             # check that the data here is a 1-D array
             if len(self.renderer.renderdict[yDataVar].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
@@ -1120,7 +1121,7 @@ class ScatterPlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
             # don't need the first element of the dataList so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate the xData
@@ -1132,7 +1133,7 @@ class ScatterPlot(Plot):
                 raise ValueError, errorString
 
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -1143,7 +1144,7 @@ class ScatterPlot(Plot):
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
 
-            self.renderer.renderDict[yDataVar] = data
+            self.renderer.renderDict[yDataVar] = copy.deepcopy(data)
 
             evalString = "_data%d = Gnuplot.Data(_x, " % i
             evalString += "_y%d" % i
@@ -1263,13 +1264,13 @@ class ScatterPlot3D(Plot):
 
         # share around the data
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")
@@ -1379,13 +1380,13 @@ class SurfacePlot(Plot):
 
         # share around the data
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         self.renderer.runString(\
                 "_data = Gnuplot.GridData(_z, _x, _y, binary=1)")

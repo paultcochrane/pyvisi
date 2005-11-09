@@ -26,6 +26,7 @@ Class and functions associated with a pyvisi Plot objects
 from pyvisi.renderers.vtk.common import debugMsg
 import Numeric
 import os
+import copy
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
@@ -236,16 +237,16 @@ class ArrowPlot(Plot):
         # now pass the data to the render dictionary so that the render code
         # knows what it's supposed to plot
         # x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
     
         # y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
     
         # dx data
-        self.renderer.renderDict['_dx'] = dxData
+        self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
     
         # dy data
-        self.renderer.renderDict['_dy'] = dyData
+        self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
     
         # keep the number of points for future reference
         numPoints = len(xData)
@@ -253,7 +254,7 @@ class ArrowPlot(Plot):
         # construct the points data
         evalString = "_points = vtk.vtkPoints()\n"
         evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-        evalString += "for _j in range(%d)\n" % numPoints
+	evalString += "for _j in range(%d):\n" % numPoints
         evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
@@ -262,7 +263,7 @@ class ArrowPlot(Plot):
         evalString += "_vectors.SetNumberOfComponents(3)\n"
         evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
         evalString += "_vectors.SetName(\"vectors\")\n"
-        evalString += "for _j in range(%d)\n" % numPoints
+	evalString += "for _j in range(%d):\n" % numPoints
         evalString += "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
         self.renderer.runString(evalString)
 
@@ -515,22 +516,22 @@ class ArrowPlot3D(Plot):
             # code knows what it's supposed to plot
 
             # x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
     
             # y data
-            self.renderer.renderDict['_y'] = yData
+            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
     
             # z data
-            self.renderer.renderDict['_z'] = zData
+            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
     
             # dx data
-            self.renderer.renderDict['_dx'] = dxData
+            self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
     
             # dy data
-            self.renderer.renderDict['_dy'] = dyData
+            self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
     
             # dz data
-            self.renderer.renderDict['_dz'] = dzData
+            self.renderer.renderDict['_dz'] = copy.deepcopy(dzData)
     
             # keep the number of points for future reference
             numPoints = len(xData)
@@ -915,8 +916,8 @@ class BallPlot(Plot):
                     "The number of points does not equal the number of radii"
 
             ### construct the grid from the point data
-            self.renderer.renderDict['_pointData'] = points
-            self.renderer.renderDict['_radiiData'] = radii
+            self.renderer.renderDict['_pointData'] = copy.deepcopy(points)
+            self.renderer.renderDict['_radiiData'] = copy.deepcopy(radii)
             # make the points
             evalString = "_points = vtk.vtkPoints()\n"
             evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
@@ -983,7 +984,7 @@ class BallPlot(Plot):
                 tagValues = valueDict.keys()
                 tagValues.sort()
 
-            self.renderer.renderDict['_tagData'] = tags
+            self.renderer.renderDict['_tagData'] = copy.deepcopy(tags)
 
             # give the tag data to vtk
             evalString = "_tags = vtk.vtkFloatArray()\n"
@@ -1004,7 +1005,8 @@ class BallPlot(Plot):
                         if tagValues[j] == tags[i]:
                             scaledTags[i] = float(j)/float(numTags-1)
 
-            self.renderer.renderDict['_scaledTagData'] = scaledTags
+            self.renderer.renderDict['_scaledTagData'] = \
+		    copy.deepcopy(scaledTags)
 
             # now give vtk the scaled tag data
             evalString = "_scaledTags = vtk.vtkFloatArray()\n"
@@ -1299,13 +1301,13 @@ class ContourPlot(Plot):
 
             # pass the data through to the pyvisi renderer
             ### the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
             ### the y data
-            self.renderer.renderDict['_y'] = yData
+            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
             ### the z data
-            self.renderer.renderDict['_z'] = zData
+            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
             # calculate the max and min of the z data
             evalString = "_zMin = min(_z)\n"
@@ -1384,13 +1386,13 @@ class ContourPlot(Plot):
 
             # stringify the data to then pass to the renderer
             ### x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
             ### y data
-            self.renderer.renderDict['_y'] = yData
+            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
             ### z data
-            self.renderer.renderDict['_z'] = zData
+            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
             # calculate the min and max
             evalString = "_zMax = max(_z.flat)\n"
@@ -2120,7 +2122,7 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## pass the x data around
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
             # if only have one array input, then autogenerate xData
@@ -2131,7 +2133,7 @@ class LinePlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
             ## pass the x data around
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         # set up the vtkDataArray object for the x data
         self.renderer.runString(
@@ -2149,7 +2151,7 @@ class LinePlot(Plot):
                 raise ValueError, "Can only handle 1D arrays at present"
 
             yDataVar = "_y%d" % i
-            self.renderer.renderDict[yDataVar] = dataList[i]
+            self.renderer.renderDict[yDataVar] = copy.deepcopy(dataList[i])
 
         # if offset is true then shift the data
         if self.offset:
@@ -2372,19 +2374,19 @@ class OffsetPlot(Plot):
                 errorString += "equal to input array length"
                 raise ValueError, errorString
             ## pass around the t data
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
         # if have two arrays to plot, the first one is the t data
         elif len(dataList) == 2:
             tData = dataList[0]
             ## pass around the t data
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         elif len(dataList) == 3:
             ## pass around the t data
-            self.renderer.renderDict['_t'] = tData
+            self.renderer.renderDict['_t'] = copy.deepcopy(tData)
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
         else:
             # shouldn't get to here, but raise an error anyway
             raise ValueError, "Incorrect number of arguments"
@@ -2404,14 +2406,13 @@ class OffsetPlot(Plot):
             raise ValueError, \
                     "The last setData argument has the incorrect shape"
 
-        # now to add my dodgy hack until I have a decent way of sharing data
-        # objects around properly
+        # share around the y data
         for i in range(dataLen):
             yDataVar = "_y%d" % i
             if len(yData.shape) == 1:
-                self.renderer.renderDict[yDataVar] = yData
+                self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
             else:
-                self.renderer.renderDict[yDataVar] = yData[:, i]
+                self.renderer.renderDict[yDataVar] = copy.deepcopy(yData[:, i])
             # check that the data here is a 1-D array
             if len(self.renderer.renderDict[yDataVar].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"

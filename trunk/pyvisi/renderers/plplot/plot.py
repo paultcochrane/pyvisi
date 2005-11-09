@@ -222,13 +222,13 @@ class ContourPlot(Plot):
 
         # share around the data
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         # determine the min and max of x, y and z
         evalString = "_xMin = min(x)\n"
@@ -341,7 +341,7 @@ class LinePlot(Plot):
         if len(dataList) > 1:
             xData = dataList[0]
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
             # don't need the first element of the dataList, so get rid of it
             dataList = dataList[1:]
         # if only have one array input, then autogenerate xData
@@ -353,7 +353,7 @@ class LinePlot(Plot):
                 raise ValueError, errorString
                         
             ## pass around the x data
-            self.renderer.renderDict['_x'] = xData
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         # range over the data, printing what the expansion of the array is
         # and regenerate the data within the eval
@@ -364,7 +364,7 @@ class LinePlot(Plot):
             if len(data.shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
             
-            self.renderer.renderDict[yDataVar] = data
+            self.renderer.renderDict[yDataVar] = copy.deepcopy(data)
 
         # if offset is true, then shift the data up accordingly
         if self.offset:
@@ -591,13 +591,13 @@ class SurfacePlot(Plot):
 
         # pass the data around
         ## the x data
-        self.renderer.renderDict['_x'] = xData
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
         ## the y data
-        self.renderer.renderDict['_y'] = yData
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
         ## the z data
-        self.renderer.renderDict['_z'] = zData
+        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
         # determine the min and max of x, y and z in world coordinates
         evalString = "_xMin = min(_x)\n"
