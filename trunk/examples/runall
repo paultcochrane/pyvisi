@@ -17,6 +17,7 @@ Files = (
     "multiCurveLinePlot.py",
     "offsetLinePlot.py",
     "offsetPlot.py",
+    "randomLinePlot.py",
     "seismicOffsetPlot1.py",
     "seismicOffsetPlot2.py",
     "seismicOffsetPlot3.py",
