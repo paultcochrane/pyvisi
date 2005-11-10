@@ -7,7 +7,7 @@ Example of plotting surfaces with pyvisi
 import sys
 numArgs = len(sys.argv)
 if numArgs == 1:
-    ren_mod = "gnuplot"
+    ren_mod = "vtk"
 else:
     ren_mod = sys.argv[1]
 
