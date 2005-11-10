@@ -58,7 +58,8 @@ plot.linestyle = 'lines'
 plot.setData(range(numPoints), y)
 
 # render the scene to screen
-#scene.render(pause=True, interactive=True)
+scene.render(pause=True, interactive=True)
+# save the scene out to file
 scene.save(fname="randomLinePlot1.png", format="png")
 
 plot.title = 'Another example of a 2D line plot of random numbers'
@@ -68,6 +69,8 @@ plot.linestyle = 'lines'
 
 plot.setData(range(numPoints), y2)
 
+# render the scene to screen
+scene.render(pause=True, interactive=True)
 # save the scene out to file
 scene.save(fname="randomLinePlot2.png", format="png")
 
