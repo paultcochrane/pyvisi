@@ -34,9 +34,19 @@ __revision__ = _rendererRevision
 from pyvisi.renderers.gnuplot.item import Item
 from pyvisi.renderers.gnuplot.renderer import Renderer
 from pyvisi.renderers.gnuplot.scene import Scene
-from pyvisi.renderers.gnuplot.plot import Plot, \
-        ArrowPlot, ContourPlot, LinePlot, MeshPlot, OffsetPlot, \
-        ScatterPlot, ScatterPlot3D, SurfacePlot
+
+# plotting stuff
+from pyvisi.renderers.gnuplot.plot import Plot
+from pyvisi.renderers.gnuplot.arrow_plot import ArrowPlot
+from pyvisi.renderers.gnuplot.contour_plot import ContourPlot
+from pyvisi.renderers.gnuplot.line_plot import LinePlot
+from pyvisi.renderers.gnuplot.mesh_plot import MeshPlot
+from pyvisi.renderers.gnuplot.offset_plot import OffsetPlot
+from pyvisi.renderers.gnuplot.scatter_plot import ScatterPlot
+from pyvisi.renderers.gnuplot.scatter_plot_3d import ScatterPlot3D
+from pyvisi.renderers.gnuplot.surface_plot import SurfacePlot
+
+
 from pyvisi.renderers.gnuplot.camera import Camera
 from pyvisi.renderers.gnuplot.image import Image, \
         JpegImage, PbmImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
