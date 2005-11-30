@@ -4,6 +4,15 @@
 #
 # $Id$
 
+# process arguments if any
+import sys
+numArgs = len(sys.argv)
+if numArgs == 1:
+    renderer = "vtk"
+else:
+    renderer = sys.argv[1]
+
+# the list of files to process
 Files = (
     "arrowPlot.py",
     "arrowPlot2D.py",
@@ -32,6 +41,7 @@ Files = (
 
 print "Running all examples"
 
+# run the examples
 import os
 err = open("runall.errs", "w")
 for file in Files:
@@ -40,7 +50,7 @@ for file in Files:
     print "Running %s" % file
     print 70*"#"
     print ""
-    result = os.system("python %s" % file)
+    result = os.system("python %s %s" % (file,renderer) )
     if result != 0:
         print "Error running example script: %s" % file
         err.write("Error running example script: %s\n" % file)
