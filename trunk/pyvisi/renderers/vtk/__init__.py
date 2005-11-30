@@ -34,9 +34,20 @@ __revision__ = _rendererRevision
 from pyvisi.renderers.vtk.item import Item
 from pyvisi.renderers.vtk.renderer import Renderer
 from pyvisi.renderers.vtk.scene import Scene
-from pyvisi.renderers.vtk.plot import Plot, \
-        ArrowPlot, ArrowPlot3D, BallPlot, ContourPlot, EllipsoidPlot, \
-        IsosurfacePlot, LinePlot, OffsetPlot, SurfacePlot
+
+# plotting stuff
+from pyvisi.renderers.vtk.plot import Plot
+from pyvisi.renderers.vtk.arrow_plot import ArrowPlot
+from pyvisi.renderers.vtk.arrow_plot_3d import ArrowPlot3D
+from pyvisi.renderers.vtk.ball_plot import BallPlot
+from pyvisi.renderers.vtk.contour_plot import ContourPlot
+from pyvisi.renderers.vtk.ellipsoid_plot import EllipsoidPlot
+from pyvisi.renderers.vtk.isosurface_plot import IsosurfacePlot
+from pyvisi.renderers.vtk.line_plot import LinePlot
+from pyvisi.renderers.vtk.offset_plot import OffsetPlot
+from pyvisi.renderers.vtk.surface_plot import SurfacePlot
+
+
 from pyvisi.renderers.vtk.camera import Camera
 from pyvisi.renderers.vtk.image import Image, \
         JpegImage, PdfImage, PngImage, PnmImage, PsImage, TiffImage
