@@ -903,7 +903,7 @@ class OffsetPlot(Plot):
             else:
                 self.renderer.renderDict[yDataVar] = copy.deepcopy(yData[:, i])
             # check that the data here is a 1-D array
-            if len(self.renderer.renderdict[yDataVar].shape) != 1:
+            if len(self.renderer.renderDict[yDataVar].shape) != 1:
                 raise ValueError, "Can only handle 1D arrays at present"
             
         ### shift the data up according to the offset rules
