@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+
+# $Id$
+
+from esys.escript import *
+from esys import bruce
+
+import numarray
+
+from pyvisi import *
+from pyvisi.renderers.vtk import *
+
+vectorDomain = bruce.Rectangle(9,1,10,1)
+vectorFunctionSpace=escript.ContinuousFunction(vectorDomain)
+
+vectorData3D = numarray.array([1.0,2.0,3.0])
+
+
+# plotting 3D vectors in a 1D array
+threeDVectorData1D = Data(vectorData3D, vectorFunctionSpace, True)
+scene = Scene()
+plot = ArrowPlot3D(scene)
+plot.setData(threeDVectorData1D)
+scene.render()
+
+# vim: expandtab shiftwidth=4:
