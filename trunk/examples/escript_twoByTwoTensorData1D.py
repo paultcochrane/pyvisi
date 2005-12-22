@@ -21,6 +21,6 @@ twoByTwoTensorData1D = Data(tensorData2x2, vectorFunctionSpace, True)
 scene = Scene()
 plot = EllipsoidPlot(scene)
 plot.setData(twoByTwoTensorData1D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

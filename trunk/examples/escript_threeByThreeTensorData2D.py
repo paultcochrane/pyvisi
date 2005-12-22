@@ -21,6 +21,6 @@ threeByThreeTensorData2D = Data(tensorData3x3, tensorFunctionSpace, True)
 scene = Scene()
 plot = EllipsoidPlot(scene)
 plot.setData(threeByThreeTensorData2D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

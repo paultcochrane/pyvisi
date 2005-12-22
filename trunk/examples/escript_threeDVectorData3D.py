@@ -21,6 +21,6 @@ threeDVectorData3D = Data(vectorData3D, brickFunctionSpace, True)
 scene = Scene()
 plot = ArrowPlot3D(scene)
 plot.setData(threeDVectorData3D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

@@ -22,7 +22,7 @@ scalarData1D = Data(scalarData, vectorFunctionSpace, True)
 scene = Scene()
 plot = LinePlot(scene)
 plot.setData(scalarData1D)
-scene.render()
+scene.render(pause=True)
 # what other kinds of plot should I use for this kind of data??
 
 # vim: expandtab shiftwidth=4:

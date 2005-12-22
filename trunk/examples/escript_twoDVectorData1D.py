@@ -22,6 +22,6 @@ twoDVectorData1D = Data(vectorData2D, vectorFunctionSpace, True)
 scene = Scene()
 plot = ArrowPlot(scene)
 plot.setData(twoDVectorData1D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

@@ -21,7 +21,7 @@ scalarData2D = Data(scalarData, tensorFunctionSpace, True)
 scene = Scene()
 plot = ContourPlot(scene)
 plot.setData(scalarData)
-scene.render()
+scene.render(pause=True)
 # add SurfacePlot, MeshPlot etc here
 
 # vim: expandtab shiftwidth=4:

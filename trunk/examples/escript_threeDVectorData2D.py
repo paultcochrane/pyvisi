@@ -21,6 +21,6 @@ threeDVectorData2D = Data(vectorData3D, tensorFunctionSpace, True)
 scene = Scene()
 plot = ArrowPlot3D(scene)
 plot.setData(threeDVectorData2D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

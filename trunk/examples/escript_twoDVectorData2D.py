@@ -21,6 +21,6 @@ twoDVectorData2D = Data(vectorData2D, tensorFunctionSpace, True)
 scene = Scene()
 plot = ArrowPlot(scene)
 plot.setData(twoDVectorData2D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:

@@ -21,6 +21,6 @@ scalarData3D = Data(scalarData, brickFunctionSpace, True)
 scene = Scene()
 plot = IsosurfacePlot(scene)
 plot.setData(scalarData3D)
-scene.render()
+scene.render(pause=True)
 
 # vim: expandtab shiftwidth=4:
