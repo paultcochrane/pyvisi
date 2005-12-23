@@ -499,7 +499,7 @@ class SurfacePlot(Plot):
 	if self.zlabel is not None:
 	    evalString += "_axes.SetZLabel(\"%s\")\n" % self.zlabel
 	else:
-	    evalString += "_axes.SetZlabel(\"\")\n"
+	    evalString += "_axes.SetZLabel(\"\")\n"
 
         # add the axes to the scene
         evalString += "_renderer.AddProp(_axes)"
