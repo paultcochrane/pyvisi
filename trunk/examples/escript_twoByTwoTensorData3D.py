@@ -23,4 +23,7 @@ plot = EllipsoidPlot(scene)
 plot.setData(twoByTwoTensorData3D)
 scene.render(pause=True)
 
+scene.save(fname="escript_twoByTwoTensorData3D_ellipsoidPlot.png", 
+	format="png")
+
 # vim: expandtab shiftwidth=4:

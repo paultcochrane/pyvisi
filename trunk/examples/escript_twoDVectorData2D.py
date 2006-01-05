@@ -23,4 +23,6 @@ plot = ArrowPlot(scene)
 plot.setData(twoDVectorData2D)
 scene.render(pause=True)
 
+scene.save(fname="escript_twoDVectorData2D_arrowPlot.png", format="png")
+
 # vim: expandtab shiftwidth=4:

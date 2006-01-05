@@ -23,4 +23,6 @@ plot = ArrowPlot3D(scene)
 plot.setData(threeDVectorData3D)
 scene.render(pause=True)
 
+scene.save(fname="escript_threeDVectorData3D_arrowPlot3D.png", format="png")
+
 # vim: expandtab shiftwidth=4:
