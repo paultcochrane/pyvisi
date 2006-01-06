@@ -16,26 +16,29 @@ include pyvisi/renderers/vtk/*.py
 include pyvisi/renderers/gnuplot/*.py
 
 # these are the examples to include so far
-include examples/arrowPlotExample.py
-include examples/arrowPlotExample2.py
-include examples/contourPlotExample.py
-include examples/contourPlotMovieExample.py
-include examples/multiCurvePlotExample.py
-include examples/meshPlotExample.py
-include examples/offsetLinePlotExample.py
-include examples/offsetPlotExample.py
-include examples/seismicOffsetPlotExample.py
-#include examples/seismicOffsetPlotExample2.py
-#include examples/seismicOffsetPlotExample3.py
-include examples/scatterPlotExample.py
-include examples/scatterPlot3DExample.py
-include examples/simplePlotMovieExample.py
-include examples/simplePlotExample.py
-include examples/singleArrayPlotExample.py
-include examples/surfaceAndContourPlotExample.py
-include examples/surfacePlotExample.py
-#include examples/imageLoadExample.py
-#include examples/Flinders_eval*
+include examples/arrowPlot.py
+include examples/arrowPlot2D.py
+include examples/arrowPlot3D.py
+include examples/ballPlot.py
+include examples/contourPlot.py
+include examples/contourPlotMovie.py
+include examples/ellipsoidPlot.py
+include examples/isosurfacePlot.py
+include examples/meshPlot.py
+include examples/multiCurveLinePlot.py
+include examples/offsetLinePlot.py
+include examples/offsetPlot.py
+include examples/randomLinePlot.py
+include examples/seismicOffsetPlot1.py
+#include examples/seismicOffsetPlot2.py
+#include examples/seismicOffsetPlot3.py
+include examples/simpleLinePlot.py
+include examples/simpleLinePlotMovie.py
+include examples/singleArrayLinePlot.py
+include examples/surfaceAndContourPlot.py
+include examples/surfacePlot.py
+include examples/scatterPlot.py
+include examples/scatterPlot3D.py
 
 # escript examples
 include examples/escript_scalarData1D.py
