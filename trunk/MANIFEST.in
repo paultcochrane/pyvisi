@@ -37,6 +37,23 @@ include examples/surfacePlotExample.py
 #include examples/imageLoadExample.py
 #include examples/Flinders_eval*
 
+# escript examples
+include examples/escript_scalarData1D.py
+include examples/escript_scalarData2D.py
+include examples/escript_scalarData3D.py
+include examples/escript_threeByThreeTensorData1D.py
+include examples/escript_threeByThreeTensorData2D.py
+include examples/escript_threeByThreeTensorData3D.py
+include examples/escript_threeDVectorData1D.py
+include examples/escript_threeDVectorData2D.py
+include examples/escript_threeDVectorData3D.py
+include examples/escript_twoByTwoTensorData1D.py
+include examples/escript_twoByTwoTensorData2D.py
+include examples/escript_twoByTwoTensorData3D.py
+include examples/escript_twoDVectorData1D.py
+include examples/escript_twoDVectorData2D.py
+include examples/escript_twoDVectorData3D.py
+
 # these are the data files supporting the examples
 include examples/waves.dat
 #include examples/waves1d.dat
