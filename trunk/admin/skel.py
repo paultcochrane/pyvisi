@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2004-2005 Paul Cochrane 
+# Copyright (C) 2004-2006 Paul Cochrane 
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ if (len(sys.argv) != 2):
 classname = sys.argv[1]  
 
 # the copyright string to put at the top of the file
-copyrightStr = """# Copyright (C) 2004-2005 Paul Cochrane
+copyrightStr = """# Copyright (C) 2004-2006 Paul Cochrane
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -50,8 +50,7 @@ copyrightStr += "Id"
 copyrightStr += "$"
 
 # doxygen documentation strings for info about the file itself
-fileDoxStr = "## @file %s.py\n" % classname
-fileDoxStr += """
+fileDoxStr = """
 \"\"\"
 Brief introduction to what the file contains/does
 \"\"\"
