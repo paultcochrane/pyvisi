@@ -25,7 +25,7 @@ Variables common to all classes and functions
 from pyvisi.common import _debug
 _rendererName = "GNUPLOT"
 _rendererVersion = '0.1'
-_rendererRevision = 'pre-alpha-4'
+_rendererRevision = 'alpha-1'
 
 __revision__ = '$Revision$'
 

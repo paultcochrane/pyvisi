@@ -27,7 +27,7 @@ from pyvisi.renderers.gnuplot.common import debugMsg
 from pyvisi.renderers.gnuplot.common import _rendererName
 from pyvisi.renderer import Renderer as BaseRenderer
 
-__revision__ = '$Revision'
+__revision__ = '$Revision$'
 
 class Renderer(BaseRenderer):
     """

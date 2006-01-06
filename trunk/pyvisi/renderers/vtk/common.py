@@ -16,8 +16,6 @@
 
 # $Id$
 
-## @file common.py
-
 """
 Variables common to all classes and functions
 """
@@ -25,9 +23,9 @@ Variables common to all classes and functions
 from pyvisi.common import _debug
 _rendererName = "VTK"
 _rendererVersion = '0.1'
-_rendererRevision = 'pre-alpha-4'
+_rendererRevision = 'alpha-1'
 
-__revision__ = '$Revision'
+__revision__ = '$Revision$'
 
 def debugMsg(message):
     """

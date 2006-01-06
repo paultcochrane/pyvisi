@@ -16,15 +16,13 @@
 
 # $Id$
 
-## @file common.py
-
 """
 Variables common to all classes and functions
 """
 
 _debug = 1
 _pyvisiVersion = '0.1'
-_pyvisiRevision = 'pre-alpha-4'
+_pyvisiRevision = 'alpha-1'
 
 __revision__ = _pyvisiRevision
 
