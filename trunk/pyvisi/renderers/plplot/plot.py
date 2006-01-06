@@ -22,7 +22,7 @@ This file contains all of the classes for the various plotting objects.
 
 from pyvisi.renderers.plplot.common import debugMsg
 
-from pyvisi.renderers.plplot.plot import Plot
+from pyvisi.renderers.plplot.item import Item
 
 __revision__ = '$Revision$'
 
@@ -50,13 +50,15 @@ class Plot(Item):
         if scene is None:
             raise ValueError, "You must specify a scene object"
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Set data to Plot
 
-        @param dataList: the data to set to the plot (should be an array or list
-        or something)
+        @param dataList: the data to set to the plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called Plot.setData()")
 

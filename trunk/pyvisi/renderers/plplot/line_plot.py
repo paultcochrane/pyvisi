@@ -21,6 +21,7 @@ This file contains all of the classes for the various plotting objects.
 """
 
 from pyvisi.renderers.plplot.common import debugMsg
+import copy
 
 from pyvisi.renderers.plplot.plot import Plot
 
@@ -35,8 +36,8 @@ class LinePlot(Plot):
         """
         Initialisation of LinePlot class
 
-        @param arg: The scene with which to associate the plot
-        @type arg: Scene object
+        @param scene: The scene with which to associate the plot
+        @type scene: Scene object
         """
         debugMsg("Called LinePlot.__init__()")
         Plot.__init__(self, scene)  # initialisation of base class

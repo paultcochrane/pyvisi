@@ -56,12 +56,15 @@ class ContourPlot(Plot):
         # now add the plot to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Sets the data to the Plot
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
+        
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called ContourPlot.setData()")
 

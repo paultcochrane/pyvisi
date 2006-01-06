@@ -22,8 +22,6 @@ Class and functions associated with a pyvisi LinePlot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
-import os
 import copy
 
 # module specific imports
@@ -52,13 +50,13 @@ class LinePlot(Plot):
         # offset the data in the lineplot?
         self.offset = False
 
-	# default values for stuff to be passed around
-	self.fname = None
-	self.format = None
-	self.scalars = None
+        # default values for stuff to be passed around
+        self.fname = None
+        self.format = None
+        self.scalars = None
 
-	self.escriptData = False
-	self.otherData = False
+        self.escriptData = False
+        self.otherData = False
 
         # add the plot to the scene
         scene.add(self)
@@ -70,203 +68,203 @@ class LinePlot(Plot):
         @param dataList: List of data to set to the plot
         @type dataList: tuple
 
-	@param options: Dictionary of extra options
-	@type options: dict
+        @param options: Dictionary of extra options
+        @type options: dict
 
-	@param offset: whether or not to offset the lines from one another
-	@type offset: boolean
+        @param offset: whether or not to offset the lines from one another
+        @type offset: boolean
 
-	@param fname: Filename of the input vtk file
-	@type fname: string
+        @param fname: Filename of the input vtk file
+        @type fname: string
 
-	@param format: format of the input vtk file ('vtk' or 'vtk-xml')
-	@type format: string
+        @param format: format of the input vtk file ('vtk' or 'vtk-xml')
+        @type format: string
 
-	@param scalars: the name of the scalar data in the vtk file to use
-	@type scalars: string
+        @param scalars: the name of the scalar data in the vtk file to use
+        @type scalars: string
         """
         debugMsg("Called setData() in LinePlot()")
 
         self.renderer.runString("# LinePlot.setData()")
 
-	# process the options, if any
-	## offset
+        # process the options, if any
+        ## offset
         if options.has_key('offset'):
             self.offset = options['offset']
         else:
             self.offset = False
-	## fname
-	if options.has_key('fname'):
-	    fname = options['fname']
-	else:
-	    fname = None
-	## format
-	if options.has_key('format'):
-	    format = options['format']
-	else:
-	    format = None
-	## scalars
-	if options.has_key('scalars'):
-	    scalars = options['scalars']
-	else:
-	    scalars = None
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+        ## scalars
+        if options.has_key('scalars'):
+            scalars = options['scalars']
+        else:
+            scalars = None
 
-	# we want to pass this info around
-	self.fname = fname
-	self.format = format
-	self.scalars = scalars
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
+        self.scalars = scalars
 
-	# reset the default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        # reset the default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
-	# do some sanity checking on the inputs
-	if len(dataList) == 0 and fname is None:
-	    raise ValueError, \
-		    "You must specify a data list or an input filename"
+        # do some sanity checking on the inputs
+        if len(dataList) == 0 and fname is None:
+            raise ValueError, \
+                    "You must specify a data list or an input filename"
 
-	if len(dataList) != 0 and fname is not None:
-	    raise ValueError, \
-		    "You cannot specify a data list as well as an input file"
+        if len(dataList) != 0 and fname is not None:
+            raise ValueError, \
+                    "You cannot specify a data list as well as an input file"
 
-	if fname is not None and vectors is None:
-	    debugMsg("No vectors specified; using default in vtk")
+        if fname is not None and scalars is None:
+            debugMsg("No scalars specified; using default in vtk")
 
-	if fname is not None and format is None:
-	    raise ValueError, "You must specify an input file format"
+        if fname is not None and format is None:
+            raise ValueError, "You must specify an input file format"
 
-	if fname is None and format is not None:
-	    raise ValueError, "Format specified, but no input filename"
+        if fname is None and format is not None:
+            raise ValueError, "Format specified, but no input filename"
 
-	# if have just a data list, check the objects passed in to see if
-	# they are escript data objects or not
-	if len(dataList) != 0:
-	    for obj in dataList:
-		try:
-		    obj.convertToNumArray()
-		    # ok, we've got escript data, set the flag
-		    self.escriptData = True
-		except AttributeError:
-		    self.otherData = True
+        # if have just a data list, check the objects passed in to see if
+        # they are escript data objects or not
+        if len(dataList) != 0:
+            for obj in dataList:
+                try:
+                    obj.convertToNumArray()
+                    # ok, we've got escript data, set the flag
+                    self.escriptData = True
+                except AttributeError:
+                    self.otherData = True
 
-	# if we have both escript and other data, barf as can't handle that
-	# just yet
-	if self.escriptData and self.otherData:
-	    raise TypeError, \
-		    "Sorry can't handle both escript and other data yet"
+        # if we have both escript and other data, barf as can't handle that
+        # just yet
+        if self.escriptData and self.otherData:
+            raise TypeError, \
+                    "Sorry can't handle both escript and other data yet"
 
-	# now generate the code for the case when we have just escript data
-	# passed into setData()
-	if self.escriptData:
-	    # get the relevant bits of data
-	    if len(dataList) == 1:
-		# only one data variable, will need to get the domain from it
-		escriptY = dataList[0]
-		escriptX = escriptY.getDomain().getX()
-	    elif len(dataList) == 2:
-		# ok, have two data variables, first is x data
-		escriptX = dataList[0]
-		escriptY = dataList[1]
-	    else:
-		errorString = \
-			"Expecting 1 or 2 elements in data list.  I got %d" \
-			% len(dataList)
-		raise ValueError, errorString
+        # now generate the code for the case when we have just escript data
+        # passed into setData()
+        if self.escriptData:
+            # get the relevant bits of data
+            if len(dataList) == 1:
+                # only one data variable, will need to get the domain from it
+                escriptY = dataList[0]
+                escriptX = escriptY.getDomain().getX()
+            elif len(dataList) == 2:
+                # ok, have two data variables, first is x data
+                escriptX = dataList[0]
+                escriptY = dataList[1]
+            else:
+                errorString = \
+                        "Expecting 1 or 2 elements in data list.  I got %d" \
+                        % len(dataList)
+                raise ValueError, errorString
 
-	    # convert the data to numarrays
-	    xData = escriptX[0].convertToNumArray()
-	    yData = escriptY.convertToNumArray()
+            # convert the data to numarrays
+            xData = escriptX[0].convertToNumArray()
+            yData = escriptY.convertToNumArray()
 
-	    # handle the x data
+            # handle the x data
 
-	    # check the shape of the xData
-	    if len(xData.shape) != 1:
-		errorString = "xData array needs to be 1D.  "  
-		errorString += "I got %d dimensions" % len(xData.shape)
-		raise ValueError, errorString
+            # check the shape of the xData
+            if len(xData.shape) != 1:
+                errorString = "xData array needs to be 1D.  "  
+                errorString += "I got %d dimensions" % len(xData.shape)
+                raise ValueError, errorString
 
-	    xDataLen = xData.shape[0]
+            xDataLen = xData.shape[0]
 
-	    # pass around the x data
-	    self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+            # pass around the x data
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
-	    # set up the vtkDataArray object for the x data
-	    self.renderer.runString(
-		    "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
-	    self.renderer.runString(
-		    "_xData.SetNumberOfTuples(len(_x))")
+            # set up the vtkDataArray object for the x data
+            self.renderer.runString(
+                    "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
+            self.renderer.runString(
+                    "_xData.SetNumberOfTuples(len(_x))")
 
-	    # now handle the y data
+            # now handle the y data
 
-	    # make sure that the shape of the yData is either 1D or 2D, if
-	    # it is 2D then split up the dims into different _y data objects
-	    if len(yData.shape) < 1 or len(yData.shape) > 2:
-		errorString = "yData array needs to be 1D or 2D.  "
-		errorString += "I got %d dimensions" % len(yData.shape)
-		raise ValueError, errorString
+            # make sure that the shape of the yData is either 1D or 2D, if
+            # it is 2D then split up the dims into different _y data objects
+            if len(yData.shape) < 1 or len(yData.shape) > 2:
+                errorString = "yData array needs to be 1D or 2D.  "
+                errorString += "I got %d dimensions" % len(yData.shape)
+                raise ValueError, errorString
 
-	    # share around the y data
-	    for i in range(len(yData.shape)):
-		if len(yData.shape) == 1:
-		    if len(yData) != xDataLen:
-			errorString = "yData array length not compatible with "
-			errorString += "xData array length"
-			raise ValueError, errorString
-		    yDataVar = "_y%d" % i
-		    self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
-		else:
-		    if len(yData[i]) != xDataLen:
-			errorString = "yData array length not compatible with "
-			errorString += "xData array length"
-			raise ValueError, errorString
-		    yDataVar = "_y%d" % i
-		    self.renderer.renderDict[yDataVar] = \
-			    copy.deepcopy(yData[i])
+            # share around the y data
+            for i in range(len(yData.shape)):
+                if len(yData.shape) == 1:
+                    if len(yData) != xDataLen:
+                        errorString = "yData array length not compatible with "
+                        errorString += "xData array length"
+                        raise ValueError, errorString
+                    yDataVar = "_y%d" % i
+                    self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
+                else:
+                    if len(yData[i]) != xDataLen:
+                        errorString = "yData array length not compatible with "
+                        errorString += "xData array length"
+                        raise ValueError, errorString
+                    yDataVar = "_y%d" % i
+                    self.renderer.renderDict[yDataVar] = \
+                            copy.deepcopy(yData[i])
 
-	elif self.otherData:
-	    # do some sanity checking on the data
-	    for i in range(len(dataList)):
-		if len(dataList[0]) != len(dataList[i]):
-		    raise ValueError, \
-			    "Input vectors must all be the same length"
+        elif self.otherData:
+            # do some sanity checking on the data
+            for i in range(len(dataList)):
+                if len(dataList[0]) != len(dataList[i]):
+                    raise ValueError, \
+                            "Input vectors must all be the same length"
 
-	    # if have more than one array to plot, the first one is the x data
-	    if len(dataList) > 1:
-		xData = dataList[0]
-		## pass the x data around
-		self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-		# don't need the first element of the dataList, so get rid of it
-		dataList = dataList[1:]
-		# if only have one array input, then autogenerate xData
-	    elif len(dataList) == 1:
-		xData = range(1, len(dataList[0])+1)
-		if len(xData) != len(dataList[0]):
-		    errorString = "Autogenerated xData array length not "
-		    errorString += "equal to input array length"
-		    raise ValueError, errorString
-		## pass the x data around
-		self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+            # if have more than one array to plot, the first one is the x data
+            if len(dataList) > 1:
+                xData = dataList[0]
+                ## pass the x data around
+                self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+                # don't need the first element of the dataList, so get rid of it
+                dataList = dataList[1:]
+                # if only have one array input, then autogenerate xData
+            elif len(dataList) == 1:
+                xData = range(1, len(dataList[0])+1)
+                if len(xData) != len(dataList[0]):
+                    errorString = "Autogenerated xData array length not "
+                    errorString += "equal to input array length"
+                    raise ValueError, errorString
+                ## pass the x data around
+                self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
-	    # set up the vtkDataArray object for the x data
-	    self.renderer.runString(
-		    "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
-	    self.renderer.runString(
-		    "_xData.SetNumberOfTuples(len(_x))")
+            # set up the vtkDataArray object for the x data
+            self.renderer.runString(
+                    "_xData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
+            self.renderer.runString(
+                    "_xData.SetNumberOfTuples(len(_x))")
 
-	    ## now to handle the y data
+            ## now to handle the y data
 
-	    # share around the y data
-	    for i in range(len(dataList)):
-		# check that the data here is a 1-D array
-		if len(dataList[i].shape) != 1:
-		    raise ValueError, "Can only handle 1D arrays at present"
+            # share around the y data
+            for i in range(len(dataList)):
+                # check that the data here is a 1-D array
+                if len(dataList[i].shape) != 1:
+                    raise ValueError, "Can only handle 1D arrays at present"
 
-		yDataVar = "_y%d" % i
-		self.renderer.renderDict[yDataVar] = copy.deepcopy(dataList[i])
+                yDataVar = "_y%d" % i
+                self.renderer.renderDict[yDataVar] = copy.deepcopy(dataList[i])
 
-	elif fname is not None and not self.escriptData and not self.otherData:
-	    # now handle the case when we have a file as input
-	    raise ImplementationError, "Sorry, can't handle file input yet"
+        elif fname is not None and not self.escriptData and not self.otherData:
+            # now handle the case when we have a file as input
+            raise NotImplementedError, "Sorry, can't handle file input yet"
 
         # if offset is true then shift the data
         if self.offset:
@@ -349,7 +347,7 @@ class LinePlot(Plot):
         # should this be here or elsewhere?
         evalString = "_plot.GetXAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
         evalString += \
-		"_plot.GetYAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
+                "_plot.GetYAxisActor2D().GetProperty().SetColor(0, 0, 0)\n"
         evalString += "_renderer.SetBackground(1.0, 1.0, 1.0)"
         self.renderer.runString(evalString)
 

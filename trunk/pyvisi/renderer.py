@@ -42,8 +42,8 @@ class Renderer(object):
         self.renderWindowWidth = 640
         self.renderWindowHeight = 480
 
-	# the namespace to run the exec code
-	self.renderDict = {}
+        # the namespace to run the exec code
+        self.renderDict = {}
 
         # initialise the evalstack
         self._evalStack = ""

@@ -65,6 +65,9 @@ class LinePlot(Plot):
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in LinePlot()")
         
@@ -81,9 +84,6 @@ class LinePlot(Plot):
             if len(dataList[0]) != len(dataList[i]):
                 raise ValueError, "Input vectors must all be the same length"
 
-        # this is a really dodgy way to get the data into the renderer
-        # I really have to find a better, more elegant way to do this
-        
         # if have more than one array to plot, the first one is the x data
         if len(dataList) > 1:
             xData = dataList[0]

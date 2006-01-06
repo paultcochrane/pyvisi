@@ -109,9 +109,9 @@ class BallPlot(Plot):
         # with what's in the vtk unstructured grid
 
         if format is not None and (format == "vtk-xml" or format == "vtk"):
-	    # check to make sure the file exists
-	    if not os.path.exists(fname):
-		raise SystemError, "File: %s not found" % fname
+            # check to make sure the file exists
+            if not os.path.exists(fname):
+                raise SystemError, "File: %s not found" % fname
 
             if format == "vtk-xml":
                 debugMsg("Using vtk-xml file as input")
@@ -300,7 +300,7 @@ class BallPlot(Plot):
                             scaledTags[i] = float(j)/float(numTags-1)
 
             self.renderer.renderDict['_scaledTagData'] = \
-		    copy.deepcopy(scaledTags)
+                    copy.deepcopy(scaledTags)
 
             # now give vtk the scaled tag data
             evalString = "_scaledTags = vtk.vtkFloatArray()\n"

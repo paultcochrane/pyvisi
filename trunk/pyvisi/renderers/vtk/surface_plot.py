@@ -22,8 +22,6 @@ Class and functions associated with a pyvisi SurfacePlot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
-import os
 import copy
 
 # module specific imports
@@ -101,9 +99,9 @@ class SurfacePlot(Plot):
         self.format = format
         self.scalars = scalars
 
-	# reset the default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        # reset the default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
         # do some sanity checking on the input args
         if len(dataList) == 0 and fname is None:
@@ -115,7 +113,7 @@ class SurfacePlot(Plot):
                     "You cannot specify a data list as well as an input file"
 
         if fname is not None and scalars is None:
-	    debugMsg("No scalars specified; using default in vtk")
+            debugMsg("No scalars specified; using default in vtk")
 
         if fname is not None and format is None:
             raise ValueError, "You must specify an input file format"
@@ -358,11 +356,11 @@ class SurfacePlot(Plot):
             evalString += "_delaunay.SetTolerance(0.001)"
             self.renderer.runString(evalString)
 
-	    # warp the surface to generate the surface or "carpet"
-	    evalString = "_warp = vtk.vtkWarpScalar()\n"
-	    evalString += "_warp.SetInput(_delaunay.GetOutput())\n"
-	    evalString += "_warp.SetScaleFactor(1.0)"
-	    self.renderer.runString(evalString)
+            # warp the surface to generate the surface or "carpet"
+            evalString = "_warp = vtk.vtkWarpScalar()\n"
+            evalString += "_warp.SetInput(_delaunay.GetOutput())\n"
+            evalString += "_warp.SetScaleFactor(1.0)"
+            self.renderer.runString(evalString)
 
             # set up the mapper
             evalString = "_mapper = vtk.vtkPolyDataMapper()\n"
@@ -373,11 +371,11 @@ class SurfacePlot(Plot):
             self.renderer.runString(evalString)
 
         elif self.fname is not None:
-	    # warp the surface to generate the surface or "carpet"
-	    evalString = "_warp = vtk.vtkWarpScalar()\n"
-	    evalString += "_warp.SetInput(_grid)\n"
-	    evalString += "_warp.SetScaleFactor(1.0)"
-	    self.renderer.runString(evalString)
+            # warp the surface to generate the surface or "carpet"
+            evalString = "_warp = vtk.vtkWarpScalar()\n"
+            evalString += "_warp.SetInput(_grid)\n"
+            evalString += "_warp.SetScaleFactor(1.0)"
+            self.renderer.runString(evalString)
 
             # set up the mapper
             evalString = "_mapper = vtk.vtkDataSetMapper()\n"
@@ -430,46 +428,46 @@ class SurfacePlot(Plot):
             evalString += "_renderer.AddActor(_titleActor)"
             self.renderer.runString(evalString)
 
-	# set up the camera so that can look at the surface nicely
-	# this will need to be handled by the Camera object eventually
-	evalString = "_camera = _renderer.GetActiveCamera()\n"
-	evalString += "_gridCentre = _grid.GetCenter()\n"
-	evalString += "_camera.SetFocalPoint(_gridCentre)\n"
-	evalString += "_camPos = _camera.GetPosition()\n"
-	evalString += "_pos = (_camPos[0] - _gridCentre[0],\n"
-	evalString += "        _camPos[1] - _gridCentre[1],\n"
-	evalString += "        _camPos[2] - _gridCentre[2])\n"
-	evalString += "_radius = "
-	evalString += "sqrt(_pos[0]*_pos[0]+_pos[1]*_pos[1]+_pos[2]*_pos[2])"
-	self.renderer.runString(evalString)
+        # set up the camera so that can look at the surface nicely
+        # this will need to be handled by the Camera object eventually
+        evalString = "_camera = _renderer.GetActiveCamera()\n"
+        evalString += "_gridCentre = _grid.GetCenter()\n"
+        evalString += "_camera.SetFocalPoint(_gridCentre)\n"
+        evalString += "_camPos = _camera.GetPosition()\n"
+        evalString += "_pos = (_camPos[0] - _gridCentre[0],\n"
+        evalString += "        _camPos[1] - _gridCentre[1],\n"
+        evalString += "        _camPos[2] - _gridCentre[2])\n"
+        evalString += "_radius = "
+        evalString += "sqrt(_pos[0]*_pos[0]+_pos[1]*_pos[1]+_pos[2]*_pos[2])"
+        self.renderer.runString(evalString)
 
-	# these are the matlab defaults...  they look ok, so use them note
-	# that azimuth and elevation mean slightly different things in vtk
-	# to what they mean in matlab: they aren't absolute, they are
-	# relative to the current position
-	evalString = "_azimuth = -37.5\n"
-	evalString += "_elevation = 30"
-	self.renderer.runString(evalString)
+        # these are the matlab defaults...  they look ok, so use them note
+        # that azimuth and elevation mean slightly different things in vtk
+        # to what they mean in matlab: they aren't absolute, they are
+        # relative to the current position
+        evalString = "_azimuth = -37.5\n"
+        evalString += "_elevation = 30"
+        self.renderer.runString(evalString)
 
-	# take the position where I am as being 0 azimuth, and 90 elevation
+        # take the position where I am as being 0 azimuth, and 90 elevation
 
-	# position the camera appropriately
-	evalString = "_xPos = _gridCentre[0] + "
-	evalString += "_radius*sin(math.pi*_azimuth/180.0)\n"
-	evalString += "_yPos = _gridCentre[1] - "
-	evalString += "_radius*cos(math.pi*_elevation/180.0)"
-	evalString += "+ _radius*cos(math.pi*_azimuth/180.0)\n"
-	evalString += "_zPos = _gridCentre[2] + _radius - "
-	evalString += "_radius*sin(math.pi*_elevation/180.0)\n"
+        # position the camera appropriately
+        evalString = "_xPos = _gridCentre[0] + "
+        evalString += "_radius*sin(math.pi*_azimuth/180.0)\n"
+        evalString += "_yPos = _gridCentre[1] - "
+        evalString += "_radius*cos(math.pi*_elevation/180.0)"
+        evalString += "+ _radius*cos(math.pi*_azimuth/180.0)\n"
+        evalString += "_zPos = _gridCentre[2] + _radius - "
+        evalString += "_radius*sin(math.pi*_elevation/180.0)\n"
 
-	evalString += "_camera.SetPosition(_xPos, _yPos, _zPos)\n"
+        evalString += "_camera.SetPosition(_xPos, _yPos, _zPos)\n"
 
-	evalString += "_camera.SetViewUp(0,0,1)\n"
+        evalString += "_camera.SetViewUp(0,0,1)\n"
 
-	evalString += "_renderer.SetActiveCamera(_camera)\n"
+        evalString += "_renderer.SetActiveCamera(_camera)\n"
 
-	evalString += "_renderer.ResetCameraClippingRange()\n"
-	self.renderer.runString(evalString)
+        evalString += "_renderer.ResetCameraClippingRange()\n"
+        self.renderer.runString(evalString)
 
         # add the axes
         evalString = "_axes = vtk.vtkCubeAxesActor2D()\n"
@@ -495,11 +493,11 @@ class SurfacePlot(Plot):
         else:
             evalString += "_axes.SetXLabel(\"\")\n"
 
-	# if we have a zlabel set it
-	if self.zlabel is not None:
-	    evalString += "_axes.SetZLabel(\"%s\")\n" % self.zlabel
-	else:
-	    evalString += "_axes.SetZLabel(\"\")\n"
+        # if we have a zlabel set it
+        if self.zlabel is not None:
+            evalString += "_axes.SetZLabel(\"%s\")\n" % self.zlabel
+        else:
+            evalString += "_axes.SetZLabel(\"\")\n"
 
         # add the axes to the scene
         evalString += "_renderer.AddProp(_axes)"

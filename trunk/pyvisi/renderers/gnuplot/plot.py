@@ -22,7 +22,6 @@ Class and functions associated with a pyvisi Plot objects (gnuplot)
 
 # generic imports
 from pyvisi.renderers.gnuplot.common import debugMsg
-import copy
 
 # module specific imports
 from pyvisi.renderers.gnuplot.item import Item
@@ -53,13 +52,15 @@ class Plot(Item):
         if scene is None:
             raise ValueError, "You must specify a scene object"
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Set data to Plot
 
-        @param dataList: the data to set to the plot (should be an array or list
-        or something)
+        @param dataList: the data to set to the plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called Plot.setData()")
 

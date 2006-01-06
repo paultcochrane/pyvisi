@@ -26,17 +26,14 @@ from pyvisi.renderers.plplot.plot import Plot
 
 __revision__ = '$Revision$'
 
- class ArrowPlot(Plot):
+class ArrowPlot(Plot):
     """
     Brief introduction to what the class does
     """
 
     def __init__(self, arg):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialise arrow plot object
         """
         debugMsg("Called ArrowPlot.__init__()")
         Plot.__init__(self)  # initialisation of base class

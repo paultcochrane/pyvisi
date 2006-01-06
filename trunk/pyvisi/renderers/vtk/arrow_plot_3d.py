@@ -22,7 +22,6 @@ Class and functions associated with a pyvisi ArrowPlot3D objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
 import os
 import copy
 import numarray
@@ -53,11 +52,11 @@ class ArrowPlot3D(Plot):
         # default values for fname, format and vectors
         self.fname = None
         self.format = None
-	self.vectors = None
-	
-	# default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        self.vectors = None
+        
+        # default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
         # add the plot to the scene
         scene.add(self)
@@ -78,8 +77,8 @@ class ArrowPlot3D(Plot):
         @param format: Format of the input vtk file ('vtk' or 'vtk-xml')
         @type format: string
 
-	@param vectors: the name of the vector data in the vtk file to use
-	@type vectors: string
+        @param vectors: the name of the vector data in the vtk file to use
+        @type vectors: string
         """
         debugMsg("Called setData() in ArrowPlot3D()")
         self.renderer.runString("# ArrowPlot3D.setData()")
@@ -95,123 +94,123 @@ class ArrowPlot3D(Plot):
             format = options['format']
         else:
             format = None
-	## vectors
-	if options.has_key('vectors'):
-	    vectors = options['vectors']
-	else:
-	    vectors = None
+        ## vectors
+        if options.has_key('vectors'):
+            vectors = options['vectors']
+        else:
+            vectors = None
 
         # we want to pass this info around
         self.fname = fname
         self.format = format
-	self.vectors = vectors
+        self.vectors = vectors
 
-	# reset the default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        # reset the default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
         # do some sanity checking on the inputs
-	if len(dataList) == 0 and fname is None:
-	    raise ValueError, \
-		    "You must specify a data list or an input filename"
+        if len(dataList) == 0 and fname is None:
+            raise ValueError, \
+                    "You must specify a data list or an input filename"
 
-	if len(dataList) != 0 and fname is not None:
-	    raise ValueError, \
-		    "You cannot specify a data list as well as an input file"
+        if len(dataList) != 0 and fname is not None:
+            raise ValueError, \
+                    "You cannot specify a data list as well as an input file"
 
-	if fname is not None and vectors is None:
-	    debugMsg("No vectors specified; using default in vtk")
+        if fname is not None and vectors is None:
+            debugMsg("No vectors specified; using default in vtk")
 
-	if fname is not None and format is None:
-	    raise ValueError, "You must specify an input file format"
+        if fname is not None and format is None:
+            raise ValueError, "You must specify an input file format"
 
         if fname is None and format is not None:
             raise ValueError, "Format specified, but no input filename"
 
-	# if have just a data list, check the objects passed in to see if 
-	# they are escript data objects or not
-	if len(dataList) != 0:
-	    for obj in dataList:
-		try:
-		    obj.convertToNumArray()
-		    # ok, we've got escript data, set the flag
-		    self.escriptData = True
-		except AttributeError:
-		    self.otherData = True
+        # if have just a data list, check the objects passed in to see if 
+        # they are escript data objects or not
+        if len(dataList) != 0:
+            for obj in dataList:
+                try:
+                    obj.convertToNumArray()
+                    # ok, we've got escript data, set the flag
+                    self.escriptData = True
+                except AttributeError:
+                    self.otherData = True
 
-	# if we have both escript and other data, barf as can't handle that
-	# just yet
-	if self.escriptData and self.otherData:
-	    raise TypeError, \
-		    "Sorry can't handle both escript and other data yet"
+        # if we have both escript and other data, barf as can't handle that
+        # just yet
+        if self.escriptData and self.otherData:
+            raise TypeError, \
+                    "Sorry can't handle both escript and other data yet"
 
-	# now generate the code for the case when we have just escript data
-	# passed into setData()
-	if self.escriptData:
-	    # get the relevant bits of data
-	    if len(dataList) == 1:
-		# only one data variable, will need to get the domain from it
-		escriptZ = dataList[0]
-		escriptX = escriptZ.getDomain().getX()
-	    else:
-		errorString = \
-			"Expecting only 1 element in data list.  I got %d" \
-			% len(dataList)
-		raise ValueError, errorString
+        # now generate the code for the case when we have just escript data
+        # passed into setData()
+        if self.escriptData:
+            # get the relevant bits of data
+            if len(dataList) == 1:
+                # only one data variable, will need to get the domain from it
+                escriptZ = dataList[0]
+                escriptX = escriptZ.getDomain().getX()
+            else:
+                errorString = \
+                        "Expecting only 1 element in data list.  I got %d" \
+                        % len(dataList)
+                raise ValueError, errorString
 
-	    # convert to numarray
-	    domainData = escriptX.convertToNumArray()
-	    fieldData = escriptZ.convertToNumArray()
+            # convert to numarray
+            domainData = escriptX.convertToNumArray()
+            fieldData = escriptZ.convertToNumArray()
 
-	    # check the shapes
-	    if len(domainData.shape) != 2:
-		raise ValueError, \
-			"domainData shape is not 2D.  I got %d dims" % \
-			len(domainData.shape)
+            # check the shapes
+            if len(domainData.shape) != 2:
+                raise ValueError, \
+                        "domainData shape is not 2D.  I got %d dims" % \
+                        len(domainData.shape)
 
-	    if len(fieldData.shape) != 2:
-		raise ValueError, \
-			"fieldData shape is not 2D.  I got %d dims" % \
-			len(fieldData.shape)
+            if len(fieldData.shape) != 2:
+                raise ValueError, \
+                        "fieldData shape is not 2D.  I got %d dims" % \
+                        len(fieldData.shape)
 
-	    if domainData.shape[1] != 2 and domainData.shape[1] != 3:
-		raise ValueError, \
-			"domainData array not 2D or 3D.  I got %d dims" % \
-			domainData.shape[1]
+            if domainData.shape[1] != 2 and domainData.shape[1] != 3:
+                raise ValueError, \
+                        "domainData array not 2D or 3D.  I got %d dims" % \
+                        domainData.shape[1]
 
-	    # check the dimensions of the vectors
-	    if fieldData.shape[1] != 2 and fieldData.shape[1] != 3:
-		errorString = "Incorrect array dimensions.  Expected "
-		errorString += "either 2D or 3D.  I got %d dims" % \
-			fieldData.shape[1]
-		raise ValueError, errorString
+            # check the dimensions of the vectors
+            if fieldData.shape[1] != 2 and fieldData.shape[1] != 3:
+                errorString = "Incorrect array dimensions.  Expected "
+                errorString += "either 2D or 3D.  I got %d dims" % \
+                        fieldData.shape[1]
+                raise ValueError, errorString
 
-	    # check the length of the arrays
-	    if domainData.shape[0] != fieldData.shape[0]:
-		raise ValueError, \
-			"domainData and fieldData lengths are not equal"
+            # check the length of the arrays
+            if domainData.shape[0] != fieldData.shape[0]:
+                raise ValueError, \
+                        "domainData and fieldData lengths are not equal"
 
-	    # get the x, y and z data
-	    xData = domainData[:,0]
+            # get the x, y and z data
+            xData = domainData[:, 0]
 
-	    # keep the number of points for future reference
-	    numPoints = len(xData)
+            # keep the number of points for future reference
+            numPoints = len(xData)
 
-	    yData = domainData[:,1]
-	    # handle the case that the domain data has only 2D vectors
-	    if domainData.shape[1] == 2:
-		zData = numarray.zeros(numPoints)
-	    else:
-		zData = domainData[:,2]
+            yData = domainData[:, 1]
+            # handle the case that the domain data has only 2D vectors
+            if domainData.shape[1] == 2:
+                zData = numarray.zeros(numPoints)
+            else:
+                zData = domainData[:, 2]
 
-	    # get the dx, dy and dz data
-	    dxData = fieldData[:,0]
-	    dyData = fieldData[:,1]
-	    # handle the case that the field data has only 2D vectors
-	    if fieldData.shape[1] == 2:
-		dzData = numarray.zeros(numPoints)
-	    else:
-		dzData = fieldData[:,2]
+            # get the dx, dy and dz data
+            dxData = fieldData[:, 0]
+            dyData = fieldData[:, 1]
+            # handle the case that the field data has only 2D vectors
+            if fieldData.shape[1] == 2:
+                dzData = numarray.zeros(numPoints)
+            else:
+                dzData = fieldData[:, 2]
 
             # now pass the data to the render dictionary so that the render
             # code knows what it's supposed to plot
@@ -259,7 +258,7 @@ class ArrowPlot3D(Plot):
             evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
             self.renderer.runString(evalString)
 
-	elif self.otherData:
+        elif self.otherData:
             # do some sanity checking on the data
             if len(dataList) != 6:
                 errorStr = "Must have six vectors as input: x, y, z, "
@@ -351,8 +350,8 @@ class ArrowPlot3D(Plot):
             evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
             self.renderer.runString(evalString)
 
-	# run the stuff for when we're reading from file
-	if fname is not None:
+        # run the stuff for when we're reading from file
+        if fname is not None:
 
             # had best make sure it exists
             if not os.path.exists(fname):

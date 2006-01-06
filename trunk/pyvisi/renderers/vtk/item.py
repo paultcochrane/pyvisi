@@ -16,10 +16,8 @@
 
 # $Id$
 
-## @file item.py
-
 """
-This is the file of the base class for items within a scene
+This is base class for items within a scene
 """
 
 # generic imports

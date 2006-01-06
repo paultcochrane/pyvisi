@@ -126,9 +126,9 @@ class Scene(BaseScene):
         debugMsg(renderer.getEvalStack())
         debugMsg(60*"#")
 
-	# execute the eval stack
-	evalStack = renderer.getEvalStack()
-	exec evalStack in self.renderer.renderDict
+        # execute the eval stack
+        evalStack = renderer.getEvalStack()
+        exec evalStack in self.renderer.renderDict
 
         # flush the evaluation stack
         debugMsg("Flusing evaluation stack")

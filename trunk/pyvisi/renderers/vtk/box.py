@@ -22,6 +22,7 @@ The classes associated with Boxes
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
+import warnings
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
@@ -265,6 +266,25 @@ class Box(Item):
         # get the current bounds
         (xmin, xmax, ymin, ymax, zmin, zmax) = self.getBounds()
 
+        # make sure that the bounds aren't silly
+        if bottom > xmax:
+            warnString = "bottom set too large for maximum x dimension."
+            warnString += "  Resetting to xMin."
+            warnings.warn(warnString)
+            bottom = xmin
+
+        if left > ymax:
+            warnString = "left set too large for maximum y dimension."
+            warnString += "  Resetting to yMin."
+            warnings.warn(warnString)
+            left = ymin
+
+        if front > zmax:
+            warnString = "front set too large for maximum z dimension."
+            warnString += "  Resetting to zMin."
+            warnings.warn(warnString)
+            front = zmin
+
         # set the new bounds
         self.setBounds(bottom, xmax, left, ymax, front, zmax)
 
@@ -286,6 +306,25 @@ class Box(Item):
         debugMsg("Called Box.setTRB()")
         # get the current bounds
         (xmin, xmax, ymin, ymax, zmin, zmax) = self.getBounds()
+
+        # make sure that the bounds aren't silly
+        if top < xmin:
+            warnString = "top set too small for minimum x dimension."
+            warnString += "  Resetting to xMax."
+            warnings.warn(warnString)
+            top = xmax
+
+        if right < ymin:
+            warnString = "right set too small for minimum y dimension."
+            warnString += "  Resetting to yMax."
+            warnings.warn(warnString)
+            right = ymax
+
+        if back < zmin:
+            warnString = "back set too small for minimum z dimension."
+            warnString += "  Resetting to zMax."
+            warnings.warn(warnString)
+            back = zmax
 
         # set the new bounds
         self.setBounds(xmin, top, ymin, right, zmin, back)

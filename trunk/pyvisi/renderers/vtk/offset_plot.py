@@ -22,8 +22,6 @@ Class and functions associated with a pyvisi OffsetPlot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
-import os
 import copy
 
 # module specific imports
@@ -56,13 +54,13 @@ class OffsetPlot(Plot):
         # the extra separation between curves (user set)
         self.sep = None
 
-	# the default values for shared info
-	self.fname = None
-	self.format = None
-	self.scalars = None
+        # the default values for shared info
+        self.fname = None
+        self.format = None
+        self.scalars = None
 
-	self.escriptData = False
-	self.otherData = False
+        self.escriptData = False
+        self.otherData = False
 
         # add the plot to the scene
         scene.add(self)
@@ -77,202 +75,202 @@ class OffsetPlot(Plot):
         @param options: Dictionary of extra options
         @type options: dict
 
-	@param fname: Filename of the input vtk file
-	@type fname: string
+        @param fname: Filename of the input vtk file
+        @type fname: string
 
-	@param format: Format of the input vtk file ('vtk' or 'vtk-xml')
-	@type format: string
+        @param format: Format of the input vtk file ('vtk' or 'vtk-xml')
+        @type format: string
 
-	@param scalars: the name of the scalar data in the vtk file to use
-	@type scalars: string
+        @param scalars: the name of the scalar data in the vtk file to use
+        @type scalars: string
         """
         debugMsg("Called setData() in OffsetPlot()")
 
         self.renderer.runString("# OffsetPlot.setData()")
 
-	# process the options, if any
-	## fname
-	if options.has_key('fname'):
-	    fname = options['fname']
-	else:
-	    fname = None
-	## format
-	if options.has_key('format'):
-	    format = options['format']
-	else:
-	    format = None
-	## scalars
-	if options.has_key('scalars'):
-	    scalars = options['scalars']
-	else:
-	    scalars = None
+        # process the options, if any
+        ## fname
+        if options.has_key('fname'):
+            fname = options['fname']
+        else:
+            fname = None
+        ## format
+        if options.has_key('format'):
+            format = options['format']
+        else:
+            format = None
+        ## scalars
+        if options.has_key('scalars'):
+            scalars = options['scalars']
+        else:
+            scalars = None
 
-	# we want to pass this info around
-	self.fname = fname
-	self.format = format
-	self.scalars = scalars
+        # we want to pass this info around
+        self.fname = fname
+        self.format = format
+        self.scalars = scalars
 
-	# reset the default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        # reset the default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
-	# do some sanity checking on the inputs
-	if len(dataList) == 0 and fname is None:
-	    raise ValueError, \
-		    "You must specify a data list or an input filename"
+        # do some sanity checking on the inputs
+        if len(dataList) == 0 and fname is None:
+            raise ValueError, \
+                    "You must specify a data list or an input filename"
 
-	if len(dataList) != 0 and fname is not None:
-	    raise ValueError, \
-		    "You cannot specify a data list as well as an input file"
+        if len(dataList) != 0 and fname is not None:
+            raise ValueError, \
+                    "You cannot specify a data list as well as an input file"
 
-	if fname is not None and vectors is None:
-	    debugMsg("No vectors specified; using default in vtk")
+        if fname is not None and scalars is None:
+            debugMsg("No scalars specified; using default in vtk")
 
-	if fname is not None and format is None:
-	    raise ValueError, "You must specify an input file format"
+        if fname is not None and format is None:
+            raise ValueError, "You must specify an input file format"
 
-	if fname is None and format is not None:
-	    raise ValueError, "Format specified, but no input filename"
+        if fname is None and format is not None:
+            raise ValueError, "Format specified, but no input filename"
 
-	# if have just a data list, check the objects passed in to see if
-	# they are escript data objects or not
-	if len(dataList) != 0:
-	    for obj in dataList:
-		try:
-		    obj.convertToNumArray()
-		    # ok, we've got escript data, set the flag
-		    self.escriptData = True
-		except AttributeError:
-		    self.otherData = True
+        # if have just a data list, check the objects passed in to see if
+        # they are escript data objects or not
+        if len(dataList) != 0:
+            for obj in dataList:
+                try:
+                    obj.convertToNumArray()
+                    # ok, we've got escript data, set the flag
+                    self.escriptData = True
+                except AttributeError:
+                    self.otherData = True
 
-	# if we have both escript and other data, barf as can't handle that
-	# just yet
-	if self.escriptData and self.otherData:
-	    raise TypeError, \
-		    "Sorry can't handle both escript and other data yet"
+        # if we have both escript and other data, barf as can't handle that
+        # just yet
+        if self.escriptData and self.otherData:
+            raise TypeError, \
+                    "Sorry can't handle both escript and other data yet"
 
-	# now generate the code for the case when we have just escript data
-	# passed into setData()
-	if self.escriptData:
-	    # get the relevant bits of data
-	    if len(dataList) == 1:
-		# only one data variable, will need to get the domain from it
-		escriptY = dataList[0]
-		escriptX = escriptY.getDomain().getX()
-	    elif len(dataList) == 2:
-		# ok, have two data variables, first is x data
-		escriptX = dataList[0]
-		escriptY = dataList[1]
-	    else:
-		errorString = \
-			"Expecting 1 or 2 elements in data list.  I got %d" \
-			% len(dataList)
-		raise ValueError, errorString
+        # now generate the code for the case when we have just escript data
+        # passed into setData()
+        if self.escriptData:
+            # get the relevant bits of data
+            if len(dataList) == 1:
+                # only one data variable, will need to get the domain from it
+                escriptY = dataList[0]
+                escriptX = escriptY.getDomain().getX()
+            elif len(dataList) == 2:
+                # ok, have two data variables, first is x data
+                escriptX = dataList[0]
+                escriptY = dataList[1]
+            else:
+                errorString = \
+                        "Expecting 1 or 2 elements in data list.  I got %d" \
+                        % len(dataList)
+                raise ValueError, errorString
 
-	    ####!!!! now process the data properly so that I can plot it
-	    print "escriptX.shape() = %s" % escriptX.shape()
-	    print "escriptY.shape() = %s" % escriptY.shape()
+            ####!!!! now process the data properly so that I can plot it
+            print "escriptX.shape() = %s" % escriptX.shape()
+            print "escriptY.shape() = %s" % escriptY.shape()
 
-	    # need to check the length and shape of the data to make sure it
-	    # looks right for an OffsetPlot object
+            # need to check the length and shape of the data to make sure it
+            # looks right for an OffsetPlot object
 
-	    raise ImplementationError, "Can't process escript Data yet"
+            raise NotImplementedError, "Can't process escript Data yet"
 
-	elif self.otherData:
+        elif self.otherData:
 
-	    # do some sanity checking on the data
-	    if len(dataList) > 3 or len(dataList) < 1:
-		raise ValueError, \
-			"Must have either one, two or three input arrays"
+            # do some sanity checking on the data
+            if len(dataList) > 3 or len(dataList) < 1:
+                raise ValueError, \
+                        "Must have either one, two or three input arrays"
 
-	    # the data is y values located at different x positions, changing
-	    # over time, so the normal x-direction is t, the normal y direction
-	    # is both x and y; y basically being offset by the x values
-	    # therefore will refer to tData, xData and yData
+            # the data is y values located at different x positions, changing
+            # over time, so the normal x-direction is t, the normal y direction
+            # is both x and y; y basically being offset by the x values
+            # therefore will refer to tData, xData and yData
 
-	    # compare the shapes of the input vectors.
-	    # assume that the first one is the t data, and that the first
-	    # dimension of the second one is the same length as the t data
-	    # length
-	    if len(dataList) == 1:
-		yData = dataList[0]
-	    elif len(dataList) == 2:
-		tData = dataList[0]
-		yData = dataList[1]
-		if tData.shape[0] != yData.shape[0]:
-		    raise ValueError, \
-			    "Input arrays don't have the correct shape"
-	    elif len(dataList) == 3:
-		tData = dataList[0]
-		xData = dataList[1]
-		yData = dataList[2]
-		if tData.shape[0] != yData.shape[0]:
-		    raise ValueError, \
-			"First dim of third arg doesn't agree with first arg"
-		if len(yData.shape) == 1:
-		    if xData.shape[0] != 1:
-			raise ValueError, \
-			   "Second arg must be scalar when third arg is vector"
-		elif len(yData.shape) == 2:
-		    if xData.shape[0] != yData.shape[1]:
-			raise ValueError, \
-			   "Second dim of 3rd arg doesn't agree with 2nd arg"
+            # compare the shapes of the input vectors.
+            # assume that the first one is the t data, and that the first
+            # dimension of the second one is the same length as the t data
+            # length
+            if len(dataList) == 1:
+                yData = dataList[0]
+            elif len(dataList) == 2:
+                tData = dataList[0]
+                yData = dataList[1]
+                if tData.shape[0] != yData.shape[0]:
+                    raise ValueError, \
+                            "Input arrays don't have the correct shape"
+            elif len(dataList) == 3:
+                tData = dataList[0]
+                xData = dataList[1]
+                yData = dataList[2]
+                if tData.shape[0] != yData.shape[0]:
+                    raise ValueError, \
+                        "First dim of third arg doesn't agree with first arg"
+                if len(yData.shape) == 1:
+                    if xData.shape[0] != 1:
+                        raise ValueError, \
+                           "Second arg must be scalar when third arg is vector"
+                elif len(yData.shape) == 2:
+                    if xData.shape[0] != yData.shape[1]:
+                        raise ValueError, \
+                           "Second dim of 3rd arg doesn't agree with 2nd arg"
 
-	    # if only have one array input, then autogenerate tData
-	    if len(dataList) == 1:
-		tData = range(1, len(dataList[0])+1)
-		if len(tData) != len(dataList[0]):
-		    errorString = "Autogenerated xData array length not "
-		    errorString += "equal to input array length"
-		    raise ValueError, errorString
-		## pass around the t data
-		self.renderer.renderDict['_t'] = copy.deepcopy(tData)
-	    # if have two arrays to plot, the first one is the t data
-	    elif len(dataList) == 2:
-		tData = dataList[0]
-		## pass around the t data
-		self.renderer.renderDict['_t'] = copy.deepcopy(tData)
-		# don't need the first element of the dataList, so get rid of it
-		dataList = dataList[1:]
-	    elif len(dataList) == 3:
-		## pass around the t data
-		self.renderer.renderDict['_t'] = copy.deepcopy(tData)
-		## pass around the x data
-		self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-	    else:
-		# shouldn't get to here, but raise an error anyway
-		raise ValueError, "Incorrect number of arguments"
+            # if only have one array input, then autogenerate tData
+            if len(dataList) == 1:
+                tData = range(1, len(dataList[0])+1)
+                if len(tData) != len(dataList[0]):
+                    errorString = "Autogenerated xData array length not "
+                    errorString += "equal to input array length"
+                    raise ValueError, errorString
+                ## pass around the t data
+                self.renderer.renderDict['_t'] = copy.deepcopy(tData)
+            # if have two arrays to plot, the first one is the t data
+            elif len(dataList) == 2:
+                tData = dataList[0]
+                ## pass around the t data
+                self.renderer.renderDict['_t'] = copy.deepcopy(tData)
+                # don't need the first element of the dataList, so get rid of it
+                dataList = dataList[1:]
+            elif len(dataList) == 3:
+                ## pass around the t data
+                self.renderer.renderDict['_t'] = copy.deepcopy(tData)
+                ## pass around the x data
+                self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+            else:
+                # shouldn't get to here, but raise an error anyway
+                raise ValueError, "Incorrect number of arguments"
 
-	    # set up the vtkDataArray object for the t data
-	    self.renderer.runString(
-		    "_tData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
-	    self.renderer.runString(
-		    "_tData.SetNumberOfTuples(len(_t))")
+            # set up the vtkDataArray object for the t data
+            self.renderer.runString(
+                    "_tData = vtk.vtkDataArray.CreateDataArray(vtk.VTK_FLOAT)")
+            self.renderer.runString(
+                    "_tData.SetNumberOfTuples(len(_t))")
 
-	    ## now to handle the y data
-	    if len(yData.shape) == 1:
-		dataLen = 1
-	    elif len(yData.shape) == 2:
-		dataLen = yData.shape[1]
-	    else:
-		raise ValueError, \
-			"The last setData argument has the incorrect shape"
+            ## now to handle the y data
+            if len(yData.shape) == 1:
+                dataLen = 1
+            elif len(yData.shape) == 2:
+                dataLen = yData.shape[1]
+            else:
+                raise ValueError, \
+                        "The last setData argument has the incorrect shape"
 
-	    # share around the y data
-	    for i in range(dataLen):
-		yDataVar = "_y%d" % i
-		if len(yData.shape) == 1:
-		    self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
-		else:
-		    self.renderer.renderDict[yDataVar] = \
-			    copy.deepcopy(yData[:, i])
-		# check that the data here is a 1-D array
-		if len(self.renderer.renderDict[yDataVar].shape) != 1:
-		    raise ValueError, "Can only handle 1D arrays at present"
+            # share around the y data
+            for i in range(dataLen):
+                yDataVar = "_y%d" % i
+                if len(yData.shape) == 1:
+                    self.renderer.renderDict[yDataVar] = copy.deepcopy(yData)
+                else:
+                    self.renderer.renderDict[yDataVar] = \
+                            copy.deepcopy(yData[:, i])
+                # check that the data here is a 1-D array
+                if len(self.renderer.renderDict[yDataVar].shape) != 1:
+                    raise ValueError, "Can only handle 1D arrays at present"
 
-	elif fname is not None and not self.escriptData and not self.otherData:
-	    # now handle the case when we have a file as input
-	    raise ImplementationError, "Sorry, can't handle file input yet"
+        elif fname is not None and not self.escriptData and not self.otherData:
+            # now handle the case when we have a file as input
+            raise NotImplementedError, "Sorry, can't handle file input yet"
 
         # concatenate the data
         evalString = "_yAll = concatenate(["

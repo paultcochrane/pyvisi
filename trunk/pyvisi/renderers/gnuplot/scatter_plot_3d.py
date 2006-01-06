@@ -59,12 +59,15 @@ class ScatterPlot3D(Plot):
         # now add the object to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in ScatterPlot3D()")
 

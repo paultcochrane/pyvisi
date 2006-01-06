@@ -21,6 +21,7 @@ This file contains all of the classes for the various plotting objects.
 """
 
 from pyvisi.renderers.plplot.common import debugMsg
+import copy
 
 from pyvisi.renderers.plplot.plot import Plot
 
@@ -35,8 +36,8 @@ class ContourPlot(Plot):
         """
         Initialisation of the ContourPlot class
 
-        @param arg: The scene with which to associate the plot
-        @type arg: Scene object
+        @param scene: The scene with which to associate the plot
+        @type scene: Scene object
         """
         debugMsg("Called ContourPlot.__init__()")
         Plot.__init__(self)  # initialisation of base class
@@ -60,6 +61,9 @@ class ContourPlot(Plot):
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in ContourPlot()")
 

@@ -34,12 +34,9 @@ class Text(Item):
     Brief introduction to what the class does
     """
 
-    def __init__(self, arg):
+    def __init__(self):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialisation of the text object
         """
         debugMsg("Called Text.__init__()")
         Item.__init__(self)  # initialisation of base class

@@ -20,24 +20,43 @@
 Pyvisi utility functions
 """
 
-def loadAscii(fname=None):
+__revision__ = '$Revision$'
+
+class Utils(object):
     """
-    Reads and returns the data from a whitespace-delimited ascii file
-
-    @param fname: the filename of the input data file
-    @type fname: string
-    """
-
-    return
-
-
-def loadCsv(fname=None):
-    """
-    Reads and returns the data from a comma separated format ascii file
-
-    @param fname: the filename of the input data file
-    @type fname: string
+    Utilities class
     """
 
-    return
+    def __init__(self):
+        """
+        Initialise the utils object
+        """
 
+    def loadAscii(self, fname=None):
+        """
+        Reads and returns the data from a whitespace-delimited ascii file
+    
+        @param fname: the filename of the input data file
+        @type fname: string
+        """
+    
+        if fname is None:
+            raise ValueError, "You must specify a filename"
+    
+        return
+    
+
+    def loadCsv(self, fname=None):
+        """
+        Reads and returns the data from a comma separated format ascii file
+    
+        @param fname: the filename of the input data file
+        @type fname: string
+        """
+    
+        if fname is None:
+            raise ValueError, "You must specify a filename"
+    
+        return
+
+# vim: expandtab shiftwidth=4:

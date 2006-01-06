@@ -22,9 +22,6 @@ Class and functions associated with a pyvisi Plot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
-import os
-import copy
 
 # module specific imports
 from pyvisi.renderers.vtk.item import Item
@@ -64,14 +61,38 @@ class Plot(Item):
         @param dataList: List of data to set to the plot
         @type dataList: tuple
 
-	@param options: Dictionary of extra options
-	@type options: dict
+        @param options: Dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in Plot()")
 
         if dataList is None:
             raise ValueError, "You must specify a data list"
         
+        return
+
+    def _setDataFromFile(self):
+        """
+        Set data to plot using an input file
+        """
+        debugMsg("Called _setDataFromFile() in Plot()")
+
+        return
+
+    def _setEscriptData(self):
+        """
+        Set data to plot using escript Data objects
+        """
+        debugMsg("Called _setEscriptData() in Plot()")
+
+        return
+
+    def _setPlainData(self):
+        """
+        Set data to plot using numarray or Numeric objects
+        """
+        debugMsg("Called _setPlainData() in Plot()")
+
         return
 
     def setTitle(self, title):
@@ -150,7 +171,7 @@ class Plot(Item):
 
         return
 
-    def _register(self, object):
+    def _register(self, obj):
         """
         Register the given object with the plot object
 
@@ -158,7 +179,7 @@ class Plot(Item):
         the current plot object, and for inserting the appropriate code.
         """
         debugMsg("Called Plot._register()")
-        self.objectList.append(object)
+        self.objectList.append(obj)
 
         return
 

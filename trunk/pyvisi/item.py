@@ -16,8 +16,6 @@
 
 # $Id$
 
-## @file item.py
-
 """
 This is the file of the base class for items within a scene
 """
@@ -38,6 +36,8 @@ class Item(object):
         object.__init__(self)
         debugMsg("Called Item.__init__()")
 
+        self.name = None
+
     def render(self):
         """
         Render the object
@@ -46,6 +46,24 @@ class Item(object):
 
         # print a warning if get to here
         overrideWarning("Item.render")
+
+        return
+
+    def getName(self):
+        """
+        Return the name of the item
+        """
+        debugMsg("Called Item.getName()")
+
+        return self.name
+
+    def setName(self, name):
+        """
+        Set the name of the item
+        """
+        debugMsg("Called Item.setName()")
+
+        self.name = name
 
         return
 

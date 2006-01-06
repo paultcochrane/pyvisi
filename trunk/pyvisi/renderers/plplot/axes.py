@@ -33,12 +33,9 @@ class Axes(Plot):
     Brief introduction to what the class does
     """
 
-    def __init__(self, arg):
+    def __init__(self):
         """
-        Brief description of the init function
-
-        @param arg: a description of the argument
-        @type arg: the type of the argument
+        Initialises the axes object
         """
         debugMsg("Called Axes.__init__()")
         Plot.__init__(self)  # initialisation of base class

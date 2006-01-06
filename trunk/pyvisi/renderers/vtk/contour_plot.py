@@ -22,7 +22,6 @@ Class and functions associated with a pyvisi ContourPlot objects
 
 # generic imports
 from pyvisi.renderers.vtk.common import debugMsg
-import Numeric
 import os
 import copy
 
@@ -101,9 +100,9 @@ class ContourPlot(Plot):
         self.format = format
         self.scalars = scalars
 
-	# reset the default values for shared info
-	self.escriptData = False
-	self.otherData = False
+        # reset the default values for shared info
+        self.escriptData = False
+        self.otherData = False
 
         # do some sanity checking on the input args
         if len(dataList) == 0 and fname is None:
@@ -115,21 +114,21 @@ class ContourPlot(Plot):
                     "You cannot specify a data list as well as an input file"
 
         if fname is not None and scalars is None:
-	    debugMsg("No scalars specified; using default in vtk")
+            debugMsg("No scalars specified; using default in vtk")
 
         if fname is not None and format is None:
             raise ValueError, "You must specify an input file format"
 
         # if have just a data list, check the objects passed in to see if
         # they are escript data objects or not
-	if len(dataList) != 0:
-	    for obj in dataList:
-		try:
-		    obj.convertToNumArray()
-		    # ok, we've got escript data, set the flag
-		    self.escriptData = True
-		except AttributeError:
-		    self.otherData = True
+        if len(dataList) != 0:
+            for obj in dataList:
+                try:
+                    obj.convertToNumArray()
+                    # ok, we've got escript data, set the flag
+                    self.escriptData = True
+                except AttributeError:
+                    self.otherData = True
 
         # if we have both escript data and other data, barf as can't handle
         # that yet
@@ -313,20 +312,20 @@ class ContourPlot(Plot):
 
         # run the stuff for when we're reading from file
         if fname is not None:
-	    # make sure the file exists
-	    if not os.path.exists(fname):
-		raise SystemError, "File: %s not found" % fname
+            # make sure the file exists
+            if not os.path.exists(fname):
+                raise SystemError, "File: %s not found" % fname
 
-	    # now handle the different kinds of vtk files
-	    if format == 'vtk':
-		# read old-style vtk files
-		evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
-	    elif format == 'vtk-xml':
-		# read vtk xml files
-		evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
-	    else:
-		# barf
-		raise ValueError, "Unknown format.  I got %s" % format
+            # now handle the different kinds of vtk files
+            if format == 'vtk':
+                # read old-style vtk files
+                evalString = "_reader = vtk.vtkUnstructuredGridReader()\n"
+            elif format == 'vtk-xml':
+                # read vtk xml files
+                evalString = "_reader = vtk.vtkXMLUnstructuredGridReader()\n"
+            else:
+                # barf
+                raise ValueError, "Unknown format.  I got %s" % format
 
             evalString += "_reader.SetFileName(\"%s\")\n" % fname
             evalString += "_reader.Update()"

@@ -21,12 +21,13 @@ This file contains all of the classes for the various plotting objects.
 """
 
 from pyvisi.renderers.plplot.common import debugMsg
+import copy
 
 from pyvisi.renderers.plplot.plot import Plot
 
 __revision__ = '$Revision$'
 
- class SurfacePlot(Plot):
+class SurfacePlot(Plot):
     """
     Surface plot
     """
@@ -57,12 +58,15 @@ __revision__ = '$Revision$'
         # now add the object to the scene
         scene.add(self)
 
-    def setData(self, *dataList):
+    def setData(self, *dataList, **options):
         """
         Sets the data to the given plot object.
 
         @param dataList: list of data objects to plot
         @type dataList: tuple
+
+        @param options: dictionary of extra options
+        @type options: dict
         """
         debugMsg("Called setData() in SurfacePlot()")
 
