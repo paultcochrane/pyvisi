@@ -43,7 +43,7 @@ from Numeric import *
 
 # read in the file
 reader = vtk.vtkXMLUnstructuredGridReader()
-reader.SetFileName("vel-0500.vtk")
+reader.SetFileName("../../vel-0500.vtk")
 reader.Update()
 
 # get the grid
