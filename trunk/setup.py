@@ -2,6 +2,7 @@
 
 # $Id$
 
+
 from distutils.core import setup
 
 a=setup(name="pyvisi",
