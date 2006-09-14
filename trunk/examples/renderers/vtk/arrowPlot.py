@@ -2,6 +2,10 @@
 
 """
 Example of plotting a vector field
+
+NOTE: I've had to disable the patented and parallel vtk libraries to get vtk
+to run again.  Gentoo have updated everything to the (masked!) version 5.0
+AAARRRGGGHHHH.
 """
 
 # set up some data to plot
