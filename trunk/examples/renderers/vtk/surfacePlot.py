@@ -27,7 +27,7 @@ import vtk
 
 # set up the points
 _points = vtk.vtkPoints()
-_points.SetNumberOfPoints(len(x))
+_points.SetNumberOfPoints(len(x)*len(y))
 _index = 0
 for i in range(len(x)):
     for j in range(len(y)):
