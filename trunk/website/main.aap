@@ -57,6 +57,7 @@ all: $Files extras
 extras:
     :execute todo/main.aap
     :execute examples/main.aap
+    :execute ../doc/manual/main.aap
 
 # publish, or just generate the html files
 @if TARGETARG == 'publish':
