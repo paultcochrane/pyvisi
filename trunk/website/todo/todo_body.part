@@ -9,25 +9,30 @@
     <th class="dateAdded">Date added</th>
     <th class="priority">Priority</th>
   </tr>
-<tr class="verylow">
-  <td class="description">Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
-  <td class="dateAdded">2005-01-12</td>
-  <td class="priority">verylow</td>
-</tr>
-<tr class="low">
-  <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="priority">low</td>
-</tr>
-<tr class="low">
-  <td class="description">Implement mesh plots in vtk</td>
+<tr class="veryhigh">
+  <td class="description">Add escript Data object support to all objects</td>
   <td class="dateAdded">2005-11-09</td>
-  <td class="priority">low</td>
+  <td class="priority">veryhigh</td>
 </tr>
-<tr class="low">
-  <td class="description">Some of the code in LinePlot.setData() should be in LinePlot.render()</td>
-  <td class="dateAdded">2005-11-10</td>
-  <td class="priority">low</td>
+<tr class="high">
+  <td class="description">Fully implement linestyles in renderers.vtk</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">View vtk structured and unstructured meshes</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">Handle multiple data sets and data types in one vtk file</td>
+  <td class="dateAdded">2005-11-03</td>
+  <td class="priority">high</td>
+</tr>
+<tr class="high">
+  <td class="description">Remove running the initString more than once in a given script</td>
+  <td class="dateAdded">2005-11-09</td>
+  <td class="priority">high</td>
 </tr>
 <tr class="medium">
   <td class="description">Need a log output file for user- and developer- debugging information.</td>
@@ -70,11 +75,6 @@
   <td class="priority">medium</td>
 </tr>
 <tr class="medium">
-  <td class="description">Implement ArrowPlot3D objects in gnuplot</td>
-  <td class="dateAdded">2005-11-30</td>
-  <td class="priority">medium</td>
-</tr>
-<tr class="medium">
   <td class="description">In the Scene.save() method determine the format by the image filename extension, and if not possible use some intelligent default</td>
   <td class="dateAdded">2006-01-05</td>
   <td class="priority">medium</td>
@@ -84,30 +84,25 @@
   <td class="dateAdded">2006-01-05</td>
   <td class="priority">medium</td>
 </tr>
-<tr class="high">
-  <td class="description">Fully implement linestyles in renderers.vtk</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="priority">high</td>
+<tr class="low">
+  <td class="description">work out concept of line data for fault systems; is it a LinePlot or what is it?</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="priority">low</td>
 </tr>
-<tr class="high">
-  <td class="description">View vtk structured and unstructured meshes</td>
-  <td class="dateAdded">2005-02-24</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Handle multiple data sets and data types in one vtk file</td>
-  <td class="dateAdded">2005-11-03</td>
-  <td class="priority">high</td>
-</tr>
-<tr class="high">
-  <td class="description">Remove running the initString more than once in a given script</td>
+<tr class="low">
+  <td class="description">Implement mesh plots in vtk</td>
   <td class="dateAdded">2005-11-09</td>
-  <td class="priority">high</td>
+  <td class="priority">low</td>
 </tr>
-<tr class="veryhigh">
-  <td class="description">Add escript Data object support to all objects</td>
-  <td class="dateAdded">2005-11-09</td>
-  <td class="priority">veryhigh</td>
+<tr class="low">
+  <td class="description">Some of the code in LinePlot.setData() should be in LinePlot.render()</td>
+  <td class="dateAdded">2005-11-10</td>
+  <td class="priority">low</td>
+</tr>
+<tr class="verylow">
+  <td class="description">Will need sections in the manual for the docs about each renderer module, or possibly each module supplies their own.</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="priority">verylow</td>
 </tr>
 </table>
 
@@ -120,171 +115,33 @@
     <th class="comment">Comment</th>
   </tr>
 <tr class="done">
-  <td class="description">Try and get a simple gnuplot plot working using renderers.gnuplot</td>
-  <td class="dateAdded">2005-01-10</td>
-  <td class="dateCompleted">2005-01-19</td>
-  <td class="comment">done</td>
+  <td class="description">Reimplement evaluation stack way of running low level code to more robust model</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-10</td>
+  <td class="comment">not really an issue anymore</td>
 </tr>
 <tr class="done">
-  <td class="description">View a 2D vector field as an Arrow Plot</td>
+  <td class="description">Work out how to find out the dimensions of an image in vtk</td>
   <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-03</td>
+  <td class="comment">not needed atm</td>
+</tr>
+<tr class="done">
+  <td class="description">Implement render object talking directly to a python interpreter instance sitting in a separate thread</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-09</td>
+  <td class="comment">Not needed anymore.</td>
+</tr>
+<tr class="done">
+  <td class="description">Investigate threading in python and how communication works between processes</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-09</td>
+  <td class="comment">unnecessary</td>
+</tr>
+<tr class="done">
+  <td class="description">Get saving to file without rendering to screen working in vtk</td>
+  <td class="dateAdded">2005-03-02</td>
   <td class="dateCompleted">2005-03-07</td>
-  <td class="comment">done in gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">View a 3D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">working in gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">done in gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">Am using MeshPlot as in matlab sense</td>
-</tr>
-<tr class="done">
-  <td class="description">Get BallPlots working in vtk</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="dateCompleted">2005-04-19</td>
-  <td class="comment">basic implementation done</td>
-</tr>
-<tr class="done">
-  <td class="description">Get BallPlots working in povray</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="dateCompleted">2005-06-08</td>
-  <td class="comment">basic implementation going</td>
-</tr>
-<tr class="done">
-  <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="dateCompleted">2005-01-25</td>
-  <td class="comment">povray structure already present.</td>
-</tr>
-<tr class="done">
-  <td class="description">View a 3D vector field as an Arrow Plot</td>
-  <td class="dateAdded">2005-02-24</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">Done.</td>
-</tr>
-<tr class="done">
-  <td class="description">Move project to sourceforge</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2004-11-26</td>
-  <td class="comment">done</td>
-</tr>
-<tr class="done">
-  <td class="description">Write up student project description</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">No longer necessary</td>
-</tr>
-<tr class="done">
-  <td class="description">Convert escript Data objects into relevant vtk objects</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">Implemented in many vtk plot classes.</td>
-</tr>
-<tr class="done">
-  <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-01-31</td>
-  <td class="comment">not much point - more intuitive at the user level to just instantiate the object</td>
-</tr>
-<tr class="done">
-  <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-04-19</td>
-  <td class="comment">not implemented that way any more</td>
-</tr>
-<tr class="done">
-  <td class="description">use a numarray to generate a mesh plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-03-08</td>
-  <td class="comment">done in gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">use a numarray to generate a surf plot</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">working in gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">work out how to cope with axes in 2D and 3D</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-01-12</td>
-  <td class="comment">started</td>
-</tr>
-<tr class="done">
-  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
-  <td class="dateAdded">2005-01-10</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">in progress</td>
-</tr>
-<tr class="done">
-  <td class="description">Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
-  <td class="dateAdded">2005-01-10</td>
-  <td class="dateCompleted">2005-01-12</td>
-  <td class="comment">implemented</td>
-</tr>
-<tr class="done">
-  <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
-  <td class="dateAdded">2005-01-11</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">done; see skel_module.py in admin directory</td>
-</tr>
-<tr class="done">
-  <td class="description">Start writing a manual, and add objects that are already supported.</td>
-  <td class="dateAdded">2005-01-12</td>
-  <td class="dateCompleted">2005-01-12</td>
-  <td class="comment">started</td>
-</tr>
-<tr class="done">
-  <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
-  <td class="dateAdded">2005-01-19</td>
-  <td class="dateCompleted">2005-01-24</td>
-  <td class="comment">done</td>
-</tr>
-<tr class="done">
-  <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
-  <td class="dateAdded">2005-01-21</td>
-  <td class="dateCompleted">2005-02-24</td>
-  <td class="comment">done</td>
-</tr>
-<tr class="done">
-  <td class="description">Need to add a delete object method so can remove objects from a Scene if desired</td>
-  <td class="dateAdded">2005-01-27</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">Stub method added.  Not actually implemented yet at the renderer module level.</td>
-</tr>
-<tr class="done">
-  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
-  <td class="dateAdded">2005-02-24</td>
-  <td class="dateCompleted">2005-11-02</td>
-  <td class="comment">Basically started.</td>
-</tr>
-<tr class="done">
-  <td class="description">Add offsets settings for LinePlots so Dion can do seismic stuff</td>
-  <td class="dateAdded">2005-03-08</td>
-  <td class="dateCompleted">2005-03-22</td>
-  <td class="comment">done in vtk and gnuplot</td>
-</tr>
-<tr class="done">
-  <td class="description">Need renderer modules to complain if they can't handle a particular kind of object.</td>
-  <td class="dateAdded">2005-11-09</td>
-  <td class="dateCompleted">2005-11-10</td>
-  <td class="comment">They already do this</td>
-</tr>
-<tr class="done">
-  <td class="description">Implement surface plots in vtk</td>
-  <td class="dateAdded">2005-11-09</td>
-  <td class="dateCompleted">2005-11-10</td>
   <td class="comment">done</td>
 </tr>
 <tr class="done">
@@ -384,33 +241,177 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">Reimplement evaluation stack way of running low level code to more robust model</td>
+  <td class="description">Move project to sourceforge</td>
   <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-10</td>
-  <td class="comment">not really an issue anymore</td>
-</tr>
-<tr class="done">
-  <td class="description">Work out how to find out the dimensions of an image in vtk</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-03</td>
-  <td class="comment">not needed atm</td>
-</tr>
-<tr class="done">
-  <td class="description">Implement render object talking directly to a python interpreter instance sitting in a separate thread</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-09</td>
-  <td class="comment">Not needed anymore.</td>
-</tr>
-<tr class="done">
-  <td class="description">Investigate threading in python and how communication works between processes</td>
-  <td class="dateAdded">2004-11-19</td>
-  <td class="dateCompleted">2005-11-09</td>
-  <td class="comment">unnecessary</td>
-</tr>
-<tr class="done">
-  <td class="description">Get saving to file without rendering to screen working in vtk</td>
-  <td class="dateAdded">2005-03-02</td>
-  <td class="dateCompleted">2005-03-07</td>
+  <td class="dateCompleted">2004-11-26</td>
   <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">Write up student project description</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">No longer necessary</td>
+</tr>
+<tr class="done">
+  <td class="description">Convert escript Data objects into relevant vtk objects</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">Implemented in many vtk plot classes.</td>
+</tr>
+<tr class="done">
+  <td class="description">Implement add()-ing objects to a scene without them being rendered or added directly at instantiation</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-01-31</td>
+  <td class="comment">not much point - more intuitive at the user level to just instantiate the object</td>
+</tr>
+<tr class="done">
+  <td class="description">scene.add() could do a _renderer.AddActor(obj) and rest of code just sets up the actor</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-04-19</td>
+  <td class="comment">not implemented that way any more</td>
+</tr>
+<tr class="done">
+  <td class="description">use a numarray to generate a mesh plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-03-08</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">use a numarray to generate a surf plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">work out how to cope with axes in 2D and 3D</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-01-12</td>
+  <td class="comment">started</td>
+</tr>
+<tr class="done">
+  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">in progress</td>
+</tr>
+<tr class="done">
+  <td class="description">Start to define the objects and methods that all renderers should override or at least give an error message or warning that that renderer doesn't support that method/object</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-12</td>
+  <td class="comment">implemented</td>
+</tr>
+<tr class="done">
+  <td class="description">Might need some kind of renderer module templating system for developers to work from.</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done; see skel_module.py in admin directory</td>
+</tr>
+<tr class="done">
+  <td class="description">Start writing a manual, and add objects that are already supported.</td>
+  <td class="dateAdded">2005-01-11</td>
+  <td class="dateCompleted">2005-01-12</td>
+  <td class="comment">started</td>
+</tr>
+<tr class="done">
+  <td class="description">Add linestyles ability to LinePlots with words from gnuplot, and with symbols from matlab</td>
+  <td class="dateAdded">2005-01-19</td>
+  <td class="dateCompleted">2005-01-24</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">Move new method and class definitions from developing renderer modules into the base classes as they get added.  This is so that the interface that new renderer module writers should be writing to override, or at least meet, is in place.</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">Need to add a delete object method so can remove objects from a Scene if desired</td>
+  <td class="dateAdded">2005-01-27</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">Stub method added.  Not actually implemented yet at the renderer module level.</td>
+</tr>
+<tr class="done">
+  <td class="description">Start writing docs for the api so that other developers can contribute more easily</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">Basically started.</td>
+</tr>
+<tr class="done">
+  <td class="description">Add offsets settings for LinePlots so Dion can do seismic stuff</td>
+  <td class="dateAdded">2005-03-08</td>
+  <td class="dateCompleted">2005-03-22</td>
+  <td class="comment">done in vtk and gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">Need renderer modules to complain if they can't handle a particular kind of object.</td>
+  <td class="dateAdded">2005-11-09</td>
+  <td class="dateCompleted">2005-11-10</td>
+  <td class="comment">They already do this</td>
+</tr>
+<tr class="done">
+  <td class="description">Implement surface plots in vtk</td>
+  <td class="dateAdded">2005-11-09</td>
+  <td class="dateCompleted">2005-11-10</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">View a 2D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-03-07</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">View a 3D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">working in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">View a 3D surface plot similar to surf() of Matlab</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-02-24</td>
+  <td class="comment">done in gnuplot</td>
+</tr>
+<tr class="done">
+  <td class="description">work out conceptual differences between a mesh plot (in matlab sense) and a mesh in a mesh generator sense</td>
+  <td class="dateAdded">2004-11-19</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">Am using MeshPlot as in matlab sense</td>
+</tr>
+<tr class="done">
+  <td class="description">Get BallPlots working in vtk</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-04-19</td>
+  <td class="comment">basic implementation done</td>
+</tr>
+<tr class="done">
+  <td class="description">Get BallPlots working in povray</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-06-08</td>
+  <td class="comment">basic implementation going</td>
+</tr>
+<tr class="done">
+  <td class="description">Once BallPlots are working in vtk, add renderers.povray and flesh out with base objects and files etc.</td>
+  <td class="dateAdded">2005-01-21</td>
+  <td class="dateCompleted">2005-01-25</td>
+  <td class="comment">povray structure already present.</td>
+</tr>
+<tr class="done">
+  <td class="description">View a 3D vector field as an Arrow Plot</td>
+  <td class="dateAdded">2005-02-24</td>
+  <td class="dateCompleted">2005-11-02</td>
+  <td class="comment">Done.</td>
+</tr>
+<tr class="done">
+  <td class="description">Try and get a simple gnuplot plot working using renderers.gnuplot</td>
+  <td class="dateAdded">2005-01-10</td>
+  <td class="dateCompleted">2005-01-19</td>
+  <td class="comment">done</td>
+</tr>
+<tr class="done">
+  <td class="description">Implement ArrowPlot3D objects in gnuplot</td>
+  <td class="dateAdded">2005-11-30</td>
+  <td class="dateCompleted">2006-09-13</td>
+  <td class="comment">not possible in gnuplot 4.0</td>
 </tr>
 </table>
