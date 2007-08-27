@@ -40,7 +40,6 @@ publishFiles =
     docs/api_epydoc/private/*.css
     docs/api_epydoc/private/*.html
     $(manDir)pyvisi_doc.pdf
-    $(manDir)pyvisi_doc.ps.gz
     $(manDir)pyvisi_doc.tar.gz
     $(htmlDir)*.css
     $(htmlDir)*.html
