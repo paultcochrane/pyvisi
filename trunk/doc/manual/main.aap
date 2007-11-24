@@ -62,7 +62,7 @@ PdfFigs = figures/plotExampleGnuplot.pdf
         figures/plotExampleVTK.pdf
         figures/pyvisi_class_structure.pdf
 
-webdir = ../../website/docs/manual
+webdir = ../../website/docs/manual/
 	
 all: pdf_figs pyvisi_doc.pdf pyvisi_doc.tar.gz
 
