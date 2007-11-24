@@ -508,6 +508,7 @@ class BallPlot(Plot):
         # with what's in the vtk unstructured grid
 
         if format is not None and (format == "vtk-xml" or format == "vtk"):
+            debugMsg("Importing data with the vtk module in setData()")
             # we're using vtk to read in the data, so import the module
             import vtk
 
@@ -681,6 +682,8 @@ class BallPlot(Plot):
                 tagValues = valueDict.keys()
                 tagValues.sort()
 
+                # now we need to assign the colours
+
             # now scale the tags
             scaledTags = Numeric.zeros(numPoints, typecode=Numeric.Float)
             if numTags == 1:
@@ -706,6 +709,7 @@ class BallPlot(Plot):
         self.green = green
         self.blue = blue
 
+        # share geometrical information around
         self.scene.centre = centre
         self.scene.bounds = bounds
 
