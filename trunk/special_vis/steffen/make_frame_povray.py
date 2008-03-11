@@ -20,7 +20,8 @@ from Numeric import *
 	"outdir=", 
 	"numframes=", 
 	"tagindex=", 
-	"rotate"],
+	"rotate",
+	],
 	)
 
 dirname = None
