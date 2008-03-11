@@ -3,7 +3,10 @@
 .PHONY: clean annotate movie
 
 frames:
-	os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -n 201" % (i,i))
+	python make_frames.py
+
+frames_loop:
+	python make_frames_loop.py
 
 annotate:
 	perl image_annotate.pl -t S003
