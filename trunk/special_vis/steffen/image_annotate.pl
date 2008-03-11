@@ -14,7 +14,7 @@ my $result = GetOptions(
     "title=s" => \$movie_title,
 );
 
-my $max_frames = 201;
+my $max_frames = 401;
 my ($text_width, $text_height);
 my $font = 'CenturySchl-Roma';
 my $text_buffer_x = 5;
@@ -54,7 +54,7 @@ for (my $frame_num=0; $frame_num<$max_frames; $frame_num++) {
     );
 
     # put on it who made the data
-    my $info_text = "Simulation: Steffen Abe";
+    my $info_text = "Steffen Abe";
     @font_metrics = $image->QueryFontMetrics(
 	text => $info_text,
 	pointsize => 20,
