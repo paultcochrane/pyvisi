@@ -271,12 +271,12 @@ def makeFrame(dirname, fname, index, outdir, numframes, opaqueTagIndex, rotFlag)
 
     # convert the file to ppm format with tgatoppm (for later processing
     # with ppmtompeg)
-    cmd = "tgatoppm %s_%04d.tga > %s_%04d.ppm" % \
-	    (imgFnameStem, index, imgFnameStem, index)
-    os.system(cmd)
+    #cmd = "tgatoppm %s_%04d.tga > %s_%04d.ppm" % \
+	    #(imgFnameStem, index, imgFnameStem, index)
+    #os.system(cmd)
 
     # status information
-    print "    Wrote %s_%04d.ppm" % (imgFnameStem, index)
+    #print "    Wrote %s_%04d.ppm" % (imgFnameStem, index)
 
     
 # do it
