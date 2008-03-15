@@ -9,12 +9,13 @@ use Getopt::Long;
 use Image::Magick;
 
 my $movie_title = "SimTitle";
+my $max_frames = 201;
 
 my $result = GetOptions(
     "title=s" => \$movie_title,
+    "max_frames=i" => \$max_frames,
 );
 
-my $max_frames = 401;
 my ($text_width, $text_height);
 my $font = 'CenturySchl-Roma';
 my $text_buffer_x = 5;
