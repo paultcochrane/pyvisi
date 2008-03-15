@@ -12,10 +12,14 @@ frames:
 	python make_frames.py
 
 frames_loop:
+	@echo "Building frames to loop for $(SIMTAG)"
 	python make_frames_loop.py
 
 annotate:
 	perl image_annotate.pl -t $(SIMTAG)
+
+annotate_loop:
+	perl image_annotate.pl -t $(SIMTAG) -m 401
 
 ppm: annotate
 	for file in `ls -1 frame_*_ann.tga`; \
@@ -27,5 +31,8 @@ movie: annotate
 	mencoder mf://*_ann.tga -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw -o $(SIMTAG)_povray.avi
 	#ppmtompeg $(SIMTAG)_povray_ann.params
 
+movie_loop: annotate
+	mencoder mf://frame*loop*_ann.tga -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw -o $(SIMTAG)_povray.avi
+
 clean:
-	rm frame_*_ann.tga
+	rm frame_*_ann.tga frame_*.tga
