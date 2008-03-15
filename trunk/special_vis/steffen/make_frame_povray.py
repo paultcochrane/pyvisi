@@ -13,11 +13,12 @@ from math import *
 from Numeric import *
 
 (opts, args) = getopt.getopt(sys.argv[1:],
-	"d:f:i:o:n:t:r",
+	"d:f:i:o:s:n:t:r",
 	["dirname=", 
 	"fname=", 
 	"index=", 
 	"outdir=", 
+	"outfname=",
 	"numframes=", 
 	"tagindex=", 
 	"rotate",
@@ -28,6 +29,7 @@ dirname = None
 fname = None
 index = None
 outdir = None
+outFnameStem = None
 numframes = None
 opaqueTagIndex = None
 rotate = False
@@ -45,6 +47,9 @@ for option, arg in opts:
     elif option in ('-o', '--outdir'):
 	outdir = arg
 	print "Input arg: outdir = %s" % outdir
+    elif option in ('-s', '--outfname'):
+	outFnameStem = arg
+	print "Input arg: outFnameStem = %s" % outFnameStem
     elif option in ('-n', '--numframes'):
 	numframes = int(arg)
 	print "Input arg: numframes = %d" % numframes
@@ -72,7 +77,7 @@ if numframes is None:
 # high = 1024x768
 res = "med"
 
-def makeFrame(dirname, fname, index, outdir, numframes, opaqueTagIndex, rotFlag):
+def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagIndex, rotFlag):
     """
     Generate image from xml file in given file (complete path possible), and
     output image in current directory
@@ -80,9 +85,14 @@ def makeFrame(dirname, fname, index, outdir, numframes, opaqueTagIndex, rotFlag)
     rotate = rotFlag
     rotPoint = 90   # after this many frames start rotating about the model
     
-    # grab the stem of the xml file and use as the stem of the image filename
-    r = re.compile(r"_\d+\.\w+$")
-    imgFnameStem = r.sub('',fname)
+    # if we have been given a stem for the image filename, use it, otherwise
+    # autogenerate it from the stem of the xml file
+    if outFnameStem is not None:
+	imgFnameStem = outFnameStem
+    else:
+	# grab the stem of the xml file and use as the stem of the image filename
+	r = re.compile(r"_\d+\.\w+$")
+	imgFnameStem = r.sub('',fname)
     
     # create the reader of the file
     reader = vtk.vtkXMLUnstructuredGridReader()
@@ -280,5 +290,5 @@ def makeFrame(dirname, fname, index, outdir, numframes, opaqueTagIndex, rotFlag)
 
     
 # do it
-makeFrame(dirname, fname, index, outdir, numframes, opaqueTagIndex, rotate)
+makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagIndex, rotate)
 
