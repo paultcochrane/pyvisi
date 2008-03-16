@@ -41,4 +41,4 @@ movie_loop_zip:
 	bzip2 -9 $(SIMTAG)_loop_povray.avi
 
 clean:
-	rm frame_*_ann.tga frame_*.tga $(SIMTAG)_povray.avi $(SIMTAG)_loop_povray.avi 
+	rm -f frame_*_ann.tga frame_*.tga $(SIMTAG)_povray.avi $(SIMTAG)_loop_povray.avi $(SIMTAG)_povray.avi.bz2 $(SIMTAG)_loop_povray.avi.bz2
