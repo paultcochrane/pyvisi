@@ -19,7 +19,7 @@ annotate:
 	perl image_annotate.pl -t $(SIMTAG)
 
 annotate_loop:
-	perl image_annotate.pl -t $(SIMTAG) -m 401
+	perl image_annotate.pl -t $(SIMTAG) -m 401 -s frame_loop
 
 ppm: annotate
 	for file in `ls -1 frame_*_ann.tga`; \
