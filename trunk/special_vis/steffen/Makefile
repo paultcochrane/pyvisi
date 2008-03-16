@@ -31,7 +31,7 @@ movie: annotate
 	mencoder mf://*_ann.tga -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw -o $(SIMTAG)_povray.avi
 	#ppmtompeg $(SIMTAG)_povray_ann.params
 
-movie_loop: annotate
+movie_loop: annotate_loop
 	mencoder mf://frame*loop*_ann.tga -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw -o $(SIMTAG)_povray.avi
 
 clean:
