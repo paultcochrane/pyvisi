@@ -10,10 +10,12 @@ use Image::Magick;
 
 my $movie_title = "SimTitle";
 my $max_frames = 201;
+my $img_fname_stem = "frame";
 
 my $result = GetOptions(
     "title=s" => \$movie_title,
     "max_frames=i" => \$max_frames,
+    "stem=s" => \$img_fname_stem,
 );
 
 my ($text_width, $text_height);
@@ -23,8 +25,8 @@ my $text_buffer_y = -8;
 my @font_metrics;
 
 for (my $frame_num=0; $frame_num<$max_frames; $frame_num++) {
-    my $in_filename = sprintf("frame_%04d.tga", $frame_num);
-    my $out_filename = sprintf("frame_%04d_ann.tga", $frame_num);
+    my $in_filename = sprintf("%s_%04d.tga", $img_fname_stem, $frame_num);
+    my $out_filename = sprintf("%s_%04d_ann.tga", $img_fname_stem, $frame_num);
 
     # get the file
     print "Reading $in_filename\n";
