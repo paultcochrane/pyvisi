@@ -29,6 +29,9 @@ for (my $frame_num=0; $frame_num<$max_frames; $frame_num++) {
     my $out_filename = sprintf("%s_%04d_ann.tga", $img_fname_stem, $frame_num);
 
     # get the file
+    if ( ! -e $in_filename ) {
+	die "$in_filename does not exist!";
+    }
     print "Reading $in_filename\n";
     my $image = new Image::Magick;
     $image->Read($in_filename);
