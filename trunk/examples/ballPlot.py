@@ -16,8 +16,6 @@
 
 # $Id$
 
-## @file ballPlotExample.py
-
 """
 Example of plotting spheres with pyvisi 
 """
