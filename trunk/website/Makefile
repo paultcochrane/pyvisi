@@ -1,7 +1,7 @@
 # main html files
 # $Id: main.aap 826 2007-08-27 12:36:56Z paultcochrane $
 
-.PHONY: date_updated.part
+.PHONY: clean date_updated.part
 .SUFFIXES: .html
 
 FILES = \
@@ -15,6 +15,19 @@ FILES = \
 	renderers.html\
 	support.html\
 	todo.html
+
+PART_FILES = \
+	contacts/*.part\
+	devel/*.part\
+	docs/*.part\
+	examples/*.part\
+	htmlbuild/*.part\
+	index/*.part\
+	links/*.part\
+	news/*.part\
+	renderers/*.part\
+	support/*.part\
+	todo/*.part
 
 # helper part files for building the html
 PARTS_DIR = htmlbuild
@@ -30,24 +43,24 @@ EPYDOC_DIR = docs/api_epydoc
 
 # the stuff to publish to the website
 PUBLISH_FILES = \
-		$(FILES)\
-		$(CSS_DIR)/pyvisi_banner-o.css\
-		$(CSS_DIR)/pyvisi_banner.css\
-		$(CSS_DIR)/pyvisi.css\
-		images/*.gif\
-		images/*.jpg\
-		$(EPYDOC_DIR)/*.css\
-		$(EPYDOC_DIR)/*.html\
-		$(EPYDOC_DIR)/public/*.css\
-		$(EPYDOC_DIR)/public/*.html\
-		$(EPYDOC_DIR)/private/*.css\
-		$(EPYDOC_DIR)/private/*.html\
-		$(MANUAL_DIR)/pyvisi_doc.pdf\
-		examples/*.png\
-		examples/*.html
+	$(FILES)\
+	$(CSS_DIR)/pyvisi_banner-o.css\
+	$(CSS_DIR)/pyvisi_banner.css\
+	$(CSS_DIR)/pyvisi.css\
+	images/*.gif\
+	images/*.jpg\
+	$(EPYDOC_DIR)/*.css\
+	$(EPYDOC_DIR)/*.html\
+	$(EPYDOC_DIR)/public/*.css\
+	$(EPYDOC_DIR)/public/*.html\
+	$(EPYDOC_DIR)/private/*.css\
+	$(EPYDOC_DIR)/private/*.html\
+	$(MANUAL_DIR)/pyvisi_doc.pdf\
+	examples/*.png\
+	examples/*.html
 
 # generating the html
-all: $(FILES)
+all: date_updated.part todo $(FILES)
 
 # generate the last updated text at the bottom of the page
 date_updated.part:
@@ -69,7 +82,7 @@ PARTS_DEPS = \
 
 # hrm, the html getting built doesn't depend on the stuff which is going to
 # change the most...  how does one organise this properly?
-%.html: $(PARTS_DEPS)
+%.html: $(PARTS_DEPS) $(PART_FILES)
 	cat $(PARTS_DIR)/doctype.part > $@
 	cat $*/$*_header.part >> $@
 	cat $(PARTS_DIR)/banner.part >> $@
@@ -78,6 +91,9 @@ PARTS_DEPS = \
 	cat $(PARTS_DIR)/spacer_end.part >> $@
 	cat date_updated.part >> $@
 	cat $(PARTS_DIR)/general_footer.part >> $@
+
+todo:
+	cd todo; python todoBodyMake.py
 
 clean:
 	rm -f $(FILES) date_updated.part
