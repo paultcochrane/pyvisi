@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright (C) 2004-2006 Paul Cochrane 
+# Copyright (C) 2004-2008 Paul Cochrane 
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -27,7 +27,7 @@ if (len(sys.argv) != 2):
 classname = sys.argv[1]  
 
 # the copyright string to put at the top of the file
-copyrightStr = """# Copyright (C) 2004-2006 Paul Cochrane
+copyrightStr = """# Copyright (C) 2004-2008 Paul Cochrane
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

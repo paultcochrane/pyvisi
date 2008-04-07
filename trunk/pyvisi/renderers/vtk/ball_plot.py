@@ -1,4 +1,4 @@
-# Copyright (C) 2004-2006 Paul Cochrane
+# Copyright (C) 2004-2008 Paul Cochrane
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
