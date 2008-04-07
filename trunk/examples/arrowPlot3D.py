@@ -92,7 +92,7 @@ scene.render(pause=True, interactive=True)
 scene.save(fname="arrowPlot3D.png", format=PngImage())
 
 # plot data defined in a vtk file
-plot.setData(fname='vel-0500.vtk', format='vtk-xml')
+plot.setData(fname='vel-0004.vtk', format='vtk-xml')
 
 scene.render(pause=True, interactive=True)
 
