@@ -10,17 +10,7 @@
 help:
 	:print To process this file, merely run the command:
 	:print   aap
-	:print and all of the documentation will be built from the sources
-	:print The documentation output is:
-	:print pdf, html and source tarball
-	:print 
-	:print To just produce the pdf, use:
-	:print   aap pyvisi_doc.pdf
-	:print To just produce the html, use:
-	:print   aap pyvisi_doc.html
-	:print To just produce the source tarball, use:
-	:print   aap pyvisi_doc.tar.gz
-	
+	:print and the pdf documentation will be built from the sources
 
 :print Executing the main aap file
 
@@ -62,9 +52,9 @@ PdfFigs = figures/plotExampleGnuplot.pdf
         figures/plotExampleVTK.pdf
         figures/pyvisi_class_structure.pdf
 
-webdir = ../../website/docs/manual/
-	
-all: pdf_figs pyvisi_doc.pdf pyvisi_doc.tar.gz
+webdir = ../../website/docs/
+
+all: pdf_figs pyvisi_doc.pdf
 
 dia_figs: $DiaFigs
         :sys dia -n -t=eps ../pyvisi_class_structure.dia
@@ -85,18 +75,4 @@ pyvisi_doc.pdf: $TexFiles $PdfFigs
 	:sys pdflatex pyvisi_doc.tex
 	:sys pdflatex pyvisi_doc.tex
 	:sys cp $target $webdir
-
-pyvisi_doc.html: pyvisi_doc.pdf
-	:print Generating the html...
-	:sys latex2html pyvisi_doc.tex
-
-pyvisi_doc.tar.gz: $TexFiles $EpsFigs $StyFiles
-	:print Generating the documentation tarball...
-	:sys mkdir pyvisi_doc
-	:sys cp $TexFiles $StyFiles pyvisi_doc/
-	:sys mkdir pyvisi_doc/figures
-	:sys cp $EpsFigs pyvisi_doc/figures/
-	:sys tar -cvzf $target pyvisi_doc
-	:sys cp $target $webdir
-	:sys rm -rf pyvisi_doc
 
