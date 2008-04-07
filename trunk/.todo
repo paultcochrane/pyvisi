@@ -1,4 +1,5 @@
-<todo version="0.1.19">
+<?xml version="1.0"?>
+<todo version="0.1.20">
     <note priority="veryhigh" time="1100836955" done="1131605908">
         Reimplement evaluation stack way of running low level code to more robust model
         <comment>
@@ -239,6 +240,12 @@
             done
         </comment>
     </note>
+    <note priority="medium" time="1133325314" done="1158172648">
+        Implement ArrowPlot3D objects in gnuplot
+        <comment>
+            not possible in gnuplot 4.0
+        </comment>
+    </note>
     <note priority="low" time="1100837073" done="1110169311">
         View a 2D vector field as an Arrow Plot
         <comment>
@@ -293,8 +300,11 @@
             done
         </comment>
     </note>
-    <note priority="veryhigh" time="1131512159">
+    <note priority="veryhigh" time="1131512159" done="1207021987">
         Add escript Data object support to all objects
+        <comment>
+            escript data objects are no longer supported
+        </comment>
     </note>
     <note priority="high" time="1106279085">
         Fully implement linestyles in renderers.vtk
@@ -331,12 +341,6 @@
     </note>
     <note priority="medium" time="1131607395">
         Make custom classes/methods/whatever for common error messages
-    </note>
-    <note priority="medium" time="1133325314" done="1158172648">
-        Implement ArrowPlot3D objects in gnuplot
-        <comment>
-            not possible in gnuplot 4.0
-        </comment>
     </note>
     <note priority="medium" time="1136419190">
         In the Scene.save() method determine the format by the image filename extension, and if not possible use some intelligent default
