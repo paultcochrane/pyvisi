@@ -9,11 +9,6 @@
     <th class="dateAdded">Date added</th>
     <th class="priority">Priority</th>
   </tr>
-<tr class="veryhigh">
-  <td class="description">Add escript Data object support to all objects</td>
-  <td class="dateAdded">2005-11-09</td>
-  <td class="priority">veryhigh</td>
-</tr>
 <tr class="high">
   <td class="description">Fully implement linestyles in renderers.vtk</td>
   <td class="dateAdded">2005-01-21</td>
@@ -355,6 +350,12 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
+  <td class="description">Implement ArrowPlot3D objects in gnuplot</td>
+  <td class="dateAdded">2005-11-30</td>
+  <td class="dateCompleted">2006-09-13</td>
+  <td class="comment">not possible in gnuplot 4.0</td>
+</tr>
+<tr class="done">
   <td class="description">View a 2D vector field as an Arrow Plot</td>
   <td class="dateAdded">2004-11-19</td>
   <td class="dateCompleted">2005-03-07</td>
@@ -409,9 +410,9 @@
   <td class="comment">done</td>
 </tr>
 <tr class="done">
-  <td class="description">Implement ArrowPlot3D objects in gnuplot</td>
-  <td class="dateAdded">2005-11-30</td>
-  <td class="dateCompleted">2006-09-13</td>
-  <td class="comment">not possible in gnuplot 4.0</td>
+  <td class="description">Add escript Data object support to all objects</td>
+  <td class="dateAdded">2005-11-09</td>
+  <td class="dateCompleted">2008-04-01</td>
+  <td class="comment">escript data objects are no longer supported</td>
 </tr>
 </table>
