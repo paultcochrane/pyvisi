@@ -634,10 +634,29 @@ class BallPlot(Plot):
                     min(z), max(z)])
 
             # make the colours
+            red = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            blue = Numeric.zeros(numPoints, typecode=Numeric.Float)
+            green = Numeric.zeros(numPoints, typecode=Numeric.Float)
+
             if colors is None:
                 # ok then, since we have no info, make them related to the
                 # radii
-                pass
+                maxRadii = max(radii)
+
+                # we know we have access to vtk, so since we don't know how
+                # to generate a decent colour lookup table (something to be
+                # researched) use vtk's lookup table
+                # make a lookup table and invert it
+                import vtk
+                lut = vtk.vtkLookupTable()
+                refLut = vtk.vtkLookupTable()
+                lut.Build()
+                refLut.Build()
+                for j in range(256):
+                    lut.SetTableValue(j, refLut.GetTableValue(255-j))
+
+                for i in range(numPoints):
+                    red[i], green[i], blue[i] = lut.GetColor(radii[i]/maxRadii)
 
             # what if we have a tags argument as well, and use that for the
             # colours if the colours array doesn't exists (which would be
@@ -694,7 +713,6 @@ class BallPlot(Plot):
                         if tagValues[j] == tags[i]:
                             scaledTags[i] = float(j)/float(numTags-1)
         else:
-            # barf
             raise ValueError, \
                     "Cannot construct BallPlot with the given input.  Exiting."
 
