@@ -35,11 +35,13 @@ from Numeric import *
 
 # read in the data (being fortunate we know how much data there is)
 fp = open('waves1d.dat')
-t = zeros((1000), typecode=Float)
-x = zeros((102), typecode=Float)
-data = zeros((1000,102), typecode=Float)
-for i in range(1000):
-    for j in range(102):
+tLen = 1000
+xLen = 102
+t = zeros((tLen), typecode=Float)
+x = zeros((xLen), typecode=Float)
+data = zeros((tLen,xLen), typecode=Float)
+for i in range(tLen):
+    for j in range(xLen):
         line = fp.readline()
         arr = line.split()
         t[i] = float(arr[0])
@@ -49,7 +51,6 @@ fp.close()
 
 # example code for how a user would write a script in pyvisi
 from pyvisi import *          # base level visualisation stuff
-#from pyvisi.utils import *   # pyvisi specific utils
 # import the objects to render the scene using the specific renderer
 if ren_mod == "gnuplot":
     from pyvisi.renderers.gnuplot import *   # gnuplot
