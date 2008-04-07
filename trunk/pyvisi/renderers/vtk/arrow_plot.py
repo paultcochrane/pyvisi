@@ -50,8 +50,6 @@ class ArrowPlot(Plot):
         self.fname = None
         self.format = None
         self.vectors = None
-        self.escriptData = False
-        self.otherData = False
 
         # add the plot to the scene
         scene.add(self)
@@ -100,10 +98,6 @@ class ArrowPlot(Plot):
         self.format = format
         self.vectors = vectors
 
-        # reset the default values for shared info
-        self.escriptData = False
-        self.otherData = False
-
         # do some sanity checking on the input args
         if len(dataList) == 0 and fname is None:
             raise ValueError, \
@@ -122,189 +116,82 @@ class ArrowPlot(Plot):
         if fname is None and format is not None:
             raise ValueError, "Format specified but no input filename"
 
-        # if have just a data list, check the objects passed in to see if
-        # they are escript data objects or not
-        if len(dataList) != 0:
-            for obj in dataList:
-                try:
-                    obj.convertToNumArray()
-                    # ok, we've got escript data, set the flag
-                    self.escriptData = True
-                except AttributeError:
-                    self.otherData = True
+        # do some sanity checking on the data
+        if len(dataList) != 4:
+            raise ValueError, \
+                    "Must have four vectors as input: x, y, dx, dy"
 
-        # if we have both escript data and other data, barf as can't handle
-        # that yet
-        if self.escriptData and self.otherData:
-            raise TypeError, \
-                    "Sorry can't handle both escript and other data yet"
+        for i in range(len(dataList)):
+            if len(dataList[i].shape) != len(dataList[0].shape):
+                raise ValueError, "All arrays must be of the same shape"
 
-        # now generate the code for the case when we have just escript data
-        # passed into setData()
-        if self.escriptData:
-            # get the relevant bits of data
-            if len(dataList) == 1:
-                # only one data variable, will need to get the domain from it
-                escriptZ = dataList[0]
-                escriptX = escriptZ.getDomain().getX()
-            else:
+        for i in range(len(dataList)):
+            if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
                 errorString = \
-                        "Expecting only 1 element in data list.  I got %d" \
-                        % len(dataList)
+                        "Can only handle 1D or 2D arrays: dim=%d" % \
+                        len(dataList[i].shape)
                 raise ValueError, errorString
 
-            domainData = escriptX.convertToNumArray()
-            fieldData = escriptZ.convertToNumArray()
-
-            # now check the shapes
-            if len(domainData.shape) != 2:
+        for i in range(len(dataList)):
+            if len(dataList[0]) != len(dataList[i]):
                 raise ValueError, \
-                        "domainData shape is not 2D.  I got %d dims" % \
-                        len(domainData.shape)
+                        "Input vectors must all be the same length"
 
-            if len(fieldData.shape) != 2:
-                raise ValueError, \
-                        "fieldData shape is not 2D.  I got %d dims" % \
-                        len(fieldData.shape)
+        # if we have 2D arrays as input, we need to flatten them to plot the
+        # data properly
+        if len(dataList[0].shape) == 1:
+            xData = dataList[0]
+            yData = dataList[1]
+            dxData = dataList[2]
+            dyData = dataList[3]
+        elif len(dataList[0].shape) == 2:
+            xData = dataList[0].flat
+            yData = dataList[1].flat
+            dxData = dataList[2].flat
+            dyData = dataList[3].flat
+        else:
+            raise ValueError, "Input vectors can only be 1D or 2D"
 
-            # we expect only 2D vectors, so make sure that the second
-            # dimension of the array is equal to 2
-            if fieldData.shape[1] != 2:
-                raise ValueError, \
-                        "fieldData vectors not 2D.  I got %d dims" % \
-                        fieldData.shape[1]
+        # now pass the data to the render dictionary so that the render code
+        # knows what it's supposed to plot
+        # x data
+        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+    
+        # y data
+        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
+    
+        # dx data
+        self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
+    
+        # dy data
+        self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
+    
+        # keep the number of points for future reference
+        numPoints = len(xData)
 
-            # make sure the lengths agree
-            if domainData.shape[0] != fieldData.shape[0]:
-                raise ValueError, \
-                        "domainData and fieldData lengths don't agree"
+        # construct the points data
+        evalString = "_points = vtk.vtkPoints()\n"
+        evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
+        evalString += "for _j in range(%d):\n" % numPoints
+        evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
+        self.renderer.runString(evalString)
 
-            # split the domainData and fieldData up into x and y parts
-            xData = domainData[:, 0]
-            yData = domainData[:, 1]
+        # construct the vectors
+        evalString = "_vectors = vtk.vtkFloatArray()\n"
+        evalString += "_vectors.SetNumberOfComponents(3)\n"
+        evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
+        evalString += "_vectors.SetName(\"vectors\")\n"
+        evalString += "for _j in range(%d):\n" % numPoints
+        evalString += \
+                "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
+        self.renderer.runString(evalString)
 
-            dxData = fieldData[:, 0]
-            dyData = fieldData[:, 1]
-
-            # now pass the data to the render dictionary so that the render code
-            # knows what it's supposed to plot
-            # x data
-            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-        
-            # y data
-            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
-        
-            # dx data
-            self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
-        
-            # dy data
-            self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
-        
-            # keep the number of points for future reference
-            numPoints = len(xData)
-
-            # construct the points data
-            evalString = "_points = vtk.vtkPoints()\n"
-            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-            evalString += "for _j in range(%d):\n" % numPoints
-            evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
-            self.renderer.runString(evalString)
-
-            # construct the vectors
-            evalString = "_vectors = vtk.vtkFloatArray()\n"
-            evalString += "_vectors.SetNumberOfComponents(3)\n"
-            evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
-            evalString += "_vectors.SetName(\"vectors\")\n"
-            evalString += "for _j in range(%d):\n" % numPoints
-            evalString += \
-                    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
-            self.renderer.runString(evalString)
-
-            # construct the grid
-            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-            evalString += "_grid.SetPoints(_points)\n"
-            evalString += "_grid.GetPointData().AddArray(_vectors)\n"
-            evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-            self.renderer.runString(evalString)
-
-        elif self.otherData:
-
-            # do some sanity checking on the data
-            if len(dataList) != 4:
-                raise ValueError, \
-                        "Must have four vectors as input: x, y, dx, dy"
-
-            for i in range(len(dataList)):
-                if len(dataList[i].shape) != len(dataList[0].shape):
-                    raise ValueError, "All arrays must be of the same shape"
-
-            for i in range(len(dataList)):
-                if len(dataList[i].shape) != 1 and len(dataList[i].shape) != 2:
-                    errorString = \
-                            "Can only handle 1D or 2D arrays: dim=%d" % \
-                            len(dataList[i].shape)
-                    raise ValueError, errorString
-
-            for i in range(len(dataList)):
-                if len(dataList[0]) != len(dataList[i]):
-                    raise ValueError, \
-                            "Input vectors must all be the same length"
-
-            # if we have 2D arrays as input, we need to flatten them to plot the
-            # data properly
-            if len(dataList[0].shape) == 1:
-                xData = dataList[0]
-                yData = dataList[1]
-                dxData = dataList[2]
-                dyData = dataList[3]
-            elif len(dataList[0].shape) == 2:
-                xData = dataList[0].flat
-                yData = dataList[1].flat
-                dxData = dataList[2].flat
-                dyData = dataList[3].flat
-            else:
-                raise ValueError, "Input vectors can only be 1D or 2D"
-
-            # now pass the data to the render dictionary so that the render code
-            # knows what it's supposed to plot
-            # x data
-            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-        
-            # y data
-            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
-        
-            # dx data
-            self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
-        
-            # dy data
-            self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
-        
-            # keep the number of points for future reference
-            numPoints = len(xData)
-
-            # construct the points data
-            evalString = "_points = vtk.vtkPoints()\n"
-            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-            evalString += "for _j in range(%d):\n" % numPoints
-            evalString += "    _points.InsertPoint(_j, _x[_j], _y[_j], 0.0)\n"
-            self.renderer.runString(evalString)
-
-            # construct the vectors
-            evalString = "_vectors = vtk.vtkFloatArray()\n"
-            evalString += "_vectors.SetNumberOfComponents(3)\n"
-            evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
-            evalString += "_vectors.SetName(\"vectors\")\n"
-            evalString += "for _j in range(%d):\n" % numPoints
-            evalString += \
-                    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], 0.0)\n"
-            self.renderer.runString(evalString)
-
-            # construct the grid
-            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-            evalString += "_grid.SetPoints(_points)\n"
-            evalString += "_grid.GetPointData().AddArray(_vectors)\n"
-            evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-            self.renderer.runString(evalString)
+        # construct the grid
+        evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
+        evalString += "_grid.SetPoints(_points)\n"
+        evalString += "_grid.GetPointData().AddArray(_vectors)\n"
+        evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
+        self.renderer.runString(evalString)
 
         # run the stuff for when we're reading from file
         if fname is not None:

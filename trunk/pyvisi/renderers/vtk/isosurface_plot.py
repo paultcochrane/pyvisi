@@ -65,9 +65,6 @@ class IsosurfacePlot(Plot):
         self.format = None
         self.scalars = None
 
-        self.escriptData = False
-        self.otherData = False
-
         # add the plot to the scene
         scene.add(self)
 
@@ -116,10 +113,6 @@ class IsosurfacePlot(Plot):
         self.format = format
         self.scalars = scalars
 
-        # reset the default values for shared info
-        self.escriptData = False
-        self.otherData = False
-
         # do a sanity check on the inputs
         if len(dataList) == 0 and fname is None:
             raise ValueError, \
@@ -138,124 +131,8 @@ class IsosurfacePlot(Plot):
         if fname is None and format is not None:
             raise ValueError, "Format specified but no input filename"
 
-        # if have just a data list, check the objects passed in to see if
-        # they are escript data objects or not
-        if len(dataList) != 0:
-            for obj in dataList:
-                try:
-                    obj.convertToNumArray()
-                    # ok, we've got escript data, set the flag
-                    self.escriptData = True
-                except AttributeError:
-                    self.otherData = True
-
-        # if we have both escript data and other data, barf as can't handle
-        # that yet
-        if self.escriptData and self.otherData:
-            raise TypeError, \
-                    "Sorry can't handle both escript and other data yet"
-
-        # now generate the code for the case when we have just escript data
-        # passed into setData()
-        if self.escriptData:
-            # get the relevant bits of data
-            if len(dataList) == 1:
-                # only one data variable, will need to get the domain from it
-                escriptZ = dataList[0]
-                escriptX = escriptZ.getDomain().getX()
-            else:
-                errorString = \
-                        "Expecting only 1 element in data list.  I got %d" \
-                        % len(dataList)
-                raise ValueError, errorString
-
-            # convert the data to numarrays
-            fieldData = escriptZ.convertToNumArray()
-            domainData = escriptX.convertToNumArray()
-
-            xData = domainData[:, 0]
-            yData = domainData[:, 1]
-            zData = domainData[:, 2]
-
-            # now check the dimensionality of the data and the grid; make
-            # sure everything looks right before doing anything more
-            if len(xData.shape) != 1:
-                raise ValueError, "xData not 1D.  I got %d dims" % \
-                        len(xData.shape)
-
-            if len(yData.shape) != 1:
-                raise ValueError, "yData not 1D.  I got %d dims" % \
-                        len(yData.shape)
-
-            if len(zData.shape) != 1:
-                raise ValueError, "zData not 1D.  I got %d dims" % \
-                        len(zData.shape)
-
-            if len(fieldData.shape) != 1:
-                raise ValueError, "fieldData not 1D.  I got %d dims" % \
-                        len(fieldData.shape)
-
-            # now check that the length of the various vectors is correct
-            dataLen = fieldData.shape[0]
-            if xData.shape[0] != dataLen:
-                raise ValueError, \
-                        "xData length doesn't agree with fieldData length"
-
-            if yData.shape[0] != dataLen:
-                raise ValueError, \
-                        "yData length doesn't agree with fieldData length"
-
-            if zData.shape[0] != dataLen:
-                raise ValueError, \
-                        "zData length doesn't agree with fieldData length"
-
-            # it looks like everything is ok...  share the data around
-            ### the x data
-            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-
-            ### the y data
-            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
-
-            ### the z data
-            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
-
-            ### the field data
-            self.renderer.renderDict['_field'] = copy.deepcopy(fieldData)
-
-            ### construct the grid, data and points arrays
-
-            # first the points array
-            evalString = "_points = vtk.vtkPoints()\n"
-            evalString += "_points.SetNumberOfPoints(%d)\n" % dataLen
-            evalString += "for _i in range(%d):\n" % dataLen
-            evalString += "   _points.SetPoint(_i, _x[_i], _y[_i], _z[_i])\n" 
-            self.renderer.runString(evalString)
-
-            # now the data array
-            evalString = "_data = vtk.vtkFloatArray()\n"
-            evalString += "_data.SetNumberOfValues(%d)\n" % dataLen
-            evalString += "_data.SetNumberOfTuples(1)\n"
-            evalString += "for _i in range(%d):\n" % dataLen
-            evalString += "    _data.SetTuple1(_i, _field[_i])\n"
-            self.renderer.runString(evalString)
-
-            # now make the grid
-            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-            evalString += "_grid.SetPoints(_points)\n"
-            evalString += "_grid.GetPointData().SetScalars(_data)\n"
-            self.renderer.runString(evalString)
-
-            # do the delaunay 3D to get proper isosurfaces
-            evalString = "_del3D = vtk.vtkDelaunay3D()\n"
-            evalString += "_del3D.SetInput(_grid)\n"
-            evalString += "_del3D.SetOffset(2.5)\n"
-            evalString += "_del3D.SetTolerance(0.001)\n"
-            evalString += "_del3D.SetAlpha(0.0)\n"
-            self.renderer.runString(evalString)
-
-        elif self.otherData:
-
-            raise NotImplementedError, "Can't process plain array data yet"
+        # not implemented for plain data yet
+        raise NotImplementedError, "Can't process plain array data yet"
 
         # run the stuff for when we're reading from file
         if fname is not None:

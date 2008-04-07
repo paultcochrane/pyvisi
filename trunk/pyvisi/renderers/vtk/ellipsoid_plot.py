@@ -59,10 +59,6 @@ class EllipsoidPlot(Plot):
         self.format = None
         self.tensors = None
 
-        # default values for shared info
-        self.escriptData = False
-        self.otherData = False
-
         # add the plot to the scene
         scene.add(self)
 
@@ -111,10 +107,6 @@ class EllipsoidPlot(Plot):
         self.format = format
         self.tensors = tensors
 
-        # reset the default values for shared info
-        self.escriptData = False
-        self.otherData = False
-
         # do some sanity checking on the input args
         if len(dataList) == 0 and fname is None:
             raise ValueError, \
@@ -133,170 +125,10 @@ class EllipsoidPlot(Plot):
         if fname is None and format is not None:
             raise ValueError, "Format specified but no input filename"
 
-        # if have just a data list, check the objects passed in to see if
-        # they are escript data objects or not
-        if len(dataList) != 0:
-            for obj in dataList:
-                try:
-                    obj.convertToNumArray()
-                    # ok, we've got escript data, set the flag
-                    self.escriptData = True
-                except AttributeError:
-                    self.otherData = True
+        # do some checks to make sure have the right kind of shape for
+        # the data and then generate the code
 
-        # if we have both escript data and other data, barf as can't handle
-        # that yet
-        if self.escriptData and self.otherData:
-            raise TypeError, \
-                    "Sorry can't handle both escript and other data yet"
-
-        # now generate the code for the case when we have just escript data
-        # passed into setData()
-        if self.escriptData:
-            # get the relevant bits of data
-            if len(dataList) == 1:
-                # only one data variable, will need to get the domain from it
-                escriptZ = dataList[0]
-                escriptX = escriptZ.getDomain().getX()
-            else:
-                errorString = \
-                        "Expecting only 1 element in data list.  I got %d" \
-                        % len(dataList)
-                raise ValueError, errorString
-
-            # convert the Data objects to numarrays
-            domainData = escriptX.convertToNumArray()
-            fieldData = escriptZ.convertToNumArray()
-
-            # make sure that the shapes are correct
-            if len(domainData.shape) != 2:
-                raise ValueError, \
-                        "domainData shape not 2D.  I got %d dims" % \
-                        len(domainData.shape)
-
-            if len(fieldData.shape) != 3:
-                raise ValueError, \
-                        "fieldData shape not 3D.  I got %d dims" % \
-                        len(fieldData.shape)
-
-            # check the array lengths
-            if domainData.shape[0] != fieldData.shape[0]:
-                raise ValueError, \
-                        "domainData and fieldData array lengths don't agree"
-
-            # check the array dimensions
-            if domainData.shape[1] != 2 and domainData.shape[1] != 3:
-                raise ValueError, \
-                        "domainData array not 2D or 3D.  I got %d dims" % \
-                        domainData.shape[1]
-
-            if fieldData.shape[1] != 2 and fieldData.shape[1] != 3:
-                raise ValueError, \
-                        "fieldData first array not 2D or 3D.  I got %d dims" \
-                        % fieldData.shape[1]
-
-            if fieldData.shape[2] != 2 and fieldData.shape[2] != 3:
-                raise ValueError, \
-                        "fieldData second array not 2D or 3D.  I got %d dims" \
-                        % fieldData.shape[2]
-
-            # check that the fieldData arrays are square
-            if fieldData.shape[1] != fieldData.shape[2]:
-                errorString = "fieldData arrays not square.  "
-                errorString += "First dim: %d.  " % fieldData.shape[1]
-                errorString += "Second dim %d." % fieldData.shape[2]
-                raise ValueError, errorString
-
-            # get the x, y and z data from the domain
-            xData = domainData[:, 0]
-            numPoints = len(xData)  # handy number to keep hanging around
-            yData = domainData[:, 1]
-            # handle the case where no zData is specified
-            if domainData.shape[1] == 2:
-                zData = numarray.zeros(numPoints)
-            else:
-                zData = domainData[:, 2]
-
-            ####!!!! now process the data properly so that I can plot it
-            print "domainData.shape = %s" % str(domainData.shape)
-            print "fieldData.shape = %s" % str(fieldData.shape)
-
-            # now pass the data to the render dictionary so that the render
-            # code knows what it's supposed to plot
-
-            # x data
-            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
-    
-            # y data
-            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
-    
-            # z data
-            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
-    
-            # field data
-            self.renderer.renderDict['_data'] = copy.deepcopy(fieldData)
-
-            # make the points for the grid
-            evalString = "_points = vtk.vtkPoints()\n"
-            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-            evalString += "for _j in range(%d):\n" % numPoints
-            evalString += \
-                    "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
-            self.renderer.runString(evalString)
-
-            # make the array of data
-            evalString = "_tensors = vtk.vtkFloatArray()\n"
-            evalString += "_tensors.SetNumberOfComponents(9)\n"
-            evalString += "_tensors.SetNumberOfTuples(%d)\n" % numPoints
-            evalString += "_tensors.SetName(\"tensors\")\n"
-            evalString += "for _j in range(%d):\n" % numPoints
-            if fieldData.shape[1] == 2:
-                evalString += "    _tensors.InsertTuple9(_j, "
-                evalString += "_data[_j][0][0], _data[_j][0][1], 0.0, "
-                evalString += "_data[_j][1][0], _data[_j][1][1], 0.0, "
-                evalString += "0.0, 0.0, 0.0)\n"
-            elif fieldData.shape[1] == 3:
-                evalString += "    _tensors.InsertTuple9(_j, "
-                evalString += \
-                        "_data[_j][0][0], _data[_j][0][1], _data[_j][0][2], "
-                evalString += \
-                        "_data[_j][1][0], _data[_j][1][1], _data[_j][1][2], "
-                evalString += \
-                        "_data[_j][2][0], _data[_j][2][1], _data[_j][2][2])\n"
-            else:
-                raise ValueError, "Incorrect fieldData shape.  I got %d" % \
-                        fieldData.shape[1]
-            self.renderer.runString(evalString)
-
-            # make the grid
-            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-            evalString += "_grid.SetPoints(_points)\n"
-            evalString += "_grid.GetPointData().AddArray(_tensors)\n"
-            evalString += \
-                    "_grid.GetPointData().SetActiveTensors(\"tensors\")\n"
-            self.renderer.runString(evalString)
- 
-            # now extract the tensor components
-            evalString = "_extract = vtk.vtkExtractTensorComponents()\n"
-            evalString += "_extract.SetInput(_grid)\n"
-            evalString += "_extract.SetScalarModeToEffectiveStress()\n"
-            evalString += "_extract.ExtractScalarsOn()\n"
-            evalString += "_extract.PassTensorsToOutputOn()\n"
-            evalString += "_extract.ScalarIsEffectiveStress()\n"
-
-            evalString += "_extractGrid = _extract.GetOutput()\n"
-            evalString += "_extractGrid.Update()\n"
-            evalString += "_extractScalarRange = "
-            evalString += \
-                    "_extractGrid.GetPointData().GetScalars().GetRange()\n"
-            self.renderer.runString(evalString)
-
-        elif self.otherData:
-
-            # do some checks to make sure have the right kind of shape for
-            # the data and then generate the code
-
-            raise NotImplementedError, "Can't process plain array data yet"
+        raise NotImplementedError, "Can't process plain array data yet"
 
         if fname is not None:
 

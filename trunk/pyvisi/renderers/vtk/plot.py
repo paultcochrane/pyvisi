@@ -79,14 +79,6 @@ class Plot(Item):
 
         return
 
-    def _setEscriptData(self):
-        """
-        Set data to plot using escript Data objects
-        """
-        debugMsg("Called _setEscriptData() in Plot()")
-
-        return
-
     def _setPlainData(self):
         """
         Set data to plot using numarray or Numeric objects
