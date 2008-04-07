@@ -120,7 +120,7 @@ class ArrowPlot3D(Plot):
             raise ValueError, "Format specified, but no input filename"
 
         # do some sanity checking on the data
-        if len(dataList) != 6:
+        if len(dataList) != 6 and fname is None:
             errorStr = "Must have six vectors as input: x, y, z, "
             errorStr += "dx, dy, dz, found: %d" % len(dataList)
             raise ValueError, errorStr
@@ -142,76 +142,83 @@ class ArrowPlot3D(Plot):
                 raise ValueError, \
                         "Input vectors must all be the same length"
 
-        # if we have 2D arrays as input, we need to flatten them to plot the
-        # data properly
-        if len(dataList[0].shape) == 1:
-            xData = dataList[0]
-            yData = dataList[1]
-            zData = dataList[2]
-            dxData = dataList[3]
-            dyData = dataList[4]
-            dzData = dataList[5]
-        elif len(dataList[0].shape) == 2:
-            xData = dataList[0].flat
-            yData = dataList[1].flat
-            zData = dataList[2].flat
-            dxData = dataList[3].flat
-            dyData = dataList[4].flat
-            dzData = dataList[5].flat
-        else:
-            raise ValueError, "Input vectors can only be 1D or 2D"
+        if fname is not None:
+            # TODO: work out if the file exists and barf with an appropriate
+            # message if not
+            pass
 
-        # now pass the data to the render dictionary so that the render
-        # code knows what it's supposed to plot
 
-        # x data
-        self.renderer.renderDict['_x'] = copy.deepcopy(xData)
+        if fname is None:
+            # if we have 2D arrays as input, we need to flatten them to plot the
+            # data properly
+            if len(dataList[0].shape) == 1:
+                xData = dataList[0]
+                yData = dataList[1]
+                zData = dataList[2]
+                dxData = dataList[3]
+                dyData = dataList[4]
+                dzData = dataList[5]
+            elif len(dataList[0].shape) == 2:
+                xData = dataList[0].flat
+                yData = dataList[1].flat
+                zData = dataList[2].flat
+                dxData = dataList[3].flat
+                dyData = dataList[4].flat
+                dzData = dataList[5].flat
+            else:
+                raise ValueError, "Input vectors can only be 1D or 2D"
 
-        # y data
-        self.renderer.renderDict['_y'] = copy.deepcopy(yData)
+            # now pass the data to the render dictionary so that the render
+            # code knows what it's supposed to plot
 
-        # z data
-        self.renderer.renderDict['_z'] = copy.deepcopy(zData)
+            # x data
+            self.renderer.renderDict['_x'] = copy.deepcopy(xData)
 
-        # dx data
-        self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
+            # y data
+            self.renderer.renderDict['_y'] = copy.deepcopy(yData)
 
-        # dy data
-        self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
+            # z data
+            self.renderer.renderDict['_z'] = copy.deepcopy(zData)
 
-        # dz data
-        self.renderer.renderDict['_dz'] = copy.deepcopy(dzData)
+            # dx data
+            self.renderer.renderDict['_dx'] = copy.deepcopy(dxData)
 
-        # keep the number of points for future reference
-        numPoints = len(xData)
+            # dy data
+            self.renderer.renderDict['_dy'] = copy.deepcopy(dyData)
 
-        # construct the points data
-        evalString = "_points = vtk.vtkPoints()\n"
-        evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
-        evalString += "for _j in range(%d):\n" % numPoints
-        evalString += \
-                "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
-        self.renderer.runString(evalString)
+            # dz data
+            self.renderer.renderDict['_dz'] = copy.deepcopy(dzData)
 
-        # construct the vectors
-        evalString = "_vectors = vtk.vtkFloatArray()\n"
-        evalString += "_vectors.SetNumberOfComponents(3)\n"
-        evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
-        evalString += "_vectors.SetName(\"vectors\")\n"
-        evalString += "for _j in range(%d):\n" % numPoints
-        evalString += \
-                "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], _dz[_j])\n"
-        self.renderer.runString(evalString)
+            # keep the number of points for future reference
+            numPoints = len(xData)
 
-        # construct the grid
-        evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
-        evalString += "_grid.SetPoints(_points)\n"
-        evalString += "_grid.GetPointData().AddArray(_vectors)\n"
-        evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
-        self.renderer.runString(evalString)
+            # construct the points data
+            evalString = "_points = vtk.vtkPoints()\n"
+            evalString += "_points.SetNumberOfPoints(%d)\n" % numPoints
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += \
+                    "    _points.InsertPoint(_j, _x[_j], _y[_j], _z[_j])\n"
+            self.renderer.runString(evalString)
+
+            # construct the vectors
+            evalString = "_vectors = vtk.vtkFloatArray()\n"
+            evalString += "_vectors.SetNumberOfComponents(3)\n"
+            evalString += "_vectors.SetNumberOfTuples(%d)\n" % numPoints
+            evalString += "_vectors.SetName(\"vectors\")\n"
+            evalString += "for _j in range(%d):\n" % numPoints
+            evalString += \
+                    "    _vectors.InsertTuple3(_j, _dx[_j], _dy[_j], _dz[_j])\n"
+            self.renderer.runString(evalString)
+
+            # construct the grid
+            evalString = "_grid = vtk.vtkUnstructuredGrid()\n"
+            evalString += "_grid.SetPoints(_points)\n"
+            evalString += "_grid.GetPointData().AddArray(_vectors)\n"
+            evalString += "_grid.GetPointData().SetActiveVectors(\"vectors\")"
+            self.renderer.runString(evalString)
 
         # run the stuff for when we're reading from file
-        if fname is not None:
+        elif fname is not None:
 
             # had best make sure it exists
             if not os.path.exists(fname):
