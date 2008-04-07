@@ -1,7 +1,7 @@
 # main html files
 # $Id: main.aap 826 2007-08-27 12:36:56Z paultcochrane $
 
-.PHONY: clean date_updated.part
+.PHONY: clean date_updated.part todo examples
 .SUFFIXES: .html
 
 FILES = \
@@ -60,7 +60,7 @@ PUBLISH_FILES = \
 	examples/*.html
 
 # generating the html
-all: date_updated.part todo $(FILES)
+all: date_updated.part todo examples $(FILES)
 
 # generate the last updated text at the bottom of the page
 date_updated.part:
@@ -95,6 +95,10 @@ PARTS_DEPS = \
 todo:
 	cd todo; python todoBodyMake.py
 
+examples:
+	$(MAKE) --directory examples
+
 clean:
 	rm -f $(FILES) date_updated.part
+	$(MAKE) --directory examples clean
 
