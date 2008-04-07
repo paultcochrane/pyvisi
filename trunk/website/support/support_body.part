@@ -8,6 +8,52 @@
 This development wouldn't be possible without the greatly appreciated support
 of the following institutions:
 
+<h3>SourceForge</h3>
+
+<a href="http://sourceforge.net/">http://sourceforge.net</a>
+
+<h2>Supporting software</h2>
+
+Any open source project benefits from the tools it uses, and these are the
+tools used to produce pyvisi.
+
+<h3>Python</h3>
+
+<a href="http://www.python.org/">http://www.python.org</a>
+
+<h3>VTK</h3>
+
+<a href="http://www.vtk.org/">http://www.vtk.org</a>
+
+<h3>Vim</h3>
+
+<a href="http://www.vim.org/">http://www.vim.org</a>
+
+<h3>Epydoc</h3>
+
+<a href="http://epydoc.sourceforge.net/">http://epydoc.sourceforge.net</a>
+
+<h3>Subversion</h3>
+
+<a href="https://subversion.tigris.org/">https://subversion.tigris.org</a>
+
+<h3>Gnuplot</h3>
+
+<a href="http://www.gnuplot.info/">http://www.gnuplot.info</a>
+
+<h3>Gnuplot.py</h3>
+
+<a href="http://gnuplot-py.sourceforge.net/">http://gnuplot-py.sourceforge.net</a>
+
+<h3>Pylint</h3>
+
+<a href="http://www.logilab.org/projects/pylint/">http://www.logilab.org/projects/pylint</a>
+
+<h2>Previous supporting institutions</h2>
+
+PyVisi development has been in the past supported by the following
+institutions:
+
 <h3>ACcESS</h3>
 
 The Australian Computational Earth Systems Simulator
@@ -31,50 +77,5 @@ The Earth Systems Science Computational Centre
 <h3>SGI</h3>
 
 <a href="http://www.sgi.com/">http://www.sgi.com</a>
-
-<h3>SourceForge</h3>
-
-<a href="http://sourceforge.net/">http://sourceforge.net</a>
-
-<h2>Supporting software</h2>
-
-Any open source project benefits from the tools it uses, and these are the
-tools used to produce pyvisi.
-
-<h3>Python</h3>
-
-<a href="http://www.python.org/">http://www.python.org</a>
-
-<h3>VTK</h3>
-
-<a href="http://www.vtk.org/">http://www.vtk.org</a>
-
-<h3>A-A-P</h3>
-
-<a href="http://www.a-a-p.org/">http://www.a-a-p.org</a>
-
-<h3>Vim</h3>
-
-<a href="http://www.vim.org/">http://www.vim.org</a>
-
-<h3>Epydoc</h3>
-
-<a href="http://epydoc.sourceforge.net/">http://epydoc.sourceforge.net</a>
-
-<h3>CVS</h3>
-
-<a href="https://www.cvshome.org/">https://www.cvshome.org</a>
-
-<h3>Gnuplot</h3>
-
-<a href="http://www.gnuplot.info/">http://www.gnuplot.info</a>
-
-<h3>Gnuplot.py</h3>
-
-<a href="http://gnuplot-py.sourceforge.net/">http://gnuplot-py.sourceforge.net</a>
-
-<h3>Pylint</h3>
-
-<a href="http://www.logilab.org/projects/pylint/">http://www.logilab.org/projects/pylint</a>
 
 
