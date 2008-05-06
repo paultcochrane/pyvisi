@@ -27,7 +27,8 @@ ppm: annotate
 	tgatoppm $$file > $$file.ppm; \
 	done
 
-MENCODER_OPTS = -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw
+#MENCODER_OPTS = -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw
+MENCODER_OPTS = -mf fps=25:type=tga -o bar.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=8000:vpass=1
 
 movie: annotate
 	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_povray.avi
