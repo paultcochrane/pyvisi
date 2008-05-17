@@ -18,7 +18,7 @@ frames_loop:
 annotate:
 	perl image_annotate.pl -t $(SIMTAG)
 
-annotate_loop:
+annotate_loop: frames_loop
 	perl image_annotate.pl -t $(SIMTAG) -m 401 -s frame_loop
 
 ppm: annotate
