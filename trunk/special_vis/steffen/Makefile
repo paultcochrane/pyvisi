@@ -15,7 +15,7 @@ frames_loop:
 	@echo "Building frames to loop for $(SIMTAG)"
 	python make_frames_loop.py
 
-annotate:
+annotate: frames
 	perl image_annotate.pl -t $(SIMTAG)
 
 annotate_loop: frames_loop
