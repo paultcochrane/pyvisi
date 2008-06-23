@@ -13,7 +13,7 @@ from math import *
 from Numeric import *
 
 (opts, args) = getopt.getopt(sys.argv[1:],
-	"d:f:i:o:s:n:t:r",
+	"d:f:i:o:s:n:t:v:r",
 	["dirname=", 
 	"fname=", 
 	"index=", 
@@ -22,6 +22,7 @@ from Numeric import *
 	"numframes=", 
 	"tagindex=", 
 	"rotate",
+	"vertialcut=",
 	],
 	)
 
@@ -33,6 +34,7 @@ outFnameStem = None
 numframes = None
 opaqueTagIndex = None
 rotate = False
+verticalCutHeight = None
 
 for option, arg in opts:
     if option in ('-d', '--dirname'):
@@ -59,6 +61,9 @@ for option, arg in opts:
     elif option in ('-r', '--rotate'):
 	print "Input arg: rotate True"
 	rotate = True
+    elif option in ('-v', '--verticalcut'):
+	verticalCutHeight = float(arg)
+	print "Input arg: verticalCutHeight = %f" % verticalCutHeight
 
 if dirname is None:
     raise ValueError, "You must supply a directory name (of the xml files)"
@@ -111,6 +116,7 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
     # grab the radii and the tag data
     vtkRadii = grid.GetPointData().GetScalars("radius")
     vtkTags = grid.GetPointData().GetScalars("particleTag")
+    vtkIds = grid.GetPointData().GetScalars("Id")
 
     # now try and work out how many tags there are so that can work out
     # what the relevant scalar range should be
@@ -163,11 +169,30 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
     radii = zeros(numPoints, typecode=Float)
     mappedTags = zeros(numPoints, typecode=Float)
     tags = zeros(numPoints, typecode=Float)
+    transparentIds = zeros(numPoints, typecode=Int)
     for i in range(numPoints):
 	x[i], y[i], z[i] = vtkPoints.GetPoint(i)
 	radii[i] = vtkRadii.GetValue(i)
 	mappedTags[i] = vtkMappedTags.GetValue(i)
 	tags[i] = vtkTags.GetValue(i)
+
+    # if I'm the first frame (index = ?) then work out which particles are
+    # below the vertical cut height and record them in the "cut file"
+    verticalCutFname = outdir + imgFnameStem + ".cut"
+    if index == 0 and verticalCutHeight is not None:
+	print "Generating the vertical cut file"
+	fp = open(verticalCutFname, "w")
+	for i in range(numPoints):
+	    if y[i] < verticalCutHeight:
+		transparentIds[i] = 1
+	    fp.write("%d\n" % transparentIds[i])
+	fp.close()
+    else:
+	print "Reading the vertical cut file"
+	fp = open(verticalCutFname, "r")
+	for i in range(numPoints):
+	    transparentIds[i] = int(fp.readline());
+	fp.close()
 
     ### generate the pov file
 
@@ -211,25 +236,26 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
 
     # the spheres
     for i in range(numPoints):
-	pov.write("sphere {\n")
-	pov.write("  <%f, %f, -%f>, %f\n" %
-		(x[i], y[i], z[i], radii[i]))
-	pov.write("  pigment {\n")
-	if opaqueTagIndex is not None:
-	    for j in range(numTags):
-		if tagValues[j] == opaqueTagIndex:
-		    tagValueIndex = j
-	    if tags[i] == tagValueIndex:
+	if not transparentIds[i]:
+	    pov.write("sphere {\n")
+	    pov.write("  <%f, %f, -%f>, %f\n" %
+		    (x[i], y[i], z[i], radii[i]))
+	    pov.write("  pigment {\n")
+	    if opaqueTagIndex is not None:
+		for j in range(numTags):
+		    if tagValues[j] == opaqueTagIndex:
+			tagValueIndex = j
+		if tags[i] == tagValueIndex:
+		    pov.write("    colour red %f green %f blue %f\n" %
+			    (red[i], green[i], blue[i]))
+		else:
+		    pov.write("    rgbt <%f, %f, %f, 0.95>\n" %
+			    (red[i], green[i], blue[i]))
+	    else:
 		pov.write("    colour red %f green %f blue %f\n" %
 			(red[i], green[i], blue[i]))
-	    else:
-		pov.write("    rgbt <%f, %f, %f, 0.95>\n" %
-			(red[i], green[i], blue[i]))
-	else:
-	    pov.write("    colour red %f green %f blue %f\n" %
-		    (red[i], green[i], blue[i]))
-	pov.write("  }\n")
-	pov.write("}\n")
+	    pov.write("  }\n")
+	    pov.write("}\n")
 
     # close the file
     pov.close()
