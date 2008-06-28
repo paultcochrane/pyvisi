@@ -109,6 +109,13 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
     grid = reader.GetOutput()
 
     modelCentre = grid.GetCenter()
+    modelBounds = grid.GetBounds()
+    xModelMin = modelBounds[0]
+    xModelMax = modelBounds[1]
+    yModelMin = modelBounds[2]
+    yModelMax = modelBounds[3]
+    zModelMin = modelBounds[4]
+    zModelMax = modelBounds[5]
 
     # grab the points
     vtkPoints = grid.GetPoints()
@@ -212,8 +219,12 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
 
     # the camera
     pov.write("camera {\n")
-    pov.write("  location <%f, %f, -100>\n" % 
-	    (modelCentre[0], modelCentre[1])) # need to work out z dynamically
+    viewRadius = 100.0
+    xPos = modelCentre[0]
+    yPos = modelCentre[1]
+    zPos = yModelMin - viewRadius 
+    pov.write("  location <%f, %f, %f>\n" % 
+	    (xPos, yPos, zPos)) # need to work out z dynamically
     # the up and right used here are actually the pov defaults
     pov.write("  up <0, 1, 0>\n")  # up is in y direction
     pov.write("  right <4/3, 0, 0>\n") 
