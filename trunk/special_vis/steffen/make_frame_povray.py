@@ -13,7 +13,7 @@ from math import *
 from Numeric import *
 
 (opts, args) = getopt.getopt(sys.argv[1:],
-	"d:f:i:o:s:n:t:v:r",
+	"d:f:i:o:s:n:t:v:e:r",
 	["dirname=", 
 	"fname=", 
 	"index=", 
@@ -23,6 +23,7 @@ from Numeric import *
 	"tagindex=", 
 	"rotate",
 	"vertialcut=",
+	"elevation=",
 	],
 	)
 
@@ -35,6 +36,7 @@ numframes = None
 opaqueTagIndex = None
 rotate = False
 verticalCutHeight = None
+elevationAngle = 0.0
 
 for option, arg in opts:
     if option in ('-d', '--dirname'):
@@ -64,6 +66,10 @@ for option, arg in opts:
     elif option in ('-v', '--verticalcut'):
 	verticalCutHeight = float(arg)
 	print "Input arg: verticalCutHeight = %f" % verticalCutHeight
+    elif option in ('-e', '--elevation'):
+	elevationAngle = float(arg)
+	print "Input arg: elevationAngle = %f" % elevationAngle
+	elevationAngle = elevationAngle*math.pi/180.0
 
 if dirname is None:
     raise ValueError, "You must supply a directory name (of the xml files)"
@@ -221,8 +227,8 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
     pov.write("camera {\n")
     viewRadius = 100.0
     xPos = modelCentre[0]
-    yPos = modelCentre[1]
-    zPos = yModelMin - viewRadius 
+    yPos = modelCentre[1] + viewRadius*sin(elevationAngle)
+    zPos = yModelMin - viewRadius*cos(elevationAngle)
     pov.write("  location <%f, %f, %f>\n" % 
 	    (xPos, yPos, zPos)) # need to work out z dynamically
     # the up and right used here are actually the pov defaults
