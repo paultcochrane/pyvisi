@@ -240,7 +240,9 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
 
     # the light source
     pov.write("light_source {\n")
-    pov.write("  <%f, %f, -300>\n" % (modelCentre[0], modelCentre[1]))
+    pov.write("  <%f, %f, %f>\n" % (xPos, 
+	modelCentre[1] + 3*viewRadius*sin(elevationAngle),
+	yModelMin - 3*viewRadius*cos(elevationAngle)))
     pov.write("  colour White\n")
     pov.write("}\n")
 
