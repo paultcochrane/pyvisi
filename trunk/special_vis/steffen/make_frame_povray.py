@@ -13,7 +13,7 @@ from math import *
 from Numeric import *
 
 (opts, args) = getopt.getopt(sys.argv[1:],
-	"d:f:i:o:s:n:t:v:e:r",
+	"d:f:i:o:s:n:t:v:e:r:",
 	["dirname=", 
 	"fname=", 
 	"index=", 
@@ -21,9 +21,10 @@ from Numeric import *
 	"outfname=",
 	"numframes=", 
 	"tagindex=", 
-	"rotate",
+	#"rotate",
 	"vertialcut=",
 	"elevation=",
+	"viewradius=",
 	],
 	)
 
@@ -37,6 +38,7 @@ opaqueTagIndex = None
 rotate = False
 verticalCutHeight = None
 elevationAngle = 0.0
+viewRadius = 100.0
 
 for option, arg in opts:
     if option in ('-d', '--dirname'):
@@ -60,9 +62,9 @@ for option, arg in opts:
     elif option in ('-t', '--tagindex'):
 	opaqueTagIndex = int(arg)
 	print "Input arg: opaqueTagIndex = %d" % opaqueTagIndex
-    elif option in ('-r', '--rotate'):
-	print "Input arg: rotate True"
-	rotate = True
+    #elif option in ('-r', '--rotate'):
+	#print "Input arg: rotate True"
+	#rotate = True
     elif option in ('-v', '--verticalcut'):
 	verticalCutHeight = float(arg)
 	print "Input arg: verticalCutHeight = %f" % verticalCutHeight
@@ -70,6 +72,9 @@ for option, arg in opts:
 	elevationAngle = float(arg)
 	print "Input arg: elevationAngle = %f" % elevationAngle
 	elevationAngle = elevationAngle*math.pi/180.0
+    elif option in ('-r', '--viewradius'):
+	viewRadius = float(arg)
+	print "Input arg: viewRadius = %f" % viewRadius
 
 if dirname is None:
     raise ValueError, "You must supply a directory name (of the xml files)"
@@ -225,7 +230,6 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
 
     # the camera
     pov.write("camera {\n")
-    viewRadius = 100.0
     xPos = modelCentre[0]
     yPos = modelCentre[1] + viewRadius*sin(elevationAngle)
     zPos = yModelMin - viewRadius*cos(elevationAngle)
