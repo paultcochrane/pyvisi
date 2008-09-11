@@ -7,9 +7,11 @@ ifeq "$(SIMTAG)" ""
     $(error "Could not determine SIMTAG from CURDIR")
 endif
 
+NUM_FRAMES = $(SIMTAG)
+
 frames:
 	@echo "Building frames for $(SIMTAG)"
-	python make_frames.py
+	python make_frames.py --numframes=$(NUM_FRAMES)
 
 frames_loop:
 	@echo "Building frames to loop for $(SIMTAG)"
