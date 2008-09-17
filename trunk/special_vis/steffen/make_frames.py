@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os
+import os,sys
 import getopt
 (opts, args) = getopt.getopt(sys.argv[1:],
 	"n:",
