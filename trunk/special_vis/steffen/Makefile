@@ -10,11 +10,11 @@ endif
 
 frames:
 	@echo "Building frames for $(SIMTAG)"
-	NUM_FRAMES=`ls -1 vtk | wc -l`; python make_frames.py --numframes=$$NUM_FRAMES
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`; python make_frames.py --numframes=$$NUM_FRAMES
 
 frames_loop:
 	@echo "Building frames to loop for $(SIMTAG)"
-	python make_frames_loop.py
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`; python make_frames_loop.py --numframes=$$NUM_FRAMES
 
 annotate: frames
 	perl image_annotate.pl -t $(SIMTAG)
