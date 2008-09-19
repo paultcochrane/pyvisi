@@ -10,17 +10,23 @@ endif
 
 frames:
 	@echo "Building frames for $(SIMTAG)"
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`; python make_frames.py --numframes=$$NUM_FRAMES
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
+	python make_frames.py --numframes=$$NUM_FRAMES
 
 frames_loop:
 	@echo "Building frames to loop for $(SIMTAG)"
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`; python make_frames_loop.py --numframes=$$NUM_FRAMES
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
+	python make_frames_loop.py --numframes=$$NUM_FRAMES
 
 annotate: frames
-	perl image_annotate.pl -t $(SIMTAG)
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
+	perl image_annotate.pl -t $(SIMTAG) -m $$NUM_FRAMES
 
 annotate_loop: frames_loop
-	perl image_annotate.pl -t $(SIMTAG) -m 401 -s frame_loop
+	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
+	NUM_FRAMES=`expr $$NUM_FRAMES * 2`;\
+	NUM_FRAMES=`expr $$NUM_FRAMES + 1`;\
+	perl image_annotate.pl -t $(SIMTAG) -m $$NUM_FRAMES -s frame_loop
 
 ppm: annotate
 	for file in `ls -1 frame_*_ann.tga`; \
