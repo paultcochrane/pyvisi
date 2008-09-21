@@ -17,5 +17,9 @@ for option, arg in opts:
 if numframes is None:
     raise ValueError, "You must supply the maximum number of frames"
 
+vertical_cut_height = 0.0
+elevation_angle = 0.0
+view_radius = 70
 for i in xrange(numframes):
-    os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -n %i -v 8 -e -75 -r 70" % (i,i,numframes))
+    os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -n %i -v %g -e %g -r %g" %
+    (i,i,numframes,vertical_cut_height,elevation_angle,view_radius))
