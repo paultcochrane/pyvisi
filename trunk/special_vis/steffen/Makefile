@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: clean annotate movie
+.PHONY: clean annotate movie config
 
 SIMTAG = $(notdir $(CURDIR))
 ifeq "$(SIMTAG)" ""
@@ -8,12 +8,15 @@ ifeq "$(SIMTAG)" ""
 endif
 
 
+config:
+	python config.py
+
 frames:
 	@echo "Building frames for $(SIMTAG)"
 	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
 	python make_frames.py --numframes=$$NUM_FRAMES
 
-frames_loop:
+frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
 	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
 	python make_frames_loop.py --numframes=$$NUM_FRAMES
