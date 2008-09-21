@@ -19,7 +19,7 @@ if numframes is None:
 
 vertical_cut_height = 0.0
 elevation_angle = 0.0
-view_radius = 70
+view_radius = 100
 for i in xrange(numframes):
     os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -n %i -v %g -e %g -r %g" %
     (i,i,numframes,vertical_cut_height,elevation_angle,view_radius))
