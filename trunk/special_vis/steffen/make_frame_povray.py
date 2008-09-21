@@ -253,7 +253,8 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
     # use an infinite plane as the background
     xPlaneNormal = 0
     yPlaneNormal = sin(elevationAngle)
-    zPlaneNormal = cos(elevationAngle) - 1
+    #zPlaneNormal = cos(elevationAngle) - 1
+    zPlaneNormal = -cos(elevationAngle)
     pov.write("plane { <%g, %g, %g>, -100\n" % (
 	xPlaneNormal, yPlaneNormal, zPlaneNormal))
     pov.write("  pigment {\n")
