@@ -24,8 +24,7 @@ view_radius = 100
 for i in xrange(totalframes):
     if i > numframes-1:
 	index = totalframes - 1 - i
-	os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i
-		-o vtk -s frame_loop -n %i -v %g -e %g -r %g" %
+	os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -s frame_loop -n %i -v %g -e %g -r %g" %
 		(index,i,numframes,vertical_cut_height,elevation_angle,view_radius))
     else:
 	os.system("python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -s frame_loop -n %i -v %g -e %g -r %g" % 
