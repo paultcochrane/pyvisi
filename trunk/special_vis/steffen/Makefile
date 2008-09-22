@@ -46,15 +46,9 @@ movie: annotate
 	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(SIMTAG)_povray.avi
 	#ppmtompeg $(SIMTAG)_povray_ann.params
 
-movie_zip:
-	bzip2 -9 $(SIMTAG)_povray.avi
-
 movie_loop: annotate_loop
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_loop_povray.avi
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(SIMTAG)_loop_povray.avi
-
-movie_loop_zip:
-	bzip2 -9 $(SIMTAG)_loop_povray.avi
 
 clean:
 	rm -f frame_*.tga $(SIMTAG)_povray.avi $(SIMTAG)_loop_povray.avi $(SIMTAG)_povray.avi.bz2 $(SIMTAG)_loop_povray.avi.bz2 divx2pass.log
