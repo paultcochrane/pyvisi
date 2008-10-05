@@ -7,29 +7,32 @@ ifeq "$(SIMTAG)" ""
     $(error "Could not determine SIMTAG from CURDIR")
 endif
 
+NUM_FRAMES = $(shell ls -1 vtk/*.vtu | wc -l)
+NUM_LOOP_FRAMES = $(shell expr expr $(NUM_FRAMES) \* 2 + 1)
+LOOP_FRAMES := $(wildcard frame_loop_[0-9][0-9][0-9][0-9].tga)
+VTU := $(wildcard vtk/frame_*.vtu)
+FRAMES := $(substr .vtu,.tga,$(VTU))
 
 config:
 	python config.py
 
-frames:
+$(FRAMES): %.tga: %.vtu make_frames.py
+
+frames: $(FRAMES)
+	@echo "$(VTU)"
 	@echo "Building frames for $(SIMTAG)"
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
-	python make_frames.py --numframes=$$NUM_FRAMES
+	@echo "NUM_FRAMES = $(NUM_FRAMES)"
+	python make_frames.py --numframes=$(NUM_FRAMES)
 
 frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
-	python make_frames_loop.py --numframes=$$NUM_FRAMES
+	python make_frames_loop.py --numframes=$(NUM_FRAMES)
 
 annotate: frames
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
-	perl image_annotate.pl -t $(SIMTAG) -m $$NUM_FRAMES
+	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_FRAMES)
 
 annotate_loop: frames_loop
-	NUM_FRAMES=`ls -1 vtk/*.vtu | wc -l`;\
-	NUM_FRAMES=`expr $$NUM_FRAMES * 2`;\
-	NUM_FRAMES=`expr $$NUM_FRAMES + 1`;\
-	perl image_annotate.pl -t $(SIMTAG) -m $$NUM_FRAMES -s frame_loop
+	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_LOOP_FRAMES) -s frame_loop
 
 ppm: annotate
 	for file in `ls -1 frame_*_ann.tga`; \
