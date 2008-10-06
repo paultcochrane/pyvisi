@@ -43,20 +43,12 @@ annotate: frames
 annotate_loop: frames_loop
 	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_LOOP_FRAMES) -s frame_loop
 
-ppm: annotate
-	for file in `ls -1 frame_*_ann.tga`; \
-	do \
-	tgatoppm $$file > $$file.ppm; \
-	done
-
-#MENCODER_OPTS = -mf w=800:h=600:fps=25:type=tga -ovc lavc -lavcopts vcodec=mpeg4:mbd=2:trell -ovc raw
 MENCODER_OPTS = -mf w=800:h=600:fps=25:type=tga -o bar.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=8000:vpass=1
 MENCODER_OPTS2 = -mf w=800:h=600:fps=25:type=tga -o bar.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=8000:vpass=2
 
 movie: annotate
 	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_povray.avi
 	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(SIMTAG)_povray.avi
-	#ppmtompeg $(SIMTAG)_povray_ann.params
 
 movie_loop: annotate_loop
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_loop_povray.avi
