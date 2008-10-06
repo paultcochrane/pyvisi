@@ -26,7 +26,7 @@ padded_vtk:
 	cp --update $$file $$newfile; \
 	done
 
-frames: $(FRAMES) padded_vtk
+frames: padded_vtk $(FRAMES)
 
 $(FRAMES): frame_%.tga: vtk/frame_%.vtk
 	@echo "Building frames for $(SIMTAG)"
