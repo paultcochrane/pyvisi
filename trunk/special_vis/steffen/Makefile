@@ -1,6 +1,6 @@
 # $Id$
 
-.PHONY: clean annotate movie config padded_vtk
+.PHONY: clean config padded_vtk
 
 SIMTAG = $(notdir $(CURDIR))
 ifeq "$(SIMTAG)" ""
@@ -10,8 +10,8 @@ endif
 NUM_FRAMES = $(shell ls -1 vtk/*.vtu | wc -l)
 NUM_LOOP_FRAMES = $(shell expr expr $(NUM_FRAMES) \* 2 + 1)
 LOOP_FRAMES := $(wildcard frame_loop_[0-9][0-9][0-9][0-9].tga)
-VTK := $(wildcard vtk/frame_*.vtu)
-FRAME_INDICES := $(subst frame_,,$(basename $(notdir $(VTK))))
+VTU := $(wildcard vtk/frame_*.vtu)
+FRAME_INDICES := $(subst frame_,,$(basename $(notdir $(VTU))))
 FRAMES := $(foreach index,$(FRAME_INDICES),$(shell perl -e 'printf "frame_%04d.tga", $(index)'))
 
 config:
@@ -21,21 +21,17 @@ padded_vtk:
 	for file in `ls -1 vtk/*.vtu`; \
 	do \
 	frame_index=`echo $$file | sed 's/[^0-9]//g'`; \
-	newfile=`perl -e "printf 'vtk/frame_%04d.vtu', $$frame_index"`; \
+	newfile=`perl -e "printf 'vtk/frame_%04d.vtk', $$frame_index"`; \
 	echo $$newfile; \
 	cp --update $$file $$newfile; \
 	done
 
-$(FRAMES): frame_%.tga: frame_%.vtu
-
 frames: $(FRAMES)
+
+$(FRAMES): frame_%.tga: vtk/frame_%.vtk
 	@echo "Building frames for $(SIMTAG)"
-	@echo "NUM_FRAMES = $(NUM_FRAMES)"
-	@echo "FRAMES = $(FRAMES)"
-	#python make_frames.py --numframes=$(NUM_FRAMES)
-	FRAME_INDEX=`echo $< | sed 's/[^0-9]//g'`
-	echo $$FRAME_INDEX
-	#python make_frame_povray.py -d vtk -f frame_%i.vtu -i %i -o vtk -n $(NUM_FRAMES) -v 0 -e 0 -r 100
+	FRAME_INDEX=`echo $< | sed 's/[^0-9]//g'`; \
+	python make_frame_povray.py -d vtk -f frame_$$FRAME_INDEX.vtk -i $$FRAME_INDEX -o vtk -n $(NUM_FRAMES) -v 0 -e 0 -r 100
 
 frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
