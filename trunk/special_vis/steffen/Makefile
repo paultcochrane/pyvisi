@@ -14,6 +14,7 @@ VTU := $(wildcard vtk/frame_*.vtu)
 FRAME_INDICES := $(subst frame_,,$(basename $(notdir $(VTU))))
 FRAMES := $(foreach index,$(FRAME_INDICES),$(shell perl -e 'printf "frame_%04d.tga", $(index)'))
 ANN_FRAMES := $(foreach index,$(FRAME_INDICES),$(shell perl -e 'printf "frame_%04d_ann.tga", $(index)'))
+MOVIE = $(SIMTAG)_povray.avi
 
 config:
 	python config.py
@@ -49,9 +50,11 @@ annotate_loop: frames_loop
 MENCODER_OPTS = -mf w=800:h=600:fps=25:type=tga -o bar.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=8000:vpass=1
 MENCODER_OPTS2 = -mf w=800:h=600:fps=25:type=tga -o bar.avi -ovc lavc -lavcopts vcodec=mpeg4:vbitrate=8000:vpass=2
 
-movie: annotate
-	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_povray.avi
-	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(SIMTAG)_povray.avi
+movie: annotate $(MOVIE)
+
+$(MOVIE): $(ANN_FRAMES)
+	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(MOVIE)
+	mencoder mf://frame_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(MOVIE)
 
 movie_loop: annotate_loop
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_loop_povray.avi
