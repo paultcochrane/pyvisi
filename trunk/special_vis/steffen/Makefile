@@ -13,6 +13,7 @@ LOOP_FRAMES := $(wildcard frame_loop_[0-9][0-9][0-9][0-9].tga)
 VTU := $(wildcard vtk/frame_*.vtu)
 FRAME_INDICES := $(subst frame_,,$(basename $(notdir $(VTU))))
 FRAMES := $(foreach index,$(FRAME_INDICES),$(shell perl -e 'printf "frame_%04d.tga", $(index)'))
+ANN_FRAMES := $(foreach index,$(FRAME_INDICES),$(shell perl -e 'printf "frame_%04d_ann.tga", $(index)'))
 
 config:
 	python config.py
@@ -37,7 +38,9 @@ frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
 	python make_frames_loop.py --numframes=$(NUM_FRAMES)
 
-annotate: frames
+annotate: frames $(ANN_FRAMES)
+
+$(ANN_FRAMES): frame_%_ann.tga: frame_%.tga
 	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_FRAMES)
 
 annotate_loop: frames_loop
@@ -54,5 +57,6 @@ movie_loop: annotate_loop
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS) -o $(SIMTAG)_loop_povray.avi
 	mencoder mf://frame_loop_[0-9][0-9][0-9][0-9]_ann.tga $(MENCODER_OPTS2) -o $(SIMTAG)_loop_povray.avi
 
+# note! this assumes that *.vtu files are the raw data files in vtk/
 clean:
-	rm -f frame_*.tga $(SIMTAG)_povray.avi $(SIMTAG)_loop_povray.avi $(SIMTAG)_povray.avi.bz2 $(SIMTAG)_loop_povray.avi.bz2 divx2pass.log
+	rm -f frame_*.tga vtk/*.vtk vtk/*.ini vtk/*.pov $(SIMTAG)_povray.avi $(SIMTAG)_loop_povray.avi $(SIMTAG)_povray.avi.bz2 $(SIMTAG)_loop_povray.avi.bz2 divx2pass.log
