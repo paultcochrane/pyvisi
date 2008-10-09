@@ -33,13 +33,13 @@ frames: $(FRAMES)
 $(FRAMES): frame_%.tga: vtk/frame_%.vtk Makefile make_frame_povray.py
 	@echo "Building frames for $(SIMTAG)"
 	FRAME_INDEX=`echo $< | sed 's/[^0-9]//g'`; \
-	python make_frame_povray.py -d vtk -f frame_$$FRAME_INDEX.vtk -i $$FRAME_INDEX -o vtk -n $(NUM_FRAMES) -v 0 -e 75 -r 70
+	python make_frame_povray.py -d vtk -f frame_$$FRAME_INDEX.vtk -i $$FRAME_INDEX -o vtk -n $(NUM_FRAMES) -v 0 -e 0 -r 100
 
 frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
 	python make_frames_loop.py --numframes=$(NUM_FRAMES)
 
-annotate: frames $(ANN_FRAMES)
+annotate: $(ANN_FRAMES)
 
 $(ANN_FRAMES): frame_%_ann.tga: frame_%.tga
 	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_FRAMES)
