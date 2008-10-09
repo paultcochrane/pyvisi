@@ -28,12 +28,12 @@ padded_vtk:
 	cp --update $$file $$newfile; \
 	done
 
-frames: padded_vtk $(FRAMES)
+frames: $(FRAMES)
 
-$(FRAMES): frame_%.tga: vtk/frame_%.vtk
+$(FRAMES): frame_%.tga: vtk/frame_%.vtk Makefile make_frame_povray.py
 	@echo "Building frames for $(SIMTAG)"
 	FRAME_INDEX=`echo $< | sed 's/[^0-9]//g'`; \
-	python make_frame_povray.py -d vtk -f frame_$$FRAME_INDEX.vtk -i $$FRAME_INDEX -o vtk -n $(NUM_FRAMES) -v 0 -e 0 -r 100
+	python make_frame_povray.py -d vtk -f frame_$$FRAME_INDEX.vtk -i $$FRAME_INDEX -o vtk -n $(NUM_FRAMES) -v 0 -e 75 -r 70
 
 frames_loop: config
 	@echo "Building frames to loop for $(SIMTAG)"
