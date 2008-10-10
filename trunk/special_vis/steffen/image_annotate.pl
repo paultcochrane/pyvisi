@@ -27,7 +27,6 @@ my @font_metrics;
 $img_fname =~ m/(\w+)(\d+)\.tga/;
 my $img_fname_stem = $1;
 my $frame_index = $2;
-print $frame_index, "\n";
 my $in_filename = sprintf("%s%s.tga", $img_fname_stem, $frame_index);
 my $out_filename = sprintf("%s%s_ann.tga", $img_fname_stem, $frame_index);
 
