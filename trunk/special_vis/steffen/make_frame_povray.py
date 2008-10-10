@@ -283,7 +283,7 @@ def makeFrame(dirname, fname, index, outdir, outFnameStem, numframes, opaqueTagI
 		pov.write("    colour red %f green %f blue %f\n" %
 			(red[i], green[i], blue[i]))
 	    pov.write("  }\n")
-	    pov.write("  no_shadow\n")
+	    #pov.write("  no_shadow\n")
 	    pov.write("}\n")
 
     # close the file
