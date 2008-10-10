@@ -41,8 +41,8 @@ frames_loop: config
 
 annotate: $(ANN_FRAMES)
 
-$(ANN_FRAMES): frame_%_ann.tga: frame_%.tga
-	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_FRAMES)
+$(ANN_FRAMES): frame_%_ann.tga: frame_%.tga image_annotate.pl
+	perl image_annotate.pl -t $(SIMTAG) -f $<
 
 annotate_loop: frames_loop
 	perl image_annotate.pl -t $(SIMTAG) -m $(NUM_LOOP_FRAMES) -s frame_loop
