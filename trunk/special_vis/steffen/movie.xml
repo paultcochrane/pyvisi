@@ -1,20 +1,28 @@
 <?xml version="1.0"?>
 <movie>
-    <frame_rate> </frame_rate>
+    <frame_rate> 20 </frame_rate>
+    <input_dir> vtk </input_dir>
+    <output_dir> frames </output_dir>
 
     <title_frames>
-	<title_text> </title_text>
-	<authors> </authors>
-	<institution> </institution>
-	<vis_by> </vis_by>
-	<display_time> </display_time>
+	<title_text> Simulation </title_text>
+	<authors> Steffen Abe </authors>
+	<institution> ?? </institution>
+	<vis_by> Paul Cochrane </vis_by>
+	<display_time unit="seconds"> 5 </display_time>
     </title_frames>
 
     <body_frames>
+	<convert input="vtk" output="pov">
+	</convert>
+	<convert input="pov" output="tga">
+	</convert>
     </body_frames>
 
     <credits_frames>
-	<credits_text> </credits_text>
-	<display_time> </display_time>
+	<credits_text> RRZN </credits_text>
+	<display_time unit="seconds"> 5 </display_time>
     </credits_frames>
+
+    <!-- build movie somehow... -->
 </movie>
