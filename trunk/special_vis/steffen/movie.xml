@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<movie>
+<particle_movie>
     <frame_rate> 20 </frame_rate>
     <input_dir> vtk </input_dir>
     <output_dir> frames </output_dir>
@@ -13,10 +13,59 @@
     </title_frames>
 
     <body_frames>
-	<convert input="vtk" output="pov">
-	</convert>
-	<convert input="pov" output="tga">
-	</convert>
+	<!-- collect frames -->
+	<phase name="frontal_view_start">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	</phase>
+	<phase name="rotate_right">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	    <rotate>
+		<azimuth units="degrees"> 0 180 </azimuth>  <!-- from-to -->
+		<elevation units="degrees"> 0 0 </elevation>  <!-- from-to -->
+	    </rotate>
+	</phase>
+	<phase name="rotate_left">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	    <rotate>
+		<azimuth units="degrees"> 180 0 </azimuth>  <!-- from-to -->
+		<elevation units="degrees"> 0 0 </elevation>  <!-- from-to -->
+	    </rotate>
+	</phase>
+	<phase name="rotate_up">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	    <rotate>
+		<azimuth units="degrees"> 0 0 </azimuth>  <!-- from-to -->
+		<elevation units="degrees"> 0 90 </elevation>  <!-- from-to -->
+	    </rotate>
+	</phase>
+	<phase name="rotate_down">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	    <rotate>
+		<azimuth units="degrees"> 0 0 </azimuth>  <!-- from-to -->
+		<elevation units="degrees"> 90 0 </elevation>  <!-- from-to -->
+	    </rotate>
+	</phase>
+	<phase name="frontal_view_end">
+	    <convert input="vtk" output="pov">
+	    </convert>
+	    <convert input="pov" output="tga">
+	    </convert>
+	</phase>
     </body_frames>
 
     <credits_frames>
@@ -25,4 +74,4 @@
     </credits_frames>
 
     <!-- build movie somehow... -->
-</movie>
+</particle_movie>
