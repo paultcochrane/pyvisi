@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<movie>
+    <frame_rate> </frame_rate>
+
+    <title_frames>
+	<title_text> </title_text>
+	<authors> </authors>
+	<institution> </institution>
+	<vis_by> </vis_by>
+	<display_time> </display_time>
+    </title_frames>
+
+    <body_frames>
+    </body_frames>
+
+    <credits_frames>
+	<credits_text> </credits_text>
+	<display_time> </display_time>
+    </credits_frames>
+</movie>
