@@ -3,6 +3,8 @@
     <frame_rate> 20 </frame_rate>
     <input_dir> vtk </input_dir>
     <output_dir> frames </output_dir>
+    <!-- number of threads for image processing -->
+    <num_threads> 4 </num_threads>  
 
     <title_frames>
 	<title_text> Simulation </title_text>
@@ -15,56 +17,50 @@
     <body_frames>
 	<!-- collect frames -->
 	<phase name="frontal_view_start">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <!-- look for vtk files in the input directory -->
+	    <!-- work out how many there are, and the correct order -->
+	    <!-- for each file: -->
+	    <!--   determine how the camera should observe the model -->
+	    <!--   convert this information and the vtk info into povray -->
+	    <!--   run povray to produce the given output format -->
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	</phase>
 	<phase name="rotate_right">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	    <rotate>
 		<azimuth units="degrees"> 0 180 </azimuth>  <!-- from-to -->
 		<elevation units="degrees"> 0 0 </elevation>  <!-- from-to -->
 	    </rotate>
 	</phase>
 	<phase name="rotate_left">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	    <rotate>
 		<azimuth units="degrees"> 180 0 </azimuth>  <!-- from-to -->
 		<elevation units="degrees"> 0 0 </elevation>  <!-- from-to -->
 	    </rotate>
 	</phase>
 	<phase name="rotate_up">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	    <rotate>
 		<azimuth units="degrees"> 0 0 </azimuth>  <!-- from-to -->
 		<elevation units="degrees"> 0 90 </elevation>  <!-- from-to -->
 	    </rotate>
 	</phase>
 	<phase name="rotate_down">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	    <rotate>
 		<azimuth units="degrees"> 0 0 </azimuth>  <!-- from-to -->
 		<elevation units="degrees"> 90 0 </elevation>  <!-- from-to -->
 	    </rotate>
 	</phase>
 	<phase name="frontal_view_end">
-	    <convert input="vtk" output="pov">
-	    </convert>
-	    <convert input="pov" output="tga">
-	    </convert>
+	    <convert input="vtk" output="pov" />
+	    <convert input="pov" output="tga" />
 	</phase>
     </body_frames>
 
