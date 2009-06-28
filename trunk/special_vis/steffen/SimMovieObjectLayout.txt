@@ -1,0 +1,35 @@
+Movie()
+  - addSequence()
+  - addCamera()
+  - addLightSource()
+  - getNumDataFiles()
+  - setMovieFilename()
+  - setInputDataDir()
+  - setOutputFramesDir()
+  - render()
+
+XMLParser()
+
+Sequence()
+  - addFrame()
+  - setStartFrameIndex()
+  - setEndFrameIndex()
+  - render()
+
+Frame()
+  - setIndex()
+  - setTitle()
+  - setAuthor()
+  - setDataFilename()
+  - setOutputFilename()
+  - setBackgroundColour()
+
+  TitleFrame()
+  ModelFrame()
+    - loadModel()
+    - rotateModel()
+  CreditsFrame()
+
+Camera()
+
+LightSource
