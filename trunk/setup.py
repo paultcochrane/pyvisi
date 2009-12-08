@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 
-# $Id$
-
-
 from distutils.core import setup
 
 a=setup(name="pyvisi",
@@ -17,5 +14,3 @@ a=setup(name="pyvisi",
       'pyvisi.renderers.vtk',
       ],
 )
-
-
