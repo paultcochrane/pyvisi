@@ -1,5 +1,3 @@
-# $Id$
-
 # the generic stuff
 include README
 include ChangeLog
