@@ -1,5 +1,4 @@
 # main html files
-# $Id: main.aap 826 2007-08-27 12:36:56Z paultcochrane $
 
 .PHONY: clean date_updated.part todo examples
 .SUFFIXES: .html
