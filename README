@@ -10,9 +10,6 @@
 Pyvisi is the Python visualisation interface: a generic Python-based interface
 to many different scientific visualisation packages.
 
-See http://pyvisi.sourceforge.net
-
-
 --------------------------------------------------------------------
  Installation
 --------------------------------------------------------------------
