@@ -1,5 +1,0 @@
-$Id$
-
-In the LinePlot classes there is a problem with saving an image directly
-after rendering a scene.  The workaround is to run setData() again before
-saving the image.
