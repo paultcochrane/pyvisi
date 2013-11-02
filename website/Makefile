@@ -68,7 +68,7 @@ date_updated.part:
 	date >> $@
 	echo "</i><br>" >> $@
 	echo "comments to: " >> $@
-	echo "<a href=\"mailto:paultcochrane@users.sourceforge.net\">webmaster</a>" >> $@
+	echo "<a href=\"mailto:paul@liekut.de">webmaster</a>" >> $@
 	echo "<br></td>" >> $@
 
 # dependencies from various .part files
