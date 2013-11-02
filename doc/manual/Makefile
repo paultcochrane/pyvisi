@@ -19,11 +19,6 @@ TEX_FILES = \
 	pyvisi_doc.tex\
         pyvisi_doc.bib
 
-EPS_FIGS = \
-	figures/plotExampleGnuplot.eps\
-        figures/plotExampleVTK.eps\
-        figures/pyvisi_class_structure.eps
-
 PDF_FIGS = \
 	figures/plotExampleGnuplot.pdf\
         figures/plotExampleVTK.pdf\
@@ -31,9 +26,6 @@ PDF_FIGS = \
 
 # generating the handcrafted docs
 all: pdf
-
-%.pdf: $(EPS_FIGS)
-	epstopdf $*.eps
 
 pdf: $(PDF_FIGS) $(TEX_FILES)
 	pdflatex pyvisi_doc.tex
