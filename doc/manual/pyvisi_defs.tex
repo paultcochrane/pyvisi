@@ -11,28 +11,8 @@
 %%%% without the slash) as this
 %%%% helps latex2html *not* see the stuff inbetween
 
-% this code hacked from that of R Chandrasekhar from UWA
-\newif\ifpdf
-\ifx\pdfoutput\undefined
-	\pdffalse    % we are not running pdfLaTeX
-\else
-	\pdfoutput=1 % we are running pdfLaTeX
-	\pdftrue
-\fi
-
-% add the color package
-\ifpdf
 \usepackage[usenames,dvipsnames]{color}
-\else
-\usepackage[usenames,dvips]{color}
-\fi
-
-% add the hyperref package
-\ifpdf
 \usepackage[pdftex]{hyperref}
-\else
-\usepackage[hypertex]{hyperref}
-\fi
 
 % defines the colour for the background of code examples
 \definecolor{LightGrey}{gray}{0.9}
@@ -40,14 +20,6 @@
 \usepackage[grey,times]{quotchap}
 \usepackage{ccaption}
 \usepackage{fancyhdr}   
-
-\ifpdf
-	\DeclareGraphicsExtensions{.pdf}  % this command defined in graphicx
-	\pdfcompresslevel=9  % 0: no compression, 9: highest compression
-			     % or, set compress_level 9 in file pdftex.cfg
-\else
-	\DeclareGraphicsExtensions{.eps}
-\fi
 
 \setlength{\oddsidemargin}{-1in}   \setlength{\evensidemargin}{-1in}
 \addtolength{\oddsidemargin}{25mm}\addtolength{\evensidemargin}{20mm}
