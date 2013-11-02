@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting a 3D vector field

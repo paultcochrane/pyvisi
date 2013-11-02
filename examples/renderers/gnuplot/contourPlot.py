@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of contour plotting with pyvisi 

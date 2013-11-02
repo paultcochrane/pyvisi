@@ -1,4 +1,3 @@
-# $Id$ 
 """
 Example of plotting multiple curves offset from each other
 

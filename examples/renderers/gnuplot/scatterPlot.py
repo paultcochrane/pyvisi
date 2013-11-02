@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of a scatter plot

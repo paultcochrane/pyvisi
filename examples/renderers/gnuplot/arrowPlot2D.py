@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting a vector field with pyvisi 

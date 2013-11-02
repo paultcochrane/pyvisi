@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting 3D scatter plots 

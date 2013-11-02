@@ -2,7 +2,6 @@
 # 
 # run all of the examples
 #
-# $Id$
 
 # process arguments if any
 import sys

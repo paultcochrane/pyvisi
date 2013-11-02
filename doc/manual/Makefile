@@ -1,7 +1,6 @@
 # This is the main file for generating the handcrafted documentation
 # for pyvisi.
 
-# $Id$
 
 .PHONY: clean
 

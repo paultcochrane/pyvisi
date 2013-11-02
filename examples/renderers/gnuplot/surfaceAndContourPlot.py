@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting surfaces with contours

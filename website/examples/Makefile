@@ -1,5 +1,4 @@
 # example html files
-# $Id$
 
 .PHONY: clean copy
 .SUFFIXES: .html .py

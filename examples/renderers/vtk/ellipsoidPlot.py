@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting ellipsoids (useful for visualising tensors) with pyvisi 

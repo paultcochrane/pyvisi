@@ -1,4 +1,3 @@
-# $Id$
 
 """
 Example of plotting a curve using only one input array with pyvisi 
