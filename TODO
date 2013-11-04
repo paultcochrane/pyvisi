@@ -1,3 +1,6 @@
+- output a complete evalStack trace with line numbers.  This would help
+  debugging errors in generated code
+
 - Will need sections in the manual for the docs about each renderer module, or
   possibly each module supplies their own.
   (added Wed Jan 12 08:54:18 2005, incomplete, priority verylow)
