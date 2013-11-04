@@ -141,20 +141,18 @@ _textProp.ItalicOff()
 _textProp.ShadowOff()
 
 # add a title
-_titleMapper = vtk.vtkTextMapper()
 _title = "Example ball plot"
-_titleMapper.SetInput(_title)
-
-_titleProp = _titleMapper.GetTextProperty()
-_titleProp.ShallowCopy(_textProp)
-_titleProp.SetJustificationToCentered()
-_titleProp.SetVerticalJustificationToTop()
 
 # set up the text actor
 _titleActor = vtk.vtkTextActor()
-_titleActor.SetMapper(_titleMapper)
+_titleActor.SetInput(_title)
 _titleActor.GetPositionCoordinate().SetCoordinateSystemToNormalizedDisplay()
 _titleActor.GetPositionCoordinate().SetValue(0.5, 0.95)
+
+_titleProp = _titleActor.GetTextProperty()
+_titleProp.ShallowCopy(_textProp)
+_titleProp.SetJustificationToCentered()
+_titleProp.SetVerticalJustificationToTop()
 
 # set up the renderer and the render window
 _ren = vtk.vtkRenderer()
