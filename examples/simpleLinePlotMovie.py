@@ -23,9 +23,9 @@ Example of plotting a changing function with pyvisi
 method = 'pyvisi'
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(10, typecode=Float)
+x = arange(10, dtype=floating)
 y = x**2
 
 # plot it using one of the three methods

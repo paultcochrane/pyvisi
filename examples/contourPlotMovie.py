@@ -23,15 +23,15 @@ Example of contour plotting a changing function with pyvisi
 method = 'pyvisi'
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 # the x and y axes
-x = arange(-2,2,0.2, typecode=Float)
-y = arange(-2,3,0.2, typecode=Float)
+x = arange(-2,2,0.2, dtype=floating)
+y = arange(-2,3,0.2, dtype=floating)
 
 # pick some interesting function to generate the data in the third dimension
 # this is the one used in the matlab docs: z = x*exp(-x^2-y^2)
-z = zeros((len(x),len(y)), typecode=Float)
+z = zeros((len(x),len(y)), dtype=floating)
 
 # boy do *I* feel old fashioned writing it this way
 # surely there's another way to do it: - something to do later

@@ -29,13 +29,13 @@ else:
 import random
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 # the three axes in space
 # this will give us 10 particles (_not_ 1000)
-x = arange(10, typecode=Float)
-y = arange(10, typecode=Float)
-z = arange(10, typecode=Float)
+x = arange(10, dtype=floating)
+y = arange(10, dtype=floating)
+z = arange(10, dtype=floating)
 
 # 3D position information
 posArray = []
@@ -46,13 +46,13 @@ for i in range(len(x)):
 
 # radius information
 random.seed()
-radiiArray = zeros(len(x)*len(y)*len(z), typecode=Float)
+radiiArray = zeros(len(x)*len(y)*len(z), dtype=floating)
 for i in range(len(x)*len(y)*len(z)):
     radiiArray[i] = random.random()*0.8
 
 # tag information
 random.seed()
-tagsArray = zeros(len(x)*len(y)*len(z), typecode=Int)
+tagsArray = zeros(len(x)*len(y)*len(z), dtype=integer)
 for i in range(len(x)*len(y)*len(z)):
     tagsArray[i] = int(random.random()*10)
 

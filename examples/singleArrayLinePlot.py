@@ -27,9 +27,9 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(0,2*pi,0.1, typecode=Float)
+x = arange(0,2*pi,0.1, dtype=floating)
 y = sin(x)
 
 # example code for how a user would write a script in pyvisi

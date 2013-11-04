@@ -30,12 +30,12 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 import random
 
 numPoints = 100000
-x = arange(numPoints, typecode=Float)
-y = zeros(numPoints, typecode=Float)
+x = arange(numPoints, dtype=floating)
+y = zeros(numPoints, dtype=floating)
 random.seed()
 for i in range(numPoints):
     y[i] = random.random()

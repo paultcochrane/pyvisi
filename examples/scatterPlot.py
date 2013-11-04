@@ -27,11 +27,11 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 import random
 
-x = arange(30, typecode=Float)
-y = arange(30, typecode=Float)
+x = arange(30, dtype=floating)
+y = arange(30, dtype=floating)
 
 # make the data a bit more scatter-like by using random numbers
 random.seed()

@@ -27,13 +27,13 @@ import os, sys
 import random
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 # the three axes in space
 # this will give us 10 particles (_not_ 1000)
-x = arange(10, typecode=Float)
-y = arange(10, typecode=Float)
-z = arange(10, typecode=Float)
+x = arange(10, dtype=floating)
+y = arange(10, dtype=floating)
+z = arange(10, dtype=floating)
 
 # 3D position information
 posArray = []
@@ -44,13 +44,13 @@ for i in range(len(x)):
 
 # radius information
 random.seed()
-radiiArray = zeros(len(x)*len(y)*len(z), typecode=Float)
+radiiArray = zeros(len(x)*len(y)*len(z), dtype=floating)
 for i in range(len(x)*len(y)*len(z)):
     radiiArray[i] = random.random()*0.8
 
 # tag information
 random.seed()
-tagsArray = zeros(len(x)*len(y)*len(z), typecode=Int)
+tagsArray = zeros(len(x)*len(y)*len(z), dtype=integer)
 for i in range(len(x)*len(y)*len(z)):
     tagsArray[i] = int(random.random()*10)
 
@@ -152,9 +152,9 @@ elif method == 'povray':
     _lut = vtk.vtkLookupTable()
     _lut.Build()
 
-    _red = zeros(_numPoints, typecode=Float)
-    _green = zeros(_numPoints, typecode=Float)
-    _blue = zeros(_numPoints, typecode=Float)
+    _red = zeros(_numPoints, dtype=floating)
+    _green = zeros(_numPoints, dtype=floating)
+    _blue = zeros(_numPoints, dtype=floating)
     for i in range(_numPoints):
         _red[i], _green[i], _blue[i] = _lut.GetColor(_vtkScaledTags.GetValue(i))
 
@@ -165,20 +165,20 @@ elif method == 'povray':
     # but this way makes the meaning of the code a lot clearer
 
     ### the points
-    _xData = zeros(_numPoints, typecode=Float)
-    _yData = zeros(_numPoints, typecode=Float)
-    _zData = zeros(_numPoints, typecode=Float)
+    _xData = zeros(_numPoints, dtype=floating)
+    _yData = zeros(_numPoints, dtype=floating)
+    _zData = zeros(_numPoints, dtype=floating)
     for i in range(_numPoints):
         _xData[i], _yData[i], _zData[i] = _vtkPoints.GetPoint(i)
 
     ### the radii
-    _radii = zeros(_numPoints, typecode=Float)
+    _radii = zeros(_numPoints, dtype=floating)
     for i in range(_numPoints):
         _radii[i] = _vtkRadii.GetValue(i)
 
     ### the tags
-    _scaledTags = zeros(_numPoints, typecode=Float)
-    _tags = zeros(_numPoints, typecode=Int)
+    _scaledTags = zeros(_numPoints, dtype=floating)
+    _tags = zeros(_numPoints, dtype=integer)
     for i in range(_numPoints):
         _scaledTags[i] = _vtkScaledTags.GetValue(i)
         _tags[i] = _vtkTags.GetValue(i)

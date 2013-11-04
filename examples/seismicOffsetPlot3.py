@@ -30,13 +30,13 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 # read in the data (being fortunate we know how much data there is)
 fp = open('waves1d.dat')
-t = zeros((1000), typecode=Float)
-x = zeros((102), typecode=Float)
-data = zeros((1000,102), typecode=Float)
+t = zeros((1000), dtype=floating)
+x = zeros((102), dtype=floating)
+data = zeros((1000,102), dtype=floating)
 for i in range(1000):
     for j in range(102):
         line = fp.readline()

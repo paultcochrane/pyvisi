@@ -27,9 +27,9 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(0, 2*pi, 0.1, typecode=Float)
+x = arange(0, 2*pi, 0.1, dtype=floating)
 y1 = sin(x)
 y2 = cos(x)
 y3 = cos(x)**2

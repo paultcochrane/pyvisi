@@ -27,20 +27,20 @@ else:
     ren_mod = sys.argv[1]
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 dim = 10
 
 # initialise the positions of the vectors
-x = zeros((dim,dim), typecode=Float)
-y = zeros((dim,dim), typecode=Float)
-z = zeros((dim,dim), typecode=Float)
+x = zeros((dim,dim), dtype=floating)
+y = zeros((dim,dim), dtype=floating)
+z = zeros((dim,dim), dtype=floating)
 
 # initialise the vector displacements
 # (I may need to rethink how this works in the interface)
-dx = zeros((dim,dim), typecode=Float)
-dy = zeros((dim,dim), typecode=Float)
-dz = zeros((dim,dim), typecode=Float)
+dx = zeros((dim,dim), dtype=floating)
+dy = zeros((dim,dim), dtype=floating)
+dz = zeros((dim,dim), dtype=floating)
 
 # set the positions randomly, and set the displacements to some smaller
 # random number but of mean zero instead of distributed between 0 and 1
