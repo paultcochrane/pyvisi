@@ -5,9 +5,9 @@ This is especially handy for people plotting seismic data
 """
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(0,2*pi,0.01, typecode=Float)
+x = arange(0,2*pi,0.01, dtype=floating)
 y1 = sin(x)
 y2 = cos(x)
 y3 = cos(x)**2

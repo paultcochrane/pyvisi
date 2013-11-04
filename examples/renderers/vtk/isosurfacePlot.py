@@ -4,7 +4,7 @@ Example of plotting a set of isosurfaces
 """
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 import vtk
 

@@ -4,9 +4,9 @@ Example of plotting a curve using only one input array with pyvisi
 """
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(0,2*pi,0.1, typecode=Float)
+x = arange(0,2*pi,0.1, dtype=floating)
 y = sin(x)
 
 #### original vtk code

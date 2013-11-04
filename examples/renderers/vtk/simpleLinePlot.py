@@ -6,9 +6,9 @@ This is the original code used to develop the vtk renderer module
 """
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
-x = arange(10, typecode=Float)
+x = arange(10, dtype=floating)
 y = x**2
 
 import vtk

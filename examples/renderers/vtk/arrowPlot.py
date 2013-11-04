@@ -8,16 +8,16 @@ AAARRRGGGHHHH.
 """
 
 # set up some data to plot
-from Numeric import *
+from numpy import *
 
 # the positions of the vectors
-x = arange(20, typecode=Float)
-y = arange(20, typecode=Float)
+x = arange(20, dtype=floating)
+y = arange(20, dtype=floating)
 
 # the vector displacements
 # (I may need to rethink how this works in the interface)
-dx = arange(20, typecode=Float)
-dy = arange(20, typecode=Float)
+dx = arange(20, dtype=floating)
+dy = arange(20, dtype=floating)
 
 # set the positions randomly, and set the displacements to be the square of
 # the positions
