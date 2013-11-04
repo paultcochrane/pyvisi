@@ -59,6 +59,6 @@ class Renderer(BaseRenderer):
         # initialise the renderer module
         self.runString("# Renderer._initRendererModule")
         self.addToInitStack("import vtk")
-        self.addToInitStack("from Numeric import *")
+        self.addToInitStack("from numpy import *")
 
 # vim: expandtab shiftwidth=4:

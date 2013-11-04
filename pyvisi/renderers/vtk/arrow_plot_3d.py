@@ -23,7 +23,6 @@ Class and functions associated with a pyvisi ArrowPlot3D objects
 from pyvisi.renderers.vtk.common import debugMsg
 import os
 import copy
-import numarray
 
 # module specific imports
 from pyvisi.renderers.vtk.plot import Plot

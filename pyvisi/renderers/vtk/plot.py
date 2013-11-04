@@ -80,7 +80,7 @@ class Plot(Item):
 
     def _setPlainData(self):
         """
-        Set data to plot using numarray or Numeric objects
+        Set data to plot using numpy objects
         """
         debugMsg("Called _setPlainData() in Plot()")
 
