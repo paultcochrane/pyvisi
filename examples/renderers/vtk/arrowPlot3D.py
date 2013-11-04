@@ -37,7 +37,7 @@ import vtk
 
 # loading a vtk file as input
 reader = vtk.vtkXMLUnstructuredGridReader()
-reader.SetFileName("../../vel-0500.vtk")
+reader.SetFileName("../../vel-0004.vtk")
 reader.Update()
 
 grid = reader.GetOutput()
